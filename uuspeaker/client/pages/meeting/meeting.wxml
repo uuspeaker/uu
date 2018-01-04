@@ -1,0 +1,134 @@
+<view class="container">
+  <!-- 用户头衔 -->
+  <view class="userinfo-top" bindtap="login">
+    <image class="userinfo-avatar-top" src="{{logged ? userInfo.avatarUrl : './../index/user-unlogin.png'}}" background-size="cover"></image>
+    <view>
+      <text>{{logged ? userInfo.nickName + '  【布衣演讲君】': 'LOGIN'}}</text>
+      <view class="userinfo-score">
+        <text>{{totalScore}}</text>
+        <text>{{rank}}</text>
+        <text>{{detailScore}}</text>
+      </view>
+      <text class="userinfo-nickname" wx:if="{{logged}}">{{userInfo.lastLoginTime}}</text>
+    </view>
+  </view>
+
+  <!-- 用户参会历史 -->
+  <view>
+
+  </view>
+  <view class="userinfo-middle">
+    <text>已报名用户：</text>
+  </view>
+   <scroll-view class="scroll-view_H" scroll-y style="height: 100%">
+  <view class="userinfo-middle" >
+    <image class="userinfo-avatar-middle" src="{{'./../index/user-unlogin.png'}}" background-size="cover"></image>
+    <view>
+      <text>{{'笑笑  【布衣演讲君】'}}</text>
+      <view class="userinfo-score">
+        <text>{{'【42分】 '}}</text>
+        <text>{{'【第1名】 '}}</text>
+        <text>{{'【12-9-6-4-11】'}}</text>
+        <text >{{'【主持】'}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="userinfo-middle" >
+    <image class="userinfo-avatar-middle" src="{{'./../index/user-unlogin.png'}}" background-size="cover"></image>
+    <view>
+      <text>{{'Charles  【布衣演讲君】'}}</text>
+      <view class="userinfo-score">
+        <text>{{'【40分】 '}}</text>
+        <text>{{'【第2名】 '}}</text>
+        <text>{{'【18-7-2-5-8】'}}</text>
+        <text >{{'【主持】'}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="userinfo-middle" >
+    <image class="userinfo-avatar-middle" src="{{'./../index/user-unlogin.png'}}" background-size="cover"></image>
+    <view>
+      <text>{{'Jenny Liu  【布衣演讲君】'}}</text>
+      <view class="userinfo-score">
+        <text>{{'【22分】 '}}</text>
+        <text>{{'【第4名】 '}}</text>
+        <text>{{'【8-2-3-6-3】'}}</text>
+        <text >{{'【主持】'}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="userinfo-middle" >
+    <image class="userinfo-avatar-middle" src="{{'./../index/user-unlogin.png'}}" background-size="cover"></image>
+    <view>
+      <text>{{'Nelson  【布衣演讲君】'}}</text>
+      <view class="userinfo-score">
+        <text>{{'【21分】 '}}</text>
+        <text>{{'【第5名】 '}}</text>
+        <text>{{'【6-5-6-3-1】'}}</text>
+        <text >{{'【主持】'}}</text>
+      </view>
+    </view>
+  </view>
+  
+  <view class="userinfo-middle" >
+    <image class="userinfo-avatar-middle" src="{{'./../index/user-unlogin.png'}}" background-size="cover"></image>
+    <view>
+      <text>{{'秀虹  【乞丐演讲君】'}}</text>
+      <view class="userinfo-score">
+        <text>{{'【17分】 '}}</text>
+        <text>{{'【第16名】 '}}</text>
+        <text>{{'【10-3-5-6-2】'}}</text>
+      </view>
+    </view>
+    </view>
+    <view class="userinfo-middle" >
+    <image class="userinfo-avatar-middle" src="{{'./../index/user-unlogin.png'}}" background-size="cover"></image>
+    <view>
+      <text>{{'杨志强  【乞丐演讲君】'}}</text>
+      <view class="userinfo-score">
+        <text>{{'【15分】 '}}</text>
+        <text>{{'【第30名】 '}}</text>
+        <text>{{'【10-3-5-6-2】'}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="userinfo-middle" >
+    <image class="userinfo-avatar-middle" src="{{'./../index/user-unlogin.png'}}" background-size="cover"></image>
+    <view>
+      <text>{{'张静  【乞丐演讲君】'}}</text>
+      <view class="userinfo-score">
+        <text>{{'【15分】 '}}</text>
+        <text>{{'【第35名】 '}}</text>
+        <text>{{'【6-3-5-6-2】'}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="userinfo-middle" >
+    <image class="userinfo-avatar-middle" src="{{'./../index/user-unlogin.png'}}" background-size="cover"></image>
+    <view>
+      <text>{{'亚奇  【乞丐演讲君】'}}</text>
+      <view class="userinfo-score">
+        <text>{{'【15分】 '}}</text>
+        <text>{{'【第30名】 '}}</text>
+        <text>{{'【10-3-5-6-2】'}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="userinfo-middle" >
+    <image class="userinfo-avatar-middle" src="{{'./../index/user-unlogin.png'}}" background-size="cover"></image>
+    <view>
+      <text>{{'白天  【乞丐演讲君】'}}</text>
+      <view class="userinfo-score">
+        <text>{{'【15分】 '}}</text>
+        <text>{{'【第30名】 '}}</text>
+        <text>{{'【10-3-5-6-2】'}}</text>
+      </view>
+    </view>
+  </view>
+  </scroll-view>
+  <view>
+    
+    <button class='userinfo-button' bandtap="applySpeaker">我要演讲</button>
+    <button class='userinfo-button' bandtap="applyCompere">我要主持</button>
+  </view>
+</view>

@@ -1,0 +1,63 @@
+/* pages/meeting/meeting.wxss */
+page {
+    background: #F6F6F6;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.userinfo-top{
+    margin-top: 40rpx;
+    height: 140rpx;
+    width: 100%;
+    background: #FFF;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-left: none;
+    border-right: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    transition: all 300ms ease;
+    font-size: 32rpx;
+}
+
+.userinfo-middle{
+    margin-top: 10rpx;
+    height: 80rpx;
+    width: 100%;
+    background: #FFF;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-left: none;
+    border-right: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    transition: all 300ms ease;
+    font-size: 26rpx;
+    color: #000;
+}
+
+.userinfo-button{
+    margin-top: 1rpx;
+    width: 100%;
+    background: green;
+    color: white;
+}
+
+.userinfo-avatar-top {
+    width: 100rpx;
+    height: 100rpx;
+    margin: 20rpx;
+    border-radius: 50%;
+}
+
+.userinfo-avatar-middle {
+    width: 70rpx;
+    height: 70rpx;
+    margin: 20rpx;
+    border-radius: 50%;
+}
+
+.userinfo-score {
+    font-size: 23rpx;
+}

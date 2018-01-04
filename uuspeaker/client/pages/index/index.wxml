@@ -56,4 +56,12 @@
             <text>快速增加 CGI</text>
         </navigator>
     </view>
+
+
+    <view class="uploader">
+        <navigator url="../meeting/meeting" open-type="navigate" class="uploader-text">
+            <text>meeting</text>
+        </navigator>
+    </view>
+    
 </view>

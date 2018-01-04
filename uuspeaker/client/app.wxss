@@ -5,3 +5,9 @@
   align-items: center;
   box-sizing: border-box;
 } 
+.small-button-normal {
+  width: 60pt;
+  font: 13pt;
+  color: #FFF;
+  background: #09BB07;
+}

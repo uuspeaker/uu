@@ -8,5 +8,18 @@
 	},
 	"appid": "wxef60ee565b6fa65f",
 	"projectname": "uuspeaker",
-	"condition": {}
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": []
+		}
+	}
 }
