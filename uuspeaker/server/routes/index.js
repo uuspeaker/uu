@@ -33,6 +33,9 @@ router.get('/message', controllers.message.get)
 router.post('/message', controllers.message.post)
 // 新增demo cgi
 router.get('/demo',controllers.demo)
-// 新增查询登记信息
-router.get('/getApplyInfo', controllers.meeting.getApplyInfo)
+
+//router.post('/score', controllers.score.post)
+router.get('/scoreDetail', controllers.scoreDetail)
+router.get('/scoreRank', controllers.scoreRank)
+router.get('/meetingApply', controllers.meetingApply)
 module.exports = router

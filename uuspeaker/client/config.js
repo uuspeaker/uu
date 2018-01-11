@@ -21,10 +21,7 @@ var config = {
         tunnelUrl: `${host}/weapp/tunnel`,
 
         // 上传图片接口
-        uploadUrl: `${host}/weapp/upload`,
-
-        // 会议管理接口
-        meetingUrl: `${host}/weapp/meeting`
+        uploadUrl: `${host}/weapp/upload`
     }
 };
 

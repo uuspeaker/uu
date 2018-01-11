@@ -1,0 +1,63 @@
+<!--pages/scoreRank/scoreRank.wxml-->
+<view class="container">
+  <template name="scoreDetailTemplate">
+    <view class="userinfo-score">
+      <text>{{'【'+user_id+'-'+total_score+'分】'}}</text>
+    </view>
+  </template>
+  
+  <view class="userinfo-middle">
+    <text>总分排名：</text>
+  </view>
+  <scroll-view class="scroll-view_H" scroll-y style="height: 100%">
+    <block wx:for="{{totalScore}}">
+      <template is="scoreDetailTemplate" data="{{...item}}" />
+    </block>
+  </scroll-view>
+
+  <view class="userinfo-middle">
+    <text>参会排名：</text>
+  </view>
+  <scroll-view class="scroll-view_H" scroll-y style="height: 100%">
+    <block wx:for="{{meetingScore}}">
+      <template is="scoreDetailTemplate" data="{{...item}}" />
+    </block>
+  </scroll-view>
+
+  <view class="userinfo-middle">
+    <text>演讲排名：</text>
+  </view>
+  <scroll-view class="scroll-view_H" scroll-y style="height: 100%">
+    <block wx:for="{{speakerScore}}">
+      <template is="scoreDetailTemplate" data="{{...item}}" />
+    </block>
+  </scroll-view>
+
+  <view class="userinfo-middle">
+    <text>点评排名：</text>
+  </view>
+  <scroll-view class="scroll-view_H" scroll-y style="height: 100%">
+    <block wx:for="{{evaluatorScore}}">
+      <template is="scoreDetailTemplate" data="{{...item}}" />
+    </block>
+  </scroll-view>
+
+  <view class="userinfo-middle">
+    <text>主持排名：</text>
+  </view>
+  <scroll-view class="scroll-view_H" scroll-y style="height: 100%">
+    <block wx:for="{{hostScore}}">
+      <template is="scoreDetailTemplate" data="{{...item}}" />
+    </block>
+  </scroll-view>
+
+  <view class="userinfo-middle">
+    <text>复盘排名：</text>
+  </view>
+  <scroll-view class="scroll-view_H" scroll-y style="height: 100%">
+    <block wx:for="{{reportScore}}">
+      <template is="scoreDetailTemplate" data="{{...item}}" />
+    </block>
+  </scroll-view>
+
+</view>

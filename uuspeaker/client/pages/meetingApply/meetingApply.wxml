@@ -1,0 +1,45 @@
+<view class="container">
+  <!-- 用户头衔 -->
+  <view class="userinfo-top" bindtap="login">
+    <image class="userinfo-avatar-top" src="{{logged ? userInfo.avatarUrl : './../index/user-unlogin.png'}}" background-size="cover"></image>
+    <view>
+      <text>{{logged ? userInfo.nickName + '  【布衣演讲君】': 'LOGIN'}}</text>
+      <view class="userinfo-score">
+        <text>{{totalScore}}</text>
+        <text>{{rank}}</text>
+        <text>{{detailScore}}</text>
+      </view>
+      <text class="userinfo-nickname" wx:if="{{logged}}">{{userInfo.lastLoginTime}}</text>
+    </view>
+  </view>
+
+   <!-- 报名模板 -->
+   <template name="scoreDetailTemplate">
+    <view class="userinfo-middle" >
+    <image class="userinfo-avatar-middle" src="{{'./../index/user-unlogin.png'}}" background-size="cover"></image>
+    <view>
+      <text>{{user_id + '  【布衣演讲君】'}}</text>
+      <view class="userinfo-score">
+        <text>{{'【'+total_score+'分】 '}}</text>
+        <text>{{'【第1名】 '}}</text>
+        <text>{{'【12-9-6-4-11】'}}</text>
+        <text >{{'【主持】'}}</text>
+      </view>
+    </view>
+  </view>
+  </template>
+  
+  <view class="userinfo-middle">
+    <text>已报名用户：</text>
+  </view>
+  <scroll-view class="scroll-view_H" scroll-y style="height: 100%">
+    <block wx:for="{{meetingApplyList}}">
+      <template is="scoreDetailTemplate" data="{{...item}}" />
+    </block>
+  </scroll-view>
+
+  
+  <view>
+    <button class='userinfo-button' bandtap="applySpeaker">speaker</button>
+  </view>
+</view>

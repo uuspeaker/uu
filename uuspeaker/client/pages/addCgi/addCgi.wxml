@@ -6,7 +6,7 @@
             <text>测试 CGI</text>
         </view>
         <view class="list-item">
-            <text class="request-text">期望输出：{"code":0,"data":{"msg":"Hello World"}}</text>
+            <text class="request-text">期望输出1：{"code":0,"data":{"msg":"Hello World"}}</text>
         </view>
         <view class="list-item" wx:if="{{requestResult}}">
             <text class="request-text">{{'请求结果：' + requestResult}}</text>

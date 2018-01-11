@@ -1,0 +1,23 @@
+<view class="container">
+  <template name="scoreDetailTemplate">
+    <view class="userinfo-score">
+      <text>{{'【'+user_id+'-'+meeting_date+'-'+meeting_time+'点-'}}</text>
+      <text wx:if="{{score_type == 1}}">参会</text>
+      <text wx:if="{{score_type == 2}}">最佳演讲</text>
+      <text wx:if="{{score_type == 3}}">最佳点评</text>
+      <text wx:if="{{score_type == 4}}">主持</text>
+      <text wx:if="{{score_type == 5}}">复盘</text>
+      <text>】</text>
+    </view>
+  </template>
+  
+  <view class="userinfo-middle">
+    <text>积分明细：</text>
+  </view>
+  <scroll-view class="scroll-view_H" scroll-y style="height: 100%">
+    <block wx:for="{{scoreDetail}}">
+      <template is="scoreDetailTemplate" data="{{...item}}" />
+    </block>
+  </scroll-view>
+
+</view>
