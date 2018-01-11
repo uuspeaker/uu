@@ -16,6 +16,12 @@
   </view>
 
   <view class="uploader">
+    <navigator url="../meetingApplyInfo/meetingApplyInfo" open-type="navigate" class="uploader-text">
+      <text>meetingApplyInfo</text>
+    </navigator>
+  </view>
+
+  <view class="uploader">
     <navigator url="../scoreDetail/scoreDetail" open-type="navigate" class="uploader-text">
       <text>scoreDetail</text>
     </navigator>

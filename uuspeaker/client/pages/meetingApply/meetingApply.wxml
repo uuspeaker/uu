@@ -14,43 +14,30 @@
     </view>
   </view>
 
-   <!-- 报名模板 -->
-   <template name="scoreDetailTemplate">
-    <view class="userinfo-middle" >
-    <image class="userinfo-avatar-middle" src="{{'./../index/user-unlogin.png'}}" background-size="cover"></image>
-    <view>
-      <text>{{userId + '  '}}</text>
-      <text wx:if="{{totalScore == 0}}">【乞丐演讲君】</text>
-      <text wx:if="{{totalScore >= 1}}">【贫民演讲君】</text>
-      <text wx:if="{{totalScore >= 20}}">【布衣演讲君】</text>
-      <text wx:if="{{totalScore >= 50}}">【青铜演讲君】</text>
-      <text wx:if="{{totalScore >= 100}}">【白银演讲君】</text>
-      <text wx:if="{{totalScore >= 200}}">【黄金演讲君】</text>
-      <text wx:if="{{totalScore >= 300}}">【铂金演讲君】</text>
-      <text wx:if="{{totalScore >= 300}}">【钻石演讲君】</text>
-      <text wx:if="{{totalScore >= 300}}">【星耀演讲君】</text>
-      <text wx:if="{{totalScore >= 300}}">【王者演讲君】</text>
-      <text>{{'【第1名】 '}}</text>
-      <view class="userinfo-score">
-        <text>{{'【'+totalScore+'分】 '}}</text>       
-        <text>{{'【'+meetingScore+'-'+speakerScore+'-'+evaluatorScore+'-'+hostScore+'-'+reportScore+'】'}}</text>
-        <text >{{'【主持】'}}</text>
-      </view>
-    </view>
-  </view>
-  </template>
-  
-  <view class="userinfo-middle">
-    <text>已报名用户：</text>
-  </view>
-  <scroll-view class="scroll-view_H" scroll-y style="height: 100%">
-    <block wx:for="{{userScoreDates}}">
-      <template is="scoreDetailTemplate" data="{{...item}}" />
-    </block>
-  </scroll-view>
+  <!--报名参会-->
+  <form bindsubmit="applySpeaker" bindreset="formReset">
 
-  
-  <view>
-    <button class='userinfo-button' bandtap="applySpeaker">speaker</button>
+  <view class="section">
+    <view class="section__title">姓名：</view>
+    <input name="user_id" placeholder="please input here" />
   </view>
+  <view class="section section_gap">
+    <view class="section__title">报名时间：</view>
+    <radio-group name="meeting_time">
+      <label><radio value="20"/>20:00开始</label>
+      <label><radio value="21"/>21:00开始</label>
+    </radio-group>
+  </view>
+  <view class="section section_gap">
+    <view class="section__title">报名类型：</view>
+    <radio-group name="meeting_time">
+      <label><radio value="1"/>演讲</label>
+      <label><radio value="2"/>主持</label>
+    </radio-group>
+  </view>
+  <view class="btn-area">
+    <button class='userinfo-button' formType="submit">报名</button>
+  </view>
+</form>
+
 </view>

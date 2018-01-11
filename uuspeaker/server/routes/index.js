@@ -40,6 +40,8 @@ router.get('/scoreDetail', controllers.scoreDetail)
 router.get('/scoreRank', controllers.scoreRank)
 //会议报名
 router.get('/meetingApply', controllers.meetingApply)
+//会议报名情况
+router.get('/meetingApplyInfo', controllers.meetingApplyInfo)
 //查询某个人的积分详情
 router.get('/userScore', controllers.userScore)
 module.exports = router
