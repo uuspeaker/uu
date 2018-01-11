@@ -4,12 +4,14 @@ var util = require('../../utils/util.js')
 
 Page({
   data: {
-    meetingApplyList: {},
-    meetingScore: {},
-    speakerScore: {},
-    evaluatorScore: {},
-    hostScore: {},
-    reportScore: {}
+    userApplyList: {},
+    totalScoreList: {},
+    meetingScoreList: {},
+    speakerScoreList: {},
+    evaluatorScoreList: {},
+    hostScoreList: {},
+    reportScoreList: {},
+    userScoreDates: {}
   },
 
   getScoreDetail: function () {
@@ -21,12 +23,14 @@ Page({
       success(result) {
         util.showSuccess('请求成功完成')
         that.setData({
-          meetingApplyList: result.data.data.meetingApplyList,
-          meetingScore: result.data.data.meetingScore,
-          speakerScore: result.data.data.speakerScore,
-          evaluatorScore: result.data.data.evaluatorScore,
-          hostScore: result.data.data.hostScore,
-          reportScore: result.data.data.reportScore
+          userApplyList: result.data.data.userApplyList,
+          totalScoreList: result.data.data.totalScore,
+          meetingScoreList: result.data.data.meetingScore,
+          speakerScoreList: result.data.data.speakerScore,
+          evaluatorScoreList: result.data.data.evaluatorScore,
+          hostScoreList: result.data.data.hostScore,
+          reportScoreList: result.data.data.reportScore,
+          userScoreDates: result.data.data
         })
       },
       fail(error) {

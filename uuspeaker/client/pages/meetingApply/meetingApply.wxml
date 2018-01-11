@@ -1,4 +1,5 @@
 <view class="container">
+{{totalScore}}
   <!-- 用户头衔 -->
   <view class="userinfo-top" bindtap="login">
     <image class="userinfo-avatar-top" src="{{logged ? userInfo.avatarUrl : './../index/user-unlogin.png'}}" background-size="cover"></image>
@@ -18,11 +19,21 @@
     <view class="userinfo-middle" >
     <image class="userinfo-avatar-middle" src="{{'./../index/user-unlogin.png'}}" background-size="cover"></image>
     <view>
-      <text>{{user_id + '  【布衣演讲君】'}}</text>
+      <text>{{userId + '  '}}</text>
+      <text wx:if="{{totalScore == 0}}">【乞丐演讲君】</text>
+      <text wx:if="{{totalScore >= 1}}">【贫民演讲君】</text>
+      <text wx:if="{{totalScore >= 20}}">【布衣演讲君】</text>
+      <text wx:if="{{totalScore >= 50}}">【青铜演讲君】</text>
+      <text wx:if="{{totalScore >= 100}}">【白银演讲君】</text>
+      <text wx:if="{{totalScore >= 200}}">【黄金演讲君】</text>
+      <text wx:if="{{totalScore >= 300}}">【铂金演讲君】</text>
+      <text wx:if="{{totalScore >= 300}}">【钻石演讲君】</text>
+      <text wx:if="{{totalScore >= 300}}">【星耀演讲君】</text>
+      <text wx:if="{{totalScore >= 300}}">【王者演讲君】</text>
+      <text>{{'【第1名】 '}}</text>
       <view class="userinfo-score">
-        <text>{{'【'+total_score+'分】 '}}</text>
-        <text>{{'【第1名】 '}}</text>
-        <text>{{'【12-9-6-4-11】'}}</text>
+        <text>{{'【'+totalScore+'分】 '}}</text>       
+        <text>{{'【'+meetingScore+'-'+speakerScore+'-'+evaluatorScore+'-'+hostScore+'-'+reportScore+'】'}}</text>
         <text >{{'【主持】'}}</text>
       </view>
     </view>
@@ -33,7 +44,7 @@
     <text>已报名用户：</text>
   </view>
   <scroll-view class="scroll-view_H" scroll-y style="height: 100%">
-    <block wx:for="{{meetingApplyList}}">
+    <block wx:for="{{userScoreDates}}">
       <template is="scoreDetailTemplate" data="{{...item}}" />
     </block>
   </scroll-view>

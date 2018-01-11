@@ -34,8 +34,12 @@ router.post('/message', controllers.message.post)
 // 新增demo cgi
 router.get('/demo',controllers.demo)
 
-//router.post('/score', controllers.score.post)
+//查询所有人的积分详情
 router.get('/scoreDetail', controllers.scoreDetail)
+//查询所有人的积分排名
 router.get('/scoreRank', controllers.scoreRank)
+//会议报名
 router.get('/meetingApply', controllers.meetingApply)
+//查询某个人的积分详情
+router.get('/userScore', controllers.userScore)
 module.exports = router
