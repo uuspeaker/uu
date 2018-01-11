@@ -2,6 +2,10 @@
 var qcloud = require('../../vendor/wafer2-client-sdk/index')
 var config = require('../../config')
 var util = require('../../utils/util.js')
+var initData = 'this is first line\nthis is second line'
+var extraLine = [];
+
+
 Page({
 
   data: {
@@ -11,7 +15,9 @@ Page({
     requestResult: '',
     totalScore: '',
     rank: '',
-    detailScore: ''
+    detailScore: '',
+    text: initData 
+
   },
 
   // 用户登录示例
@@ -41,11 +47,8 @@ Page({
               that.setData({
                 userInfo: result.data.data,
                 logged: true,
-                totalScore: '【27分】 ',
-                rank: '【第3名】 ',
-                detailScore: '【9-2-4-3-9】'
               })
-              setScore(that);
+              that.setScore(that);
             },
 
             fail(error) {
@@ -53,6 +56,7 @@ Page({
               console.log('request fail', error)
             }
           })
+          
         }
       },
 
@@ -62,14 +66,39 @@ Page({
       }
     })
   },
-  
+
+  add: function (e) {
+    extraLine.push('other line')
+    this.setData({
+      text: initData + '\n' + extraLine.join('\n')
+    })
+  },
+  remove: function (e) {
+    if (extraLine.length > 0) {
+      extraLine.pop()
+      this.setData({
+        text: initData + '\n' + extraLine.join('\n')
+      })
+    }
+  },
+
+
+  /**
+   * 报名演讲
+   */
+  applySpeaker:function() {
+    util.showSuccess(this.data.userInfo.openId);
+  },    
+
   setScore: function(){
     this.setData({
       totalScore: '总分：23',
       rank: '名次：3',
       detailScore: '详情：【10-3-5-6-2】'
-  })
-  },        
+  }) 
+  },   
+
+  
 
   /**
    * 生命周期函数--监听页面加载

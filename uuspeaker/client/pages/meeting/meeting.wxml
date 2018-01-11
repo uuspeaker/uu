@@ -128,7 +128,15 @@
   </scroll-view>
   <view>
     
-    <button class='userinfo-button' bandtap="applySpeaker">我要演讲</button>
-    <button class='userinfo-button' bandtap="applyCompere">我要主持</button>
+    <button class='userinfo-button' bindtap="applySpeaker">我要演讲</button>
+    <button class='userinfo-button' bindtap="applyCompere">我要主持</button>
   </view>
+
+  <view class="btn-area">
+  <view class="body-view">
+    <text>{{text}}</text>
+    <button bindtap="add">add line</button>
+    <button bindtap="remove">remove line</button>
+  </view>
+</view>
 </view>
