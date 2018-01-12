@@ -19,6 +19,7 @@ Page({
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/meetingApplyInfo`,
+      
       login: false,
       success(result) {
         util.showSuccess('请求成功完成')
@@ -31,6 +32,28 @@ Page({
           hostScoreList: result.data.data.hostScore,
           reportScoreList: result.data.data.reportScore,
           userScoreDates: result.data.data
+        })
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
+  applySpeaker: function(e){
+    console.log(e.detail.value)
+    util.showBusy('请求中...')
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/meetingManage`,
+      data: e.detail.value,
+      method: 'POST',
+      login: false,
+      success(result) {
+        util.showSuccess('请求成功完成')
+        that.setData({
+          applyResult: result.data.data
         })
       },
       fail(error) {

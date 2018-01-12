@@ -30,7 +30,7 @@
     <text>已报名用户：</text>
   </view>
   <scroll-view class="scroll-view_H" scroll-y style="height: 100%">
-    <block wx:for="{{userScoreDates}}">
+    <block wx:for="{{userScoreDates}}" wx:key="idx">
       <template is="scoreDetailTemplate" data="{{...item}}" />
     </block>
   </scroll-view>

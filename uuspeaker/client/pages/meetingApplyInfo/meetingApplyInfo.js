@@ -32,6 +32,7 @@ Page({
           reportScoreList: result.data.data.reportScore,
           userScoreDates: result.data.data
         })
+        
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -42,7 +43,7 @@ Page({
 
   onLoad: function () {
     this.getScoreDetail();
-    console.log(JSON.stringify(this.scoreDetail))
+    
   }
 
 })

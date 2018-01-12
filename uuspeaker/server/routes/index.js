@@ -40,6 +40,10 @@ router.get('/scoreDetail', controllers.scoreDetail)
 router.get('/scoreRank', controllers.scoreRank)
 //会议报名
 router.get('/meetingApply', controllers.meetingApply)
+router.get('/meetingManage', controllers.meetingManage.get)
+router.post('/meetingManage', controllers.meetingManage.post)
+router.put('/meetingManage', controllers.meetingManage.put)
+router.delete('/meetingManage', controllers.meetingManage.del)
 //会议报名情况
 router.get('/meetingApplyInfo', controllers.meetingApplyInfo)
 //查询某个人的积分详情

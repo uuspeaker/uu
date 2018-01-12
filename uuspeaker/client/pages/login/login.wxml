@@ -1,0 +1,18 @@
+<view class="container">
+  <!-- 用户头衔 -->
+  <view class="userinfo-top" bindtap="login">
+    <image class="userinfo-avatar-top" src="{{logged ? userInfo.avatarUrl : './../index/user-unlogin.png'}}" background-size="cover"></image>
+    <view>
+      <text>{{logged ? userInfo.nickName : 'LOGIN'}}</text>
+      <view class="userinfo-score">
+        <text>{{totalScore}}</text>
+        <text>{{rank}}</text>
+        <text>{{detailScore}}</text>
+      </view>
+      <text class="userinfo-nickname" wx:if="{{logged}}">{{userInfo.lastLoginTime}}</text>
+    </view>
+  </view>
+
+  
+
+</view>
