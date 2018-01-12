@@ -15,7 +15,7 @@
   </view>
 
   <!--报名参会-->
-  <form bindsubmit="applySpeaker" bindreset="formReset">
+  <form id='applySpeakerForm' bindsubmit="applySpeaker" bindreset="formReset">
 
   <view class="section">
     <view class="section__title">姓名：</view>
@@ -36,7 +36,9 @@
     </radio-group>
   </view>
   <view class="btn-area">
-    <button class='userinfo-button' formType="submit">报名</button>
+    <button data-action='post' class='userinfo-button' formType="submit">报名</button>
+    <button data-action='put'  class='userinfo-button' formType="submit">修改报名</button>
+    <button data-action='delete'  class='userinfo-button' formType="submit">取消报名</button>
   </view>
 </form>
 
