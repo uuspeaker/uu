@@ -39,11 +39,10 @@ router.get('/scoreDetail', controllers.scoreDetail)
 //查询所有人的积分排名
 router.get('/scoreRank', controllers.scoreRank)
 //会议报名
-router.get('/meetingApply', controllers.meetingApply)
-router.get('/meetingManage', controllers.meetingManage.get)
-router.post('/meetingManage', controllers.meetingManage.post)
-router.put('/meetingManage', controllers.meetingManage.put)
-router.delete('/meetingManage', controllers.meetingManage.del)
+router.get('/meetingApply', controllers.meetingApply.get)
+router.post('/meetingApply', controllers.meetingApply.post)
+router.put('/meetingApply', controllers.meetingApply.put)
+router.delete('/meetingApply', controllers.meetingApply.del)
 //会议报名情况
 router.get('/meetingApplyInfo', controllers.meetingApplyInfo)
 //查询某个人的积分详情

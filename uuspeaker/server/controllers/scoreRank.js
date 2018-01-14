@@ -20,7 +20,9 @@ module.exports = async ctx => {
       .orderBy('total_score', 'desc'),
 
     reportScore: await mysql("user_score_detail").select('user_id', mysql.raw("count(user_id) as total_score")).where({ score_type: 5 }).groupBy('user_id')
-      .orderBy('total_score', 'desc')
+      .orderBy('total_score', 'desc'),
+
+    LeaderScore: await mysql("user_base_info").innerJoin('user_score_detail', 'user_base_info.user_id', 'user_score_detail.user_id').select('user_base_info.recommend_user as user_id', mysql.raw("count(user_base_info.recommend_user) as total_score")).groupBy('user_base_info.recommend_user').orderBy('total_score', 'desc')
 
   }
 }

@@ -4,18 +4,22 @@ var util = require('../../utils/util.js')
 
 Page({
   data: {
-    methodName: 'post'
+    methodName: '',
+    queryUserId: 'AA',
+    meetingData: {},
+    meetingTime: {},
+    roleType: {},
+    applyResult: {}
   },
 
 
   applySpeaker: function(e){
-    //console.log(e)
     var methodName = e.detail.target.dataset.action
     console.log(e.detail.target.dataset.action)
     util.showBusy('请求中...')
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/meetingManage`,
+      url: `${config.service.host}/weapp/meetingApply`,
       data: e.detail.value,
       method: methodName,
       login: false,
@@ -35,7 +39,33 @@ Page({
   
 
   onLoad: function () {
-    
+    util.showBusy('请求中...')
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/meetingApply`,
+      data: {'userId': 'AA'},
+      method: 'get',
+      login: false,
+      success(result) {
+        util.showSuccess('请求成功完成')
+        console.log(result.data.data)
+        that.setData({
+          applyResult: result.data.data,
+          meetingData: result.data.data[0].meeting_data,
+          meetingTime: result.data.data[0].meeting_time,
+          roleType: result.data.data[0].role_type
+
+        })
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
+  onShow: function(){
+
   }
 
 })

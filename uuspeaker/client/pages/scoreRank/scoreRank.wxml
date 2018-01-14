@@ -60,4 +60,13 @@
     </block>
   </scroll-view>
 
+  <view class="userinfo-middle">
+    <text>影响力排名：</text>
+  </view>
+  <scroll-view class="scroll-view_H" scroll-y style="height: 100%">
+    <block wx:for="{{LeaderScore}}">
+      <template is="scoreDetailTemplate" data="{{...item}}" />
+    </block>
+  </scroll-view>
+
 </view>

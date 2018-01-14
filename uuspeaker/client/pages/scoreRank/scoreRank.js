@@ -9,7 +9,8 @@ Page({
     speakerScore: {},
     evaluatorScore: {},
     hostScore: {},
-    reportScore: {}
+    reportScore: {},
+    LeaderScore: {}
   },
 
   getScoreDetail: function () {
@@ -26,7 +27,8 @@ Page({
           speakerScore: result.data.data.speakerScore,
           evaluatorScore: result.data.data.evaluatorScore,
           hostScore: result.data.data.hostScore,
-          reportScore: result.data.data.reportScore
+          reportScore: result.data.data.reportScore,
+          LeaderScore: result.data.data.LeaderScore
         })
       },
       fail(error) {
@@ -38,7 +40,6 @@ Page({
 
   onLoad: function () {
     this.getScoreDetail();
-    console.log(JSON.stringify(this.scoreDetail))
   }
 
 })
