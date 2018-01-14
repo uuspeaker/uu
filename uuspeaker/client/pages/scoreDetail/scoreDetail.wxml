@@ -1,7 +1,43 @@
 <view class="container">
-  <template name="scoreDetailTemplate">
+  <!--查询用户积分信息-->
+  <!--报名参会-->
+  <form id='applySpeakerForm' bindsubmit="queryUserScore" bindreset="formReset">
+   <view class="section">
+    <view class="section__title">姓名：</view>
+    <input id="userId" name="userId" value="Charles" bindBlur="bindBlur" />
+    <button class='userinfo-button' formType="submit" >查询</button>    
+  </view>
+  </form>
+
+  <block wx:if="{{totalScore == 0}}"><view class="section__title">没有查询到任何信息！</view></block>
+  <block wx:if="{{totalScore != 0}}">
+  <!--积分详细信息展示-->
+
+    <image class="userinfo-avatar-middle" src="{{'./../index/user-unlogin.png'}}" background-size="cover"></image>
+    <view>
+      <text>{{scoreData.userId + '  '}}</text>
+      <text wx:if="{{totalScore == 0}}">【乞丐演讲君】</text>
+      <text wx:if="{{totalScore >= 1 && totalScore < 20}}">【贫民演讲君】</text>
+      <text wx:if="{{totalScore >= 20 && totalScore < 50}}">【布衣演讲君】</text>
+      <text wx:if="{{totalScore >= 50 && totalScore < 100}}">【青铜演讲君】</text>
+      <text wx:if="{{totalScore >= 100 && totalScore < 200}}">【白银演讲君】</text>
+      <text wx:if="{{totalScore >= 200 && totalScore < 300}}">【黄金演讲君】</text>
+      <text wx:if="{{totalScore >= 300 && totalScore < 500}}">【铂金演讲君】</text>
+      <text wx:if="{{totalScore >= 500 && totalScore < 700}}">【钻石演讲君】</text>
+      <text wx:if="{{totalScore >= 700 && totalScore < 1000}}">【星耀演讲君】</text>
+      <text wx:if="{{totalScore >= 1000}}">【王者演讲君】</text>
+      <text>{{'【第1名】 '}}</text>
+      <view >
+        <text>{{'【'+scoreData.totalScore+'分】 '}}</text>       
+        <text>{{'【'+scoreData.meetingScore+'-'+scoreData.speakerScore+'-'+scoreData.evaluatorScore+'-'+scoreData.hostScore+'-'+scoreData.reportScore+'】'}}</text>
+      </view>
+    </view>
+
+
+  
+   <template name="scoreDetailTemplate">
     <view class="userinfo-score">
-      <text>{{'【'+user_id+'-'+meeting_date+'-'+meeting_time+'点-'}}</text>
+      <text>{{'【'+meeting_date+'-'+meeting_time+'点-'}}</text>
       <text wx:if="{{score_type == 1}}">参会</text>
       <text wx:if="{{score_type == 2}}">最佳演讲</text>
       <text wx:if="{{score_type == 3}}">最佳点评</text>
@@ -10,14 +46,10 @@
       <text>】</text>
     </view>
   </template>
-  
-  <view class="userinfo-middle">
-    <text>积分明细：</text>
-  </view>
   <scroll-view class="scroll-view_H" scroll-y style="height: 100%">
-    <block wx:for="{{scoreDetail}}">
+    <block wx:for="{{scoreData.scoreDetail}}" wx:key="idx">
       <template is="scoreDetailTemplate" data="{{...item}}" />
     </block>
   </scroll-view>
-
+  </block>
 </view>

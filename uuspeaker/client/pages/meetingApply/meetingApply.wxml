@@ -1,5 +1,5 @@
 <view class="container">
-{{totalScore}}
+
   <!-- 用户头衔 -->
   <view class="userinfo-top" bindtap="login">
     <image class="userinfo-avatar-top" src="{{logged ? userInfo.avatarUrl : './../index/user-unlogin.png'}}" background-size="cover"></image>
@@ -19,20 +19,20 @@
 
   <view class="section">
     <view class="section__title">姓名：</view>
-    <input name="userId" placeholder="please input here" />
+    <input name="userId" value="{{queryUserId}}" placeholder="" />
   </view>
   <view class="section section_gap">
     <view class="section__title">报名时间：</view>
     <radio-group name="meetingTime">
-      <label><radio value="20"/>20:00开始</label>
-      <label><radio value="21"/>21:00开始</label>
+      <label><radio value="20" checked="{{meetingTime==20?true:false}}"/>20:00开始</label>
+      <label><radio value="21" checked="{{meetingTime==21?true:false}}"/>21:00开始</label>
     </radio-group>
   </view>
   <view class="section section_gap">
     <view class="section__title">报名类型：</view>
     <radio-group name="roleType">
-      <label><radio value="1"/>speaker</label>
-      <label><radio value="2"/>host</label>
+      <label><radio value="1" checked="{{roleType==1?true:false}}"/>speaker{{roleType}}</label>
+      <label><radio value="2" checked="{{roleType==2?true:false}}"/>host</label>
     </radio-group>
   </view>
   <view class="btn-area">
