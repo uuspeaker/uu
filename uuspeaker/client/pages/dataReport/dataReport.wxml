@@ -18,5 +18,6 @@
   <view class="section__title">参会人次：：{{dataReport.studyAmount[0].totalScore}}</view>
   
   <view class="section__title">新增会员数：{{dataReport.increasedUser[0].totalScore}}</view>
+  <view class="section__title">复盘数：{{dataReport.reportCount[0].totalScore}}</view>
   </block>
   </view>

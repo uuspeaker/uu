@@ -10,7 +10,7 @@ module.exports = async ctx => {
    // studyRate: studyUserAmount / totalUserAmount,
     reportCount: await mysql("user_score_detail").count('user_id as totalScore').andWhere('score_type', '=', 4).andWhere('meeting_date', '>=', startDate).andWhere('meeting_date', '<=', endDate),
     //reportRate: reportCount / studyAmount,
-    increasedUser: await mysql("user_base_info").count('user_id as totalScore').where('first_speak_date', '>=', startDate),
+    increasedUser: await mysql("user_base_info").count('user_id as totalScore').andWhere('first_speak_date', '>=', startDate).andWhere('first_speak_date', '<=', endDate),
    
 
   }
