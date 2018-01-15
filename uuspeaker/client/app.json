@@ -8,7 +8,9 @@
     "pages/scoreDetail/scoreDetail",
     "pages/scoreRank/scoreRank",
     "pages/meetingApply/meetingApply",
-    "pages/meetingApplyInfo/meetingApplyInfo"
+    "pages/meetingApplyInfo/meetingApplyInfo",
+    "pages/userStudyRank/userStudyRank",
+    "pages/dataReport/dataReport"
   ],
   "window":{
     "backgroundColor":"#F6F6F6",

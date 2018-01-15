@@ -33,4 +33,16 @@
     </navigator>
   </view>
 
+  <view class="uploader">
+    <navigator url="../userStudyRank/userStudyRank" open-type="navigate" class="uploader-text">
+      <text>userStudyRank</text>
+    </navigator>
+  </view>
+
+  <view class="uploader">
+    <navigator url="../dataReport/dataReport" open-type="navigate" class="uploader-text">
+      <text>dataReport</text>
+    </navigator>
+  </view>
+
 </view>

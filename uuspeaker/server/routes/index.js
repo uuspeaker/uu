@@ -47,4 +47,8 @@ router.delete('/meetingApply', controllers.meetingApply.del)
 router.get('/meetingApplyInfo', controllers.meetingApplyInfo)
 //查询某个人的积分详情
 router.get('/userScore', controllers.userScore)
+//查询学习力积分详情
+router.get('/userStudyRank', controllers.userStudyRank)
+//查询汇总数据
+router.get('/dataReport', controllers.dataReport)
 module.exports = router
