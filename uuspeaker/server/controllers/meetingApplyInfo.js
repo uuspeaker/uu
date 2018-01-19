@@ -1,8 +1,8 @@
 const { mysql } = require('../qcloud')
 
 module.exports = async ctx => {
-
-  var userIds = await mysql('meeting_apply').select('user_id')
+  var today = new Date()
+  var userIds = await mysql('meeting_apply').select('user_id').where({meeting_date:})
   var userScoreDatas = []
   
   for(var idx in userIds){

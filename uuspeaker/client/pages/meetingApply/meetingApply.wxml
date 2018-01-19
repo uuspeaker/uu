@@ -1,18 +1,6 @@
 <view class="container">
 
-  <!-- 用户头衔 -->
-  <view class="userinfo-top" bindtap="login">
-    <image class="userinfo-avatar-top" src="{{logged ? userInfo.avatarUrl : './../index/user-unlogin.png'}}" background-size="cover"></image>
-    <view>
-      <text>{{logged ? userInfo.nickName + '  【布衣演讲君】': 'LOGIN'}}</text>
-      <view class="userinfo-score">
-        <text>{{totalScore}}</text>
-        <text>{{rank}}</text>
-        <text>{{detailScore}}</text>
-      </view>
-      <text class="userinfo-nickname" wx:if="{{logged}}">{{userInfo.lastLoginTime}}</text>
-    </view>
-  </view>
+
 
   <!--报名参会-->
   <form id='applySpeakerForm' bindsubmit="applySpeaker" bindreset="formReset">
@@ -31,8 +19,8 @@
   <view class="section section_gap">
     <view class="section__title">报名类型：</view>
     <radio-group name="roleType">
-      <label><radio value="1" checked="{{roleType==1?true:false}}"/>speaker{{roleType}}</label>
-      <label><radio value="2" checked="{{roleType==2?true:false}}"/>host</label>
+      <label><radio value="1" checked="{{roleType==1?true:false}}"/>演讲</label>
+      <label><radio value="2" checked="{{roleType==2?true:false}}"/>主持</label>
     </radio-group>
   </view>
   <view class="btn-area">

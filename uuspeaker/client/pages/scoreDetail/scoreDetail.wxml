@@ -4,7 +4,7 @@
   <form id='applySpeakerForm' bindsubmit="queryUserScore" bindreset="formReset">
    <view class="section">
     <view class="section__title">姓名：</view>
-    <input id="userId" name="userId" value="Charles" bindBlur="bindBlur" />
+    <input id="userId" name="userId" value="" bindBlur="bindBlur" />
     <button class='userinfo-button' formType="submit" >查询</button>    
   </view>
   </form>

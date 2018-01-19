@@ -16,11 +16,9 @@
       <text wx:if="{{totalScore >= 500 && totalScore < 700}}">【钻石演讲君】</text>
       <text wx:if="{{totalScore >= 700 && totalScore < 1000}}">【星耀演讲君】</text>
       <text wx:if="{{totalScore >= 1000}}">【王者演讲君】</text>
-      <text>{{'【第1名】 '}}</text>
       <view class="userinfo-score">
         <text>{{'【'+totalScore+'分】 '}}</text>       
         <text>{{'【'+meetingScore+'-'+speakerScore+'-'+evaluatorScore+'-'+hostScore+'-'+reportScore+'】'}}</text>
-        <text >{{'【主持】'}}</text>
       </view>
     </view>
   </view>

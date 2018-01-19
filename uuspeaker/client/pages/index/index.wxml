@@ -1,47 +1,45 @@
 <!--index.wxml-->
 <view class="container">
 
-
-  
-  <view class="uploader">
-    <navigator url="../meeting/meeting" open-type="navigate" class="uploader-text">
-      <text>meeting example</text>
-    </navigator>
-  </view>
-
   <view class="uploader">
     <navigator url="../meetingApply/meetingApply" open-type="navigate" class="uploader-text">
-      <text>join meeting</text>
+      <text>报名参会</text>
     </navigator>
   </view>
 
   <view class="uploader">
     <navigator url="../meetingApplyInfo/meetingApplyInfo" open-type="navigate" class="uploader-text">
-      <text>meetingApplyInfo</text>
+      <text>报名信息</text>
     </navigator>
   </view>
 
   <view class="uploader">
     <navigator url="../scoreDetail/scoreDetail" open-type="navigate" class="uploader-text">
-      <text>scoreDetail</text>
+      <text>积分明细</text>
     </navigator>
   </view>
 
   <view class="uploader">
     <navigator url="../scoreRank/scoreRank" open-type="navigate" class="uploader-text">
-      <text>scoreRank</text>
+      <text>积分排名</text>
     </navigator>
   </view>
 
   <view class="uploader">
     <navigator url="../userStudyRank/userStudyRank" open-type="navigate" class="uploader-text">
-      <text>userStudyRank</text>
+      <text>积分查询</text>
     </navigator>
   </view>
 
   <view class="uploader">
     <navigator url="../dataReport/dataReport" open-type="navigate" class="uploader-text">
-      <text>dataReport</text>
+      <text>积分统计</text>
+    </navigator>
+  </view>
+
+  <view class="uploader">
+    <navigator url="../scoreManage/scoreManage" open-type="navigate" class="uploader-text">
+      <text>积分登记</text>
     </navigator>
   </view>
 

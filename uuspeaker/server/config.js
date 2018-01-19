@@ -25,6 +25,27 @@ const CONF = {
         char: 'utf8mb4'
     },
 
+    //云直播相关配置
+    live: {
+      appID: 1400063484,
+      bizid:1,
+      pushSecretKey:1,
+      APIKey:1,
+      validTime:3600*24*7
+    },
+
+    //云通信相关配置
+    im: {
+      sdkAppID: 1400063484,
+      accountType: 21916,
+      administrator: 'tianhan',
+      privateKey: '-----BEGIN PRIVATE KEY-----\r\n' +
+      'MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgGjEGt3r1oaS1Xqn4\r\n' +
+      'hEkCcQBQH3jgPhsYknEZe7pTzEChRANCAARHLhPg09JRyNdAXvfMKUw+Le3DFEn7\r\n' +
+      'CHfkVP4LM+3k+tY3HxjRiX5+YTwj4wtPoIpJZ0JAOIRachTEBOeNRwNp\r\n' +
+      '-----END PRIVATE KEY-----\r\n'
+    },
+
     cos: {
         /**
          * 地区简称
