@@ -8,6 +8,12 @@
   </view>
 
   <view class="uploader">
+    <navigator url="../scoreManage/scoreManage" open-type="navigate" class="uploader-text">
+      <text>积分登记</text>
+    </navigator>
+  </view>
+
+  <view class="uploader">
     <navigator url="../meetingApplyInfo/meetingApplyInfo" open-type="navigate" class="uploader-text">
       <text>报名信息</text>
     </navigator>
@@ -37,10 +43,6 @@
     </navigator>
   </view>
 
-  <view class="uploader">
-    <navigator url="../scoreManage/scoreManage" open-type="navigate" class="uploader-text">
-      <text>积分登记</text>
-    </navigator>
-  </view>
+  
 
 </view>

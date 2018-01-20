@@ -1,6 +1,7 @@
 var qcloud = require('../../vendor/wafer2-client-sdk/index')
 var config = require('../../config')
 var util = require('../../utils/util.js')
+var dateFormat = require('../../common/dateFormat.js')
 
 Page({
   data: {
@@ -17,9 +18,12 @@ Page({
   getScoreDetail: function () {
     util.showBusy('请求中...')
     var that = this
+    var now = new Date()
+    var meetingDate = dateFormat.getFormatDate(now, 'yyyyMMdd')
     qcloud.request({
       url: `${config.service.host}/weapp/meetingApplyInfo`,
       login: false,
+      data: { 'meetingDate': meetingDate},
       success(result) {
         util.showSuccess('请求成功完成')
         that.setData({

@@ -23,9 +23,15 @@
       <label><radio value="2" checked="{{roleType==2?true:false}}"/>主持</label>
     </radio-group>
   </view>
+  <view class="section section_gap">
+    <view class="section__title">会议类型：</view>
+    <radio-group name="meetingType">
+      <label><radio value="1" checked="{{meetingType==1?true:false}}"/>中文</label>
+      <label><radio value="2" checked="{{meetingType==2?true:false}}"/>英文</label>
+    </radio-group>
+  </view>
   <view class="btn-area">
     <button data-action='post' class='userinfo-button' formType="submit">报名</button>
-    <button data-action='put'  class='userinfo-button' formType="submit">修改报名</button>
     <button data-action='delete'  class='userinfo-button' formType="submit">取消报名</button>
   </view>
 </form>

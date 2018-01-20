@@ -8,7 +8,7 @@ module.exports = async ctx => {
   var userScoreDatas = []
 
   //获取用户参会明细
-  var scoreDetail = await mysql("user_score_detail").select('user_id', 'meeting_date', 'meeting_time', 'score_type').where({ user_id: userId }).orderBy('meeting_date','asc')
+  var scoreDetail = await mysql("user_score_detail").select('user_id', 'meeting_date', 'meeting_time', 'score_type').where({ user_id: userId }).orderBy('meeting_date','desc')
   //获取用户积分总额
   var totalScoreRes = await mysql("user_score_detail").count('user_id as totalScore').where({ user_id: userId })
   //获取用户参会次数

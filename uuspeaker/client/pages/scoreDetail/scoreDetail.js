@@ -17,7 +17,7 @@ Page({
     qcloud.request({
       url: `${config.service.host}/weapp/scoreDetail`,
       login: false,
-      //method: 'get',
+      method: 'get',
       data: e.detail.value,
       success(result) {
         util.showSuccess('请求成功完成')

@@ -1,6 +1,7 @@
 var qcloud = require('../../vendor/wafer2-client-sdk/index')
 var config = require('../../config')
 var util = require('../../utils/util.js')
+var dateFormat = require('../../common/dateFormat.js')
 
 Page({
   data: {
@@ -9,12 +10,11 @@ Page({
     timeArray: ['20:00','21:00'],
     timeValue: [20,21],
     dateIndex: 0,
-    timeIndex: 1
+    timeIndex: 1 
 
   },
   
   scoreManage: function (e) {
-    this.initDateFormat();
     console.log(e.detail.value)
     util.showBusy('请求中...')
     var that = this
@@ -22,8 +22,7 @@ Page({
     var now = new Date()
     var meetingDateMinus = this.data.dateValue[this.data.dateIndex]
     now.setDate(now.getDate() - meetingDateMinus)
-    console.log(now.format('yyyyMMdd'))
-    requestData.meetingDate = now.format('yyyyMMdd')
+    requestData.meetingDate = dateFormat.getFormatDate(now,'yyyyMMdd')
     requestData.meetingTime = this.data.timeValue[this.data.timeIndex]
     qcloud.request({
       url: `${config.service.host}/weapp/scoreManage`,
@@ -53,23 +52,23 @@ Page({
     })
   },
 
-  initDateFormat: function(){
-    Date.prototype.format = function (fmt) { //author: meizz 
-      var o = {
-        "M+": this.getMonth() + 1, //月份 
-        "d+": this.getDate(), //日 
-        "h+": this.getHours(), //小时 
-        "m+": this.getMinutes(), //分 
-        "s+": this.getSeconds(), //秒 
-        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-        "S": this.getMilliseconds() //毫秒 
-      };
-      if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-      for (var k in o)
-        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-      return fmt;
-    }
-  }
+  // initDateFormat: function(){
+  //   Date.prototype.format = function (fmt) { //author: meizz 
+  //     var o = {
+  //       "M+": this.getMonth() + 1, //月份 
+  //       "d+": this.getDate(), //日 
+  //       "h+": this.getHours(), //小时 
+  //       "m+": this.getMinutes(), //分 
+  //       "s+": this.getSeconds(), //秒 
+  //       "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+  //       "S": this.getMilliseconds() //毫秒 
+  //     };
+  //     if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+  //     for (var k in o)
+  //       if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+  //     return fmt;
+  //   }
+  // }
 
 
 })

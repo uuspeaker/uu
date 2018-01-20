@@ -5,7 +5,7 @@
     <view class="userinfo-middle" >
     <image class="userinfo-avatar-middle" src="{{'./../index/user-unlogin.png'}}" background-size="cover"></image>
     <view>
-      <text>{{userId + '  '}}</text>
+      <text>{{userId}}  </text>
       <text wx:if="{{totalScore == 0}}">【乞丐演讲君】</text>
       <text wx:if="{{totalScore >= 1 && totalScore < 20}}">【贫民演讲君】</text>
       <text wx:if="{{totalScore >= 20 && totalScore < 50}}">【布衣演讲君】</text>
@@ -17,8 +17,11 @@
       <text wx:if="{{totalScore >= 700 && totalScore < 1000}}">【星耀演讲君】</text>
       <text wx:if="{{totalScore >= 1000}}">【王者演讲君】</text>
       <view class="userinfo-score">
-        <text>{{'【'+totalScore+'分】 '}}</text>       
-        <text>{{'【'+meetingScore+'-'+speakerScore+'-'+evaluatorScore+'-'+hostScore+'-'+reportScore+'】'}}</text>
+      <text>【{{totalScore}}分】 </text>     
+        <text>【{{meetingScore}}-{{speakerScore}}-{{evaluatorScore}}-{{hostScore}}-{{reportScore}}】</text>
+        <text wx:if="{{meetingType == 1}}">【中文】</text>
+        <text wx:if="{{meetingType == 2}}">【英文】</text>
+        <text wx:if="{{roleType == 2}}">【主持】</text>
       </view>
     </view>
   </view>

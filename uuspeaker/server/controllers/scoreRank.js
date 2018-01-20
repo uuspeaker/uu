@@ -2,7 +2,7 @@ const { mysql } = require('../qcloud')
 //const uuid = require('node-uuid')
 
 module.exports = async ctx => {
-  var countLimit = 3
+  var countLimit = 0
   ctx.state.data = {
     totalScore:await mysql("user_score_detail").select('user_id', mysql.raw("count(user_id) as total_score")).groupBy('user_id').having('total_score','>=',5)
     .orderBy('total_score', 'desc'),

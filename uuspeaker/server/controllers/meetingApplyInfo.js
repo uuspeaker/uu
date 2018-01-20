@@ -1,12 +1,16 @@
 const { mysql } = require('../qcloud')
+//const { dateFormat } = require('../../common/dateFormat')
 
 module.exports = async ctx => {
-  var today = new Date()
-  var userIds = await mysql('meeting_apply').select('user_id').where({meeting_date:})
+  var meetingDate = ctx.query.meetingDate
+  // var now = new Date()
+  // var meetingDate = dateFormat.getFormatDate(now, 'yyyyMMdd')
+  var userIds = await mysql('meeting_apply').where({ 'meeting_date': meetingDate }).orderByRaw('meeting_type desc, role_type desc')
   var userScoreDatas = []
   
   for(var idx in userIds){
     var userId = userIds[idx]['user_id']
+    var roleType = userIds[idx]['role_type']
     var totalScoreRes = await mysql("user_score_detail").count('user_id as totalScore').where({ user_id: userId })
     var meetingScoreRes = await mysql("user_score_detail").count('user_id as totalScore').where({ user_id: userId, score_type: 1 })
     var speakerScoreRes = await mysql("user_score_detail").count('user_id as totalScore').where({ user_id: userId, score_type: 2 })
@@ -15,7 +19,8 @@ module.exports = async ctx => {
     var reportScoreRes = await mysql("user_score_detail").count('user_id as totalScore').where({ user_id: userId, score_type: 5 })
     userScoreDatas.push({
       userId: userId ,
-      userName: 12,
+      roleType: userIds[idx]['role_type'],
+      meetingType: userIds[idx]['meeting_type'],
       totalScore: totalScoreRes[0]['totalScore'] ,
       meetingScore: meetingScoreRes[0]['totalScore'],
       speakerScore: speakerScoreRes[0]['totalScore'] ,
