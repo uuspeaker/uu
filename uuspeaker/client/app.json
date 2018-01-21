@@ -1,6 +1,6 @@
 {
-  "pages":[
-    
+  "pages":[   
+
     "pages/index/index",
     "pages/login/login",
     "pages/addCgi/addCgi",
@@ -11,13 +11,42 @@
     "pages/meetingApplyInfo/meetingApplyInfo",
     "pages/userStudyRank/userStudyRank",
     "pages/dataReport/dataReport",
-    "pages/scoreManage/scoreManage"
+    "pages/scoreManage/scoreManage",
+    "pages/userInfo/userInfo",
+    "pages/honorList/honorList"
   ],
+  "tabBar": {  
+   "color": "#a9b7b7",  
+   "selectedColor": "#11cd6e",  
+   "borderStyle":"white",  
+   "list": [{  
+     "selectedIconPath": "images/study.png",  
+     "iconPath": "images/study.png",  
+     "pagePath": "pages/index/index",  
+     "text": "报名"  
+   }, {  
+     "selectedIconPath": "images/score.png",  
+     "iconPath": "images/score.png",  
+     "pagePath": "pages/scoreDetail/scoreDetail",  
+     "text": "成绩"  
+   }, {  
+     "selectedIconPath": "images/honor.png",  
+     "iconPath": "images/honor.png",  
+     "pagePath": "pages/honorList/honorList",  
+     "text": "荣誉"  
+   },
+  {
+    "selectedIconPath": "images/user.png",
+    "iconPath": "images/user.png",
+    "pagePath": "pages/userInfo/userInfo",
+    "text": "我的"
+  }]  
+ },  
   "window":{
     "backgroundColor":"#F6F6F6",
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "Wafer Quick Start",
+    "navigationBarTitleText": "懂你演讲",
     "navigationBarTextStyle":"black"
   }
 }

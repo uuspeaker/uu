@@ -15,9 +15,13 @@ Page({
   },
 
   // 用户登录示例
-  login: function () {
-    if (this.data.logged) return
-
+  login: function () { 
+    if (this.data.logged) {
+      wx.navigateTo({
+        url: '../index/index'
+      })
+      return
+    }
     util.showBusy('正在登录')
     var that = this
 
@@ -56,6 +60,9 @@ Page({
         util.showModel('登录失败', error)
         console.log('登录失败', error)
       }
+    })
+    wx.navigateTo({
+      url: '../index/index'
     })
   },
 
