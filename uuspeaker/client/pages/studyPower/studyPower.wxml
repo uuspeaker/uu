@@ -1,0 +1,5 @@
+<!--pages/studyPower/studyPower.wxml-->
+<text>pages/studyPower/studyPower.wxml</text>
+<view > 
+  <button class="fixed-bottom" bindtap="toCheckin" > 打卡 </button>
+</view>

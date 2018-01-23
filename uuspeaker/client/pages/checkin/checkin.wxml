@@ -1,0 +1,37 @@
+<view class="container">
+  <!--登记积分-->
+  <form bindsubmit="scoreManage" bindreset="formReset">   
+    {{userInfo.nickName}}
+    <picker name="meetingDate"   range="{{dateArray}}"  bindchange="bindDateChange">
+      <view class="picker">
+        会议日期: {{dateArray[dateIndex]}}
+      </view>
+    </picker> 
+
+     
+<picker name="meetingTime"   range="{{timeArray}}"  bindchange="bindTimeChange">
+    <view class="picker">
+        会议时间: {{timeArray[timeIndex]}}
+      </view>
+  </picker>
+ 
+
+<view class="btn-area">
+  <text class="section__title">已参会</text>
+  <switch name="isJoinMeeting"  show-value/>
+  <text class="section__title">最佳演讲</text>
+  <switch name="isSpeaker"  show-value/>
+  <text class="section__title">最佳点评</text>
+  <switch name="isEvaluator"  show-value/>
+  <text class="section__title">担任主持</text>
+  <switch name="isHost"  show-value/>
+  <text class="section__title">已经复盘</text>
+  <switch name="isReport"  show-value/>
+</view>
+
+<view class="btn-area">
+    <button data-action='post' formType="submit">保存</button>
+  </view>
+
+</form>
+</view>

@@ -5,6 +5,10 @@ module.exports = async (ctx, next) => {
     if (ctx.state.$wxInfo.loginState === 1) {
         // loginState 为 1，登录态校验成功
         ctx.state.data = ctx.state.$wxInfo.userinfo
+        wx.setStorage({
+          key: "openId",
+          data: ctx.state.$wxInfo.userinfo.openId
+        })
     } else {
         ctx.state.code = -1
     }

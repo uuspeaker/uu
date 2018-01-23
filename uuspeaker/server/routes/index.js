@@ -53,4 +53,6 @@ router.get('/userStudyRank', controllers.userStudyRank)
 router.get('/dataReport', controllers.dataReport)
 //登记用户积分
 router.post('/scoreManage', controllers.scoreManage.post)
+//登记用户积分
+router.post('/checkin', controllers.checkin.post)
 module.exports = router

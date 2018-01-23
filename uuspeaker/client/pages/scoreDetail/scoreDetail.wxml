@@ -52,3 +52,6 @@
   </scroll-view>
   </block>
 </view>
+<view >
+  <button class="fixed-bottom" bindtap="toMeetingApply" > 打卡 </button>
+</view>

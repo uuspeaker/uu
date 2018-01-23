@@ -5,8 +5,6 @@ var dateFormat = require('../../common/dateFormat.js')
 Page({
 
   data: {
-    userInfo: {},
-    logged: false,
     userApplyList: {},
     totalScoreList: {},
     meetingScoreList: {},
@@ -25,58 +23,6 @@ Page({
     autoplay: true,
     interval: 4000,
     duration: 1000
-  },
-
-  // 用户登录示例
-  login: function () {
-    if (this.data.logged) {
-      wx.navigateTo({
-        url: '../index/index'
-      })
-      return
-    }
-    util.showBusy('正在登录')
-    var that = this
-
-    // 调用登录接口
-    qcloud.login({
-      success(result) {
-        if (result) {
-          util.showSuccess('登录成功')
-          that.setData({
-            userInfo: result,
-            logged: true
-          })
-          setScore();
-        } else {
-          // 如果不是首次登录，不会返回用户信息，请求用户信息接口获取
-          qcloud.request({
-            url: config.service.requestUrl,
-            login: true,
-            success(result) {
-              util.showSuccess('登录成功')
-              that.setData({
-                userInfo: result.data.data,
-                logged: true
-              })
-            },
-
-            fail(error) {
-              util.showModel('请求失败', error)
-              console.log('request fail', error)
-            }
-          })
-        }
-      },
-
-      fail(error) {
-        util.showModel('登录失败', error)
-        console.log('登录失败', error)
-      }
-    })
-    wx.navigateTo({
-      url: '../index/index'
-    })
   },
 
   selected: function (e) {

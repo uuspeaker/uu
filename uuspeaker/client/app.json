@@ -1,8 +1,7 @@
 {
-  "pages":[   
-
-    "pages/index/index",
+  "pages":[    
     "pages/login/login",
+    "pages/index/index",
     "pages/addCgi/addCgi",
     "pages/meeting/meeting",
     "pages/scoreDetail/scoreDetail",
@@ -13,7 +12,10 @@
     "pages/dataReport/dataReport",
     "pages/scoreManage/scoreManage",
     "pages/userInfo/userInfo",
-    "pages/honorList/honorList"
+    "pages/honorList/honorList",
+    "pages/studyPower/studyPower",
+    "pages/leaderPower/leaderPower",
+    "pages/checkin/checkin"
   ],
   "tabBar": {  
    "color": "#a9b7b7",  
@@ -23,13 +25,19 @@
      "selectedIconPath": "images/study.png",  
      "iconPath": "images/study.png",  
      "pagePath": "pages/index/index",  
-     "text": "报名"  
+     "text": "发现"  
    }, {  
      "selectedIconPath": "images/score.png",  
      "iconPath": "images/score.png",  
-     "pagePath": "pages/scoreDetail/scoreDetail",  
-     "text": "成绩"  
-   }, {  
+     "pagePath": "pages/studyPower/studyPower",  
+     "text": "学习力"  
+   },{
+    "selectedIconPath": "images/score2.png",
+    "iconPath": "images/score2.png",
+    "pagePath": "pages/leaderPower/leaderPower",
+    "text": "影响力"
+  },
+  {  
      "selectedIconPath": "images/honor.png",  
      "iconPath": "images/honor.png",  
      "pagePath": "pages/honorList/honorList",  

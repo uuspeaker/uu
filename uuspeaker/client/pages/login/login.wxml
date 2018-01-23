@@ -13,45 +13,4 @@
     </view>
   </view>
 
-  
-  
- <view class="uploader">
-    <navigator url="../meetingApply/meetingApply" open-type="navigate" class="uploader-text">
-      <text>报名参会</text>
-    </navigator>
-     <navigator url="../meetingApplyInfo/meetingApplyInfo" open-type="navigate" class="uploader-text">
-      <text>报名情况</text>
-    </navigator>
-  </view>
-  <view class="uploader">
-    <navigator url="../meetingApplyInfo/meetingApplyInfo" open-type="navigate" class="uploader-text">
-      <text>报名情况</text>
-    </navigator>
-  </view>
-  <view class="uploader">
-    <navigator url="../scoreManage/scoreManage" open-type="navigate" class="uploader-text">
-      <text>登记积分</text>
-    </navigator>
-  </view>
-  <view class="uploader">
-    <navigator url="../scoreDetail/scoreDetail" open-type="navigate" class="uploader-text">
-      <text>积分查询（按人）</text>
-    </navigator>
-  </view>
-  <view class="uploader">
-    <navigator url="../userStudyRank/userStudyRank" open-type="navigate" class="uploader-text">
-      <text>积分查询（按时间段）</text>
-    </navigator>
-  </view>
- <view class="uploader">
-    <navigator url="../scoreRank/scoreRank" open-type="navigate" class="uploader-text">
-      <text>积分总榜</text>
-    </navigator>
-  </view>
-  <view class="uploader">
-    <navigator url="../dataReport/dataReport" open-type="navigate" class="uploader-text">
-      <text>数据统计</text>
-    </navigator>
-  </view>  
-
 </view>
