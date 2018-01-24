@@ -30,8 +30,11 @@ Page({
             userInfo: result,
             logged: true
           })
-          
+          wx.switchTab({
+            url: '../index/index'
+          })
           console.log(result)
+          wx.setStorageSync('skey', 'value')
         } else { 
           // 如果不是首次登录，不会返回用户信息，请求用户信息接口获取
           qcloud.request({
@@ -44,7 +47,10 @@ Page({
                 logged: true
               }) 
               console.log(result.data.data)
-              
+              wx.setStorageSync('skey', 'value')
+              wx.switchTab({
+                url: '../index/index'
+              })
             }, 
 
             fail(error) {
@@ -53,9 +59,7 @@ Page({
             }
           })
         } 
-        wx.switchTab({
-          url: '../index/index'
-        })
+        
       },
 
       fail(error) {

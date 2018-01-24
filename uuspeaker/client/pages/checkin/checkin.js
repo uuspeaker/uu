@@ -2,6 +2,7 @@ var qcloud = require('../../vendor/wafer2-client-sdk/index')
 var config = require('../../config')
 var util = require('../../utils/util.js')
 var dateFormat = require('../../common/dateFormat.js')
+var session = require('../../vendor/wafer2-client-sdk/lib/session.js');
 
 Page({
   data: {
@@ -25,17 +26,19 @@ Page({
     now.setDate(now.getDate() - meetingDateMinus)
     requestData.meetingDate = dateFormat.getFormatDate(now, 'yyyyMMdd')
     requestData.meetingTime = this.data.timeValue[this.data.timeIndex]
+    requestData.skey = session.get()
+    console.log(requestData)
     qcloud.request({
       url: `${config.service.host}/weapp/checkin`,
       data: requestData,
-      login: false,
+      login: true,
       method: 'post',
       success(result) {
         util.showSuccess('请求成功完成')
         that.setData({
           applyResult: result.data.data
         })
-      },
+      }, 
       fail(error) {
         util.showModel('请求失败', error);
         console.log('request fail', error);

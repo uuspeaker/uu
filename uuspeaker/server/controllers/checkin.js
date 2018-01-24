@@ -2,16 +2,10 @@ const { mysql } = require('../qcloud')
 
 module.exports = {
   post: async ctx => {
-    var openId = ''
-    wx.getStorage({
-      key: 'userInfo',
-      success: function (res) {
-        openId = res.data
-      }
-    })
-    //var userId = ctx.request.body.userId
-    var userId = openId
-    //var userId = ctx.state.$wxInfo.userinfo.openId
+    var skey = ctx.header['x-wx-skey']
+    console.log(skey)
+    var openIds = await mysql('cSessionInfo').select('open_id').where({'skey': skey})
+    var userId = openIds[0].open_id
     var meetingDate = ctx.request.body.meetingDate
     var meetingTime = ctx.request.body.meetingTime
     var isJoinMeeting = ctx.request.body.isJoinMeeting
