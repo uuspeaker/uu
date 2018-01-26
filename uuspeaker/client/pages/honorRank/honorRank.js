@@ -6,7 +6,7 @@ var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
 
 Page({
   data: {
-    tabs: ["study", "studyI", "leader","leaderI"],
+    tabs: ["总分", "本月增长", "leader","leaderI"],
     activeIndex: 1,
     sliderOffset: 0,
     sliderLeft: 0,

@@ -1,5 +1,32 @@
-<!--pages/studyPower/studyPower.wxml-->
-<text>pages/studyPower/studyPower.wxml</text>
-<view > 
-  <button class="fixed-bottom" bindtap="toCheckin" > 打卡 </button>
+
+<view class="content">
+  <view>Jason Tian 田晗</view>
+  <view class='small-grey'>刚刚在【懂你演讲】上完成了学习打卡</view>
+  <view class='line'></view>
+
+  <view class="weui-flex">
+    <view class="weui-flex__item">
+      <view class='small-grey'>累计打卡</view>
+      <view class="weui-flex">18
+      <view class='small-grey-2'>次</view>
+      </view>
+    </view>
+    <view class="weui-flex__item">
+      <view class='small-grey'>行动力超过</view>
+      <view class="weui-flex">80
+      <view class='small-grey-2'>%的同学</view></view>
+    </view>
+    <view class="weui-flex__item">
+      <view class='small-grey'>今日学习</view>
+      <view class="weui-flex">50
+      <view class='small-grey-2'>分钟</view></view>
+    </view>
+  </view>
 </view>
+
+
+
+
+
+
+

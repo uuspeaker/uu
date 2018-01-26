@@ -1,8 +1,10 @@
 {
   "pages":[    
+    "pages/studyPower/studyPower",
+    "pages/index/index",
     "pages/honorRank/honorRank",
     "pages/login/login",
-    "pages/index/index",
+    
     "pages/addCgi/addCgi",
     "pages/meeting/meeting",
     "pages/scoreDetail/scoreDetail",
@@ -14,7 +16,7 @@
     "pages/scoreManage/scoreManage",
     "pages/userInfo/userInfo",
     
-    "pages/studyPower/studyPower",
+    
     "pages/leaderPower/leaderPower",
     "pages/checkin/checkin"
     

@@ -45,7 +45,7 @@
 
 <!--如果无人报名则显示默认图片-->
 <block wx:if="{{userScoreDates.length == 0}}">
-<image class="img" src="{{'../../images/smile7.jpg'}}" mode="widthFix"></image>
+<image class="img" src="{{'../../images/smile.jpg'}}" mode="widthFix"></image>
 </block>
 <view >
   <button class="fixed-bottom" bindtap="toMeetingApply" > 报名 </button>
