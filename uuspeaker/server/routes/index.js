@@ -38,6 +38,8 @@ router.get('/demo',controllers.demo)
 router.get('/scoreDetail', controllers.scoreDetail)
 //查询所有人的积分排名
 router.get('/scoreRank', controllers.scoreRank)
+//查询荣誉榜
+router.get('/honorRank', controllers.honorRank)
 //会议报名
 router.get('/meetingApply', controllers.meetingApply.get)
 router.post('/meetingApply', controllers.meetingApply.post)

@@ -45,7 +45,7 @@ Page({
     var meetingDate = dateFormat.getFormatDate(now, 'yyyyMMdd')
     qcloud.request({
       url: `${config.service.host}/weapp/meetingApplyInfo`,
-      login: false,
+      login: true,
       data: { 'meetingDate': meetingDate },
       success(result) {
         util.showSuccess('请求成功完成')

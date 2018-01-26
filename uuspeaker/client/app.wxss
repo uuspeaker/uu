@@ -1,5 +1,7 @@
 /**app.wxss**/
-.fixed-bottom {
+@import 'weui.wxss';
+
+ .fixed-bottom {
   position: fixed;
   width: 100%;
   bottom: 0;
@@ -16,7 +18,7 @@
   color: #FFF;
   background: #09BB07;
 }
-/* pages/meeting/meeting.wxss */
+
 page {
     background: #F6F6F6;
     display: flex;
@@ -78,4 +80,4 @@ page {
 
 .userinfo-score {
     font-size: 23rpx;
-}
+} 

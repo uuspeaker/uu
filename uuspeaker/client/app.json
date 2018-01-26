@@ -1,5 +1,6 @@
 {
   "pages":[    
+    "pages/honorRank/honorRank",
     "pages/login/login",
     "pages/index/index",
     "pages/addCgi/addCgi",
@@ -12,10 +13,11 @@
     "pages/dataReport/dataReport",
     "pages/scoreManage/scoreManage",
     "pages/userInfo/userInfo",
-    "pages/honorList/honorList",
+    
     "pages/studyPower/studyPower",
     "pages/leaderPower/leaderPower",
     "pages/checkin/checkin"
+    
   ],
   "tabBar": {  
    "color": "#a9b7b7",  
@@ -40,8 +42,8 @@
   {  
      "selectedIconPath": "images/honor.png",  
      "iconPath": "images/honor.png",  
-     "pagePath": "pages/honorList/honorList",  
-     "text": "荣誉"  
+     "pagePath": "pages/honorRank/honorRank",  
+     "text": "排名"  
    },
   {
     "selectedIconPath": "images/user.png",

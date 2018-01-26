@@ -1,37 +1,72 @@
-<view class="container">
+<view>
   <!--登记积分-->
-  <form bindsubmit="scoreManage" bindreset="formReset">   
-    {{userInfo.nickName}}
-    <picker name="meetingDate"   range="{{dateArray}}"  bindchange="bindDateChange">
-      <view class="picker">
-        会议日期: {{dateArray[dateIndex]}}
+  <form bindsubmit="scoreManage">
+
+    <view class="weui-cells__title">Meeting Info</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_select">
+        <view class="weui-cell__hd weui-cell__hd_in-select-after">
+          <view class="weui-label">日期：</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker name="meetingDate" bindchange="bindDateChange" value="{{dateIndex}}" range="{{dateArray}}">
+            <view class="weui-select weui-select_in-select-after">{{dateArray[dateIndex]}}</view>
+          </picker>
+        </view>
       </view>
-    </picker> 
 
-     
-<picker name="meetingTime"   range="{{timeArray}}"  bindchange="bindTimeChange">
-    <view class="picker">
-        会议时间: {{timeArray[timeIndex]}}
+   
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label">时间：</view>
+          </view>
+          <view class="weui-cell__bd">
+            <picker name="meetingTime" bindchange="bindTimeChange" value="{{timeIndex}}" range="{{timeArray}}">
+              <view class="weui-select weui-select_in-select-after">{{timeArray[timeIndex]}}</view>
+            </picker>
+          </view>
+        </view>
+    </view>
+
+    <view class="weui-cells__title">meeting detail</view>
+    
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_switch">
+        <view class="weui-cell__bd">meeting</view>
+        <view class="weui-cell__ft">
+          <switch name="isJoinMeeting" />
+        </view>
+      </view>  
+   
+      <view class="weui-cell weui-cell_switch">
+        <view class="weui-cell__bd">speaker</view>
+        <view class="weui-cell__ft">
+          <switch name="isSpeaker" />
+        </view>
       </view>
-  </picker>
- 
 
-<view class="btn-area">
-  <text class="section__title">已参会</text>
-  <switch name="isJoinMeeting"  show-value/>
-  <text class="section__title">最佳演讲</text>
-  <switch name="isSpeaker"  show-value/>
-  <text class="section__title">最佳点评</text>
-  <switch name="isEvaluator"  show-value/>
-  <text class="section__title">担任主持</text>
-  <switch name="isHost"  show-value/>
-  <text class="section__title">已经复盘</text>
-  <switch name="isReport"  show-value/>
-</view>
+      <view class="weui-cell weui-cell_switch">
+        <view class="weui-cell__bd">evaluator</view>
+        <view class="weui-cell__ft">
+          <switch name="isEvaluator" />
+        </view>
+      </view>
 
-<view class="btn-area">
-    <button data-action='post' formType="submit">保存</button>
-  </view>
+      <view class="weui-cell weui-cell_switch">
+        <view class="weui-cell__bd">host</view>
+        <view class="weui-cell__ft">
+          <switch name="isHost" />
+        </view>
+      </view>
 
-</form>
+       <view class="weui-cell weui-cell_switch">
+        <view class="weui-cell__bd">report</view>
+        <view class="weui-cell__ft">
+          <switch name="isReport" />
+        </view>
+      </view>
+    </view>
+
+    <button class="weui-btn" type="primary" data-action='post' formType="submit">保存</button>
+  </form>
 </view>
