@@ -1,32 +1,52 @@
+<view class='smile'>
 
-<view class="content">
-  <view>Jason Tian 田晗</view>
-  <view class='small-grey'>刚刚在【懂你演讲】上完成了学习打卡</view>
-  <view class='line'></view>
 
-  <view class="weui-flex">
-    <view class="weui-flex__item">
-      <view class='small-grey'>累计打卡</view>
-      <view class="weui-flex">18
-      <view class='small-grey-2'>次</view>
+
+  <view class="content" style='margin-top: 250px;'>   
+    <view class='name'>田晗
+      <text style='font-size: 13px;'>青铜演讲君</text>
+    </view>
+    <view class='small-grey'>刚刚在【懂你演讲】上完成了演讲练习</view>
+    <view class='line'></view>
+
+    <view class="weui-flex">
+      <view class="weui-flex__item">
+        <view class='small-grey'>累计打卡</view>
+        <view class="weui-flex">18
+          <view class='small-grey-2'>次</view>
+        </view>
+      </view>
+      <view class="weui-flex__item">
+        <view class='small-grey'>行动力超过</view>
+        <view class="weui-flex">80
+          <view class='small-grey-2'>%的同学</view>
+        </view>
+      </view>
+      <view class="weui-flex__item">
+        <view class='small-grey'>今日学习</view>
+        <view class="weui-flex">50
+          <view class='small-grey-2'>分钟</view>
+        </view>
       </view>
     </view>
-    <view class="weui-flex__item">
-      <view class='small-grey'>行动力超过</view>
-      <view class="weui-flex">80
-      <view class='small-grey-2'>%的同学</view></view>
+  </view>
+
+  <view class='content' style='margin-top: 20px;height: 80px;'>
+    <view class="weui-flex">
+      <view>
+        <view>懂你演讲</view>
+        <view>让表达成为一种享受</view>
+        <view class='weui-flex code-notice'>
+          <view>长按识别二维码</view>
+          <view style='width:5px'></view>
+          <view class='arrow-right'>></view>
+        </view>
+
+      </view>
+      <view class="weui-flex__item">
+        <image  class="uu-code" src='../../images/uu-code.jpg' mode="widthFix"></image>
+      </view>
     </view>
-    <view class="weui-flex__item">
-      <view class='small-grey'>今日学习</view>
-      <view class="weui-flex">50
-      <view class='small-grey-2'>分钟</view></view>
-    </view>
+
   </view>
 </view>
-
-
-
-
-
-
-
