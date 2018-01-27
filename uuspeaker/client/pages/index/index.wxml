@@ -1,7 +1,7 @@
 <!-- 报名模板 -->
 <template name="scoreDetailTemplate">
   <view>
-    <image src="{{'./../index/user-unlogin.png'}}" background-size="cover" class="I6"></image>
+    <image src="{{logged ? userInfo.avatarUrl : './../index/user-unlogin.png'}}"  background-size="cover" class="I6"></image>
 
     <text>{{userId}}  </text>
     <text wx:if="{{totalScore == 0}}">【乞丐】</text>

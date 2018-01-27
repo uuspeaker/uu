@@ -10,5 +10,6 @@
 
 page {
     background: #F6F6F6;
+    font-family: 'Microsoft Yahei'
 }
 

@@ -2,6 +2,7 @@
   "pages":[    
     "pages/studyPower/studyPower",
     "pages/index/index",
+    "pages/index2/index2",
     "pages/honorRank/honorRank",
     "pages/login/login",
     
@@ -28,7 +29,7 @@
    "list": [{  
      "selectedIconPath": "images/study.png",  
      "iconPath": "images/study.png",  
-     "pagePath": "pages/index/index",  
+     "pagePath": "pages/index2/index2",  
      "text": "发现"  
    }, {  
      "selectedIconPath": "images/score.png",  
