@@ -1,7 +1,7 @@
 <template name="scoreDetailTemplate">
   <view class="weui-cell weui-cell_access" >
     <view  style='padding-left:5px;width:6px'>{{rank}}</view>
-    <view class="weui-cell__bd" style='padding-left:50px'>{{user_id}}</view>
+    <view class="weui-cell__bd" style='padding-left:50px'>{{nick_name}}</view>
     <view class="weui-cell__bd" style='padding-left:100px;'>{{total_score}}
     </view>
   </view>
@@ -9,7 +9,7 @@
 <template name="scoreDetailTemplate2">
   <view class="weui-cell weui-cell_access" >
     <view  style='padding-left:5px;width:6px'>{{rank}}</view>
-    <view class="weui-cell__bd" style='padding-left:50px'>{{user_id}}</view>
+    <view class="weui-cell__bd" style='padding-left:50px'>{{nick_name}}</view>
     <view class="weui-cell__bd" style='padding-left:100px;'>
     <image src='../../images/increase.png' style='width:20px;height:16px;padding-top:0px;'></image>{{total_score}}
     </view>  

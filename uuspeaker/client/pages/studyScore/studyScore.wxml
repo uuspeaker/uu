@@ -20,13 +20,10 @@
         <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
       </view>
       <view class="weui-tab__panel">
-        <!--tab1-->
+        <!--tab1 登记积分-->
         <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
           <view>
-            <!--登记积分-->
             <form bindsubmit="studyScore">
-
-              <view class="weui-cells__title">学习时间</view>
               <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell weui-cell_select">
                   <view class="weui-cell__hd weui-cell__hd_in-select-after">
@@ -39,7 +36,6 @@
                   </view>
                 </view>
 
-
                 <view class="weui-cell weui-cell_select">
                   <view class="weui-cell__hd weui-cell__hd_in-select-after">
                     <view class="weui-label">时间：</view>
@@ -51,8 +47,6 @@
                   </view>
                 </view>
               </view>
-
-              <view class="weui-cells__title">参会情况</view>
 
               <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell weui-cell_switch">
@@ -90,19 +84,41 @@
                   </view>
                 </view>
               </view>
-
               <button class="weui-btn" type="primary" data-action='post' formType="submit">保存</button>
-              <button class="weui-btn" bindtap='toStudyScoreDetail'>详情</button>
             </form>
           </view>
         </view>
-        <!--tab2-->
+        <!--tab2 复盘-->
         <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
-          <!--登记学习时长-->
-          <view>
-            <form bindsubmit="studyDuration">
+          <form bindsubmit="studyDuration">
+              <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cell weui-cell_select">
+                  <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                    <view class="weui-label">日期：</view>
+                  </view>
+                  <view class="weui-cell__bd">
+                    <picker name="studyDate" bindchange="bindDateChange" value="{{dateIndex}}" range="{{dateArray}}">
+                      <view class="weui-select weui-select_in-select-after">{{dateArray[dateIndex]}}</view>
+                    </picker>
+                  </view>
+                </view>         
+              </view>
 
-              <view class="weui-cells__title">登记学习时长</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">
+                    <textarea class="weui-textarea" placeholder="请输入复盘" style="height: 20em" />
+                    <view class="weui-textarea-counter">0/1000</view>
+                </view>
+            </view>
+        </view>
+              <button class="weui-btn" type="primary" data-action='post' formType="submit">保存</button>
+            </form>
+        </view>
+        <!--tab3 登记学习时长-->
+        <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
+         
+            <form bindsubmit="studyDuration">
               <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell weui-cell_select">
                   <view class="weui-cell__hd weui-cell__hd_in-select-after">
@@ -128,9 +144,8 @@
                 </view>
               </view>
               <button class="weui-btn" type="primary" data-action='post' formType="submit">保存</button>
-              <button class="weui-btn" bindtap='toStudyDurationDetail'>详情</button>
             </form>
-          </view>
+          
         </view>
 
       </view>

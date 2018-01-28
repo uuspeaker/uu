@@ -1,7 +1,7 @@
 {
   "pages":[    
-    "pages/studyManage/studyManage",
     "pages/studyScore/studyScore",
+    "pages/studyManage/studyManage",
     
     "pages/checkin/checkin",
     "pages/studyShow/studyShow",

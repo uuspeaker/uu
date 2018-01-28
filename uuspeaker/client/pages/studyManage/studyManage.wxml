@@ -53,7 +53,7 @@
     <view class="weui-cells__title"></view>
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_access" bindtap='toStudyShow'>
-        <view class="weui-cell__bd">学习打卡</view>
+        <view class="weui-cell__bd">每日打卡</view>
         <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
       </view>
       <view class="weui-cell weui-cell_access">
