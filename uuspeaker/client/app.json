@@ -1,12 +1,11 @@
 {
   "pages":[    
-    "pages/studyPower/studyPower",
-    "pages/index/index",
+    "pages/studyDuration/studyDuration",
+    "pages/checkin/checkin",
+    "pages/studyShow/studyShow",
     "pages/index2/index2",
-    "pages/honorRank/honorRank",
     "pages/login/login",
-    
-    "pages/addCgi/addCgi",
+    "pages/index/index",
     "pages/meeting/meeting",
     "pages/scoreDetail/scoreDetail",
     "pages/scoreRank/scoreRank",
@@ -16,10 +15,10 @@
     "pages/dataReport/dataReport",
     "pages/scoreManage/scoreManage",
     "pages/userInfo/userInfo",
+    "pages/studyRank/studyRank",
+    "pages/leaderRank/leaderRank",
+    "pages/leaderPower/leaderPower"
     
-    
-    "pages/leaderPower/leaderPower",
-    "pages/checkin/checkin"
     
   ],
   "tabBar": {  
@@ -29,25 +28,24 @@
    "list": [{  
      "selectedIconPath": "images/study.png",  
      "iconPath": "images/study.png",  
-     "pagePath": "pages/index2/index2",  
+     "pagePath": "pages/studyDuration/studyDuration",  
      "text": "发现"  
    }, {  
      "selectedIconPath": "images/score.png",  
      "iconPath": "images/score.png",  
-     "pagePath": "pages/studyPower/studyPower",  
-     "text": "学习力"  
+     "pagePath": "pages/studyShow/studyShow",  
+     "text": "打卡"  
    },{
+    "selectedIconPath": "images/honor.png",
+    "iconPath": "images/honor.png",
+    "pagePath": "pages/studyRank/studyRank",
+    "text": "学习力"
+  },{
     "selectedIconPath": "images/score2.png",
     "iconPath": "images/score2.png",
-    "pagePath": "pages/leaderPower/leaderPower",
+    "pagePath": "pages/leaderRank/leaderRank",
     "text": "影响力"
   },
-  {  
-     "selectedIconPath": "images/honor.png",  
-     "iconPath": "images/honor.png",  
-     "pagePath": "pages/honorRank/honorRank",  
-     "text": "排名"  
-   },
   {
     "selectedIconPath": "images/user.png",
     "iconPath": "images/user.png",

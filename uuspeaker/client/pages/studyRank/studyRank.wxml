@@ -20,9 +20,24 @@
         <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
       </view>
       <view class="weui-tab__panel">
-        
-         <!--tab3-->
+        <!--tab1-->
         <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+          <scroll-view>
+            <block wx:for="{{studyScore}}">
+              <template is="scoreDetailTemplate" data="{{...item}}" />
+            </block>
+          </scroll-view>
+        </view>
+        <!--tab2-->
+        <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+          <scroll-view>
+            <block wx:for="{{studyIncreaseScore}}">
+              <template is="scoreDetailTemplate" data="{{...item}}" />
+            </block>
+          </scroll-view>
+        </view>
+         <!--tab3-->
+        <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
           <scroll-view>
             <block wx:for="{{leaderScore}}">
               <template is="scoreDetailTemplate" data="{{...item}}" />
@@ -30,7 +45,7 @@
           </scroll-view>
         </view>
         <!--tab4-->
-        <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+        <view class="weui-tab__content" hidden="{{activeIndex != 3}}">
           <scroll-view>
             <block wx:for="{{leaderIncreaseScore}}">
               <template is="scoreDetailTemplate" data="{{...item}}" />

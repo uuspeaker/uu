@@ -53,8 +53,12 @@ router.get('/userScore', controllers.userScore)
 router.get('/userStudyRank', controllers.userStudyRank)
 //查询汇总数据
 router.get('/dataReport', controllers.dataReport)
+//当天打卡展示
+router.get('/studyShow', controllers.studyShow)
 //登记用户积分
 router.post('/scoreManage', controllers.scoreManage.post)
 //登记用户积分
 router.post('/checkin', controllers.checkin.post)
+//登记学习时长
+router.post('/studyDuration', controllers.studyDuration.post)
 module.exports = router
