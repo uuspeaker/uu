@@ -61,4 +61,17 @@ router.post('/scoreManage', controllers.scoreManage.post)
 router.post('/checkin', controllers.checkin.post)
 //登记学习时长
 router.post('/studyDuration', controllers.studyDuration.post)
+router.get('/studyDuration', controllers.studyDuration.get)
+//当天打卡展示
+router.get('/studyManage', controllers.studyManage)
+//学习积分详情
+router.get('/studyScore', controllers.studyScore.get)
+router.post('/studyScore', controllers.studyScore.post)
+//学习积分详情
+router.get('/leaderDetail', controllers.leaderDetail.get)
+//查询积分榜
+router.get('/studyRank', controllers.studyRank)
+//查询影响榜
+router.get('/leaderRank', controllers.leaderRank)
+
 module.exports = router

@@ -10,22 +10,21 @@ Page({
   data: {
     scoreData: {},
     userInfo: {},
-    totalScore:0
-  },  
+    totalScore: 0
+  },
 
   //查询用户参会数据
   queryUserScore: function (e) {
     util.showBusy('请求中...')
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/studyShow`,
+      url: `${config.service.host}/weapp/studyManage`,
       login: true,
       method: 'get',
       success(result) {
         util.showSuccess('请求成功完成')
         that.setData({
-          scoreData: result.data.data[0],
-          totalScore: result.data.data[0].totalScore
+          scoreData: result.data.data[0]
         })
       },
       fail(error) {
@@ -35,7 +34,7 @@ Page({
     })
   },
 
-  initUserInfo: function(){
+  initUserInfo: function () {
     var that = this
     wx.getUserInfo({
       withCredentials: false,
@@ -50,10 +49,28 @@ Page({
         console.log('request fail', error)
       },
       complete: function (res) {
-        
-       },
+
+      },
     })
-  },  
+  },
+
+  toStudyShow: function(){
+    wx.navigateTo({
+      url: '../studyShow/studyShow',
+    })
+  },
+
+  toStudyDetail: function () {
+    wx.navigateTo({
+      url: '../studyDetail/studyDetail',
+    })
+  },
+
+  toLeaderDetail: function () {
+    wx.navigateTo({
+      url: '../leaderDetail/leaderDetail',
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载
@@ -67,48 +84,48 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-  
+
   }
 })

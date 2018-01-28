@@ -1,20 +1,23 @@
 <template name="scoreDetailTemplate">
   <view class="weui-cell weui-cell_access" >
-    <view  style='padding-left:5px;width:6px'>{{rank}}</view>
-    <view class="weui-cell__bd" style='padding-left:50px'>{{user_id}}</view>
-    <view class="weui-cell__bd" style='padding-left:100px;'>{{total_score}}
+    <view class="weui-cell__bd" style='padding-left:50px'>{{meeting_date}}</view>
+    <view class="weui-cell__bd" style='padding-left:100px;'>
+    <text wx:if="{{score_type == 1}}">参会</text>
+      <text wx:if="{{score_type == 2}}">最佳演讲</text>
+      <text wx:if="{{score_type == 3}}">最佳点评</text>
+      <text wx:if="{{score_type == 4}}">主持</text>
+      <text wx:if="{{score_type == 5}}">复盘</text>
     </view>
   </view>
 </template>
+
 <template name="scoreDetailTemplate2">
   <view class="weui-cell weui-cell_access" >
-    <view  style='padding-left:5px;width:6px'>{{rank}}</view>
-    <view class="weui-cell__bd" style='padding-left:50px'>{{user_id}}</view>
-    <view class="weui-cell__bd" style='padding-left:100px;'>
-    <image src='../../images/increase.png' style='width:20px;height:16px;padding-top:0px;'></image>{{total_score}}
-    </view>  
+    <view class="weui-cell__bd" style='padding-left:50px'>{{study_date}}</view>
+    <view class="weui-cell__bd" style='padding-left:100px;'>{{study_duration}}分钟</view>
   </view>
 </template>
+
 
 <view class="page">
   <view class="page__bd">
@@ -32,7 +35,7 @@
 
         <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
           <view class="weui-cells weui-cells_after-title">
-            <block wx:for="{{studyScore}}">
+            <block wx:for="{{studyScoreData}}">
               <template is="scoreDetailTemplate" data="{{...item}}" />
             </block>
           </view>
@@ -41,7 +44,7 @@
         <!--tab2-->
         <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
           <view class="weui-cells weui-cells_after-title">
-            <block wx:for="{{studyIncreaseScore}}">
+            <block wx:for="{{studyDurationData}}">
               <template is="scoreDetailTemplate2" data="{{...item}}" />
             </block>
           </view>

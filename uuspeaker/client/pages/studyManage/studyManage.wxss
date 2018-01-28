@@ -1,0 +1,13 @@
+/* pages/studyManage/studyManage.wxss */
+.line{
+width:99%;
+height:1px;
+margin-top: 0px;
+margin-bottom: 10px;
+background:#F6F6F6;
+}
+.small-grey{
+  font-size: 13px;
+  color:#888888;
+  font-weight: normal;
+}

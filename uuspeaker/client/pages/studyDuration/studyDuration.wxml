@@ -1,5 +1,5 @@
+<!--登记学习时长-->
 <view>
-  <!--登记积分-->
   <form bindsubmit="scoreManage">
 
     <view class="weui-cells__title">登记学习时长</view>

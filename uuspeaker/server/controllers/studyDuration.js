@@ -1,10 +1,10 @@
 const { mysql } = require('../qcloud')
+const userInfo = require('../common/userInfo.js')
+const dateUtil = require('../common/dateUtil.js')
 
 module.exports = {
   post: async ctx => {
-    var skey = ctx.header['x-wx-skey']
-    var openIds = await mysql('cSessionInfo').select('open_id').where({ 'skey': skey })
-    var userId = openIds[0].open_id
+    var userId = await userInfo.getOpenId(ctx)
     var studyDate = ctx.request.body.studyDate
     var studyDuration = ctx.request.body.studyDuration
     
@@ -24,6 +24,13 @@ module.exports = {
           study_duration: studyDuration
         })
     }
+  },
 
+  get: async ctx => {
+    //查询用户ID
+    var userId = await userInfo.getOpenId(ctx)
+    //获取用户参会明细
+    var durationDetail = await mysql("user_study_duration").select('study_date', 'study_duration').where({ user_id: userId }).orderBy('study_date', 'desc')
+    ctx.state.data = durationDetail
   }
 }

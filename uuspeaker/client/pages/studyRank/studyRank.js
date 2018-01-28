@@ -7,40 +7,39 @@ var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
 Page({
   data: {
     tabs: ["学习力", "本月增长"],
-    activeIndex: 1,
+    activeIndex: 0,
     sliderOffset: 0,
     sliderLeft: 0,
 
-    totalScore: {},
-    increaseScore: {},
-    leaderScore: {}
+    studyScore: {},
+    studyIncreaseScore: {}
   },
 
-  getScoreDetail: function () {
+  getScoreDetail:function() {
     util.showBusy('请求中...')
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/honorRank`,
+      url: `${config.service.host}/weapp/studyRank`,
       login: false,
       success(result) {
         util.showSuccess('请求成功完成')
         that.setData({
           studyScore: result.data.data.studyScore,
-          studyIncreaseScore: result.data.data.studyIncreaseScore,
-          leaderScore: result.data.data.leaderScore,
-          leaderIncreaseScore: result.data.data.leaderIncreaseScore
+          studyIncreaseScore: result.data.data.studyIncreaseScore
         })
+        
       },
       fail(error) {
         util.showModel('请求失败', error);
         console.log('request fail', error);
       }
     })
+
   },
 
   onLoad: function () {
     this.getScoreDetail()
-
+    
     var that = this;
     wx.getSystemInfo({
       success: function (res) {
@@ -51,6 +50,8 @@ Page({
       }
     });
   },
+
+
   tabClick: function (e) {
     this.setData({
       sliderOffset: e.currentTarget.offsetLeft,

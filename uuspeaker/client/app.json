@@ -1,6 +1,8 @@
 {
   "pages":[    
-    "pages/studyDuration/studyDuration",
+    "pages/studyManage/studyManage",
+    "pages/studyScore/studyScore",
+    
     "pages/checkin/checkin",
     "pages/studyShow/studyShow",
     "pages/index2/index2",
@@ -17,7 +19,9 @@
     "pages/userInfo/userInfo",
     "pages/studyRank/studyRank",
     "pages/leaderRank/leaderRank",
-    "pages/leaderPower/leaderPower"
+    "pages/leaderPower/leaderPower",
+    "pages/studyDetail/studyDetail",
+    "pages/leaderDetail/leaderDetail"
     
     
   ],
@@ -28,28 +32,23 @@
    "list": [{  
      "selectedIconPath": "images/study.png",  
      "iconPath": "images/study.png",  
-     "pagePath": "pages/studyDuration/studyDuration",  
-     "text": "发现"  
-   }, {  
-     "selectedIconPath": "images/score.png",  
-     "iconPath": "images/score.png",  
-     "pagePath": "pages/studyShow/studyShow",  
-     "text": "打卡"  
+     "pagePath": "pages/studyScore/studyScore",  
+     "text": "学习"  
    },{
     "selectedIconPath": "images/honor.png",
     "iconPath": "images/honor.png",
     "pagePath": "pages/studyRank/studyRank",
-    "text": "学习力"
+    "text": "学习榜"
   },{
     "selectedIconPath": "images/score2.png",
     "iconPath": "images/score2.png",
     "pagePath": "pages/leaderRank/leaderRank",
-    "text": "影响力"
+    "text": "影响榜"
   },
   {
     "selectedIconPath": "images/user.png",
     "iconPath": "images/user.png",
-    "pagePath": "pages/userInfo/userInfo",
+    "pagePath": "pages/studyManage/studyManage",
     "text": "我的"
   }]  
  },  

@@ -1,18 +1,17 @@
-const { mysql } = require('../qcloud')
+const { mysql} = require('../qcloud')
+const userInfo = require('../common/userInfo.js')
+const dateUtil = require('../common/dateUtil.js')
 
 module.exports = {
   post: async ctx => {
-    var skey = ctx.header['x-wx-skey']
-    console.log(skey)
-    var openIds = await mysql('cSessionInfo').select('open_id').where({'skey': skey})
-    var userId = openIds[0].open_id
+    var userId = await userInfo.getOpenId(ctx)
     var meetingDate = ctx.request.body.meetingDate
     var meetingTime = ctx.request.body.meetingTime
     var isJoinMeeting = ctx.request.body.isJoinMeeting
     var isSpeaker = ctx.request.body.isSpeaker
     var isEvaluator = ctx.request.body.isEvaluator
     var isHost = ctx.request.body.isHost
-    var isReport = ctx.request.body.isReport 
+    var isReport = ctx.request.body.isReport
 
     //删除原有记录
     await mysql('user_score_detail').where({
@@ -75,5 +74,13 @@ module.exports = {
           score_type: 5
         })
     }
+  },
+
+  get: async ctx => {
+    //查询用户ID
+    var userId = await userInfo.getOpenId(ctx)
+    //获取用户参会明细
+    var scoreDetail = await mysql("user_score_detail").select('meeting_date', 'meeting_time', 'score_type').where({ user_id: userId }).orderBy('meeting_date', 'desc')
+    ctx.state.data = scoreDetail
   }
 }

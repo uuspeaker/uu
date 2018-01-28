@@ -1,10 +1,18 @@
 <template name="scoreDetailTemplate">
-  <view class="weui-cell">
-    <view class="weui-cell__hd">
-      <image src="{{icon}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+  <view class="weui-cell weui-cell_access" >
+    <view  style='padding-left:5px;width:6px'>{{rank}}</view>
+    <view class="weui-cell__bd" style='padding-left:50px'>{{user_id}}</view>
+    <view class="weui-cell__bd" style='padding-left:100px;'>{{total_score}}
     </view>
-    <view class="weui-cell__bd">{{user_id}}</view>
-    <view class="weui-cell__ft">{{total_score}}</view>
+  </view>
+</template>
+<template name="scoreDetailTemplate2">
+  <view class="weui-cell weui-cell_access" >
+    <view  style='padding-left:5px;width:6px'>{{rank}}</view>
+    <view class="weui-cell__bd" style='padding-left:50px'>{{user_id}}</view>
+    <view class="weui-cell__bd" style='padding-left:100px;'>
+    <image src='../../images/increase.png' style='width:20px;height:16px;padding-top:0px;'></image>{{total_score}}
+    </view>  
   </view>
 </template>
 
@@ -23,19 +31,19 @@
         
          <!--tab3-->
         <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
-          <scroll-view>
+           <view class="weui-cells weui-cells_after-title">
             <block wx:for="{{leaderScore}}">
               <template is="scoreDetailTemplate" data="{{...item}}" />
             </block>
-          </scroll-view>
+          </view>
         </view>
         <!--tab4-->
         <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
-          <scroll-view>
+           <view class="weui-cells weui-cells_after-title">
             <block wx:for="{{leaderIncreaseScore}}">
-              <template is="scoreDetailTemplate" data="{{...item}}" />
+              <template is="scoreDetailTemplate2" data="{{...item}}" />
             </block>
-          </scroll-view>
+          </view>
         </view>
       </view>
     </view>
