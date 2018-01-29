@@ -86,6 +86,35 @@ Page({
     
   },
 
+  studyReport: function (e) {
+    console.log(e.detail.value)
+    util.showBusy('请求中...')
+    var that = this
+    var requestData = e.detail.value
+    // var now = new Date()
+    // var studyDateMinus = this.data.dateValue[this.data.dateIndex]
+    // now.setDate(now.getDate() - studyDateMinus)
+    // requestData.studyDate = dateFormat.getFormatDate(now, 'yyyyMMdd')
+    console.log(requestData)
+    qcloud.request({
+      url: `${config.service.host}/weapp/studyReport`,
+      data: requestData,
+      login: true,
+      method: 'post',
+      success(result) {
+        util.showSuccess('请求成功完成')
+        that.setData({
+          applyResult: result.data.data
+        })
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+
+  },
+
   bindDateChange: function (e) {
     this.setData({
       dateIndex: e.detail.value

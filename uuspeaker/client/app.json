@@ -1,12 +1,14 @@
 {
-  "pages":[    
+  "pages":[ 
     "pages/studyScore/studyScore",
+    "pages/dataReport/dataReport",
+    "pages/studyDetail/studyDetail",
+    "pages/scoreManage/scoreManage",   
+    "pages/checkin/checkin",
     "pages/studyManage/studyManage",
     
-    "pages/checkin/checkin",
     "pages/studyShow/studyShow",
     "pages/index2/index2",
-    "pages/login/login",
     "pages/index/index",
     "pages/meeting/meeting",
     "pages/scoreDetail/scoreDetail",
@@ -14,13 +16,12 @@
     "pages/meetingApply/meetingApply",
     "pages/meetingApplyInfo/meetingApplyInfo",
     "pages/userStudyRank/userStudyRank",
-    "pages/dataReport/dataReport",
-    "pages/scoreManage/scoreManage",
+
+    
     "pages/userInfo/userInfo",
     "pages/studyRank/studyRank",
     "pages/leaderRank/leaderRank",
     "pages/leaderPower/leaderPower",
-    "pages/studyDetail/studyDetail",
     "pages/leaderDetail/leaderDetail"
     
     

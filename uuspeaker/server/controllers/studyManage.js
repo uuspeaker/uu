@@ -10,6 +10,8 @@ module.exports = async ctx => {
   //返回结果
   var userScoreDatas = []
 
+  //获取用户积分总额
+  var totalScoreRes = await mysql("user_score_detail").count('user_id as totalScore').where({ user_id: userId })
   //获取用户参会次数
   var meetingScoreRes = await mysql("user_score_detail").count('user_id as totalScore').where({ user_id: userId, score_type: 1 })
   //获取用户演讲获奖次数
@@ -21,6 +23,7 @@ module.exports = async ctx => {
   //获取用户复盘次数
   var reportScoreRes = await mysql("user_score_detail").count('user_id as totalScore').where({ user_id: userId, score_type: 5 })
   userScoreDatas.push({
+    totalScore: totalScoreRes[0]['totalScore'],
     meetingScore: meetingScoreRes[0]['totalScore'],
     speakerScore: speakerScoreRes[0]['totalScore'],
     evaluatorScore: evaluatorScoreRes[0]['totalScore'],

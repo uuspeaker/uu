@@ -1,6 +1,6 @@
 <template name="scoreDetailTemplate">
   <view class="weui-cell weui-cell_access" >
-    <view class="weui-cell__bd" style='padding-left:50px'>{{user_id}}</view>
+    <view class="weui-cell__bd" style='padding-left:50px'>{{nick_name}}</view>
     <view class="weui-cell__bd" style='padding-left:100px;'>{{total_score}}</view>
   </view>
 </template>

@@ -5,8 +5,8 @@ var dateFormat = require('../../common/dateFormat.js')
 
 Page({
   data: {
-    dateArray: ['今天', '昨天', '前天', '3天前', '4天前', '5天前'],
-    dateValue: [0,1,2,3,4,5],
+    dateArray: ['今天', '昨天', '前天', '3天前', '4天前', '5天前', '6天前', '7天前'],
+    dateValue: [0,1,2,3,4,5,6,7],
     timeArray: ['20:00','21:00'],
     timeValue: [20,21],
     dateIndex: 0,

@@ -20,7 +20,7 @@ module.exports = async ctx => {
     for (j = 0; j < allUserInfo.length; j++) {
       if(ctx.state.data.leaderScore[i].user_id == allUserInfo[j].user_id){
         ctx.state.data.leaderScore[i].nick_name = allUserInfo[j].nick_name
-        break;
+        continue;
       }
     }
   }
@@ -29,7 +29,7 @@ module.exports = async ctx => {
     for (j = 0; j < allUserInfo.length; j++) {
       if (ctx.state.data.leaderIncreaseScore[i].user_id == allUserInfo[j].user_id) {
         ctx.state.data.leaderIncreaseScore[i].nick_name = allUserInfo[j].nick_name
-        break;
+        continue;
       }
     }
   }

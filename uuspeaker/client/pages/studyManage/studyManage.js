@@ -24,7 +24,8 @@ Page({
       success(result) {
         util.showSuccess('请求成功完成')
         that.setData({
-          scoreData: result.data.data[0]
+          scoreData: result.data.data[0],
+          totalScore: result.data.data[0].totalScore
         })
       },
       fail(error) {

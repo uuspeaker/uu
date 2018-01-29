@@ -90,24 +90,33 @@
         </view>
         <!--tab2 复盘-->
         <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
-          <form bindsubmit="studyDuration">
+          <form bindsubmit="studyReport">
               <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell weui-cell_select">
                   <view class="weui-cell__hd weui-cell__hd_in-select-after">
                     <view class="weui-label">日期：</view>
                   </view>
                   <view class="weui-cell__bd">
-                    <picker name="studyDate" bindchange="bindDateChange" value="{{dateIndex}}" range="{{dateArray}}">
-                      <view class="weui-select weui-select_in-select-after">{{dateArray[dateIndex]}}</view>
-                    </picker>
+                   <input name="studyDate" class="weui-input" placeholder="格式（20180101）" />
                   </view>
-                </view>         
+                </view>
+
+                <view class="weui-cells weui-cells_after-title">
+                  <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__hd">
+                      <view class="weui-label">标题</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                      <input name="title" class="weui-input" placeholder="请输入标题" />
+                    </view>
+                  </view>
+                </view>
               </view>
 
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell">
                 <view class="weui-cell__bd">
-                    <textarea class="weui-textarea" placeholder="请输入复盘" style="height: 20em" />
+                    <textarea name="studyReport" class="weui-textarea" placeholder="请输入复盘（暂不支持表情等特殊符号）" style="height: 18em" />
                     <view class="weui-textarea-counter">0/1000</view>
                 </view>
             </view>

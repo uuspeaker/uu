@@ -73,5 +73,7 @@ router.get('/leaderDetail', controllers.leaderDetail.get)
 router.get('/studyRank', controllers.studyRank)
 //查询影响榜
 router.get('/leaderRank', controllers.leaderRank)
-
+//登记复盘
+router.post('/studyReport', controllers.studyReport.post)
+router.get('/studyReport', controllers.studyReport.get)
 module.exports = router

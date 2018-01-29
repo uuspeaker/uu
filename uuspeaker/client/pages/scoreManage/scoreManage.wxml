@@ -2,33 +2,33 @@
   <!--登记积分-->
   <form bindsubmit="scoreManage" bindreset="formReset">
     <view class="section">
-      <view class="section__title">姓名：</view>
+      <view class="section__title">name:</view>
       <input name="userId" value="{{userId}}" value="Charles" placeholder="" />
     </view>
     <picker name="meetingDate"   range="{{dateArray}}"  bindchange="bindDateChange">
       <view class="picker">
-        会议日期: {{dateArray[dateIndex]}}
+        meeting_date: {{dateArray[dateIndex]}}
       </view>
     </picker>
 
      
 <picker name="meetingTime"   range="{{timeArray}}"  bindchange="bindTimeChange">
     <view class="picker">
-        会议时间: {{timeArray[timeIndex]}}
+        meeting_time: {{timeArray[timeIndex]}}
       </view>
   </picker>
  
 
 <view class="btn-area">
-  <text class="section__title">已参会</text>
+  <text class="section__title">meeting</text>
   <switch name="isJoinMeeting"  show-value/>
-  <text class="section__title">最佳演讲</text>
+  <text class="section__title">speaker</text>
   <switch name="isSpeaker"  show-value/>
-  <text class="section__title">最佳点评</text>
+  <text class="section__title">evaluator</text>
   <switch name="isEvaluator"  show-value/>
-  <text class="section__title">担任主持</text>
+  <text class="section__title">host</text>
   <switch name="isHost"  show-value/>
-  <text class="section__title">已经复盘</text>
+  <text class="section__title">report</text>
   <switch name="isReport"  show-value/>
 </view>
 
