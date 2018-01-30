@@ -4,7 +4,15 @@
   </view>
   <view class="weui-article__p article">
     <rich-text>{{study_report}}</rich-text>
-    <view class="date">{{create_date}}</view>
+     <view class="weui-flex">
+    <view class="weui-flex__item date">{{create_date}}</view>
+    <view class="tooltip"><image class=" commnetImg " src='../../images/reportShow/commentTip.png'>
+    <view class="weui-flex tooltiptext" >
+    <view class="weui-flex__item" bindtap='likeArticle({{article_id}})'><image class=" commnetImg2 " src='../../images/reportShow/like.png'></image>赞</view>
+    <view class="weui-flex__item" bindtap='commentArticle({{article_id}})'><image class=" commnetImg2 " src='../../images/reportShow/comment.png'></image>评论</view>
+    </view>
+    </image></view>
+    </view>
   </view>
 </template>
 

@@ -17,6 +17,52 @@
 
 .date {
   padding-top: 5px;
-  font-size: 11px;
+  font-size: 13px;
   color: grey;
+}
+
+.comment{
+  align-content: right;
+  background-color: grey;
+  width: 20px;
+}
+
+.commnetImg{
+  width: 25px;
+  height: 25px;
+  padding-right: 10px;
+}
+
+.commnetImg2{
+  width: 15px;
+  height: 15px;
+  padding-right: 5px;
+  padding-top: 3px;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 150px;
+    height: 20px;
+    background-color: grey;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    
+    /* 定位 */
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    right: 105%;
+    font-size: 13px;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
 }

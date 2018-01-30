@@ -1,8 +1,8 @@
 {
   "pages":[ 
+    "pages/reportShow/reportShow",
     "pages/leaderRank/leaderRank",
     "pages/studyRank/studyRank",
-    "pages/reportShow/reportShow",
     "pages/studyScore/studyScore",
     "pages/dataReport/dataReport",
     "pages/studyDetail/studyDetail",
@@ -33,7 +33,7 @@
      "selectedIconPath": "images/tabbar/study2.png",  
      "iconPath": "images/tabbar/study1.png",  
      "pagePath": "pages/studyScore/studyScore",  
-     "text": "学习"  
+     "text": "打卡"  
    },{
     "selectedIconPath": "images/tabbar/studyRank2.png",
     "iconPath": "images/tabbar/studyRank1.png",
