@@ -24,55 +24,78 @@
     <view class='line'></view>
 
     <view>
-        <view class="weui-flex" style='padding-left:15px;padding-bottom:5px'>
-      <view class="weui-flex__item">
-        <view class='small-grey'>参会</view>
-        <view class="weui-flex" style='font-size:15px'>{{scoreData.meetingScore}}</view>
-      </view>
-      <view class="weui-flex__item">
-        <view class='small-grey'>演讲</view>
-        <view class="weui-flex" style='font-size:15px'>{{scoreData.speakerScore}}</view>
-      </view>
-      <view class="weui-flex__item">
-        <view class='small-grey'>点评</view>
-        <view class="weui-flex" style='font-size:15px'>{{scoreData.evaluatorScore}}</view>
-      </view>
-      <view class="weui-flex__item">
-        <view class='small-grey'>主持</view>
-        <view class="weui-flex" style='font-size:15px'>{{scoreData.hostScore}}</view>
-      </view>
-      <view class="weui-flex__item">
-        <view class='small-grey'>复盘</view>
-        <view class="weui-flex" style='font-size:15px'>{{scoreData.reportScore}}</view>
+      <view class="weui-flex" style='padding-left:15px;padding-bottom:5px'>
+        <view class="weui-flex__item">
+          <view class='small-grey'>参会</view>
+          <view class="weui-flex" style='font-size:15px'>{{scoreData.meetingScore}}</view>
+        </view>
+        <view class="weui-flex__item">
+          <view class='small-grey'>演讲</view>
+          <view class="weui-flex" style='font-size:15px'>{{scoreData.speakerScore}}</view>
+        </view>
+        <view class="weui-flex__item">
+          <view class='small-grey'>点评</view>
+          <view class="weui-flex" style='font-size:15px'>{{scoreData.evaluatorScore}}</view>
+        </view>
+        <view class="weui-flex__item">
+          <view class='small-grey'>主持</view>
+          <view class="weui-flex" style='font-size:15px'>{{scoreData.hostScore}}</view>
+        </view>
+        <view class="weui-flex__item">
+          <view class='small-grey'>复盘</view>
+          <view class="weui-flex" style='font-size:15px'>{{scoreData.reportScore}}</view>
+        </view>
       </view>
     </view>
-  </view>
   </view>
 
   <view class="page__bd">
     <view class="weui-cells__title"></view>
     <view class="weui-cells weui-cells_after-title">
-      <view class="weui-cell weui-cell_access" bindtap='toStudyShow'>
+      <view class="weui-cell " bindtap='toStudyShow'>
+        <view>
+          <image src="../../images/studyManage/checkIn.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
         <view class="weui-cell__bd">每日打卡</view>
-        <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
-      </view>
-      <view class="weui-cell weui-cell_access">
-        <view class="weui-cell__bd">学习目标（建设中）</view>
         <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
       </view>
     </view>
 
     <view class="weui-cells__title"></view>
     <view class="weui-cells weui-cells_after-title">
+
+    <view class="weui-cell weui-cell_access" bindtap=''>
+        <view>
+          <image src="../../images/studyManage/target.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
+        <view class="weui-cell__bd">我的目标（建设中）</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
+      </view>
+
       <view class="weui-cell weui-cell_access" bindtap='toStudyDetail'>
-        <view class="weui-cell__bd">学习力</view>
+        <view>
+          <image src="../../images/studyManage/study.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
+        <view class="weui-cell__bd">我的学习</view>
         <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
       </view>
+
       <view class="weui-cell weui-cell_access" bindtap='toLeaderDetail'>
-        <view class="weui-cell__bd">影响力</view>
+        <view>
+          <image src="../../images/studyManage/leader.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
+        <view class="weui-cell__bd">我的影响</view>
         <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
       </view>
+
+      <view class="weui-cell weui-cell_access" bindtap=''>
+        <view>
+          <image src="../../images/studyManage/honor.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
+        <view class="weui-cell__bd">我的荣誉（建设中）</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
+      </view>
+
     </view>
-   
   </view>
 </view>

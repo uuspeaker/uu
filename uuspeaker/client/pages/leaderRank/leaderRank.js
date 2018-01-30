@@ -6,10 +6,17 @@ var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
 
 Page({
   data: {
-    tabs: ["影响力", "本月增长"],
+    tabs: ["影响总榜", "本月进步榜"],
     activeIndex: 0,
     sliderOffset: 0,
     sliderLeft: 0,
+
+    userInfo: {},
+
+    myLeaderScore: 0,
+    myLeaderScoreRank: 0,
+    myLeaderIncreaseScore: 0,
+    myLeaderIncreaseScoreRank: 0,
 
     totalScore: {},
     increaseScore: {},
@@ -25,10 +32,12 @@ Page({
       success(result) {
         util.showSuccess('请求成功完成')
         that.setData({
-          studyScore: result.data.data.studyScore,
-          studyIncreaseScore: result.data.data.studyIncreaseScore,
           leaderScore: result.data.data.leaderScore,
-          leaderIncreaseScore: result.data.data.leaderIncreaseScore
+          leaderIncreaseScore: result.data.data.leaderIncreaseScore,
+          myLeaderScore: result.data.data.myLeaderScore,
+          myLeaderScoreRank: result.data.data.myLeaderScoreRank,
+          myLeaderIncreaseScore: result.data.data.myLeaderIncreaseScore,
+          myLeaderIncreaseScoreRank: result.data.data.myLeaderIncreaseScoreRank
         })
       },
       fail(error) {
@@ -38,9 +47,29 @@ Page({
     })
   },
 
+  initUserInfo: function () {
+    var that = this
+    wx.getUserInfo({
+      withCredentials: false,
+      lang: '',
+      success(result) {
+        that.setData({
+          userInfo: result.userInfo
+        })
+      },
+      fail(error) {
+        util.showModel('请求失败', error)
+        console.log('request fail', error)
+      },
+      complete: function (res) {
+
+      },
+    })
+  },  
+
   onLoad: function () {
     this.getScoreDetail()
-
+    this.initUserInfo()
     var that = this;
     wx.getSystemInfo({
       success: function (res) {

@@ -107,7 +107,7 @@
                       <view class="weui-label">标题</view>
                     </view>
                     <view class="weui-cell__bd">
-                      <input name="title" class="weui-input" placeholder="请输入标题" />
+                      <input name="title" class="weui-input" placeholder="请输入复盘标题" />
                     </view>
                   </view>
                 </view>
@@ -116,8 +116,8 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell">
                 <view class="weui-cell__bd">
-                    <textarea name="studyReport" class="weui-textarea" placeholder="请输入复盘（暂不支持表情等特殊符号）" style="height: 18em" />
-                    <view class="weui-textarea-counter">0/1000</view>
+                    <textarea name="studyReport" placeholder-class="textarea" class="weui-textarea" placeholder="请输入复盘（暂不支持表情等特殊符号）。推荐格式：1、做得好的；2、需要改进的；3、我从别人身上学到的；4、其他感受" style="height: 18em" maxlength='2000'/>
+                    <view class="weui-textarea-counter">0/2000</view>
                 </view>
             </view>
         </view>

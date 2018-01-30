@@ -1,18 +1,18 @@
 <template name="scoreDetailTemplate">
-  <view class="weui-cell weui-cell_access" >
-    <view  style='padding-left:5px;width:6px'>{{rank}}</view>
+  <view class="weui-cell weui-cell_access">
+    <view style='padding-left:5px;width:6px'>{{rank}}</view>
     <view class="weui-cell__bd" style='padding-left:50px'>{{nick_name}}</view>
     <view class="weui-cell__bd" style='padding-left:100px;'>{{total_score}}
     </view>
   </view>
 </template>
 <template name="scoreDetailTemplate2">
-  <view class="weui-cell weui-cell_access" >
-    <view  style='padding-left:5px;width:6px'>{{rank}}</view>
+  <view class="weui-cell weui-cell_access">
+    <view style='padding-left:5px;width:6px'>{{rank}}</view>
     <view class="weui-cell__bd" style='padding-left:50px'>{{nick_name}}</view>
     <view class="weui-cell__bd" style='padding-left:100px;'>
-    <image src='../../images/increase.png' style='width:20px;height:16px;padding-top:0px;'></image>{{total_score}}
-    </view>  
+      <image src='../../images/increase.png' style='width:20px;height:16px;padding-top:0px;'></image>{{total_score}}
+    </view>
   </view>
 </template>
 
@@ -25,21 +25,37 @@
             <view class="weui-navbar__title">{{item}}</view>
           </view>
         </block>
+
         <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
       </view>
       <view class="weui-tab__panel">
-        
-         <!--tab3-->
+
+        <!--tab1-->
         <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
-           <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_access">
+            <view style='padding-left:5px;width:6px'>{{myLeaderScoreRank}}</view>
+            <view class="weui-cell__bd " style='padding-left:50px'>{{userInfo.nickName}}</view>
+            <view class="tooltip" >公式<text class="tooltiptext">影响积分 = 我介绍进来的会员的学习积分之和
+            学习积分 = 参会次数 + 演讲获奖次数 + 点评获奖次数 + 主持次数 + 复盘次数</text></view>
+            <view class="weui-cell__bd" style='padding-left:70px;'>{{myLeaderScore}}</view>
+            
+          </view>
+          <view class="weui-cells weui-cells_after-title">
             <block wx:for="{{leaderScore}}">
               <template is="scoreDetailTemplate" data="{{...item}}" />
             </block>
           </view>
         </view>
-        <!--tab4-->
+        <!--tab2-->
         <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
-           <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_access">
+            <view style='padding-left:5px;width:6px'>{{myLeaderIncreaseScoreRank}}</view>
+            <view class="weui-cell__bd" style='padding-left:50px'>{{userInfo.nickName}}</view>
+            <view class="weui-cell__bd" style='padding-left:100px;'>
+              <image src='../../images/increase.png' style='width:20px;height:16px;padding-top:0px;'></image>{{myLeaderIncreaseScore}}
+            </view>
+          </view>
+          <view class="weui-cells weui-cells_after-title">
             <block wx:for="{{leaderIncreaseScore}}">
               <template is="scoreDetailTemplate2" data="{{...item}}" />
             </block>

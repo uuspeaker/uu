@@ -76,4 +76,6 @@ router.get('/leaderRank', controllers.leaderRank)
 //登记复盘
 router.post('/studyReport', controllers.studyReport.post)
 router.get('/studyReport', controllers.studyReport.get)
+
+router.get('/reportShow', controllers.reportShow.get)
 module.exports = router

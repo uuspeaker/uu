@@ -1,0 +1,15 @@
+<template name="scoreDetailTemplate">
+  <view class="weui-cell weui-cell_access title">
+    <view style='padding-left:0px'>{{nick_name}}</view>
+  </view>
+  <view class="weui-article__p article">
+    <rich-text>{{study_report}}</rich-text>
+    <view class="date">{{create_date}}</view>
+  </view>
+</template>
+
+<view class="weui-cells weui-cells_after-title">
+  <block wx:for="{{studyReportData}}">
+    <template is="scoreDetailTemplate" data="{{...item}}" />
+  </block>
+</view>
