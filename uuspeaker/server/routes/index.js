@@ -78,4 +78,8 @@ router.post('/studyReport', controllers.studyReport.post)
 router.get('/studyReport', controllers.studyReport.get)
 
 router.get('/reportShow', controllers.reportShow.get)
+//给复盘点赞
+router.post('/likeReport', controllers.likeReport.post)
+router.get('/likeReport', controllers.likeReport.get)
+router.del('/likeReport', controllers.likeReport.del)
 module.exports = router

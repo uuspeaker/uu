@@ -4,14 +4,20 @@
   </view>
   <view class="weui-article__p article">
     <rich-text>{{study_report}}</rich-text>
-     <view class="weui-flex">
-    <view class="weui-flex__item date">{{create_date}}</view>
-    <view class="tooltip"><image class=" commnetImg " src='../../images/reportShow/commentTip.png'>
-    <view class="weui-flex tooltiptext" >
-    <view class="weui-flex__item" bindtap='likeArticle({{article_id}})'><image class=" commnetImg2 " src='../../images/reportShow/like.png'></image>赞</view>
-    <view class="weui-flex__item" bindtap='commentArticle({{article_id}})'><image class=" commnetImg2 " src='../../images/reportShow/comment.png'></image>评论</view>
+    <view class="weui-flex">
+      <view class="weui-flex__item date">{{create_date}}</view>
+      <view class="tooltip">
+        <image class=" commnetImg " src='../../images/reportShow/commentTip.png'>
+          <view class="weui-flex tooltiptext">
+            <view class="weui-flex__item" data-reportid='{{report_id}}' bindtap='likeArticle'>
+              <image class=" commnetImg2 " src='../../images/reportShow/like.png'></image>赞</view>
+            <view class="weui-flex__item" data-reportid="{{report_id}}" bindtap='commentArticle'>
+              <image class=" commnetImg2 " src='../../images/reportShow/comment.png'></image>评论</view>
+          </view>
+        </image>
+      </view>
     </view>
-    </image></view>
+    <view class="commentShow"><image class=" commnetImg2 " src='../../images/reportShow/like2.png'></image>{{nickNameLikeStr}}
     </view>
   </view>
 </template>
