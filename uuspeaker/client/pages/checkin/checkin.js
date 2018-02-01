@@ -23,7 +23,7 @@ Page({
     var now = new Date()
     var meetingDateMinus = this.data.dateValue[this.data.dateIndex]
     now.setDate(now.getDate() - meetingDateMinus)
-    requestData.meetingDate = dateFormat.getFormatDate(now, 'yyyyMMdd')
+    requestData.meetingDate = dateFormat.format(now, 'yyyyMMdd')
     requestData.meetingTime = this.data.timeValue[this.data.timeIndex]
     qcloud.request({
       url: `${config.service.host}/weapp/checkin`,

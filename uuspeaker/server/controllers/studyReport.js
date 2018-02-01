@@ -7,7 +7,7 @@ module.exports = {
   post: async ctx => {
     var userId = await userInfo.getOpenId(ctx)
     var studyDate = ctx.request.body.studyDate
-    var title = ctx.request.body.title
+    //var title = ctx.request.body.title
     var studyReport = ctx.request.body.studyReport
     var reportId = uuid.v1()
 
@@ -24,7 +24,7 @@ module.exports = {
           report_id: reportId,
           user_id: userId,
           study_date: studyDate,
-          title: title,
+          //title: title,
           study_report: studyReport
         })
     }
@@ -34,7 +34,7 @@ module.exports = {
     //查询用户ID
     var userId = await userInfo.getOpenId(ctx)
     //获取用户参会明细
-    var studyReport = await mysql("user_study_report").select('report_id','study_date', 'title','study_report').where({ user_id: userId }).orderBy('study_date', 'desc')
+    var studyReport = await mysql("user_study_report").select('report_id','study_date','study_report').where({ user_id: userId }).orderBy('study_date', 'desc')
     ctx.state.data = studyReport
   }
 }

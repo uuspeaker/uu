@@ -21,7 +21,7 @@ Page({
     var now = new Date()
     var studyDateMinus = this.data.dateValue[this.data.dateIndex]
     now.setDate(now.getDate() - studyDateMinus)
-    requestData.studyDate = dateFormat.getFormatDate(now, 'yyyyMMdd')
+    requestData.studyDate = dateFormat.format(now, 'yyyyMMdd')
     //requestData.skey = session.get()
     console.log(requestData)
     qcloud.request({

@@ -42,7 +42,7 @@ Page({
     util.showBusy('请求中...')
     var that = this
     var now = new Date()
-    var meetingDate = dateFormat.getFormatDate(now, 'yyyyMMdd')
+    var meetingDate = dateFormat.format(now, 'yyyyMMdd')
     qcloud.request({
       url: `${config.service.host}/weapp/meetingApplyInfo`,
       login: true,

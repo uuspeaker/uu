@@ -17,4 +17,4 @@ var getFormatDate = (date, fmt) => {
   return date.format(fmt)
 }
 
-module.exports = { getFormatDate }
+module.exports = {format: getFormatDate }

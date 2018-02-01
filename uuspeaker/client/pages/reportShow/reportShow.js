@@ -1,6 +1,7 @@
 var qcloud = require('../../vendor/wafer2-client-sdk/index')
 var config = require('../../config')
 var util = require('../../utils/util.js')
+var dateFormat = require('../../common/dateFormat.js')
 //var uuid = require('../../vendor/wafer2-client-sdk/lib/uuid');
 
 //查询标记(0-查询最新;1-查询前面10条;2-查询后面10条)
@@ -15,7 +16,7 @@ Page({
 
   //查询最新复盘列表,包含点赞及评论
   queryStudyReport: function (e) {
-    util.showBusy('请求中...')
+    //util.showBusy('请求中...')
     var that = this
     var queryData = { 'queryFlag': queryFlag, 'firstReportTime': firstReportTime, 'lastReportTime': lastReportTime }
     console.log(queryData)
@@ -25,7 +26,7 @@ Page({
       data: queryData,
       method: 'get',
       success(result) {
-        util.showSuccess('请求成功完成')
+        //util.showSuccess('请求成功完成')
         var resultData = []
         if(queryFlag == 0){
           resultData = result.data.data
@@ -39,7 +40,10 @@ Page({
         })
         //将点赞json数组转化成单行文字
         that.arrayNamesToStr()
+        //保存第一条和最后一条数据的id,上拉和下拉的时候查询用
         that.refreshReportId()
+        //将时间格式化显示
+        that.formatDate()
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -48,10 +52,41 @@ Page({
     })
   },  
 
+  //保存第一条和最后一条数据的id,上拉和下拉的时候查询用
   refreshReportId: function(){
     var length = this.data.studyReportData.length
     firstReportTime = this.data.studyReportData[0].create_date
     lastReportTime = this.data.studyReportData[length - 1].create_date
+  },
+
+  formatDate: function(){
+    var data = this.data.studyReportData
+    var now = new Date()
+    console.log(dateFormat.format(now,'yyyyMMdd'))
+    for (var i = 0; i < data.length; i++) {
+      var likeDate = new Date(data[i].create_date)
+      var day = Math.floor((now - likeDate) / (24 * 60 * 60 * 1000))
+      var hour = Math.floor((now - likeDate) / (60 * 60 * 1000))
+      var min = Math.floor((now - likeDate) / (60 * 1000))
+      if (min <= 1){
+        data[i].createDateStr = '刚才'
+      }else if (min < 60){
+        data[i].createDateStr = min + '分钟前'
+      } else if (hour >=1 && hour < 24){       
+        data[i].createDateStr = hour + '小时前'
+      } else if (day >= 1 && day < 7) {    
+        data[i].createDateStr = day + '天前'
+      }else{
+        data[i].createDateStr = dateFormat.format(new Date(data[i].create_date), 'yyyyMMdd hh:mi')
+      }   
+      
+
+      
+      
+    }
+    this.setData({
+      studyReportData: data
+    })
   },
 
   arrayNamesToStr: function(){
@@ -67,7 +102,7 @@ Page({
           userNames = userNames + nickNameLikeList[j].nick_name
         }
       }
-      data[i].nickNameLikeStr = userNames  
+      data[i].nickNameLikeStr = userNames   
     }
     //将拼接好的点赞人显示到界面
     this.setData({
@@ -87,7 +122,7 @@ Page({
     var reportId = e.currentTarget.dataset.reportid
     var requestDate = { 'reportId': reportId, 'like': like }
     console.log(requestDate)
-    util.showBusy('请求中...')
+    //util.showBusy('请求中...')
     var that = this
     //更新点赞信息,并返回最新的点赞列表并刷新页面显示
     qcloud.request({
@@ -96,7 +131,7 @@ Page({
       data: requestDate,
       method: 'post',
       success(result) {
-        util.showSuccess('请求成功完成')
+        //util.showSuccess('请求成功完成')
         var nickNameLikeList = result.data.data
         console.log("545555555555")
         console.log(nickNameLikeList)

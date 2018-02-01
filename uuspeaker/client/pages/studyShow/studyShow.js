@@ -15,14 +15,14 @@ Page({
 
   //查询用户参会数据
   queryUserScore: function (e) {
-    util.showBusy('请求中...')
+    //util.showBusy('请求中...')
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/studyShow`,
       login: true,
       method: 'get',
       success(result) {
-        util.showSuccess('请求成功完成')
+        //util.showSuccess('请求成功完成')
         that.setData({
           scoreData: result.data.data[0],
           totalScore: result.data.data[0].totalScore

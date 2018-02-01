@@ -19,14 +19,14 @@ Page({
   },
 
   queryStudyScore: function (e) {
-    util.showBusy('请求中...')
+    //util.showBusy('请求中...')
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/studyScore`,
       login: true,
       method: 'get',
       success(result) {
-        util.showSuccess('请求成功完成')
+        //util.showSuccess('请求成功完成')
         that.setData({
           studyScoreData: result.data.data
         })
@@ -41,14 +41,14 @@ Page({
   },
 
   queryStudyDuration: function (e) {
-    util.showBusy('请求中...')
+    //util.showBusy('请求中...')
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/studyDuration`,
       login: true,
       method: 'get',
       success(result) {
-        util.showSuccess('请求成功完成')
+        //util.showSuccess('请求成功完成')
         that.setData({
           studyDurationData: result.data.data
         })
@@ -63,14 +63,14 @@ Page({
   },
 
   queryStudyReport: function (e) {
-    util.showBusy('请求中...')
+    //util.showBusy('请求中...')
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/studyReport`,
       login: true,
       method: 'get',
       success(result) {
-        util.showSuccess('请求成功完成')
+        //util.showSuccess('请求成功完成')
         that.setData({
           studyReportData: result.data.data
         })

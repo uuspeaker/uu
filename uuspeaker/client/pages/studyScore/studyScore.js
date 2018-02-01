@@ -32,7 +32,7 @@ Page({
     var now = new Date()
     var meetingDateMinus = this.data.dateValue[this.data.dateIndex]
     now.setDate(now.getDate() - meetingDateMinus)
-    requestData.meetingDate = dateFormat.getFormatDate(now, 'yyyyMMdd')
+    requestData.meetingDate = dateFormat.format(now, 'yyyyMMdd')
     requestData.meetingTime = this.data.timeValue[this.data.timeIndex]
     console.log(requestData)
     qcloud.request({
@@ -61,7 +61,7 @@ Page({
     var now = new Date()
     var studyDateMinus = this.data.dateValue[this.data.dateIndex]
     now.setDate(now.getDate() - studyDateMinus)
-    requestData.studyDate = dateFormat.getFormatDate(now, 'yyyyMMdd')
+    requestData.studyDate = dateFormat.format(now, 'yyyyMMdd')
     //requestData.skey = session.get()
     console.log(requestData)
     qcloud.request({
@@ -94,7 +94,7 @@ Page({
     // var now = new Date()
     // var studyDateMinus = this.data.dateValue[this.data.dateIndex]
     // now.setDate(now.getDate() - studyDateMinus)
-    // requestData.studyDate = dateFormat.getFormatDate(now, 'yyyyMMdd')
+    // requestData.studyDate = dateFormat.format(now, 'yyyyMMdd')
     console.log(requestData)
     qcloud.request({
       url: `${config.service.host}/weapp/studyReport`,

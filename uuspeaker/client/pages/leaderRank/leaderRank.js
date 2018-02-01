@@ -24,13 +24,13 @@ Page({
   },
 
   getScoreDetail: function () {
-    util.showBusy('请求中...')
+    //util.showBusy('请求中...')
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/leaderRank`,
       login: false,
       success(result) {
-        util.showSuccess('请求成功完成')
+        //util.showSuccess('请求成功完成')
         that.setData({
           leaderScore: result.data.data.leaderScore,
           leaderIncreaseScore: result.data.data.leaderIncreaseScore,

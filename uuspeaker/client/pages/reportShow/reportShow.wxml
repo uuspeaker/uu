@@ -2,10 +2,10 @@
   <view class="weui-cell weui-cell_access title">
     <view style='padding-left:0px'>{{nick_name}}</view>
   </view>
-  <view class="weui-article__p article">
+  <view class="weui-article__p article" style='height:100%'>
     <rich-text>{{study_report}}</rich-text>
     <view class="weui-flex">
-      <view class="weui-flex__item date">{{create_date}}</view>
+      <view class="weui-flex__item date">{{createDateStr}}</view>
       <view class="tooltip">
         <image class=" commnetImg " src='../../images/reportShow/commentTip.png'>
           <view class="weui-flex tooltiptext">
@@ -20,8 +20,14 @@
         </image>
       </view>
     </view>
+    <block wx:if="{{nickNameLikeStr!=''}}">
     <view class="commentShow"><image class=" commnetImg2 " src='../../images/reportShow/like2.png'></image>{{nickNameLikeStr}}
     </view>
+    </block>
+    <block wx:if="{{commentStr!=undefined}}">
+    <view class="commentShow"><image class=" commnetImg2 " src='../../images/reportShow/comment2.png'></image>
+    </view>
+    </block>
   </view>
 </template>
 
