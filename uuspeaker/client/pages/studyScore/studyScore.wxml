@@ -97,7 +97,7 @@
                     <view class="weui-label">日期：</view>
                   </view>
                   <view class="weui-cell__bd">
-                   <input name="studyDate" class="weui-input" placeholder="格式（20180101）" />
+                   <input name="studyDate" type="number" class="weui-input" placeholder="格式（20180101）" />
                   </view>
                 </view>
 

@@ -9,8 +9,11 @@
       <view class="tooltip">
         <image class=" commnetImg " src='../../images/reportShow/commentTip.png'>
           <view class="weui-flex tooltiptext">
-            <view class="weui-flex__item" data-reportid='{{report_id}}' bindtap='likeArticle'>
-              <image class=" commnetImg2 " src='../../images/reportShow/like.png'></image>赞</view>
+            <view class="weui-flex__item" data-reportid='{{report_id}}' data-like='{{like}}' bindtap='likeArticle'>
+              <image class=" commnetImg2 " src='../../images/reportShow/like.png'></image>
+              <text wx:if="{{like==0}}">赞</text>
+              <text wx:if="{{like==1}}">取消</text>
+              </view>
             <view class="weui-flex__item" data-reportid="{{report_id}}" bindtap='commentArticle'>
               <image class=" commnetImg2 " src='../../images/reportShow/comment.png'></image>评论</view>
           </view>

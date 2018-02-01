@@ -8,22 +8,18 @@
     "pages/studyDetail/studyDetail",
     "pages/scoreManage/scoreManage",   
     "pages/checkin/checkin",
-    "pages/studyManage/studyManage",
-    
+    "pages/studyManage/studyManage", 
     "pages/studyShow/studyShow",
     "pages/index2/index2",
     "pages/index/index",
     "pages/meeting/meeting",
     "pages/scoreDetail/scoreDetail",
-    "pages/scoreRank/scoreRank",
-    
+    "pages/scoreRank/scoreRank",  
     "pages/meetingApplyInfo/meetingApplyInfo",
     "pages/userStudyRank/userStudyRank",    
     "pages/userInfo/userInfo",   
     "pages/leaderPower/leaderPower",
-    "pages/leaderDetail/leaderDetail"
-    
-    
+    "pages/leaderDetail/leaderDetail" 
   ],
   "tabBar": {  
    "color": "#a9b7b7",  
@@ -62,6 +58,7 @@
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#F6F6F6",
     "navigationBarTitleText": "懂你演讲",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle":"black",
+    "enablePullDownRefresh": true
   }
 }

@@ -3,62 +3,62 @@ var config = require('../../config')
 var util = require('../../utils/util.js')
 //var uuid = require('../../vendor/wafer2-client-sdk/lib/uuid');
 
-var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
+//查询标记(0-查询最新;1-查询前面10条;2-查询后面10条)
+var queryFlag = 0
+var firstReportTime= ''
+var lastReportTime = ''
 
 Page({
   data: {
-    studyReportData: {}
+    studyReportData: []
   },
 
+  //查询最新复盘列表,包含点赞及评论
   queryStudyReport: function (e) {
     util.showBusy('请求中...')
     var that = this
+    var queryData = { 'queryFlag': queryFlag, 'firstReportTime': firstReportTime, 'lastReportTime': lastReportTime }
+    console.log(queryData)
     qcloud.request({
       url: `${config.service.host}/weapp/reportShow`,
       login: true,
+      data: queryData,
       method: 'get',
       success(result) {
         util.showSuccess('请求成功完成')
+        var resultData = []
+        if(queryFlag == 0){
+          resultData = result.data.data
+        }else if(queryFlag == 1){
+          resultData = [].concat(result.data.data,that.data.studyReportData)
+        }else if(queryFlag ==2){
+          resultData = [].concat(that.data.studyReportData,result.data.data)
+        }
         that.setData({
-          studyReportData: result.data.data
+          studyReportData: resultData
         })
-        that.initNames()
+        //将点赞json数组转化成单行文字
+        that.arrayNamesToStr()
+        that.refreshReportId()
       },
       fail(error) {
         util.showModel('请求失败', error);
         console.log('request fail', error);
       }
     })
+  },  
+
+  refreshReportId: function(){
+    var length = this.data.studyReportData.length
+    firstReportTime = this.data.studyReportData[0].create_date
+    lastReportTime = this.data.studyReportData[length - 1].create_date
   },
 
-  showReportComment: function(){
-    that = this
-    for (var i = 0; i < this.studyReportData.length; i++){
-      qcloud.request({
-        url: `${config.service.host}/weapp/reportLike`,
-        login: true,
-        method: 'get',
-        success(result) {
-          util.showSuccess('请求成功完成')
-          that.setData({
-            reportLikeData: result.data.data
-          })
-          
-        },
-        fail(error) {
-          util.showModel('请求失败', error);
-          console.log('request fail', error);
-        }
-      })
-    }
-  },
-
-  initNames: function(){
-    console.log(this.data.studyReportData.length)
+  arrayNamesToStr: function(){
     var data = this.data.studyReportData
+     //遍历每一个复盘,将将复盘的所有点赞的人拼接成一条记录,逗号分割
     for (var i = 0; i < data.length; i++) {
       var userNames = ''
-      //将所有点赞的人拼接成一条记录
       var nickNameLikeList = data[i].nickNameLikeList
       for (var j = 0; j < nickNameLikeList.length; j++) {
         if (j != nickNameLikeList.length - 1) {
@@ -69,33 +69,39 @@ Page({
       }
       data[i].nickNameLikeStr = userNames  
     }
+    //将拼接好的点赞人显示到界面
     this.setData({
       studyReportData: data
     })
   },
 
+  //给复盘点赞
   likeArticle: function(e){
-    var like = this.data.studyReportData.like
+    var like = e.currentTarget.dataset.like
+    //每点击一次,点赞或者取消点赞
     if (like == 1){
       like = 0
     }else{
       like = 1
     }
     var reportId = e.currentTarget.dataset.reportid
-    //this.refreshLike(reportId)
-    console.log(reportId)
+    var requestDate = { 'reportId': reportId, 'like': like }
+    console.log(requestDate)
     util.showBusy('请求中...')
     var that = this
+    //更新点赞信息,并返回最新的点赞列表并刷新页面显示
     qcloud.request({
       url: `${config.service.host}/weapp/likeReport`,
       login: true,
-      data: {'like':like},
+      data: requestDate,
       method: 'post',
-      data: {reportId: reportId},
       success(result) {
         util.showSuccess('请求成功完成')
         var nickNameLikeList = result.data.data
-        that.updateReportLikeUser(reportId, nickNameLikeList, like)
+        console.log("545555555555")
+        console.log(nickNameLikeList)
+        //用最新的点赞信息刷新页面显示(只刷新当前这条记录的数据)
+        that.updateCurrentLikeUser(reportId, nickNameLikeList, like)
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -104,23 +110,38 @@ Page({
     })
   },
 
-  updateReportLikeUser: function (reportId, nickNameLikeList,like){
+  updateCurrentLikeUser: function (reportId, nickNameLikeList,like){
     var data = this.data.studyReportData
     for (var i = 0; i < data.length; i++) {
-      if (data[i].report_id = reportId){
+      if (data[i].report_id == reportId){
         data[i].nickNameLikeList = nickNameLikeList
         data[i].like = like
         this.setData({
           studyReportData: data
         })
+        break
       }
     }
-    this.initNames()
+    this.arrayNamesToStr()
   },
 
   onLoad: function (e) {
+    queryFlag = 0
     this.queryStudyReport()
     //console.log(uuid.v1())
   },
+
+
+  onPullDownRefresh: function () {
+    queryFlag = 1
+    this.queryStudyReport()
+  },
+
+  onReachBottom: function () {
+    queryFlag = 2
+    this.queryStudyReport()
+  },
+
+  
 
 });
