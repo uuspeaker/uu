@@ -86,9 +86,9 @@ Page({
       var nickNameLikeList = data[i].nickNameLikeList
       for (var j = 0; j < nickNameLikeList.length; j++) {
         if (j != nickNameLikeList.length - 1) {
-          userNames = userNames + nickNameLikeList[j].nick_name + '，'
+          userNames = userNames + nickNameLikeList[j].user_info.nickName + '，'
         } else {
-          userNames = userNames + nickNameLikeList[j].nick_name
+          userNames = userNames + nickNameLikeList[j].user_info.nickName
         }
       }
       data[i].nickNameLikeStr = userNames   

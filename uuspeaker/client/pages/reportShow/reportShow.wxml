@@ -1,13 +1,19 @@
 <template name="commentTemplate">
   <view class="weui-flex">
-    <view class="commentTitle ">{{nick_name}}：</view>
+    <view class="commentTitle ">{{user_info.nickName}}：</view>
     <view class="commentText ">{{comment}}</view>
   </view>
 </template>
 
 <template name="scoreDetailTemplate">
+  <view class="weui-cell">
+      <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+        <image class="user-pic" src="{{user_info.avatarUrl}}"  />
+      </view>
+      <view class="weui-cell__bd">
   <view class="weui-cell weui-cell_access title">
-    <view style='padding-left:0px'>{{nick_name}}</view>
+  
+    <view style='padding-left:0px'>{{user_info.nickName}}</view>
   </view>
   <view class="weui-article__p article" style='height:100%'>
     <rich-text>{{study_report}}</rich-text>
@@ -35,8 +41,8 @@
     <block wx:for="{{commentList}}" wx:for-item="item">
     <template is="commentTemplate" data="{{...item}}" />
   </block>
-  </view>
-
+  </view></view>
+</view>
 </template>
 
 <view class="weui-cells weui-cells_after-title" >

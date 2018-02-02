@@ -1,5 +1,10 @@
 /* pages/studyDetail/studyDetail.wxss */
-
+.user-pic{
+width: 40px; 
+height: 40px; 
+display: block;
+border-radius: 3px;
+}
 .title {
   padding-left: 15px;
   font-size: 15px;
@@ -29,14 +34,14 @@
 }
 
 .commentImg{
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   padding-right: 10px;
 }
 
 .commentImg2{
-  width: 15px;
-  height: 15px;
+  width: 12px;
+  height: 12px;
   padding-right: 5px;
   padding-top: 3px;
 }
@@ -48,9 +53,9 @@
 
 .tooltip .tooltiptext {
     visibility: hidden;
-    width: 150px;
-    height: 20px;
-    background-color: grey;
+    width: 130px;
+    height: 18px;
+    background-color: #353535;
     color: #fff;
     text-align: center;
     border-radius: 6px;

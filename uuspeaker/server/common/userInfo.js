@@ -6,4 +6,13 @@ var getOpenId = async (ctx) => {
   return openIds[0].open_id
 }
 
-module.exports = { getOpenId}
+var getUserInfo =  (userInfoStr) => {
+  //return JSON.parse(userInfoStr)
+  var userInfoTmp = JSON.parse(userInfoStr)
+  var userInfo = {}
+  userInfo.nickName = userInfoTmp.nickName
+  userInfo.avatarUrl = userInfoTmp.avatarUrl
+  return userInfo
+}
+
+module.exports = { getOpenId,getUserInfo}

@@ -25,8 +25,11 @@ module.exports = {
         })
     }
     //获取用户参会明细
-    var reportLikeList = await mysql("user_report_like").innerJoin('user_base_info', 'user_base_info.user_id', 'user_report_like.user_id').select('user_base_info.user_id', 'user_base_info.nick_name').where({ 'user_report_like.report_id': reportId })
+    var reportLikeList = await mysql("user_report_like").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_report_like.user_id').select('user_report_like.user_id', 'cSessionInfo.user_info').where({ 'user_report_like.report_id': reportId })
     ctx.state.data = reportLikeList
+    for (var j = 0; j < reportLikeList.length; j++) {
+      reportLikeList[j].user_info = userInfo.getUserInfo(reportLikeList[j].user_info)
+    }  
 
   },
 
