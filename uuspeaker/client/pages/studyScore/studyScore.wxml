@@ -138,7 +138,7 @@
                       <view class="weui-label">学习时长</view>
                     </view>
                     <view class="weui-cell__bd">
-                      <input name="studyDuration" class="weui-input" placeholder="请输入学习时长（分钟）" />
+                      <input name="studyDuration" type="number" class="weui-input" placeholder="请输入学习时长（分钟）" />
                     </view>
                   </view>
                 </view>

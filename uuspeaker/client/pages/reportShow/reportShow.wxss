@@ -28,13 +28,13 @@
   width: 20px;
 }
 
-.commnetImg{
+.commentImg{
   width: 25px;
   height: 25px;
   padding-right: 10px;
 }
 
-.commnetImg2{
+.commentImg2{
   width: 15px;
   height: 15px;
   padding-right: 5px;
@@ -68,7 +68,7 @@
     visibility: visible;
 }
 
-.commentShow{
+.commentLike{
   background-color: #F6F6F6;
   padding-top: 5px;
   padding-left: 5px;
@@ -78,3 +78,19 @@
   height: 25px;
   vertical-align: center;
 }
+.commentTitle{
+  font-size: 13px;
+  font-weight: bold;
+  color: #576b95;
+}
+.commentText{
+  padding-right: 5px;
+  font-size: 13px;
+}
+.textarea{
+  height:60px;
+}
+/*
+评论模块样式
+*/
+

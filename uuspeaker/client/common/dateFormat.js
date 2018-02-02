@@ -1,4 +1,4 @@
-var getFormatDate = (date, fmt) => {
+var format = (date, fmt) => {
   Date.prototype.format = function (fmt) { //author: meizz 
     var o = {
       "M+": this.getMonth() + 1, //月份 
@@ -17,4 +17,23 @@ var getFormatDate = (date, fmt) => {
   return date.format(fmt)
 }
 
-module.exports = {format: getFormatDate }
+var getTimeNotice= function(noticeDate) {
+  var now = new Date()
+  var targetDate = new Date(noticeDate)
+  var day = Math.floor((now - targetDate) / (24 * 60 * 60 * 1000))
+  var hour = Math.floor((now - targetDate) / (60 * 60 * 1000))
+  var min = Math.floor((now - targetDate) / (60 * 1000))
+  if (min <= 1) {
+    return '刚才'
+  } else if (min < 60) {
+    return min + '分钟前'
+  } else if (hour >= 1 && hour < 24) {
+    return hour + '小时前'
+  } else if (day >= 1 && day < 7) {
+    return day + '天前'
+  } else {
+    return dateFormat.format(noticeDate, 'yyyyMMdd hh:mi')
+  }
+}
+
+module.exports = { format, getTimeNotice}

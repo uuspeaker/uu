@@ -1,3 +1,10 @@
+<template name="commentTemplate">
+  <view class="weui-flex">
+    <view class="commentTitle ">{{nick_name}}：</view>
+    <view class="commentText ">{{comment}}</view>
+  </view>
+</template>
+
 <template name="scoreDetailTemplate">
   <view class="weui-cell weui-cell_access title">
     <view style='padding-left:0px'>{{nick_name}}</view>
@@ -7,32 +14,37 @@
     <view class="weui-flex">
       <view class="weui-flex__item date">{{createDateStr}}</view>
       <view class="tooltip">
-        <image class=" commnetImg " src='../../images/reportShow/commentTip.png'>
+        <image class=" commentImg " src='../../images/reportShow/commentTip.png'>
           <view class="weui-flex tooltiptext">
             <view class="weui-flex__item" data-reportid='{{report_id}}' data-like='{{like}}' bindtap='likeArticle'>
-              <image class=" commnetImg2 " src='../../images/reportShow/like.png'></image>
+              <image class=" commentImg2 " src='../../images/reportShow/like.png'></image>
               <text wx:if="{{like==0}}">赞</text>
               <text wx:if="{{like==1}}">取消</text>
-              </view>
-            <view class="weui-flex__item" data-reportid="{{report_id}}" bindtap='commentArticle'>
-              <image class=" commnetImg2 " src='../../images/reportShow/comment.png'></image>评论</view>
+            </view>
+            <view class="weui-flex__item" data-reportid="{{report_id}}" bindtap='showCommentView'>
+              <image class=" commentImg2 " src='../../images/reportShow/comment.png'></image>评论</view>
           </view>
         </image>
       </view>
     </view>
     <block wx:if="{{nickNameLikeStr!=''}}">
-    <view class="commentShow"><image class=" commnetImg2 " src='../../images/reportShow/like2.png'></image>{{nickNameLikeStr}}
-    </view>
+      <view class="commentLike">
+        <image class=" commentImg2 " src='../../images/reportShow/like2.png'></image>{{nickNameLikeStr}}
+      </view>
     </block>
-    <block wx:if="{{commentStr!=undefined}}">
-    <view class="commentShow"><image class=" commnetImg2 " src='../../images/reportShow/comment2.png'></image>
-    </view>
-    </block>
+    <block wx:for="{{commentList}}" wx:for-item="item">
+    <template is="commentTemplate" data="{{...item}}" />
+  </block>
   </view>
+
 </template>
 
-<view class="weui-cells weui-cells_after-title">
+<view class="weui-cells weui-cells_after-title" >
   <block wx:for="{{studyReportData}}">
     <template is="scoreDetailTemplate" data="{{...item}}" />
   </block>
 </view>
+
+<modal hidden="{{!showComment}}" title="请输入评论" confirm-text="提交" cancel-text="取消" bindcancel="cancelComment" bindconfirm="saveComment">
+  <textarea class="textarea" id="comment" placeholder="请输入内容"  bindinput="setCommentValue" value='{{commentValue}}' auto-focus> </textarea>
+</modal>

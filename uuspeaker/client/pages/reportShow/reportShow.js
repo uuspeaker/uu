@@ -8,10 +8,13 @@ var dateFormat = require('../../common/dateFormat.js')
 var queryFlag = 0
 var firstReportTime= ''
 var lastReportTime = ''
+var commentReportId = ''
 
 Page({
   data: {
-    studyReportData: []
+    studyReportData: [],
+    showComment: false,
+    commentValue: ''
   },
 
   //查询最新复盘列表,包含点赞及评论
@@ -61,28 +64,14 @@ Page({
 
   formatDate: function(){
     var data = this.data.studyReportData
-    var now = new Date()
-    console.log(dateFormat.format(now,'yyyyMMdd'))
     for (var i = 0; i < data.length; i++) {
       var likeDate = new Date(data[i].create_date)
-      var day = Math.floor((now - likeDate) / (24 * 60 * 60 * 1000))
-      var hour = Math.floor((now - likeDate) / (60 * 60 * 1000))
-      var min = Math.floor((now - likeDate) / (60 * 1000))
-      if (min <= 1){
-        data[i].createDateStr = '刚才'
-      }else if (min < 60){
-        data[i].createDateStr = min + '分钟前'
-      } else if (hour >=1 && hour < 24){       
-        data[i].createDateStr = hour + '小时前'
-      } else if (day >= 1 && day < 7) {    
-        data[i].createDateStr = day + '天前'
-      }else{
-        data[i].createDateStr = dateFormat.format(new Date(data[i].create_date), 'yyyyMMdd hh:mi')
-      }   
-      
-
-      
-      
+      data[i].createDateStr = dateFormat.getTimeNotice(likeDate) 
+      var commentData = data[i].commentList
+      for (var j = 0; j < commentData.length; j++) {
+        var commentDate = new Date(commentData[j].create_date)
+        commentData[j].createDateStr = dateFormat.getTimeNotice(commentDate) 
+      }
     }
     this.setData({
       studyReportData: data
@@ -97,7 +86,7 @@ Page({
       var nickNameLikeList = data[i].nickNameLikeList
       for (var j = 0; j < nickNameLikeList.length; j++) {
         if (j != nickNameLikeList.length - 1) {
-          userNames = userNames + nickNameLikeList[j].nick_name + ','
+          userNames = userNames + nickNameLikeList[j].nick_name + '，'
         } else {
           userNames = userNames + nickNameLikeList[j].nick_name
         }
@@ -160,6 +149,73 @@ Page({
     this.arrayNamesToStr()
   },
 
+  setCommentValue: function(e){
+    this.setData({
+      commentValue : e.detail.value
+    })
+    
+  },
+
+  //点击评论显示评论框
+  showCommentView: function(e){
+    commentReportId = e.target.dataset.reportid
+    this.setData({
+      showComment: true
+    })
+  },
+
+  //点击提交更新评论并隐藏评论框
+  saveComment: function(){
+    var requestDate = { 'reportId': commentReportId, 'comment': this.data.commentValue }
+    console.log(requestDate)
+    //util.showBusy('请求中...')
+    var that = this
+    //更新点赞信息,并返回最新的点赞列表并刷新页面显示
+    qcloud.request({
+      url: `${config.service.host}/weapp/commentReport`,
+      login: true,
+      data: requestDate,
+      method: 'post',
+      success(result) {
+        //util.showSuccess('请求成功完成')
+        var commentList = result.data.data
+        console.log("545555555555")
+        console.log(commentList)
+        //用最新的评论信息刷新页面显示(只刷新当前这条记录的数据)
+        that.updateCurrentComment(commentReportId, commentList)
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+    that.setData({
+      showComment: false,
+      commentValue: ''
+    })
+  },
+
+  //提交评论后，更新界面的评论信息
+  updateCurrentComment: function (reportId, commentList){
+    var data = this.data.studyReportData
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].report_id == reportId) {
+        data[i].commentList = commentList
+        this.setData({
+          studyReportData: data
+        })
+        break
+      }
+    }
+  },
+
+  //点击取消隐藏评论框
+  cancelComment: function(e){
+    this.setData({
+      showComment: false
+    })
+  },
+
   onLoad: function (e) {
     queryFlag = 0
     this.queryStudyReport()
@@ -169,12 +225,12 @@ Page({
 
   onPullDownRefresh: function () {
     queryFlag = 1
-    this.queryStudyReport()
+    this.onLoad()
   },
 
   onReachBottom: function () {
     queryFlag = 2
-    this.queryStudyReport()
+    this.onLoad()
   },
 
   

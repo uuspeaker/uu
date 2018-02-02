@@ -82,4 +82,6 @@ router.get('/reportShow', controllers.reportShow.get)
 router.post('/likeReport', controllers.likeReport.post)
 router.get('/likeReport', controllers.likeReport.get)
 router.del('/likeReport', controllers.likeReport.del)
+//给复盘评论
+router.post('/commentReport', controllers.commentReport.post)
 module.exports = router
