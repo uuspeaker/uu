@@ -29,6 +29,7 @@ Page({
       data: queryData,
       method: 'get',
       success(result) {
+        if (result.data.data == '')return;
         //util.showSuccess('请求成功完成')
         var resultData = []
         if(queryFlag == 0){

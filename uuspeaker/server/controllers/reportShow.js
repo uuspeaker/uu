@@ -5,7 +5,7 @@ const dateUtil = require('../common/dateUtil.js')
 module.exports = {
 
   get: async ctx => {
-    var userId = userInfo.getOpenId()
+    var userId = await userInfo.getOpenId(ctx)
     var limit = 5
     var offset = 0
     var queryFlag = ctx.query.queryFlag

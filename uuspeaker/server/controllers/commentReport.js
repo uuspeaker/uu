@@ -18,8 +18,11 @@ module.exports = {
         })
 
     //获取用户评论明细
-      var reportCommentList = await mysql("user_report_comment").innerJoin('user_base_info', 'user_base_info.user_id', 'user_report_comment.user_id').select('user_base_info.user_id', 'user_base_info.nick_name', 'user_report_comment.comment_id','user_report_comment.comment','user_report_comment.create_date').where({ 'user_report_comment.report_id': reportId })
+      var reportCommentList = await mysql("user_report_comment").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_report_comment.user_id').select('user_report_comment.user_id', 'cSessionInfo.user_info', 'user_report_comment.comment_id','user_report_comment.comment','user_report_comment.create_date').where({ 'user_report_comment.report_id': reportId })
       ctx.state.data = reportCommentList  
+      for (var j = 0; j < reportCommentList.length; j++) {
+        reportCommentList[j].user_info = userInfo.getUserInfo(reportCommentList[j].user_info)
+      } 
 
   },
 
