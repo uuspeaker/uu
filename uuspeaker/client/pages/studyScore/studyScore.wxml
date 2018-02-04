@@ -88,35 +88,9 @@
             </form>
           </view>
         </view>
-        <!--tab2 复盘-->
-        <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
-          <form bindsubmit="studyReport">
-              <view class="weui-cells weui-cells_after-title">
-                <view class="weui-cell weui-cell_select">
-                  <view class="weui-cell__hd weui-cell__hd_in-select-after">
-                    <view class="weui-label">日期：</view>
-                  </view>
-                  <view class="weui-cell__bd">
-                   <input name="studyDate" type="number" class="weui-input" placeholder="格式（20180101）" />
-                  </view>
-                </view>
-
-              
-              </view>
-
-        <view class="weui-cells weui-cells_after-title">
-            <view class="weui-cell">
-                <view class="weui-cell__bd">
-                    <textarea name="studyReport" placeholder-class="textarea" class="weui-textarea" placeholder="请输入复盘（暂不支持表情等特殊符号）。推荐格式：1、做得好的；2、需要改进的；3、我从别人身上学到的；4、其他感受" style="height: 20em" maxlength='2000'/>
-                    <view class="weui-textarea-counter">0/2000</view>
-                </view>
-            </view>
-        </view>
-              <button class="weui-btn" type="primary" data-action='post' formType="submit">保存</button>
-            </form>
-        </view>
+        
         <!--tab3 登记学习时长-->
-        <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
+        <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
          
             <form bindsubmit="studyDuration">
               <view class="weui-cells weui-cells_after-title">

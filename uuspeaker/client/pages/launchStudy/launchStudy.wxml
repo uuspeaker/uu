@@ -1,0 +1,26 @@
+<view class="weui-flex">
+  <view class="weui-flex__item welcome">
+    <view class='welcome-name'>懂你演讲</view>
+    <view class='welcome-tip'>欢迎光临</view>
+  </view>
+  <view class="weui-flex__item " >
+    <view class='introduce'>懂你介绍</view>
+    <view class='begin'>如何开始</view>
+  </view>
+</view>
+
+<view class="weui-flex__item startStudy">
+  <view >开始学习</view>
+</view>
+
+<view class="weui-flex">
+ <view class="weui-flex__item " >
+    <view class='introduce' style='background-color: rgb(107,73,192);'>懂你介绍</view>
+    <view class='begin' style='background-color: rgb(217,89,54);'>如何开始</view>
+  </view>
+  <view class="weui-flex__item welcome" style='border-radius:0 0 60px 0;background-color: rgb(228,188,41); '>
+    <view class='welcome-name' style=''>懂你演讲</view>
+    <view class='welcome-tip'>欢迎光临</view>
+  </view>
+ 
+</view>

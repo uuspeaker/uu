@@ -18,7 +18,7 @@ Page({
     //util.showBusy('请求中...')
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/studyManage`,
+      url: `${config.service.host}/weapp/studyShow`,
       login: true,
       method: 'get',
       success(result) {
@@ -55,29 +55,14 @@ Page({
     })
   },
 
-  toStudyScore: function(){
-    wx.navigateTo({
-      url: '../studyScore/studyScore',
-    })
+  likeArticle: function (articleId) {
+
   },
 
-  toStudyDetail: function () {
-    wx.navigateTo({
-      url: '../studyDetail/studyDetail',
-    })
+  commentArticle: function (articleId) {
+
   },
 
-  toReportDetail: function () {
-    wx.navigateTo({
-      url: '../myReport/myReport',
-    })
-  },
-
-  toLeaderDetail: function () {
-    wx.navigateTo({
-      url: '../leaderDetail/leaderDetail',
-    })
-  },
 
   /**
    * 生命周期函数--监听页面加载

@@ -1,6 +1,8 @@
 {
   "pages":[ 
-    "pages/reportShow/reportShow",
+    "pages/launchStudy/launchStudy",
+    "pages/allReport/allReport",
+    "pages/myReport/myReport",
     "pages/leaderRank/leaderRank",
     "pages/studyRank/studyRank",
     "pages/studyScore/studyScore",
@@ -19,7 +21,8 @@
     "pages/userStudyRank/userStudyRank",    
     "pages/userInfo/userInfo",   
     "pages/leaderPower/leaderPower",
-    "pages/leaderDetail/leaderDetail" 
+    "pages/leaderDetail/leaderDetail",
+    "pages/writeArticle/writeArticle"
   ],
   "tabBar": {  
    "color": "#a9b7b7",  
@@ -28,8 +31,8 @@
    "list": [{  
      "selectedIconPath": "images/tabbar/study2.png",  
      "iconPath": "images/tabbar/study1.png",  
-     "pagePath": "pages/studyScore/studyScore",  
-     "text": "打卡"  
+     "pagePath": "pages/launchStudy/launchStudy",  
+     "text": "报名"  
    },{
     "selectedIconPath": "images/tabbar/studyRank2.png",
     "iconPath": "images/tabbar/studyRank1.png",
@@ -43,7 +46,7 @@
   },{
     "selectedIconPath": "images/tabbar/discover2.png",
     "iconPath": "images/tabbar/discover1.png",
-    "pagePath": "pages/reportShow/reportShow",
+    "pagePath": "pages/allReport/allReport",
     "text": "发现"
   },
   {

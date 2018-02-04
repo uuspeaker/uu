@@ -71,15 +71,6 @@
           </view>
         </view>
 
-        <!--tab3-->
-        <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
-          <view class="weui-cells weui-cells_after-title">
-            <block wx:for="{{studyReportData}}">
-              <template is="scoreDetailTemplate3" data="{{...item}}" />
-            </block>
-          </view>
-        </view>
-
       </view>
     </view>
   </view>

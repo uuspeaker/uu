@@ -73,15 +73,17 @@ router.get('/leaderDetail', controllers.leaderDetail.get)
 router.get('/studyRank', controllers.studyRank)
 //查询影响榜
 router.get('/leaderRank', controllers.leaderRank)
-//登记复盘
-router.post('/studyReport', controllers.studyReport.post)
-router.get('/studyReport', controllers.studyReport.get)
 
-router.get('/reportShow', controllers.reportShow.get)
+router.get('/allReport', controllers.allReport.get)
+
 //给复盘点赞
 router.post('/likeReport', controllers.likeReport.post)
 router.get('/likeReport', controllers.likeReport.get)
 router.del('/likeReport', controllers.likeReport.del)
 //给复盘评论
 router.post('/commentReport', controllers.commentReport.post)
+//我的复盘
+router.get('/myReport', controllers.myReport.get)
+router.post('/myReport', controllers.myReport.post)
+router.delete('/myReport', controllers.myReport.del)
 module.exports = router

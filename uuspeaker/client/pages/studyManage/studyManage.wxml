@@ -52,7 +52,7 @@
   <view class="page__bd">
     <view class="weui-cells__title"></view>
     <view class="weui-cells weui-cells_after-title">
-      <view class="weui-cell " bindtap='toStudyShow'>
+      <view class="weui-cell " bindtap='toStudyScore'>
         <view>
           <image src="../../images/studyManage/checkIn.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
         </view>
@@ -77,6 +77,14 @@
           <image src="../../images/studyManage/study.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
         </view>
         <view class="weui-cell__bd">我的学习</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" bindtap='toReportDetail'>
+        <view>
+          <image src="../../images/studyManage/article.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
+        <view class="weui-cell__bd">我的发言</view>
         <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
       </view>
 

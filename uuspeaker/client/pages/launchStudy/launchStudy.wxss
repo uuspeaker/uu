@@ -1,0 +1,59 @@
+
+.welcome {
+  width: 50%;
+  height: 200px;
+  background-color: rgb(228, 140,58);
+  margin: 5px;
+  border-radius:60px 0 0 0;
+  color: white;
+  box-shadow: 5px 5px 5px #888888;
+}
+.welcome-name{
+  font-size: 30px;
+  padding-top: 60px;
+  font-weight: bold;
+  text-align-last: center;
+}
+.welcome-tip{
+  font-size: 18px;
+  padding-top: 10px;
+  vertical-align: middle;
+  text-align-last: center;
+}
+.introduce{
+  width: 96%;
+  height: 90px;
+  background-color: rgb(29, 178,23858);
+  margin-top: 5px ;
+  margin-left: 2px;
+  color: white;
+  box-shadow: 5px 5px 5px #888888;
+  text-align-last: center;
+  vertical-align: middle
+}
+.begin{
+  width: 96%;
+  height: 105px;
+  background-color: rgb(136, 186, 71);
+  margin-top: 5px ;
+  margin-left: 2px;
+  color: white;
+  box-shadow: 5px 5px 5px #888888;
+  text-align-last: center;
+}
+.startStudy{
+  margin: 5px;
+  width: 97%;
+  height: 100px;
+  font-weight: bold;
+  color: white;
+  font-size: 30px;
+  text-align-last: center;
+  padding-top: 25px;
+  
+}
+
+.contact{ 
+border-radius:0 0 60px 0;background-color: rgb(228,188,41);  
+}
+

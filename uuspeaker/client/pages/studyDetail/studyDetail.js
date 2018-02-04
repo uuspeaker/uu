@@ -6,7 +6,7 @@ var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
 
 Page({
   data: {
-    tabs: ["学习积分", "学习时长", "学习复盘"],
+    tabs: ["学习积分", "学习时长"],
     activeIndex: 0,
     sliderOffset: 0,
     sliderLeft: 0,
@@ -51,28 +51,6 @@ Page({
         //util.showSuccess('请求成功完成')
         that.setData({
           studyDurationData: result.data.data
-        })
-
-        console.log(result.data.data)
-      },
-      fail(error) {
-        util.showModel('请求失败', error);
-        console.log('request fail', error);
-      }
-    })
-  },
-
-  queryStudyReport: function (e) {
-    //util.showBusy('请求中...')
-    var that = this
-    qcloud.request({
-      url: `${config.service.host}/weapp/studyReport`,
-      login: true,
-      method: 'get',
-      success(result) {
-        //util.showSuccess('请求成功完成')
-        that.setData({
-          studyReportData: result.data.data
         })
 
         console.log(result.data.data)
