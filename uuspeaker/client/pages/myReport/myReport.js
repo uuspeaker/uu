@@ -274,8 +274,7 @@ Page({
     })
   },
 
-  onLoad: function (e) {
-    queryFlag = 0
+  onLoad: function (e) {    
     this.queryStudyReport()
     //console.log(uuid.v1())
   },

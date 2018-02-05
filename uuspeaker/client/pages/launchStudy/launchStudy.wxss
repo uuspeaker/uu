@@ -81,11 +81,11 @@
   width: 97%;
   height: 100px;
   font-weight: bold;
-  font-size: 30px;
+  font-size: 42px;
   text-align: center;
-  padding-top: 12px;
-  opacity:0.6;
-  border-radius: 0px;
+  padding-top: 3px;
+  opacity:1;
+  color:grey;
 }
 
 .contact {

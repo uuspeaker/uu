@@ -12,20 +12,21 @@ Page({
     userInfo: {},
     totalScore: 0,
     viewStyle:[],
+    textStyle: [],
     isChecked:true
   },
 
   initViewStyle: function(){
     var initViewStyle = new Array(10)
     for (var i = 0; i < initViewStyle.length; i++){
-      initViewStyle[i] = 'box-shadow: 2px 2px 5px 2px #888888'
+      initViewStyle[i] = 'box-shadow: 2px 2px 5px 2px #888888;text-shadow: 1px 1px 1px silver;'
     }   
     this.setData({
       viewStyle: initViewStyle
     })
   },
 
-  pressDown: function(e){
+  pressView: function(e){
     var index = e.currentTarget.dataset.item
     console.log(index)
     var tmpViewStyle = this.data.viewStyle
@@ -34,7 +35,29 @@ Page({
       viewStyle: tmpViewStyle
     })
     var that = this
-    setTimeout(this.initViewStyle, 220); 
+    setTimeout(this.initViewStyle, 200); 
+  },
+
+  initTextStyle: function () {
+    var tmpTextStyle = new Array(10)
+    for (var i = 0; i < tmpTextStyle.length; i++) {
+      tmpTextStyle[i] = 'text-shadow: 5px 5px 5px silver;'
+    }
+    this.setData({
+      textStyle: tmpTextStyle
+    })
+  },
+
+  pressText: function (e) {
+    var index = e.currentTarget.dataset.item
+    var tmtextStyle = this.data.textStyle
+    console.log(index)
+    tmtextStyle[index] = 'text-shadow:0px 0px 0px 0px'
+    this.setData({
+      textStyle: tmtextStyle
+    })
+    var that = this
+    setTimeout(this.initTextStyle, 250);
   },
 
 
@@ -93,9 +116,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.initUserInfo();
-    this.queryUserScore();
+    this.initUserInfo()
+    this.queryUserScore()
     this.initViewStyle()
+    this.initTextStyle()
   },
 
   /**

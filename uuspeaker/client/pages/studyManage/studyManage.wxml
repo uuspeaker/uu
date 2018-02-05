@@ -1,10 +1,10 @@
-<view class="page">
+<view class="page" >
   <view class="weui-cells weui-cells_after-title">
     <view class="weui-cell">
       <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
-        <image class="user-pic" src="{{userInfo.avatarUrl}}"  />
+        <image class="user-pic"  src="{{userInfo.avatarUrl}}"  />
       </view>
-      <view class="weui-cell__bd">
+      <view class="weui-cell__bd" >
         <view>{{userInfo.nickName}}</view>
         <view style="font-size: 13px;color: #888888;padding-top:5px">
           <text wx:if="{{totalScore == 0}}">Lv1：乞丐演讲君</text>
@@ -24,7 +24,7 @@
     <view class='line'></view>
 
     <view>
-      <view class="weui-flex" style='padding-left:15px;padding-bottom:5px'>
+      <view class="weui-flex" style='padding-left:15px;padding-bottom:5px' >
         <view class="weui-flex__item">
           <view class='small-grey'>参会</view>
           <view class="weui-flex" style='font-size:15px'>{{scoreData.meetingScore}}</view>

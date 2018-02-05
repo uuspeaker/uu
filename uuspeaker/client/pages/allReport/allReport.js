@@ -224,7 +224,6 @@ Page({
   },
 
   onLoad: function (e) {
-    queryFlag = 0
     this.queryStudyReport()
     //console.log(uuid.v1())
   },

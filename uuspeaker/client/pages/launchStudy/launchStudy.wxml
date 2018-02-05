@@ -1,17 +1,17 @@
 <view class="weui-flex">
-  <view class="weui-flex__item welcome" style="{{viewStyle[0]}}" data-item='0' bindtap='pressDown'>
-    <view class='welcome-name'>懂你演讲</view>
+  <view class="weui-flex__item welcome" style="{{viewStyle[0]}}" data-item='0' bindtap='pressView'>
+    <view class='welcome-name' >懂你演讲</view>
     <view class='welcome-tip'>欢迎光临</view>
   </view>
   <view class="weui-flex__item ">
-    <view class='guideline' style="{{viewStyle[1]}}" data-item='1' bindtap='pressDown'>
+    <view class='guideline' style="{{viewStyle[1]}}" data-item='1' bindtap='pressView'>
         <view>
           <image class="uu-code" src='../../images/launchStudy/guideline.png'></image>
         </view>
         <view>新手试炼</view>
     </view>
 
-    <view class='advance' style="{{viewStyle[2]}}" data-item='2' bindtap='pressDown'>
+    <view class='advance' style="{{viewStyle[2]}}" data-item='2' bindtap='pressView'>
       <view>
         <view>
           <image class="uu-code2" src='../../images/launchStudy/advance.png'></image>
@@ -22,34 +22,34 @@
   </view>
 </view>
 
-<view class="weui-flex__item startStudy" data-item='9' bindtap='pressDown' style='{{viewStyle[9]}}'>
+<view class="weui-flex__item startStudy" data-item='0' bindtap='pressText' style="{{textStyle[0]}}" >
   <view class="startStudy" >开始学习</view>
 </view>
 
 <view class="weui-flex">
   <view class="weui-flex__item ">
     <view class="weui-flex">
-      <view class='speech' data-item='3' bindtap='pressDown' style='background-color: rgb(107,73,192);{{viewStyle[3]}}'>
+      <view class='speech' data-item='3' bindtap='pressView' style='background-color: rgb(107,73,192);{{viewStyle[3]}}'>
         <view>
           <image class="uu-code" src='../../images/launchStudy/impromptu.png'></image>
         </view>
         <view>即兴</view>
       </view>
-      <view class='speech' data-item='4' bindtap='pressDown' style='background-color: rgb(136, 186, 71);{{viewStyle[4]}}'>
+      <view class='speech' data-item='4' bindtap='pressView' style='background-color: rgb(136, 186, 71);{{viewStyle[4]}}'>
         <view>
           <image class="uu-code" src='../../images/launchStudy/prepare.png'></image>
         </view>
         <view style>备稿</view>
       </view>
     </view>
-    <view class='workshop' data-item='5' bindtap='pressDown' style='{{viewStyle[5]}}'>
+    <view class='workshop' data-item='5' bindtap='pressView' style='{{viewStyle[5]}}'>
       <view>
           <image class="uu-code3" src='../../images/launchStudy/workshop.png'></image>
         </view>
         <view>工作坊</view>
     </view>
   </view>
-  <view class="weui-flex__item hero" data-item='6' bindtap='pressDown' style=' {{viewStyle[6]}}'>
+  <view class="weui-flex__item hero" data-item='6' bindtap='pressView' style=' {{viewStyle[6]}}'>
     <view >
         <view style='padding-top: 40px;'>
           <image class="uu-code4" src='../../images/launchStudy/sword.png'></image>
