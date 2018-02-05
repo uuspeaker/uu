@@ -10,8 +10,33 @@ Page({
   data: {
     scoreData: {},
     userInfo: {},
-    totalScore: 0
+    totalScore: 0,
+    viewStyle:[],
+    isChecked:true
   },
+
+  initViewStyle: function(){
+    var initViewStyle = new Array(10)
+    for (var i = 0; i < initViewStyle.length; i++){
+      initViewStyle[i] = 'box-shadow: 2px 2px 5px 2px #888888'
+    }   
+    this.setData({
+      viewStyle: initViewStyle
+    })
+  },
+
+  pressDown: function(e){
+    var index = e.currentTarget.dataset.item
+    console.log(index)
+    var tmpViewStyle = this.data.viewStyle
+    tmpViewStyle[index] = 'box-shadow:0px 0px 0px 0px '
+    this.setData({
+      viewStyle: tmpViewStyle
+    })
+    var that = this
+    setTimeout(this.initViewStyle, 220); 
+  },
+
 
   //查询用户参会数据
   queryUserScore: function (e) {
@@ -70,6 +95,7 @@ Page({
   onLoad: function (options) {
     this.initUserInfo();
     this.queryUserScore();
+    this.initViewStyle()
   },
 
   /**
@@ -97,7 +123,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    
   },
 
   /**

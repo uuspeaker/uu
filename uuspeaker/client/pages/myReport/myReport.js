@@ -108,6 +108,22 @@ Page({
   },
 
   deleteArticle: function(e){
+    var that = this
+    wx.showModal({
+      title: '提示',
+      content: '确定要删除吗？',
+      success: function (sm) {
+        if (sm.confirm) {
+          that.executeDeleteArticle(e)
+        } else if (sm.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+
+  executeDeleteArticle: function(e){
+    
     var reportId = e.currentTarget.dataset.reportid
     var requestDate = { 'reportId': reportId }
     //util.showBusy('请求中...')

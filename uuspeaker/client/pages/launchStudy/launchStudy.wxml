@@ -1,26 +1,61 @@
 <view class="weui-flex">
-  <view class="weui-flex__item welcome">
+  <view class="weui-flex__item welcome" style="{{viewStyle[0]}}" data-item='0' bindtap='pressDown'>
     <view class='welcome-name'>懂你演讲</view>
     <view class='welcome-tip'>欢迎光临</view>
   </view>
-  <view class="weui-flex__item " >
-    <view class='introduce'>懂你介绍</view>
-    <view class='begin'>如何开始</view>
+  <view class="weui-flex__item ">
+    <view class='guideline' style="{{viewStyle[1]}}" data-item='1' bindtap='pressDown'>
+        <view>
+          <image class="uu-code" src='../../images/launchStudy/guideline.png'></image>
+        </view>
+        <view>新手试炼</view>
+    </view>
+
+    <view class='advance' style="{{viewStyle[2]}}" data-item='2' bindtap='pressDown'>
+      <view>
+        <view>
+          <image class="uu-code2" src='../../images/launchStudy/advance.png'></image>
+        </view>
+        <view>进阶指南</view>      
+    </view>
+    </view>
   </view>
 </view>
 
-<view class="weui-flex__item startStudy">
-  <view >开始学习</view>
+<view class="weui-flex__item startStudy" data-item='9' bindtap='pressDown' style='{{viewStyle[9]}}'>
+  <view class="startStudy" >开始学习</view>
 </view>
 
 <view class="weui-flex">
- <view class="weui-flex__item " >
-    <view class='introduce' style='background-color: rgb(107,73,192);'>懂你介绍</view>
-    <view class='begin' style='background-color: rgb(217,89,54);'>如何开始</view>
+  <view class="weui-flex__item ">
+    <view class="weui-flex">
+      <view class='speech' data-item='3' bindtap='pressDown' style='background-color: rgb(107,73,192);{{viewStyle[3]}}'>
+        <view>
+          <image class="uu-code" src='../../images/launchStudy/impromptu.png'></image>
+        </view>
+        <view>即兴</view>
+      </view>
+      <view class='speech' data-item='4' bindtap='pressDown' style='background-color: rgb(136, 186, 71);{{viewStyle[4]}}'>
+        <view>
+          <image class="uu-code" src='../../images/launchStudy/prepare.png'></image>
+        </view>
+        <view style>备稿</view>
+      </view>
+    </view>
+    <view class='workshop' data-item='5' bindtap='pressDown' style='{{viewStyle[5]}}'>
+      <view>
+          <image class="uu-code3" src='../../images/launchStudy/workshop.png'></image>
+        </view>
+        <view>工作坊</view>
+    </view>
   </view>
-  <view class="weui-flex__item welcome" style='border-radius:0 0 60px 0;background-color: rgb(228,188,41); '>
-    <view class='welcome-name' style=''>懂你演讲</view>
-    <view class='welcome-tip'>欢迎光临</view>
+  <view class="weui-flex__item hero" data-item='6' bindtap='pressDown' style=' {{viewStyle[6]}}'>
+    <view >
+        <view style='padding-top: 40px;'>
+          <image class="uu-code4" src='../../images/launchStudy/sword.png'></image>
+        </view>
+        <view>英雄大会</view>
+    </view>
   </view>
- 
+
 </view>

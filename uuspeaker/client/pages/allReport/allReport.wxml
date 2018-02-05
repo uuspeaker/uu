@@ -72,5 +72,5 @@
 </view>
 
 <modal class="modal" hidden="{{!showComment}}" title="请输入评论" confirm-text="提交" cancel-text="取消" bindcancel="cancelComment" bindconfirm="saveComment">
-  <textarea class="textarea" id="comment" placeholder="请输入内容" bindinput="setCommentValue" value='{{commentValue}}' auto-focus> </textarea>
+  <textarea class="textarea" id="comment" placeholder="请输入内容" bindinput="setCommentValue" value='{{commentValue}}' > </textarea>
 </modal>
