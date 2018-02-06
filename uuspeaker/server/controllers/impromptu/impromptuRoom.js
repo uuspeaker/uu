@@ -41,7 +41,7 @@ module.exports = {
     var limit = 50
     var offset = 0
 
-    var rooms = await mysql("room_impromptu").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'room_impromptu.user_id').select('room_impromptu.*', 'cSessionInfo.user_info').where('start_date', '>=', today).orderBy('room_impromptu.create_date', 'desc').limit(limit).offset(offset)
+    var rooms = await mysql("room_impromptu").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'room_impromptu.user_id').select('room_impromptu.*', 'cSessionInfo.user_info').where('start_date', '>=', today).orderBy('room_impromptu.create_date', 'asc').limit(limit).offset(offset)
     ctx.state.data = rooms
 
     for (var i = 0; i < rooms.length; i++) {

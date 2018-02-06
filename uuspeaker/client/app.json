@@ -1,8 +1,8 @@
 {
   "pages":[ 
 
-    "pages/impromptu/impromptuIndex/impromptuIndex",
     "pages/launchStudy/launchStudy",
+    "pages/impromptu/impromptuIndex/impromptuIndex",
     "pages/impromptu/impromptuRoom/impromptuRoom",
     "pages/allReport/allReport",
     "pages/myReport/myReport",
