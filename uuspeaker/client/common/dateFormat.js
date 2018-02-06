@@ -32,8 +32,20 @@ var getTimeNotice= function(noticeDate) {
   } else if (day >= 1 && day < 7) {
     return day + '天前'
   } else {
-    return dateFormat.format(noticeDate, 'yyyyMMdd hh:mi')
+    return dateFormat.format(noticeDate, 'yyyy年MM月dd日 hh:mi')
   }
 }
 
-module.exports = { format, getTimeNotice}
+var getTimeNoticeFuture = function (noticeDate) {
+  var now = new Date()
+  var nowStr = dateFormat.format(now, 'yyyyMMdd')
+  var targetDate = new Date(noticeDate)
+  targetDateStr = dateFormat.format(now, 'targetDate')
+  if (nowStr == targetDateStr) {
+    return '今天'
+  } else {
+    return dateFormat.format(noticeDate, 'yyyy年MM月dd日')
+  }
+}
+
+module.exports = { format, getTimeNotice, getTimeNoticeFuture}

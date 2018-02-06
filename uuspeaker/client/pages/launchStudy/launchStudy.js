@@ -19,7 +19,7 @@ Page({
   initViewStyle: function(){
     var initViewStyle = new Array(10)
     for (var i = 0; i < initViewStyle.length; i++){
-      initViewStyle[i] = 'box-shadow: 2px 2px 5px 2px #888888;text-shadow: 1px 1px 1px silver;'
+      initViewStyle[i] = 'box-shadow: 2px 2px 8px 2px #888888;text-shadow: 1px 1px 1px silver;'
     }   
     this.setData({
       viewStyle: initViewStyle
@@ -60,6 +60,11 @@ Page({
     setTimeout(this.initTextStyle, 250);
   },
 
+  toImpromptu: function(){
+    wx.navigateTo({
+      url: '../impromptu/impromptuIndex/impromptuIndex',
+    })
+  },
 
   //查询用户参会数据
   queryUserScore: function (e) {

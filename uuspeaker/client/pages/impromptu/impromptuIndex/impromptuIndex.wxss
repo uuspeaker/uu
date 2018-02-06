@@ -1,0 +1,63 @@
+
+/* 任务栏样式 */
+.welcome {
+  height: 100px;
+  background-color: lightgrey;
+  margin: 3px ;
+  border-radius: 10px 10px 10px 10px;
+  color: white;
+  font-weight: bold;
+  padding-left: 5px;
+}
+
+.welcome-tip {
+  font-size: 18px;
+  padding-top: 10px;
+  text-align: center;
+}
+
+
+/* pages/studyDetail/studyDetail.wxss */
+.write{
+background-color: white;
+height: 10px;
+padding-top: 5px;
+}
+.user-pic{
+width: 40px; 
+height: 40px; 
+border-radius: 3px;
+}
+.user-avatar{
+
+  vertical-align: text-top;
+}
+.title {
+  padding-left: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #576b95;
+}
+
+.article {
+  padding-left: 15px;
+  padding-right: 5px;
+  font-size: 15px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.date {
+  padding-top: 5px;
+  font-size: 13px;
+  color: grey;
+}
+
+
+
+
+
+
+
+

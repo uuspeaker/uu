@@ -86,4 +86,8 @@ router.post('/commentReport', controllers.commentReport.post)
 router.get('/myReport', controllers.myReport.get)
 router.post('/myReport', controllers.myReport.post)
 router.delete('/myReport', controllers.myReport.del)
+//我的即兴房间
+router.get('/impromptu.impromptuRoom', controllers.impromptu.impromptuRoom.get)
+router.post('/impromptu.impromptuRoom', controllers.impromptu.impromptuRoom.post)
+router.delete('/impromptu.impromptuRoom', controllers.impromptu.impromptuRoom.del)
 module.exports = router

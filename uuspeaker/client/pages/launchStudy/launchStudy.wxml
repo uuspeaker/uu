@@ -29,7 +29,7 @@
 <view class="weui-flex">
   <view class="weui-flex__item ">
     <view class="weui-flex">
-      <view class='speech' data-item='3' bindtap='pressView' style='background-color: rgb(107,73,192);{{viewStyle[3]}}'>
+      <view class='speech' data-item='3' bindtap='toImpromptu' style='background-color: rgb(107,73,192);{{viewStyle[3]}}'>
         <view>
           <image class="uu-code" src='../../images/launchStudy/impromptu.png'></image>
         </view>

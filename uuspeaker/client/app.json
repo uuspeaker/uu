@@ -1,6 +1,9 @@
 {
   "pages":[ 
+
     "pages/launchStudy/launchStudy",
+    "pages/impromptu/impromptuIndex/impromptuIndex",
+    "pages/impromptu/impromptuRoom/impromptuRoom",
     "pages/allReport/allReport",
     "pages/myReport/myReport",
     "pages/leaderRank/leaderRank",
@@ -17,7 +20,7 @@
     "pages/meeting/meeting",
     "pages/scoreDetail/scoreDetail",
     "pages/scoreRank/scoreRank",  
-    "pages/meetingApplyInfo/meetingApplyInfo",
+    
     "pages/userStudyRank/userStudyRank",    
     "pages/userInfo/userInfo",   
     "pages/leaderPower/leaderPower",

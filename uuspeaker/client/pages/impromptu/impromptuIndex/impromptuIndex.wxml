@@ -1,0 +1,50 @@
+<!--任务栏-->
+<view class="weui-flex">
+  <view class="weui-flex__item welcome" style="{{viewStyle[0]}}" data-item='0' bindtap='pressView'>
+    <view>正常模式</view>
+  </view>
+  <view class="weui-flex__item welcome" style="{{viewStyle[1]}}" data-item='1' bindtap='pressView'>
+    <view>疯狂模式</view>
+  </view>
+  <view class="weui-flex__item welcome" style="{{viewStyle[2]}}" data-item='2' bindtap='pressView'>
+    <view>娱乐模式</view>
+  </view>
+  <view class="weui-flex__item welcome" style="{{viewStyle[3]}}" data-item='3' bindtap='pressView'>
+    <view >对抗模式</view>
+  </view>
+</view>
+<!--查询与开房-->
+<view class="weui-flex">
+  <view class="weui-flex__item welcome" style="{{viewStyle[4]}}" data-item='4' bindtap='pressView'>
+    <view >WANTED</view>
+  </view>
+  <view class="weui-flex__item welcome" style="{{viewStyle[5]}}" data-item='5' bindtap='openImpromptuRoom'>
+    <view >开房</view>
+  </view>
+</view>
+
+<!--报名展示-->
+
+
+<template name="scoreDetailTemplate">
+  <view class="weui-cell ">
+    <view class="user-avatar">
+      <image class="user-pic" src="{{user_info.avatarUrl}}" />
+    </view>
+    <view class="weui-cell__bd">
+    <view class="title">
+        <view style='padding-left:0px'>{{user_info.nickName}}[房主]</view>
+      </view>
+      <view class="article">
+        <view class=" date">{{startDateStr}}</view>
+      </view>
+    </view>
+    <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
+  </view>
+</template>
+
+<view class="weui-cells weui-cells_after-title">
+  <block wx:for="{{rooms}}">
+    <template is="scoreDetailTemplate" data="{{...item}}" />
+  </block>
+</view>
