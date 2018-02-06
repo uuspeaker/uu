@@ -12,6 +12,8 @@ Page({
     viewStyle: [],
     textStyle: [],
     rooms: [],
+    modeItems: [ '普通模式','疯狂模式', '娱乐模式','对抗模式'],
+    languageItems: ['中文', 'English']
   },
 
   initViewStyle: function () {
@@ -27,7 +29,6 @@ Page({
   pressView: function (e) {
     this.initViewStyle()
     var index = e.currentTarget.dataset.item
-    console.log(index)
     var tmpViewStyle = this.data.viewStyle
     tmpViewStyle[index] = 'box-shadow:0px 0px 0px 0px'
     this.setData({
@@ -62,8 +63,7 @@ Page({
   formatDate: function () {
     var data = this.data.rooms
     for (var i = 0; i < data.length; i++) {
-      var startDate = new Date(data[i].start_date)
-      data[i].startDateStr = dateFormat.getFutureTimeNotice(startDate)
+      data[i].startDateStr = dateFormat.getTimeNoticeFuture(data[i].start_date, data[i].start_time)  
     }
     this.setData({
       rooms: data
@@ -71,7 +71,6 @@ Page({
   },
 
   openImpromptuRoom: function () {
-    console.log(111111)
     wx.navigateTo({
       url: '../impromptuRoom/impromptuRoom',
     })
@@ -84,6 +83,10 @@ Page({
     this.initViewStyle()
     this.queryImpromptuRooms()
   },
+
+  onShow: function(){
+    this.onLoad()
+  }
 
 
 })

@@ -8,14 +8,14 @@ var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
 Page({
   data: {
     modeItems: [
-      { name: '普通模式', value: '1', checked: true},
-      { name: '疯狂模式', value: '2' },
-      { name: '娱乐模式', value: '3' },
-      { name: '对抗模式', value: '4' }
+      { name: '普通模式', value: '0', checked: true},
+      { name: '疯狂模式', value: '1' },
+      { name: '娱乐模式', value: '2' },
+      { name: '对抗模式', value: '3' }
     ],
     languageItems: [
-      { name: '中文', value: '1', checked: true },
-      { name: 'English', value: '2' }
+      { name: '中文', value: '0', checked: true },
+      { name: 'English', value: '1' }
     ],
     userInfo: {},
     startDate: dateFormat.format(new Date(), 'yyyy-MM-dd'),

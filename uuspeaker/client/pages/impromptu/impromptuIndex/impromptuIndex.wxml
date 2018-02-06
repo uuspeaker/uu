@@ -33,10 +33,16 @@
     </view>
     <view class="weui-cell__bd">
     <view class="title">
-        <view style='padding-left:0px'>{{user_info.nickName}}[房主]</view>
+        <view style='padding-left:0px'>
+        <text wx:if="{{language == 1}}">【中文】</text>
+        <text wx:if="{{mode == 2}}">【English】</text>
+        <text wx:if="{{mode == 1}}">【普通模式】</text>
+        <text wx:if="{{mode == 2}}">【疯狂模式】</text>
+        <text wx:if="{{mode == 3}}">【娱乐模式】</text>
+        <text wx:if="{{mode == 4}}">【对抗模式】</text></view>
       </view>
-      <view class="article">
-        <view class=" date">{{startDateStr}}</view>
+      <view >
+        <view class=" date">  {{startDateStr}}</view>
       </view>
     </view>
     <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>

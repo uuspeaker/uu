@@ -1,5 +1,5 @@
 <template name="commentTemplate">
-  <view class="weui-flex" style='background-color: #F6F6F6;padding-left:5px;padding-bottom:1px' style='box-shadow: 2px 2px 5px 2px #888888;'>
+  <view class="weui-flex" style='background-color: #F6F6F6;padding-left:5px;padding-bottom:1px' >
     <view class="commentTitle ">{{user_info.nickName}}：</view>
     <view class="commentText ">{{comment}}</view>
   </view>

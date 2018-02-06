@@ -1,3 +1,4 @@
+var that = this
 var format = (date, fmt) => {
   Date.prototype.format = function (fmt) { //author: meizz 
     var o = {
@@ -32,20 +33,46 @@ var getTimeNotice= function(noticeDate) {
   } else if (day >= 1 && day < 7) {
     return day + '天前'
   } else {
-    return dateFormat.format(noticeDate, 'yyyy年MM月dd日 hh:mi')
+    return this.format(noticeDate, 'yyyy年MM月dd日 hh:mi')
   }
 }
 
-var getTimeNoticeFuture = function (noticeDate) {
+var getTimeNoticeFuture = function (noticeDate,time) {
   var now = new Date()
-  var nowStr = dateFormat.format(now, 'yyyyMMdd')
+  now.setHours(0) 
+  now.setMinutes(0) 
+  now.setSeconds(0) 
+  now.setMilliseconds(0) 
   var targetDate = new Date(noticeDate)
-  targetDateStr = dateFormat.format(now, 'targetDate')
-  if (nowStr == targetDateStr) {
-    return '今天'
-  } else {
-    return dateFormat.format(noticeDate, 'yyyy年MM月dd日')
+  targetDate.setHours(0)
+  targetDate.setMinutes(0)
+  targetDate.setSeconds(0)
+  targetDate.setMilliseconds(0) 
+  var between = (targetDate - now) / (24 * 60 * 60 * 1000)
+  if (between < 0) {
+    return '已过期'
+  } else if (between == 0){
+    return '今天' + ' ' + time + '（' + this.getWeek(noticeDate) + ')'
+  } else if (between == 1) {
+    return '明天' + ' ' + time + '（' + this.getWeek(noticeDate) + ')'
+  } else if (between == 2) {
+    return '后天' + ' ' + time + '（' + this.getWeek(noticeDate) + ')'
+  }else {
+    return this.format(noticeDate, 'yyyy年MM月dd日') + '（' + this.getWeek(noticeDate) + ')'
   }
 }
 
-module.exports = { format, getTimeNotice, getTimeNoticeFuture}
+var getWeek = function(dateString) {
+  var date;
+  if (dateString == null || typeof dateString == "undefined") {
+    date = new Date();
+  } else {
+    var dateArray = dateString.split("-");
+    date = new Date(dateArray[0], parseInt(dateArray[1] - 1), dateArray[2]);
+  }
+  //var weeks = new Array("日", "一", "二", "三", "四", "五", "六");
+  //return "星期" + weeks[date.getDay()];
+  return "星期" + "日一二三四五六".charAt(date.getDay());
+}
+
+module.exports = { format, getTimeNotice, getTimeNoticeFuture,getWeek}
