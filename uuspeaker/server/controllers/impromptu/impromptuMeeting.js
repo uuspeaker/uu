@@ -1,12 +1,11 @@
 const { mysql } = require('../../qcloud')
-const userInfo = require('../../common/userInfo')
-const dateUtil = require('../../common/dateUtil')
-const uuid = require('../../common/uuid');
-var impromptuRoomService = require('../../service/impromptuRoomService');
+const userInfoService = require('../../service/userInfoService.js')
+const dateUtil = require('../../common/dateUtil.js')
+const uuid = require('../../common/uuid.js');
 
 module.exports = {
   post: async ctx => {
-    var userId = await userInfo.getOpenId(ctx)
+    var userId = await userInfoService.getOpenId(ctx)
     var mode = ctx.request.body.mode
     var language = ctx.request.body.language
     var startDate = ctx.request.body.startDate
@@ -40,7 +39,13 @@ module.exports = {
   },
 
   get: async ctx => {
-    ctx.state.data = await impromptuRoomService.getRooms()
+    var userId = ctx.query.userId
+    var roomId = ctx.query.roomId
+    ctx.state.data = {
+      'hostTotalScore': await userInfoService.getTotalScore(userId),
+    }
+
+
   },
 
 }

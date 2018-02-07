@@ -1,8 +1,8 @@
 {
-  "pages":[ 
-
+  "pages": [
     "pages/launchStudy/launchStudy",
     "pages/impromptu/impromptuIndex/impromptuIndex",
+    "pages/impromptu/impromptuMeeting/impromptuMeeting",
     "pages/impromptu/impromptuRoom/impromptuRoom",
     "pages/allReport/allReport",
     "pages/myReport/myReport",
@@ -11,60 +11,64 @@
     "pages/studyScore/studyScore",
     "pages/dataReport/dataReport",
     "pages/studyDetail/studyDetail",
-    "pages/scoreManage/scoreManage",   
+    "pages/scoreManage/scoreManage",
     "pages/checkin/checkin",
-    "pages/studyManage/studyManage", 
+    "pages/studyManage/studyManage",
     "pages/studyShow/studyShow",
     "pages/index2/index2",
     "pages/index/index",
     "pages/meeting/meeting",
     "pages/scoreDetail/scoreDetail",
-    "pages/scoreRank/scoreRank",  
-    
-    "pages/userStudyRank/userStudyRank",    
-    "pages/userInfo/userInfo",   
+    "pages/scoreRank/scoreRank",
+    "pages/userStudyRank/userStudyRank",
+    "pages/userInfo/userInfo",
     "pages/leaderPower/leaderPower",
     "pages/leaderDetail/leaderDetail",
     "pages/writeArticle/writeArticle"
   ],
-  "tabBar": {  
-   "color": "#a9b7b7",  
-   "selectedColor": "#11cd6e",  
-   "borderStyle":"white",  
-   "list": [{  
-     "selectedIconPath": "images/tabbar/study2.png",  
-     "iconPath": "images/tabbar/study1.png",  
-     "pagePath": "pages/launchStudy/launchStudy",  
-     "text": "报名"  
-   },{
-    "selectedIconPath": "images/tabbar/studyRank2.png",
-    "iconPath": "images/tabbar/studyRank1.png",
-    "pagePath": "pages/studyRank/studyRank",
-    "text": "学习榜"
-  },{
-    "selectedIconPath": "images/tabbar/leaderRank2.png",
-    "iconPath": "images/tabbar/leaderRank1.png",
-    "pagePath": "pages/leaderRank/leaderRank",
-    "text": "影响榜"
-  },{
-    "selectedIconPath": "images/tabbar/discover2.png",
-    "iconPath": "images/tabbar/discover1.png",
-    "pagePath": "pages/allReport/allReport",
-    "text": "发现"
+  "tabBar": {
+    "color": "#a9b7b7",
+    "selectedColor": "#11cd6e",
+    "borderStyle": "white",
+    "list": [
+      {
+        "selectedIconPath": "images/tabbar/study2.png",
+        "iconPath": "images/tabbar/study1.png",
+        "pagePath": "pages/launchStudy/launchStudy",
+        "text": "报名"
+      },
+      {
+        "selectedIconPath": "images/tabbar/studyRank2.png",
+        "iconPath": "images/tabbar/studyRank1.png",
+        "pagePath": "pages/studyRank/studyRank",
+        "text": "学习榜"
+      },
+      {
+        "selectedIconPath": "images/tabbar/leaderRank2.png",
+        "iconPath": "images/tabbar/leaderRank1.png",
+        "pagePath": "pages/leaderRank/leaderRank",
+        "text": "影响榜"
+      },
+      {
+        "selectedIconPath": "images/tabbar/discover2.png",
+        "iconPath": "images/tabbar/discover1.png",
+        "pagePath": "pages/allReport/allReport",
+        "text": "发现"
+      },
+      {
+        "selectedIconPath": "images/tabbar/user2.png",
+        "iconPath": "images/tabbar/user1.png",
+        "pagePath": "pages/studyManage/studyManage",
+        "text": "我的"
+      }
+    ]
   },
-  {
-    "selectedIconPath": "images/tabbar/user2.png",
-    "iconPath": "images/tabbar/user1.png",
-    "pagePath": "pages/studyManage/studyManage",
-    "text": "我的"
-  }]  
- },  
-  "window":{
-    "backgroundColor":"#F6F6F6",
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
     "navigationBarTitleText": "懂你演讲",
-    "navigationBarTextStyle":"black",
+    "navigationBarTextStyle": "black",
     "enablePullDownRefresh": true
   }
 }

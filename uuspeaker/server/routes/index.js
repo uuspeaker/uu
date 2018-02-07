@@ -90,4 +90,8 @@ router.delete('/myReport', controllers.myReport.del)
 router.get('/impromptu.impromptuRoom', controllers.impromptu.impromptuRoom.get)
 router.post('/impromptu.impromptuRoom', controllers.impromptu.impromptuRoom.post)
 router.delete('/impromptu.impromptuRoom', controllers.impromptu.impromptuRoom.del)
+//即兴会议
+router.get('/impromptu.impromptuMeeting', controllers.impromptu.impromptuMeeting.get)
+router.post('/impromptu.impromptuMeeting', controllers.impromptu.impromptuMeeting.post)
+router.delete('/impromptu.impromptuMeeting', controllers.impromptu.impromptuMeeting.del)
 module.exports = router

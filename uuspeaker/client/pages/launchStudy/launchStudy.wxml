@@ -23,7 +23,7 @@
 </view>
 
 <view class="weui-flex__item startStudy" data-item='0' bindtap='pressText' style="{{textStyle[0]}}" >
-  <view class="startStudy" >开始学习</view>
+  <view class="startStudy" >懂你演讲</view>
 </view>
 
 <view class="weui-flex">

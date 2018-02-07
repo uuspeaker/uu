@@ -1,6 +1,6 @@
-var qcloud = require('../../vendor/wafer2-client-sdk/index')
-var config = require('../../config')
-var util = require('../../utils/util.js')
+var qcloud = require('../../../vendor/wafer2-client-sdk/index')
+var config = require('../../../config')
+var util = require('../../../utils/util.js')
 
 Page({
 
@@ -14,19 +14,19 @@ Page({
   },
 
   //查询用户参会数据
-  queryUserScore: function (e) {
+  queryMeetingUser: function (data) {
     //util.showBusy('请求中...')
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/studyManage`,
+      url: `${config.service.host}/weapp/impromptu.impromptuMeeting`,
       login: true,
+      data: data,
       method: 'get',
       success(result) {
-        console.log(result.data.data)
         //util.showSuccess('请求成功完成')
         that.setData({
           scoreData: result.data.data,
-          totalScore: result.data.data.totalScore
+          totalScore: result.data.data.hostTotalScore
         })
       },
       fail(error) {
@@ -56,7 +56,7 @@ Page({
     })
   },
 
-  toStudyScore: function(){
+  toStudyScore: function () {
     wx.navigateTo({
       url: '../studyScore/studyScore',
     })
@@ -84,8 +84,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
     this.initUserInfo();
-    this.queryUserScore();
+    this.queryMeetingUser(options);
   },
 
   /**

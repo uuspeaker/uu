@@ -76,8 +76,8 @@ Page({
         that.setData({
           applyResult: result.data.data
         })
-        wx.navigateBack({
-          
+        wx.navigateTo({
+          url: '../impromptuIndex/impromptuIndex?isUpdate=true',
         })
       },
       fail(error) {

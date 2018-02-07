@@ -1,5 +1,5 @@
 <!--任务栏-->
-<view class="weui-flex">
+<view class="weui-flex" style='width:98%'>
   <view class="weui-flex__item welcome" style="{{viewStyle[0]}}" data-item='0' bindtap='pressView'>
     <view>正常模式</view>
   </view>
@@ -12,13 +12,7 @@
   <view class="weui-flex__item welcome" style="{{viewStyle[3]}}" data-item='3' bindtap='pressView'>
     <view >对抗模式</view>
   </view>
-</view>
-<!--查询与开房-->
-<view class="weui-flex">
-  <view class="weui-flex__item welcome" style="{{viewStyle[4]}}" data-item='4' bindtap='pressView'>
-    <view >WANTED</view>
-  </view>
-  <view class="weui-flex__item welcome" style="{{viewStyle[5]}}" data-item='5' bindtap='openImpromptuRoom'>
+  <view class="weui-flex__item welcome" style="{{viewStyle[4]}}" data-item='4' bindtap='openImpromptuRoom'>
     <view >开房</view>
   </view>
 </view>
@@ -27,7 +21,7 @@
 
 
 <template name="scoreDetailTemplate">
-  <view class="weui-cell ">
+  <view class="weui-cell" data-roomid='{{room_id}}' data-userid='{{user_id}}' bindtap="enterImpromptuRoom">
     <view class="user-avatar">
       <image class="user-pic" src="{{user_info.avatarUrl}}" />
     </view>
@@ -35,8 +29,8 @@
     <view class="title">
         <view style='padding-left:0px'>
         <text wx:if="{{language == 1}}">【中文】</text>
-        <text wx:if="{{mode == 2}}">【English】</text>
-        <text wx:if="{{mode == 1}}">【普通模式】</text>
+        <text wx:if="{{language == 2}}">【英文】</text>
+        <text wx:if="{{mode == 1}}">【普通模式】</text> 
         <text wx:if="{{mode == 2}}">【疯狂模式】</text>
         <text wx:if="{{mode == 3}}">【娱乐模式】</text>
         <text wx:if="{{mode == 4}}">【对抗模式】</text></view>

@@ -70,6 +70,15 @@ Page({
     })
   },
 
+  enterImpromptuRoom: function(e){
+    console.log(e)
+    var roomId = e.currentTarget.dataset.roomid
+    var userId = e.currentTarget.dataset.userid
+    wx.navigateTo({
+      url: '../impromptuMeeting/impromptuMeeting?roomId=' + roomId + "&userId=" + userId ,
+    })
+  },
+
   openImpromptuRoom: function () {
     wx.navigateTo({
       url: '../impromptuRoom/impromptuRoom',
@@ -84,9 +93,17 @@ Page({
     this.queryImpromptuRooms()
   },
 
-  onShow: function(){
+  onShow: function(options){
+    console.log(options.isUpdate)
+    if(options.isUpdate == true){
+      this.onLoad()
+    }
+    
+  },
+
+  onPullDownRefresh: function () {
     this.onLoad()
-  }
+  },
 
 
 })
