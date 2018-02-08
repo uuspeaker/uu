@@ -90,6 +90,7 @@ router.delete('/myReport', controllers.myReport.del)
 router.get('/impromptu.impromptuRoom', controllers.impromptu.impromptuRoom.get)
 router.post('/impromptu.impromptuRoom', controllers.impromptu.impromptuRoom.post)
 router.delete('/impromptu.impromptuRoom', controllers.impromptu.impromptuRoom.del)
+router.put('/impromptu.impromptuRoom', controllers.impromptu.impromptuRoom.put)
 //即兴会议
 router.get('/impromptu.impromptuMeeting', controllers.impromptu.impromptuMeeting.get)
 router.post('/impromptu.impromptuMeeting', controllers.impromptu.impromptuMeeting.post)

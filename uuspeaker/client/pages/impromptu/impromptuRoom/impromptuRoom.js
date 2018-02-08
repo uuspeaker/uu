@@ -3,8 +3,8 @@ var config = require('../../../config')
 var util = require('../../../utils/util.js')
 var dateFormat = require('../../../common/dateFormat.js')
 
-var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
-
+var roomId = ''
+var operation = ''
 Page({
   data: {
     modeItems: [
@@ -20,7 +20,10 @@ Page({
     userInfo: {},
     startDate: dateFormat.format(new Date(), 'yyyy-MM-dd'),
     startTime: '21:00',
-    endTime: '22:00'
+    endTime: '22:00',
+    notice: '',
+    mode:'',
+    language:''
 
   },
 
@@ -63,20 +66,24 @@ Page({
   },
 
   openImpromptuRoom: function (e) {
-    console.log(e.detail.value)
+    var method = 'post'
+    if (operation == 'modify'){
+      method = 'put'
+      e.detail.value.roomId = roomId
+    }
     util.showBusy('请求中...')
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.impromptuRoom`,
       data: e.detail.value,
       login: true,
-      method: 'post',
+      method: method,
       success(result) {
         util.showSuccess('请求成功完成')
         that.setData({
           applyResult: result.data.data
         })
-        wx.navigateTo({
+        wx.navigateBack({
           url: '../impromptuIndex/impromptuIndex?isUpdate=true',
         })
       },
@@ -87,8 +94,25 @@ Page({
     })
   },
 
-  onLoad: function () {
-
+  onLoad: function (options) {
+    console.log(options)
+    operation = options.operation
+    if (options.operation == 'modify'){
+      roomId = options.roomId
+      //如果是修改，则默认值为之前保存的值
+      this.data.modeItems[0].checked = false
+      this.data.languageItems[0].checked = false
+      this.data.modeItems[parseInt(options.mode) - 1].checked = true
+      this.data.languageItems[parseInt(options.language) - 1].checked = true
+      this.setData({
+        startDate: options.startDate,
+        startTime: options.startTime,
+        endTime: options.endTime,
+        notice: options.notice,
+        modeItems: this.data.modeItems,
+        languageItems: this.data.languageItems
+      })
+    }
   },
 
 });

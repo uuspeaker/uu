@@ -72,8 +72,8 @@ Page({
 
   enterImpromptuRoom: function(e){
     console.log(e)
-    var roomId = e.currentTarget.dataset.roomid
-    var userId = e.currentTarget.dataset.userid
+    var roomId = e.currentTarget.dataset.room_id
+    var userId = e.currentTarget.dataset.user_id
     wx.navigateTo({
       url: '../impromptuMeeting/impromptuMeeting?roomId=' + roomId + "&userId=" + userId ,
     })
@@ -81,7 +81,20 @@ Page({
 
   openImpromptuRoom: function () {
     wx.navigateTo({
-      url: '../impromptuRoom/impromptuRoom',
+      url: '../impromptuRoom/impromptuRoom?operation=add'
+    })
+  },
+
+  updateImpromptuRoom: function (e) {
+    wx.navigateTo({
+      url: '../impromptuRoom/impromptuRoom?operation=modify'
+      + '&roomId=' + e.currentTarget.dataset.room_id
+      + '&startDate=' + e.currentTarget.dataset.start_date
+      + '&startTime=' + e.currentTarget.dataset.start_time
+      + '&endTime=' + e.currentTarget.dataset.end_time
+      + '&mode=' + e.currentTarget.dataset.mode
+      + '&language=' + e.currentTarget.dataset.language
+      + '&notice=' + e.currentTarget.dataset.notice
     })
   },
 
@@ -94,10 +107,9 @@ Page({
   },
 
   onShow: function(options){
-    console.log(options.isUpdate)
-    if(options.isUpdate == true){
+    //if(options.isUpdate == true){
       this.onLoad()
-    }
+    //}
     
   },
 

@@ -1,11 +1,13 @@
-<view class="page" >
-  <view class="weui-cells weui-cells_after-title">
-    <view class="weui-cell">
-      <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
-        <image class="user-pic"  src="{{userInfo.avatarUrl}}"  />
-      </view>
-      <view class="weui-cell__bd" >
-        <view>{{userInfo.nickName}}</view>
+<template name="scoreDetailTemplate">
+  <view class="weui-cell" bindtap="">
+    <view class="user-avatar" style="position: relative;margin-right: 10px;">
+      <image class="user-pic" src="{{userInfo.avatarUrl}}" />
+    </view>
+    <view class="weui-cell__bd">
+      <view>{{userInfo.nickName}}
+      <text wx:if="{{role_type == 1}}">【演讲】</text>
+        <text wx:if="{{role_type == 2}}">【主持】</text>
+        </view>
         <view style="font-size: 13px;color: #888888;padding-top:5px">
           <text wx:if="{{totalScore == 0}}">Lv1：乞丐演讲君</text>
           <text wx:if="{{totalScore >= 1 && totalScore < 20}}">Lv2：贫民演讲君</text>
@@ -16,25 +18,64 @@
           <text wx:if="{{totalScore >= 300 && totalScore < 500}}">Lv7：铂金演讲君</text>
           <text wx:if="{{totalScore >= 500 && totalScore < 700}}">Lv8：钻石演讲君</text>
           <text wx:if="{{totalScore >= 700 && totalScore < 1000}}">Lv9：星耀演讲君</text>
-          <text wx:if="{{totalScore >= 1000}}">Lv10：王者演讲君】</text>
+          <text wx:if="{{totalScore >= 1000}}">Lv10：王者演讲君</text>
+        </view>
+      <view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<view class="page">
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell">
+      <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+        <image class="user-pic" src="{{userInfo.avatarUrl}}" />
+      </view>
+      <view class="weui-cell__bd">
+        <view>{{userInfo.nickName}}【房主】</view>
+        <view style="font-size: 13px;color: #888888;padding-top:5px">
+          <text wx:if="{{totalScore == 0}}">Lv1：乞丐演讲君</text>
+          <text wx:if="{{totalScore >= 1 && totalScore < 20}}">Lv2：贫民演讲君</text>
+          <text wx:if="{{totalScore >= 20 && totalScore < 50}}">Lv3：布衣演讲君</text>
+          <text wx:if="{{totalScore >= 50 && totalScore < 100}}">Lv4：青铜演讲君</text>
+          <text wx:if="{{totalScore >= 100 && totalScore < 200}}">Lv5：白银演讲君</text>
+          <text wx:if="{{totalScore >= 200 && totalScore < 300}}">Lv6：黄金演讲君</text>
+          <text wx:if="{{totalScore >= 300 && totalScore < 500}}">Lv7：铂金演讲君</text>
+          <text wx:if="{{totalScore >= 500 && totalScore < 700}}">Lv8：钻石演讲君</text>
+          <text wx:if="{{totalScore >= 700 && totalScore < 1000}}">Lv9：星耀演讲君</text>
+          <text wx:if="{{totalScore >= 1000}}">Lv10：王者演讲君</text>
         </view>
       </view>
     </view>
   </view>
 
   <view class="page__bd">
-    <view class="weui-cells__title">speaker</view>
+    <view class="weui-cells__title">公告：{{notice}}</view>
     <view class="weui-cells weui-cells_after-title">
-
-    <view class="weui-cell weui-cell_access" bindtap=''>
-        <view>
-          <image src="../../images/studyManage/target.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
-        </view>
-        <view class="weui-cell__bd">（中）</view>
-        <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
-      </view>
-
+      <block wx:for="{{meetingUser}}" wx:key="item">
+        <template is="scoreDetailTemplate" data="{{...item}}" />
+      </block>
     </view>
   </view>
-  
+
+</view>
+
+<view class="weui-flex bottom">
+<block wx:if="{{isJoin == false}}">
+  <view class="weui-flex__item " data-roletype='2' bindtap='applyMeeting'>
+    <button class="" >报名主持</button>
+  </view>
+  <view class="weui-flex__item " data-roletype='1' bindtap='applyMeeting'>
+    <button class="" type="primary" >报名演讲</button>
+  </view>
+</block>
+<block wx:if="{{isJoin == true}}">
+  <view class="weui-flex__item" bindtap='cancelMeeting'>
+    <button class="" >取消报名</button>
+  </view>
+  <view class="weui-flex__item" bindtap='toReport'>
+    <button class="" type="primary">复盘</button>
+  </view>
+</block>
 </view>

@@ -23,6 +23,12 @@ border-radius: 3px;
   word-break: break-all;
   color: grey;
 }
+.delete{
+  color: #576b95;
+  padding-left: 10px;
+  font-weight: bold;
+  font-size: 13px;
+}
 
 
 

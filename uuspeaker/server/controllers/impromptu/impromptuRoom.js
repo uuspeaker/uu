@@ -28,19 +28,53 @@ module.exports = {
 
   },
 
+  put: async ctx => {
+    var userId = await userInfo.getOpenId(ctx)
+    var roomId = ctx.request.body.roomId
+    var mode = ctx.request.body.mode
+    var language = ctx.request.body.language
+    var startDate = ctx.request.body.startDate
+    var startTime = ctx.request.body.startTime
+    var endTime = ctx.request.body.endTime
+    var notice = ctx.request.body.notice
+
+    await mysql('room_impromptu').update(
+      {
+        mode: mode,
+        language: language,
+        start_date: startDate,
+        start_time: startTime,
+        end_time: endTime,
+        notice: notice
+      }).where({
+        room_id: roomId,
+        user_id: userId
+      })
+
+  },
+
   del: async ctx => {
-    var commentId = ctx.request.body.commentId
-    var report_id = ctx.request.body.report_id
+    var roomId = ctx.request.body.roomId
+    var userId = await userInfo.getOpenId(ctx)
 
     //删除原有记录
-    await mysql('user_report_comment').where({
-      commentId: commentId,
-      report_id: reportId
+    await mysql('room_impromptu').where({
+      room_id: roomId,
+      user_id: userId
     }).del()
   },
 
   get: async ctx => {
-    ctx.state.data = await impromptuRoomService.getRooms()
+    var userId = await userInfo.getOpenId(ctx)
+    var rooms = await impromptuRoomService.getRooms()
+    for(var i=0; i<rooms.length; i++){
+      if(rooms[i].user_id == userId){
+        rooms[i].isHost = true
+      }else{
+        rooms[i].isHost = false
+      }
+    }
+    ctx.state.data = rooms
   },
 
 }

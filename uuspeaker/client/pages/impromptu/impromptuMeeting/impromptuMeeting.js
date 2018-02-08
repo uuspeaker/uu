@@ -1,15 +1,19 @@
 var qcloud = require('../../../vendor/wafer2-client-sdk/index')
 var config = require('../../../config')
 var util = require('../../../utils/util.js')
+var dateFormat = require('../../../common/dateFormat')
 
+//包含房间信息，房主信息
+var roomParams = {}
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    scoreData: {},
+    meetingUser: {},
     userInfo: {},
+    isJoin: '',
     totalScore: 0
   },
 
@@ -25,14 +29,27 @@ Page({
       success(result) {
         //util.showSuccess('请求成功完成')
         that.setData({
-          scoreData: result.data.data,
-          totalScore: result.data.data.hostTotalScore
+          meetingUser: result.data.data.meetingUser,
+          totalScore: result.data.data.hostTotalScore,
+          isJoin: result.data.data.isJoin
         })
+        that.formatDate()
       },
       fail(error) {
         util.showModel('请求失败', error);
         console.log('request fail', error);
       }
+    })
+  },
+
+  formatDate: function () {
+    var data = this.data.meetingUser
+    console.log(data)
+    for (var i = 0; i < data.length; i++) {
+      data[i].startDateStr = dateFormat.getTimeNotice(data[i].create_date)
+    }
+    this.setData({
+      meetingUser: data
     })
   },
 
@@ -56,27 +73,44 @@ Page({
     })
   },
 
-  toStudyScore: function () {
-    wx.navigateTo({
-      url: '../studyScore/studyScore',
+  applyMeeting: function(e){
+    var roleType = e.currentTarget.dataset.roletype
+    var that = this
+    var meetingParams = roomParams
+    meetingParams.roleType = roleType
+    console.log(meetingParams)
+    qcloud.request({
+      url: `${config.service.host}/weapp/impromptu.impromptuMeeting`,
+      login: true,
+      data: meetingParams,
+      method: 'post',
+      success(result) {
+        util.showSuccess('会议申请成功')
+        that.onLoad(roomParams)
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
     })
   },
 
-  toStudyDetail: function () {
-    wx.navigateTo({
-      url: '../studyDetail/studyDetail',
-    })
-  },
-
-  toReportDetail: function () {
-    wx.navigateTo({
-      url: '../myReport/myReport',
-    })
-  },
-
-  toLeaderDetail: function () {
-    wx.navigateTo({
-      url: '../leaderDetail/leaderDetail',
+  cancelMeeting: function(){
+    var that = this
+    var meetingParams = roomParams
+    qcloud.request({
+      url: `${config.service.host}/weapp/impromptu.impromptuMeeting`,
+      login: true,
+      data: meetingParams,
+      method: 'delete',
+      success(result) {
+        util.showSuccess('报名已取消')
+        that.onLoad(roomParams)
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
     })
   },
 
@@ -84,57 +118,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options)
+    roomParams = options
     this.initUserInfo();
-    this.queryMeetingUser(options);
+    this.queryMeetingUser(roomParams);
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
+  
 })

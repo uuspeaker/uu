@@ -17,3 +17,8 @@ height: 50px;
 display: block;
 border-radius: 6px;
 }
+.bottom{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}

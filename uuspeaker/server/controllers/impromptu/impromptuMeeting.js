@@ -1,51 +1,50 @@
 const { mysql } = require('../../qcloud')
-const userInfoService = require('../../service/userInfoService.js')
-const dateUtil = require('../../common/dateUtil.js')
+const userInfoService = require('../../service/userInfoService')
+const dateUtil = require('../../common/dateUtil')
 const uuid = require('../../common/uuid.js');
+var impromptuMeetingService = require('../../service/impromptuMeetingService');
 
 module.exports = {
   post: async ctx => {
     var userId = await userInfoService.getOpenId(ctx)
-    var mode = ctx.request.body.mode
-    var language = ctx.request.body.language
-    var startDate = ctx.request.body.startDate
-    var startTime = ctx.request.body.startTime
-    var endTime = ctx.request.body.endTime
-    var notice = ctx.request.body.notice
+    var roomId = ctx.request.body.roomId
+    var roleType = ctx.request.body.roleType
 
-    await mysql('room_impromptu').insert(
+    await mysql('meeting_apply').insert(
       {
-        room_id: uuid.v1(),
+        room_id: roomId,
         user_id: userId,
-        mode: mode,
-        language: language,
-        start_date: startDate,
-        start_time: startTime,
-        end_time: endTime,
-        notice: notice
+        role_type: roleType
       })
-
   },
 
   del: async ctx => {
-    var commentId = ctx.request.body.commentId
-    var report_id = ctx.request.body.report_id
+    var userId = await userInfoService.getOpenId(ctx)
+    var roomId = ctx.request.body.roomId
 
     //删除原有记录
-    await mysql('user_report_comment').where({
-      commentId: commentId,
-      report_id: reportId
+    await mysql('meeting_apply').where({
+      room_id: roomId,
+      user_id: userId,
     }).del()
   },
 
   get: async ctx => {
-    var userId = ctx.query.userId
+    var hostId = ctx.query.userId
     var roomId = ctx.query.roomId
-    ctx.state.data = {
-      'hostTotalScore': await userInfoService.getTotalScore(userId),
+    var userId = await userInfoService.getOpenId(ctx)
+    var meetingUser = await impromptuMeetingService.getMeetingUser(roomId)
+    var isJoin = false
+    for(var i=0; i<meetingUser.length; i++){
+      if(meetingUser[i].user_id == userId){
+        isJoin = true
+      }
     }
-
-
+    ctx.state.data = {
+      'hostTotalScore': await userInfoService.getTotalScore(hostId),
+      'meetingUser': meetingUser,
+      'isJoin': isJoin
+    }
   },
 
 }
