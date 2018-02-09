@@ -1,0 +1,35 @@
+<form bindsubmit="vote">
+  <view class="weui-cells__title">请选择最佳演讲者</view>
+  <view class="weui-cells weui-cells_after-title">
+    <radio-group bindchange="speakerChange" name="bestSpeaker">
+      <label class="weui-cell weui-check__label" wx:for="{{speakerUser}}" wx:key="value">
+        <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
+        <view> <image class="user-pic" src="{{item.avatarUrl}}" /></view>
+        <view class="weui-cell__bd">{{item.name}}</view>
+        <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+          <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+        </view>
+      </label>
+    </radio-group>
+  </view>
+
+  <view class="weui-cells__title">请选择最佳点评人</view>
+  <view class="weui-cells weui-cells_after-title">
+    <radio-group bindchange="evaluatorChange" name="bestEvaluator">
+      <label class="weui-cell weui-check__label" wx:for="{{evaluatorUser}}" wx:key="value">
+        <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
+        <view> <image class="user-pic" src="{{item.avatarUrl}}" /></view>
+        <view class="weui-cell__bd">{{item.name}}</view>
+        <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+          <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+        </view>
+      </label>
+    </radio-group>
+  </view>
+
+  <view class="weui-flex bottom">
+    <view class="weui-flex__item">
+      <button class="weui-btn" type="primary" formType="submit">投票</button>
+    </view>
+  </view>
+</form>

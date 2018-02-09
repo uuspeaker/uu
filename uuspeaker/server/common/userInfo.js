@@ -15,4 +15,14 @@ var getUserInfo =  (userInfoStr) => {
   return userInfo
 }
 
-module.exports = { getOpenId,getUserInfo}
+var getUserInfoWithId = (userInfoStr) => {
+  //return JSON.parse(userInfoStr)
+  var userInfoTmp = JSON.parse(userInfoStr)
+  var userInfo = {}
+  userInfo.nickName = userInfoTmp.nickName
+  userInfo.avatarUrl = userInfoTmp.avatarUrl
+  userInfo.userId = userInfoTmp.openId
+  return userInfo
+}
+
+module.exports = { getOpenId, getUserInfo, getUserInfoWithId}

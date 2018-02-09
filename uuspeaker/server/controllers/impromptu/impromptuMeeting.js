@@ -30,7 +30,7 @@ module.exports = {
   },
 
   get: async ctx => {
-    var hostId = ctx.query.userId
+    var hostId = ctx.query.hostId
     var roomId = ctx.query.roomId
     var userId = await userInfoService.getOpenId(ctx)
     var meetingUser = await impromptuMeetingService.getMeetingUser(roomId)

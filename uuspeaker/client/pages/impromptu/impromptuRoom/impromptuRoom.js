@@ -4,7 +4,6 @@ var util = require('../../../utils/util.js')
 var dateFormat = require('../../../common/dateFormat.js')
 
 var roomId = ''
-var operation = ''
 Page({
   data: {
     modeItems: [
@@ -23,8 +22,8 @@ Page({
     endTime: '22:00',
     notice: '',
     mode:'',
-    language:''
-
+    language:'',
+    operation: 'add'
   },
 
   languageChange: function (e) {
@@ -65,21 +64,57 @@ Page({
     })
   },
 
+  cancelImpromptuRoom: function(){
+    var that = this
+    wx.showModal({
+      title: '提示',
+      content: '确定要取消会议吗？',
+      success: function (sm) {
+        if (sm.confirm) {
+          that.doCancel()
+        } else if (sm.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })   
+  },
+
+  doCancel: function(){
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/impromptu.impromptuRoom`,
+      data: { 'roomId': roomId },
+      login: true,
+      method: 'delete',
+      success(result) {
+        util.showSuccess('已成功取消会议')
+        wx.navigateBack({
+          url: '../impromptuIndex/impromptuIndex?isUpdate=true',
+        })
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
   openImpromptuRoom: function (e) {
+    var requestData = e.detail.value
     var method = 'post'
-    if (operation == 'modify'){
+    if (this.data.operation == 'modify'){
       method = 'put'
-      e.detail.value.roomId = roomId
-    }
+      requestData.roomId = roomId
+    } 
     util.showBusy('请求中...')
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.impromptuRoom`,
-      data: e.detail.value,
+      data: requestData,
       login: true,
       method: method,
       success(result) {
-        util.showSuccess('请求成功完成')
+        util.showSuccess('会议申请成功')
         that.setData({
           applyResult: result.data.data
         })
@@ -96,7 +131,6 @@ Page({
 
   onLoad: function (options) {
     console.log(options)
-    operation = options.operation
     if (options.operation == 'modify'){
       roomId = options.roomId
       //如果是修改，则默认值为之前保存的值
@@ -110,7 +144,8 @@ Page({
         endTime: options.endTime,
         notice: options.notice,
         modeItems: this.data.modeItems,
-        languageItems: this.data.languageItems
+        languageItems: this.data.languageItems,
+        operation: options.operation
       })
     }
   },

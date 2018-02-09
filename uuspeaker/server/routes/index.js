@@ -95,4 +95,9 @@ router.put('/impromptu.impromptuRoom', controllers.impromptu.impromptuRoom.put)
 router.get('/impromptu.impromptuMeeting', controllers.impromptu.impromptuMeeting.get)
 router.post('/impromptu.impromptuMeeting', controllers.impromptu.impromptuMeeting.post)
 router.delete('/impromptu.impromptuMeeting', controllers.impromptu.impromptuMeeting.del)
+//即兴会议发起投票问卷
+router.get('/impromptu.impromptuSurvey', controllers.impromptu.impromptuSurvey.get)
+router.post('/impromptu.impromptuSurvey', controllers.impromptu.impromptuSurvey.post)
+//即兴会议投票
+router.post('/impromptu.impromptuVote', controllers.impromptu.impromptuVote.post)
 module.exports = router

@@ -2,6 +2,9 @@
   "pages": [
     "pages/launchStudy/launchStudy",
     "pages/impromptu/impromptuIndex/impromptuIndex",
+    "pages/impromptu/impromptuVote/impromptuVote",
+    "pages/index/index",
+    "pages/impromptu/impromptuSurvey/impromptuSurvey",
     "pages/impromptu/impromptuMeeting/impromptuMeeting",
     "pages/impromptu/impromptuRoom/impromptuRoom",
     "pages/allReport/allReport",
@@ -16,7 +19,6 @@
     "pages/studyManage/studyManage",
     "pages/studyShow/studyShow",
     "pages/index2/index2",
-    "pages/index/index",
     "pages/meeting/meeting",
     "pages/scoreDetail/scoreDetail",
     "pages/scoreRank/scoreRank",

@@ -12,21 +12,18 @@
   <view class="weui-flex__item welcome" style="{{viewStyle[3]}}" data-item='3' bindtap='pressView'>
     <view >对抗模式</view>
   </view>
-  <view class="weui-flex__item welcome" style="{{viewStyle[4]}}" data-item='4' bindtap='openImpromptuRoom'>
-    <view >开房</view>
-  </view>
 </view>
 
 <!--报名展示-->
 
 
 <template name="scoreDetailTemplate">
-  <view class="weui-cell" data-room_id='{{room_id}}' data-user_id='{{user_id}}' >
-    <view class="user-avatar" data-room_id='{{room_id}}' data-user_id='{{user_id}}' bindtap="enterImpromptuRoom">
+  <view class="weui-cell" data-room_id="{{room_id}}" data-user_id='{{user_id}}' data-start_date='{{start_date}}' data-start_time='{{start_time}}' data-end_time='{{end_time}}' data-mode='{{mode}}' data-language='{{language}}' data-notice='{{notice}}' data-is_host='{{isHost}}' data-survey_status='{{survey_status}}' bindtap="enterImpromptuRoom">
+    <view class="user-avatar" >
       <image class="user-pic" src="{{user_info.avatarUrl}}" />
     </view>
     <view class="weui-cell__bd" >
-    <view class="title" data-room_id='{{room_id}}' data-user_id='{{user_id}}' bindtap="enterImpromptuRoom">
+    <view class="title" >
         <view style='padding-left:0px'>
         <text wx:if="{{language == 1}}">【中文】</text>
         <text wx:if="{{language == 2}}">【英文】</text>
@@ -36,11 +33,11 @@
         <text wx:if="{{mode == 4}}">【对抗模式】</text></view>
       </view>
       <view >
-        <view class=" date">  {{startDateStr}}<block wx:if="{{isHost == true}}"> <text class='delete' data-room_id="{{room_id}}" data-user_id='{{user_id}}' data-start_date='{{start_date}}' data-start_time='{{start_time}}' data-end_time='{{end_time}}' data-mode='{{mode}}' data-language='{{language}}' data-notice='{{notice}}'bindtap='updateImpromptuRoom'>编辑</text> </block>
+        <view class=" date">  {{startDateStr}}<block wx:if="{{isHost == true}}"> <text class='delete' data-room_id="{{room_id}}" data-user_id='{{user_id}}' data-start_date='{{start_date}}' data-start_time='{{start_time}}' data-end_time='{{end_time}}' data-mode='{{mode}}' data-language='{{language}}' data-notice='{{notice}}' data-is_host='{{isHost}}' catchtap='updateImpromptuRoom'>编辑</text> </block>
         </view>
       </view>
     </view>
-    <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0" data-room_id='{{room_id}}' data-user_id='{{user_id}}' bindtap="enterImpromptuRoom"> </view>
+    <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0" > </view>
   </view>
 </template>
 
@@ -48,4 +45,10 @@
   <block wx:for="{{rooms}}" wx:key="item">
     <template is="scoreDetailTemplate" data="{{...item}}" />
   </block>
+</view>
+
+<view class="weui-flex bottom">
+  <view class="weui-flex__item "  bindtap='openImpromptuRoom'>
+    <button type="primary" class="" >开房</button>
+  </view>
 </view>

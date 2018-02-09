@@ -12,6 +12,7 @@ Page({
    */
   data: {
     meetingUser: {},
+    roomParams: {},
     userInfo: {},
     isJoin: '',
     totalScore: 0
@@ -114,11 +115,27 @@ Page({
     })
   },
 
+  vote: function(){
+    wx.navigateTo({
+      url: '../impromptuVote/impromptuVote?roomId=' + roomParams.roomId 
+    })
+  },
+
+  toImprmptuSurvey: function(){
+    wx.navigateTo({
+      url: '../impromptuSurvey/impromptuSurvey?roomId=' + roomParams.roomId + "&meetingUser=" + JSON.stringify(this.data.meetingUser)
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
     roomParams = options
+    this.setData({
+      roomParams: options
+    })
     this.initUserInfo();
     this.queryMeetingUser(roomParams);
   },

@@ -1,50 +1,71 @@
-<!-- 报名模板 -->
-<template name="scoreDetailTemplate">
-  <view>
-    <image src="{{logged ? userInfo.avatarUrl : './../index/user-unlogin.png'}}"  background-size="cover" class="I6"></image>
-
-    <text>{{userId}}  </text>
-    <text wx:if="{{totalScore == 0}}">【乞丐】</text>
-    <text wx:if="{{totalScore >= 1 && totalScore < 20}}">【贫民】</text>
-    <text wx:if="{{totalScore >= 20 && totalScore < 50}}">【布衣】</text>
-    <text wx:if="{{totalScore >= 50 && totalScore < 100}}">【青铜】</text>
-    <text wx:if="{{totalScore >= 100 && totalScore < 200}}">【白银】</text>
-    <text wx:if="{{totalScore >= 200 && totalScore < 300}}">【黄金】</text>
-    <text wx:if="{{totalScore >= 300 && totalScore < 500}}">【铂金】</text>
-    <text wx:if="{{totalScore >= 500 && totalScore < 700}}">【钻石】</text>
-    <text wx:if="{{totalScore >= 700 && totalScore < 1000}}">【星耀】</text>
-    <text wx:if="{{totalScore >= 1000}}">【王者】</text>
-    <text wx:if="{{meetingType == 1}}">【中文】</text>
-    <text wx:if="{{meetingType == 2}}">【英文】</text>
-    <text wx:if="{{roleType == 2}}">【主持】</text>
-
-
+<view class="weui-flex">
+  <view class="weui-flex__item" style='float:left;'>
+    <view class='guideline' style="{{viewStyle[1]}}" data-item='1' bindtap='pressView'>
+        <view>
+          <image class="uu-code" src='../../images/launchStudy/guideline.png'></image>
+        </view>
+        <view>新手试炼</view>
+    </view>
   </view>
-</template>
+  <view class="weui-flex__item" style='float:right;'>
+    <view class='guideline' style="float:right;{{viewStyle[1]}}" data-item='1' bindtap='pressView'>
+        <view>
+          <image class="uu-code" src='../../images/launchStudy/guideline.png'></image>
+        </view>
+        <view>新手试炼</view>
+    </view>
+  </view>
+</view>
 
-<block wx:if="{{userScoreDates.length > 0}}">
-<!--报名页面循环会员风采-->
-<swiper indicator-dots="{{indicatorDots}}"
-  autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-  <block wx:for="{{imgUrls}}">
-    <swiper-item>
-      <image src="{{item}}" class="img" />
-    </swiper-item>
-  </block>
-</swiper>
+<view class="weui-flex">
+  
+  <view class="weui-flex__item ">
+    <view class='guideline' style="{{viewStyle[1]}}" data-item='1' bindtap='pressView'>
+        <view>
+          <image class="uu-code" src='../../images/launchStudy/guideline.png'></image>
+        </view>
+        <view>新手试炼</view>
+    </view>
 
+    <view class='advance' style="{{viewStyle[2]}}" data-item='2' bindtap='pressView'>
+      <view>
+        <view>
+          <image class="uu-code2" src='../../images/launchStudy/advance.png'></image>
+        </view>
+        <view>进阶指南</view>      
+    </view>
+    </view>
+  </view>
 
-<!--显示已报名用户-->
-<text>已报名用户：</text>
-<scroll-view scroll-y>
-  <block wx:for="{{userScoreDates}}" wx:key="idx">
-    <template is="scoreDetailTemplate" data="{{...item}}" />
-  </block>
-</scroll-view>
-</block>
+  <view class="weui-flex__item ">
+    <view class='guideline' style="{{viewStyle[1]}}" data-item='1' bindtap='pressView'>
+        <view>
+          <image class="uu-code" src='../../images/launchStudy/guideline.png'></image>
+        </view>
+        <view>新手试炼</view>
+    </view>
 
-<!--如果无人报名则显示默认图片-->
+    <view class='advance' style="{{viewStyle[2]}}" data-item='2' bindtap='pressView'>
+      <view>
+        <view>
+          <image class="uu-code2" src='../../images/launchStudy/advance.png'></image>
+        </view>
+        <view>进阶指南</view>      
+    </view>
+    </view>
+  </view>
 
-<view >
-  <button class="fixed-bottom" bindtap="toMeetingApply" > 报名 </button>
+</view>
+
+<view class="weui-flex">
+  <view class="weui-flex__item advance" style="{{viewStyle[0]}}" data-item='0' bindtap='pressView'>
+    <view class='welcome-name' >懂你演讲</view>
+  </view>
+</view>
+<view class="weui-flex">
+  <view class="weui-flex__item welcome" style="{{viewStyle[0]}}" data-item='0' bindtap='pressView'>
+    <view class='welcome-name' >懂你演讲</view>
+    <view class='welcome-tip'>欢迎光临</view>
+  </view>
+
 </view>

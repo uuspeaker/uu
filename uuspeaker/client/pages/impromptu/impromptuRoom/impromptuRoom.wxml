@@ -78,12 +78,12 @@
 
   <view class="weui-flex bottom">
     <block wx:if="{{operation == 'modify'}}">
-      <view class="weui-flex__item" bindtap='cancelRoom'>
-        <button class="">取消房间</button>
+      <view class="weui-flex__item" bindtap='cancelImpromptuRoom'>
+        <button class="">取消</button>
       </view>
       </block>
       <view class="weui-flex__item">
-        <button class="weui-btn" type="primary" data-action='post' formType="submit">保存</button>
+        <button class="weui-btn" type="primary" formType="submit">保存</button>
       </view>
     
   </view>
