@@ -60,29 +60,15 @@ Page({
       data: {'roomId':roomId},
       method: 'get',
       success(result) {
-        that.initMeetingUser(result.data.data)
+        that.setData({
+          speakerUser: result.data.data,
+          evaluatorUser: result.data.data
+        })
       },
       fail(error) {
         util.showModel('请求失败', error);
         console.log('request fail', error);
       }
-    })
-  },
-
-  initMeetingUser: function(meetingUserStr){
-    
-    var meetingUserTmp = JSON.parse(meetingUserStr)
-    console.log(meetingUserTmp)
-    var meetingUser = []
-    for (var i = 0; i < meetingUserTmp.length; i++){
-      if(meetingUserTmp[i].checked == true){
-        meetingUserTmp[i].checked = false
-        meetingUser.push(meetingUserTmp[i])
-      }
-    }
-    this.setData({
-      speakerUser: meetingUser,
-      evaluatorUser: meetingUser
     })
   },
 

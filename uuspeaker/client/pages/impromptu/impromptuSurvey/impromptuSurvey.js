@@ -28,6 +28,18 @@ Page({
   },
 
   startSurvey: function(e){
+    var selectUser = false
+    var userItems = this.data.userItems
+    for (var i = 0; i < userItems.length; i++) {
+      if(userItems[i].checked == true){
+        selectUser = true
+        continue
+      }
+    }
+    if (!selectUser){
+      util.showSuccess('请选择要参会人员')
+      return
+    }
     var requestParam = JSON.stringify(this.data.userItems)
     var that = this
     qcloud.request({

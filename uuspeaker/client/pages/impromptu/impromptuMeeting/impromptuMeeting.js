@@ -15,6 +15,8 @@ Page({
     roomParams: {},
     userInfo: {},
     isJoin: '',
+    roomInfo:{},
+    isHost:'',
     totalScore: 0
   },
 
@@ -32,7 +34,9 @@ Page({
         that.setData({
           meetingUser: result.data.data.meetingUser,
           totalScore: result.data.data.hostTotalScore,
-          isJoin: result.data.data.isJoin
+          isJoin: result.data.data.isJoin,
+          roomInfo: result.data.data.roomInfo,
+          isHost: result.data.data.isHost,
         })
         that.formatDate()
       },
@@ -45,7 +49,6 @@ Page({
 
   formatDate: function () {
     var data = this.data.meetingUser
-    console.log(data)
     for (var i = 0; i < data.length; i++) {
       data[i].startDateStr = dateFormat.getTimeNotice(data[i].create_date)
     }
@@ -127,6 +130,12 @@ Page({
     })
   },
 
+  toWatchSurvey: function () {
+    wx.navigateTo({
+      url: '../impromptuSurveyDetail/impromptuSurveyDetail?roomId=' + roomParams.roomId + '&surveyStatus=' + this.data.roomInfo.survey_status
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -140,5 +149,7 @@ Page({
     this.queryMeetingUser(roomParams);
   },
 
-  
+  onShow: function () {
+    this.onLoad(roomParams)
+  }
 })

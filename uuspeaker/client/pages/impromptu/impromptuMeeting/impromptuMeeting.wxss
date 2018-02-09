@@ -22,3 +22,21 @@ border-radius: 6px;
   bottom: 0;
   width: 100%;
 }
+.uu-code{
+  width:25px;
+  height:25px;
+  margin-top: 7px;
+}
+.normal {
+  height: 60px;
+  color: white;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 10px 10px 10px 10px;
+}
+.link{
+  font-size: 17px;
+  font-weight: bold;
+  color: #576b95;
+}

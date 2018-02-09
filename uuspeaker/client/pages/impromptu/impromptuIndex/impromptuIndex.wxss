@@ -1,14 +1,19 @@
 
-/* 任务栏样式 */
-.welcome {
-  height: 60px;
-  background-color: lightgrey;
-  margin: 5px ;
-  border-radius: 10px 10px 10px 10px;
+.normal {
+  height: 85px;
+  width: 20%;
+  margin-top: 5px;
+  margin-left: 10px;
   color: white;
-  font-weight: bold;
-  padding-left: 5px;
+  text-align: center;
   font-size: 15px;
+  font-weight: bold;
+  border-radius: 10px 10px 10px 10px;
+}
+.uu-code{
+  width:35px;
+  height:35px;
+  margin-top: 10px;
 }
 .user-pic{
 width: 50px; 
@@ -29,6 +34,7 @@ border-radius: 3px;
   font-weight: bold;
   font-size: 13px;
 }
+
 
 
 

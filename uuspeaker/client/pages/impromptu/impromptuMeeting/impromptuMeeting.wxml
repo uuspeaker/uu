@@ -5,29 +5,37 @@
     </view>
     <view class="weui-cell__bd">
       <view>{{user_info.nickName}}
-      <text wx:if="{{role_type == 1}}">【演讲】</text>
-        <text wx:if="{{role_type == 2}}">【主持】</text>
-        </view>
-        <view style="font-size: 13px;color: #888888;padding-top:5px">
-          <text wx:if="{{totalScore == 0}}">Lv1：乞丐演讲君</text>
-          <text wx:if="{{totalScore >= 1 && totalScore < 20}}">Lv2：贫民演讲君</text>
-          <text wx:if="{{totalScore >= 20 && totalScore < 50}}">Lv3：布衣演讲君</text>
-          <text wx:if="{{totalScore >= 50 && totalScore < 100}}">Lv4：青铜演讲君</text>
-          <text wx:if="{{totalScore >= 100 && totalScore < 200}}">Lv5：白银演讲君</text>
-          <text wx:if="{{totalScore >= 200 && totalScore < 300}}">Lv6：黄金演讲君</text>
-          <text wx:if="{{totalScore >= 300 && totalScore < 500}}">Lv7：铂金演讲君</text>
-          <text wx:if="{{totalScore >= 500 && totalScore < 700}}">Lv8：钻石演讲君</text>
-          <text wx:if="{{totalScore >= 700 && totalScore < 1000}}">Lv9：星耀演讲君</text>
-          <text wx:if="{{totalScore >= 1000}}">Lv10：王者演讲君</text>
-        </view>
+        <text wx:if="{{role_type == 1}}">【演讲者】</text>
+        <text wx:if="{{role_type == 2}}">【主持人】</text>
+      </view>
+      <view style="font-size: 13px;color: #888888;padding-top:5px">
+        <text wx:if="{{totalScore == 0}}">Lv1：乞丐演讲君</text>
+        <text wx:if="{{totalScore >= 1 && totalScore < 20}}">Lv2：贫民演讲君</text>
+        <text wx:if="{{totalScore >= 20 && totalScore < 50}}">Lv3：布衣演讲君</text>
+        <text wx:if="{{totalScore >= 50 && totalScore < 100}}">Lv4：青铜演讲君</text>
+        <text wx:if="{{totalScore >= 100 && totalScore < 200}}">Lv5：白银演讲君</text>
+        <text wx:if="{{totalScore >= 200 && totalScore < 300}}">Lv6：黄金演讲君</text>
+        <text wx:if="{{totalScore >= 300 && totalScore < 500}}">Lv7：铂金演讲君</text>
+        <text wx:if="{{totalScore >= 500 && totalScore < 700}}">Lv8：钻石演讲君</text>
+        <text wx:if="{{totalScore >= 700 && totalScore < 1000}}">Lv9：星耀演讲君</text>
+        <text wx:if="{{totalScore >= 1000}}">Lv10：王者演讲君</text>
+      </view>
       <view>
       </view>
+    </view>
+    
+    <view class="weui-cell__ft" style='font-size:13px;font-weight:bold'>
+    <view class="weui-flex">
+    <view><image class="uu-code" src='../../../images/impromptuMeeting/medal.png'></image><view wx:if="{{isBestSpeaker == true}}">演讲</view></view>
+    <view style='padding-left:10px'><image class="uu-code" src='../../../images/impromptuMeeting/medal2.png'></image><view wx:if="{{isBestEvaluator == true}}">点评</view></view>
+    </view>
     </view>
   </view>
 </template>
 
 <view class="page">
-  <view class="weui-cells weui-cells_after-title">
+  <view class="weui-cells weui-cells_after-title"> 
+
     <view class="weui-cell">
       <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
         <image class="user-pic" src="{{userInfo.avatarUrl}}" />
@@ -47,14 +55,31 @@
           <text wx:if="{{totalScore >= 1000}}">Lv10：王者演讲君</text>
         </view>
       </view>
-      <block wx:if="{{roomParams.isHost == 'true'}}">
-      <view class="weui-cell__ft " bindtap='toImprmptuSurvey'>制作投票</view>
+      <block wx:if="{{isHost == true}}">
+        <block wx:if="{{roomInfo.survey_status == '1'}}">
+        <view class="weui-cell__ft link" bindtap='toImprmptuSurvey'>制作投票</view>
+        </block>
+        <block wx:if="{{roomInfo.survey_status > '1'}}">
+        <view class="weui-cell__ft link" bindtap='toWatchSurvey'>查看投票</view>
+        </block>
       </block>
+    </view>
+
+    <view class="weui-cell" style='font-size:13px'>
+      <view class="weui-cell__bd">
+        <view><text wx:if="{{roomInfo.language == 1}}">【中文】</text>
+        <text wx:if="{{roomInfo.language == 2}}">【英文】</text>
+        <text wx:if="{{roomInfo.mode == 1}}">【普通模式】</text> 
+        <text wx:if="{{roomInfo.mode == 2}}">【疯狂模式】</text>
+        <text wx:if="{{roomInfo.mode == 3}}">【娱乐模式】</text>
+        <text wx:if="{{roomInfo.mode == 4}}">【对抗模式】</text></view>
+      </view>
+      <view class=" date">{{roomParams.startDatestr}}</view>
     </view>
   </view>
 
   <view class="page__bd">
-    <view class="weui-cells__title">公告：{{roomParams.notice}}</view>
+    <view class="weui-cells__title">公告：{{roomInfo.notice}}</view>
     <view class="weui-cells weui-cells_after-title">
       <block wx:for="{{meetingUser}}" wx:key="item">
         <template is="scoreDetailTemplate" data="{{...item}}" />
@@ -65,27 +90,27 @@
 </view>
 
 <view class="weui-flex bottom">
-<block wx:if="{{isJoin == false}}">
-  <view class="weui-flex__item " data-roletype='2' bindtap='applyMeeting'>
-    <button class="" >报名主持</button>
-  </view>
-  <view class="weui-flex__item " data-roletype='1' bindtap='applyMeeting'>
-    <button class="" type="primary" >报名演讲</button>
-  </view>
-</block>
-<block wx:if="{{isJoin == true}}">
-<block wx:if="{{roomParams.surveyStatus == 2}}">
- <view class="weui-flex__item" bindtap='vote'>
-    <button class="" >投票</button>
-  </view>
-</block>
-<block wx:if="{{roomParams.surveyStatus == 1}}">
-  <view class="weui-flex__item" bindtap='cancelMeeting'>
-    <button class="" >取消报名</button>
-  </view>
+  <block wx:if="{{isJoin == false}}">
+    <view class="weui-flex__item " data-roletype='2' bindtap='applyMeeting'>
+      <button class="">报名主持</button>
+    </view>
+    <view class="weui-flex__item " data-roletype='1' bindtap='applyMeeting'>
+      <button class="" type="primary">报名演讲</button>
+    </view>
   </block>
-  <view class="weui-flex__item" bindtap='toReport'>
-    <button class="" type="primary">复盘</button>
-  </view>
-</block>
+  <block wx:if="{{isJoin == true}}">
+    <block wx:if="{{roomInfo.survey_status == 2}}">
+      <view class="weui-flex__item" bindtap='vote'>
+        <button class="">投票</button>
+      </view>
+    </block>
+    <block wx:if="{{roomInfo.survey_status == 1}}">
+      <view class="weui-flex__item" bindtap='cancelMeeting'>
+        <button class="">取消报名</button>
+      </view>
+    </block>
+    <view class="weui-flex__item" bindtap='toReport'>
+      <button class="" type="primary">复盘</button>
+    </view>
+  </block>
 </view>

@@ -33,7 +33,7 @@ var getTimeNotice= function(noticeDate) {
   } else if (day >= 1 && day < 7) {
     return day + '天前'
   } else {
-    return this.format(noticeDate, 'yyyy年MM月dd日 hh:mi')
+    return this.format(targetDate, 'yyyy年MM月dd日 hh:mm')
   }
 }
 
@@ -58,7 +58,7 @@ var getTimeNoticeFuture = function (noticeDate,time) {
   } else if (between == 2) {
     return '后天' + ' ' + time + '（' + this.getWeek(noticeDate) + ')'
   }else {
-    return this.format(noticeDate, 'yyyy年MM月dd日') + '（' + this.getWeek(noticeDate) + ')'
+    return this.format(targetDate, 'yyyy年MM月dd日') + '（' + this.getWeek(noticeDate) + ')'
   }
 }
 

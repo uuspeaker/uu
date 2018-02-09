@@ -97,6 +97,7 @@ router.post('/impromptu.impromptuMeeting', controllers.impromptu.impromptuMeetin
 router.delete('/impromptu.impromptuMeeting', controllers.impromptu.impromptuMeeting.del)
 //即兴会议发起投票问卷
 router.get('/impromptu.impromptuSurvey', controllers.impromptu.impromptuSurvey.get)
+router.put('/impromptu.impromptuSurvey', controllers.impromptu.impromptuSurvey.put)
 router.post('/impromptu.impromptuSurvey', controllers.impromptu.impromptuSurvey.post)
 //即兴会议投票
 router.post('/impromptu.impromptuVote', controllers.impromptu.impromptuVote.post)

@@ -18,10 +18,11 @@
     </checkbox-group>
 
   </view>
-
+<block wx:if="{{userItems.length > 0}}">
   <view class="weui-flex bottom">
     <view class="weui-flex__item">
       <button class="weui-btn" type="primary" formType="submit">发起投票</button>
     </view>
   </view>
+  </block>
 </form>

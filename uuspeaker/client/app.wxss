@@ -6,11 +6,23 @@ page {
 }
 .bottom{
   position: fixed;
-  bottom: 0;
+  bottom: 1px;
   width: 100%;
 }
 .user-pic{
 width: 40px; 
 height: 40px; 
 padding-right: 10px;
+}
+.green{
+  background-color: rgb(136, 186, 71);
+}
+.yellow{
+  background-color: rgb(228,188,41);
+}
+.blue{
+  background-color: rgb(29, 178, 23858);
+}
+.orange{
+  background-color: rgb(228, 140, 58);
 }
