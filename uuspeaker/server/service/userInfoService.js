@@ -1,6 +1,4 @@
 const { mysql } = require('../qcloud')
-const userInfo = require('../common/userInfo.js')
-const dateUtil = require('../common/dateUtil.js')
 //const uuid = require('node-uuid')
 
 /**
@@ -12,6 +10,16 @@ var getOpenId = async (ctx) => {
   var skey = ctx.header['x-wx-skey']
   var openIds = await mysql('cSessionInfo').select('open_id').where({ 'skey': skey })
   return openIds[0].open_id
+}
+
+/**
+ * 获取用户ID 
+ * ctx 前端的请求，用于获取登陆用户信息
+ * 返回：用户ID
+ */
+var getUserInfo = async (userId) => {
+  var userInfo = await mysql('cSessionInfo').select('user_info').where({ 'open_id': userId })
+  return getTailoredUserInfo(userInfo[0].user_info)
 }
 
 /**
@@ -74,5 +82,6 @@ module.exports = {
   getSpeakerScore,
   getEvaluatorScore,
   getHostScore,
-  getReportScore
+  getReportScore,
+  getUserInfo
   }

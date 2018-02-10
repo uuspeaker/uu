@@ -1,42 +1,42 @@
-/* pages/studyManage/studyManage.wxss */
-.line{
-width:99%;
-height:1px;
-margin-top: 0px;
-margin-bottom: 10px;
-background:#F6F6F6;
-}
-.small-grey{
-  font-size: 13px;
-  color:#888888;
-  font-weight: normal;
-}
-.user-pic{
+
+.host-pic{
 width: 50px; 
-height: 50px; 
-display: block;
+height: 50px;
 border-radius: 6px;
+margin-right: 10px;
 }
-.bottom{
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+.speaker-pic{
+width: 40px; 
+height: 40px; 
+border-radius: 6px;
+margin-right: 10px;
 }
-.uu-code{
-  width:25px;
-  height:25px;
+.medal{
+  width:20px;
+  height:20px;
   margin-top: 7px;
-}
-.normal {
-  height: 60px;
-  color: white;
-  text-align: center;
-  font-size: 12px;
-  font-weight: bold;
-  border-radius: 10px 10px 10px 10px;
 }
 .link{
   font-size: 17px;
   font-weight: bold;
   color: #576b95;
+}
+.host-level{
+  font-size: 13px;
+  color: #888888;
+  padding-top:5px
+}
+.speaker-level{
+  font-size: 12px;
+  color: #888888;
+  padding-top:3px
+}
+.speaker{
+  font-size: 14px;
+}
+.medal-view{
+  font-size:12px;
+  font-weight:bold;
+  position: absolute;
+  right: 25px;
 }

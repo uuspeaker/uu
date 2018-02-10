@@ -70,24 +70,12 @@ Page({
     })
   },
 
-  enterImpromptuRoom: function(e){
-    console.log(e)
+  toImpromptuMeeting: function(e){
     var roomId = e.currentTarget.dataset.room_id
     var userId = e.currentTarget.dataset.user_id
     
     wx.navigateTo({
-      url: '../impromptuMeeting/impromptuMeeting?'
-      + '&roomId=' + e.currentTarget.dataset.room_id
-      + '&hostId=' + e.currentTarget.dataset.user_id
-      + '&isHost=' + e.currentTarget.dataset.is_host
-      + '&startDate=' + e.currentTarget.dataset.start_date
-      + '&startTime=' + e.currentTarget.dataset.start_time
-      + '&endTime=' + e.currentTarget.dataset.end_time
-      + '&mode=' + e.currentTarget.dataset.mode
-      + '&language=' + e.currentTarget.dataset.language
-      + '&notice=' + e.currentTarget.dataset.notice
-      + '&surveyStatus=' + e.currentTarget.dataset.survey_status
-      + '&startDatestr=' + dateFormat.getTimeNoticeFuture(e.currentTarget.dataset.start_date, e.currentTarget.dataset.start_time)  
+      url: '../impromptuMeeting/impromptuMeeting?'+ '&roomId=' + e.currentTarget.dataset.room_id
     })
   },
 

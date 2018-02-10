@@ -4,7 +4,6 @@ var util = require('../../../utils/util.js')
 var dateFormat = require('../../../common/dateFormat')
 
 //包含房间信息，房主信息
-var roomParams = {}
 Page({
 
   /**
@@ -12,7 +11,7 @@ Page({
    */
   data: {
     meetingUser: {},
-    roomParams: {},
+    roomId: {},
     userInfo: {},
     isJoin: '',
     roomInfo:{},
@@ -21,13 +20,13 @@ Page({
   },
 
   //查询用户参会数据
-  queryMeetingUser: function (data) {
+  queryMeetingUser: function () {
     //util.showBusy('请求中...')
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.impromptuMeeting`,
       login: true,
-      data: data,
+      data: {roomId:this.data.roomId},
       method: 'get',
       success(result) {
         //util.showSuccess('请求成功完成')
@@ -52,8 +51,11 @@ Page({
     for (var i = 0; i < data.length; i++) {
       data[i].startDateStr = dateFormat.getTimeNotice(data[i].create_date)
     }
+    var roomInfo = this.data.roomInfo
+    roomInfo.startDateStr = dateFormat.getTimeNoticeFuture(roomInfo.start_date, roomInfo.start_time) 
     this.setData({
-      meetingUser: data
+      meetingUser: data,
+      roomInfo: roomInfo
     })
   },
 
@@ -80,17 +82,14 @@ Page({
   applyMeeting: function(e){
     var roleType = e.currentTarget.dataset.roletype
     var that = this
-    var meetingParams = roomParams
-    meetingParams.roleType = roleType
-    console.log(meetingParams)
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.impromptuMeeting`,
       login: true,
-      data: meetingParams,
+      data: { roomId: this.data.roomId,roleType:roleType},
       method: 'post',
       success(result) {
         util.showSuccess('会议申请成功')
-        that.onLoad(roomParams)
+        that.queryMeetingUser()
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -101,15 +100,14 @@ Page({
 
   cancelMeeting: function(){
     var that = this
-    var meetingParams = roomParams
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.impromptuMeeting`,
       login: true,
-      data: meetingParams,
+      data: { roomId: this.data.roomId },
       method: 'delete',
       success(result) {
         util.showSuccess('报名已取消')
-        that.onLoad(roomParams)
+        that.queryMeetingUser()
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -120,19 +118,19 @@ Page({
 
   vote: function(){
     wx.navigateTo({
-      url: '../impromptuVote/impromptuVote?roomId=' + roomParams.roomId 
+      url: '../impromptuVote/impromptuVote?roomId=' + this.data.roomId 
     })
   },
 
   toImprmptuSurvey: function(){
     wx.navigateTo({
-      url: '../impromptuSurvey/impromptuSurvey?roomId=' + roomParams.roomId + "&meetingUser=" + JSON.stringify(this.data.meetingUser)
+      url: '../impromptuSurvey/impromptuSurvey?roomId=' + this.data.roomId + "&meetingUser=" + JSON.stringify(this.data.meetingUser)
     })
   },
 
   toWatchSurvey: function () {
     wx.navigateTo({
-      url: '../impromptuSurveyDetail/impromptuSurveyDetail?roomId=' + roomParams.roomId + '&surveyStatus=' + this.data.roomInfo.survey_status
+      url: '../impromptuSurveyDetail/impromptuSurveyDetail?roomId=' + this.data.roomId + '&surveyStatus=' + this.data.roomInfo.survey_status
     })
   },
 
@@ -141,15 +139,17 @@ Page({
    */
   onLoad: function (options) {
     console.log(options)
-    roomParams = options
     this.setData({
-      roomParams: options
+      roomId: options.roomId
     })
-    this.initUserInfo();
-    this.queryMeetingUser(roomParams);
+    this.queryMeetingUser()
   },
 
   onShow: function () {
-    this.onLoad(roomParams)
-  }
+    this.queryMeetingUser()
+  },
+
+  onPullDownRefresh: function () {
+    this.queryMeetingUser()
+  },
 })

@@ -231,12 +231,12 @@ Page({
 
   onPullDownRefresh: function () {
     queryFlag = 1
-    this.onLoad()
+    this.queryStudyReport()
   },
 
   onReachBottom: function () {
     queryFlag = 2
-    this.onLoad()
+    this.queryStudyReport()
   },
 
   

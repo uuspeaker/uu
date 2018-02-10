@@ -11,7 +11,7 @@ const uuid = require('../common/uuid.js')
 var getMeetingUser = async (roomId) => {
   var today = dateUtil.getFormatDate(new Date(), 'yyyy-MM-dd')
 
-  var MeetingUser = await mysql("meeting_apply").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'meeting_apply.user_id').innerJoin('user_score_detail', 'user_score_detail.user_id', 'meeting_apply.user_id').select('cSessionInfo.user_info', 'meeting_apply.role_type', 'meeting_apply.user_id', 'meeting_apply.create_date', mysql.raw("count(cSessionInfo.user_info) as totalScore")).where('meeting_apply.room_id', roomId).groupBy('cSessionInfo.user_info', 'meeting_apply.role_type', 'meeting_apply.user_id', 'meeting_apply.create_date').orderBy('meeting_apply.create_date', 'asc')
+  var MeetingUser = await mysql("meeting_apply").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'meeting_apply.user_id').leftJoin('user_score_detail', 'user_score_detail.user_id', 'meeting_apply.user_id').select('cSessionInfo.user_info', 'meeting_apply.role_type', 'meeting_apply.user_id', 'meeting_apply.create_date', mysql.raw("count(user_score_detail.user_id) as totalScore")).where('meeting_apply.room_id', roomId).groupBy('cSessionInfo.user_info', 'meeting_apply.role_type', 'meeting_apply.user_id', 'meeting_apply.create_date').orderBy('meeting_apply.create_date', 'asc')
 
   for (var i = 0; i < MeetingUser.length; i++) {
     //获取复盘人用户昵称及头像

@@ -1,14 +1,14 @@
 <template name="scoreDetailTemplate">
   <view class="weui-cell" bindtap="">
-    <view class="user-avatar" style="position: relative;margin-right: 10px;">
-      <image class="user-pic" src="{{user_info.avatarUrl}}" />
+    <view class='weui-cell__hd'>
+      <image class="speaker-pic" src="{{user_info.avatarUrl}}" />
     </view>
-    <view class="weui-cell__bd">
+    <view class="weui-cell__bd" class='speaker'>
       <view>{{user_info.nickName}}
-        <text wx:if="{{role_type == 1}}">【演讲者】</text>
-        <text wx:if="{{role_type == 2}}">【主持人】</text>
+        <text wx:if="{{role_type == 1}}">【演讲】</text>
+        <text wx:if="{{role_type == 2}}">【主持】</text>
       </view>
-      <view style="font-size: 13px;color: #888888;padding-top:5px">
+      <view class='speaker-level'>
         <text wx:if="{{totalScore == 0}}">Lv1：乞丐演讲君</text>
         <text wx:if="{{totalScore >= 1 && totalScore < 20}}">Lv2：贫民演讲君</text>
         <text wx:if="{{totalScore >= 20 && totalScore < 50}}">Lv3：布衣演讲君</text>
@@ -20,14 +20,12 @@
         <text wx:if="{{totalScore >= 700 && totalScore < 1000}}">Lv9：星耀演讲君</text>
         <text wx:if="{{totalScore >= 1000}}">Lv10：王者演讲君</text>
       </view>
-      <view>
-      </view>
-    </view>
-    
-    <view class="weui-cell__ft" style='font-size:13px;font-weight:bold'>
-    <view class="weui-flex">
-    <view><image class="uu-code" src='../../../images/impromptuMeeting/medal.png'></image><view wx:if="{{isBestSpeaker == true}}">演讲</view></view>
-    <view style='padding-left:10px'><image class="uu-code" src='../../../images/impromptuMeeting/medal2.png'></image><view wx:if="{{isBestEvaluator == true}}">点评</view></view>
+    </view>    
+ 
+    <view class="weui-cell__ft medal-view" >
+    <view class="weui-flex " >
+    <view wx:if="{{isBestSpeaker == true}}"><image class="medal" src='../../../images/impromptuMeeting/medal.png'></image><view >演讲</view></view>
+    <view wx:if="{{isBestEvaluator == true}}" style='padding-left:15px'><image class="medal" src='../../../images/impromptuMeeting/medal2.png'></image><view >点评</view></view>
     </view>
     </view>
   </view>
@@ -37,12 +35,12 @@
   <view class="weui-cells weui-cells_after-title"> 
 
     <view class="weui-cell">
-      <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
-        <image class="user-pic" src="{{userInfo.avatarUrl}}" />
+      <view class="weui-cell__hd">
+        <image class="host-pic" src="{{roomInfo.userInfo.avatarUrl}}" />
       </view>
       <view class="weui-cell__bd">
-        <view>{{userInfo.nickName}}【房主】</view>
-        <view style="font-size: 13px;color: #888888;padding-top:5px">
+        <view>{{roomInfo.userInfo.nickName}}【房主】</view>
+        <view class='host-level'>
           <text wx:if="{{totalScore == 0}}">Lv1：乞丐演讲君</text>
           <text wx:if="{{totalScore >= 1 && totalScore < 20}}">Lv2：贫民演讲君</text>
           <text wx:if="{{totalScore >= 20 && totalScore < 50}}">Lv3：布衣演讲君</text>
@@ -74,16 +72,18 @@
         <text wx:if="{{roomInfo.mode == 3}}">【娱乐模式】</text>
         <text wx:if="{{roomInfo.mode == 4}}">【对抗模式】</text></view>
       </view>
-      <view class=" date">{{roomParams.startDatestr}}</view>
+      <view class=" date">{{roomInfo.startDateStr}}</view>
     </view>
   </view>
 
   <view class="page__bd">
     <view class="weui-cells__title">公告：{{roomInfo.notice}}</view>
+    <view class="page">
     <view class="weui-cells weui-cells_after-title">
       <block wx:for="{{meetingUser}}" wx:key="item">
         <template is="scoreDetailTemplate" data="{{...item}}" />
       </block>
+    </view>
     </view>
   </view>
 
