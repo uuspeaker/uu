@@ -3,8 +3,8 @@ var config = require('../../config')
 var util = require('../../utils/util.js')
 var dateFormat = require('../../common/dateFormat.js')
 
-var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
-
+var roomId
+var reportType
 Page({
   data: {
 
@@ -16,6 +16,8 @@ Page({
     util.showBusy('请求中...')
     var that = this
     var requestData = e.detail.value
+    requestData.roomId = roomId
+    requestData.reportType = reportType
     // var now = new Date()
     // var studyDateMinus = this.data.dateValue[this.data.dateIndex]
     // now.setDate(now.getDate() - studyDateMinus)
@@ -37,7 +39,11 @@ Page({
         console.log('request fail', error);
       }
     })
+  },
 
+  onLoad: function(options){
+    roomId = options.roomId
+    reportType = options.reportType
   },
 
 });

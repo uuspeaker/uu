@@ -223,6 +223,13 @@ Page({
     })
   },
 
+  toImpromptuMeeting: function(e){
+    console.log(e)
+    wx.navigateTo({
+      url: '../impromptu/impromptuMeeting/impromptuMeeting?' + '&roomId=' + e.currentTarget.dataset.room_id
+    })
+  },
+
   onLoad: function (e) {
     this.queryStudyReport()
     //console.log(uuid.v1())

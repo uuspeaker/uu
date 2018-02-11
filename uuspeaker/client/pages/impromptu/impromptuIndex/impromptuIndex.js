@@ -102,19 +102,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.initViewStyle()
-    this.queryImpromptuRooms()
+    //this.initViewStyle()
+    //this.queryImpromptuRooms()
   },
 
   onShow: function(options){
-    //if(options.isUpdate == true){
-      this.onLoad()
-    //}
+    this.initViewStyle()
+    this.queryImpromptuRooms()
     
   },
 
   onPullDownRefresh: function () {
-    this.onLoad()
+    this.initViewStyle()
+    this.queryImpromptuRooms()
   },
 
 

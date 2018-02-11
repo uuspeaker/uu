@@ -13,7 +13,7 @@ var getRooms = async (ctx) => {
   var limit = 50
   var offset = 0
 
-  var rooms = await mysql("room_impromptu").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'room_impromptu.user_id').select('room_impromptu.*', 'cSessionInfo.user_info').where('start_date', '>=', today).orderBy('room_impromptu.create_date', 'asc').limit(limit).offset(offset)
+  var rooms = await mysql("room_impromptu").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'room_impromptu.user_id').select('room_impromptu.*', 'cSessionInfo.user_info').where('start_date', '>=', today).orderBy('room_impromptu.start_date', 'asc', 'room_impromptu.start_time', 'asc').limit(limit).offset(offset)
 
   for (var i = 0; i < rooms.length; i++) {
     //获取复盘人用户昵称及头像

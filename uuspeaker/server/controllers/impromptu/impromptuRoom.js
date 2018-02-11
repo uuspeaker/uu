@@ -67,6 +67,7 @@ module.exports = {
   get: async ctx => {
     var userId = await userInfo.getOpenId(ctx)
     var rooms = await impromptuRoomService.getRooms()
+
     for(var i=0; i<rooms.length; i++){
       if(rooms[i].user_id == userId){
         rooms[i].isHost = true

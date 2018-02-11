@@ -40,3 +40,9 @@ margin-right: 10px;
   position: absolute;
   right: 25px;
 }
+.notice{
+  border: 1px;
+  border-color: yellow;
+  color: orange;
+  font-weight: bold;
+}

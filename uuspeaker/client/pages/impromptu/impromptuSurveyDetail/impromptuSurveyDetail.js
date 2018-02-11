@@ -40,6 +40,7 @@ Page({
       method: 'put',
       success(result) {
         util.showSuccess('投票完成')
+        wx:wx.navigateBack({})
       },
       fail(error) {
         util.showModel('请求失败', error);

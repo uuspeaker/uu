@@ -8,6 +8,8 @@ module.exports = {
   post: async ctx => {
     var userId = await userInfo.getOpenId(ctx)
     var studyReport = ctx.request.body.studyReport
+    var roomId = ctx.request.body.roomId
+    var reportType = ctx.request.body.reportType
     var reportId = uuid.v1()
 
     //更新参会记录
@@ -16,6 +18,8 @@ module.exports = {
         {
           report_id: reportId,
           user_id: userId,
+          room_id: roomId,
+          report_type: reportType,
           study_report: studyReport
         })
     }
@@ -32,15 +36,15 @@ module.exports = {
     var studyReport = []
     //查询最近10条信息
     if (queryFlag == 0) {
-      studyReport = await mysql("user_study_report").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_study_report.user_id').select('user_study_report.report_id', 'cSessionInfo.user_info', 'user_study_report.study_report', 'user_study_report.create_date').where('user_study_report.user_id',userId).orderBy('user_study_report.create_date', 'desc').limit(limit).offset(offset)
+      studyReport = await mysql("user_study_report").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_study_report.user_id').select('user_study_report.*', 'cSessionInfo.user_info').where('user_study_report.user_id',userId).orderBy('user_study_report.create_date', 'desc').limit(limit).offset(offset)
     }
     //查询前10条信息,此种方式会导致10(limit)条之外的数据无法查询到,因影响不大,使用此种简单但不完备的方式
     if (queryFlag == 1) {
-      studyReport = await mysql("user_study_report").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_study_report.user_id').select('user_study_report.report_id', 'cSessionInfo.user_info', 'user_study_report.study_report', 'user_study_report.create_date').orderBy('user_study_report.create_date', 'desc').where('user_study_report.create_date', '>', new Date(firstReportTime)).andWhere('user_study_report.user_id', userId).limit(limit).offset(offset)
+      studyReport = await mysql("user_study_report").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_study_report.user_id').select('user_study_report.*', 'cSessionInfo.user_info').orderBy('user_study_report.create_date', 'desc').where('user_study_report.create_date', '>', new Date(firstReportTime)).andWhere('user_study_report.user_id', userId).limit(limit).offset(offset)
     }
     //查询后10条信息
     if (queryFlag == 2) {
-      studyReport = await mysql("user_study_report").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_study_report.user_id').select('user_study_report.report_id', 'cSessionInfo.user_info', 'user_study_report.study_report', 'user_study_report.create_date').orderBy('user_study_report.create_date', 'desc').where('user_study_report.create_date', '<', new Date(lastReportTime)).andWhere('user_study_report.user_id', userId).limit(limit).offset(offset)
+      studyReport = await mysql("user_study_report").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_study_report.user_id').select('user_study_report.*', 'cSessionInfo.user_info').orderBy('user_study_report.create_date', 'desc').where('user_study_report.create_date', '<', new Date(lastReportTime)).andWhere('user_study_report.user_id', userId).limit(limit).offset(offset)
     }
 
     ctx.state.data = studyReport
