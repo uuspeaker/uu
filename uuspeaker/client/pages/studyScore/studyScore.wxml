@@ -36,16 +36,6 @@
                   </view>
                 </view>
 
-                <view class="weui-cell weui-cell_select">
-                  <view class="weui-cell__hd weui-cell__hd_in-select-after">
-                    <view class="weui-label">时间：</view>
-                  </view>
-                  <view class="weui-cell__bd">
-                    <picker name="meetingTime" bindchange="bindTimeChange" value="{{timeIndex}}" range="{{timeArray}}">
-                      <view class="weui-select weui-select_in-select-after">{{timeArray[timeIndex]}}</view>
-                    </picker>
-                  </view>
-                </view>
               </view>
 
               <view class="weui-cells weui-cells_after-title">

@@ -2,10 +2,13 @@
 {
   "pages": [
     "pages/launchStudy/launchStudy",
+    "pages/prepared/preparedMeeting/preparedMeeting",
+    "pages/studyManage/studyManage",
+    "pages/index/index",
     "pages/impromptu/impromptuIndex/impromptuIndex",
     "pages/impromptu/impromptuSurveyDetail/impromptuSurveyDetail",
     "pages/impromptu/impromptuVote/impromptuVote",
-    "pages/index/index",
+    
     "pages/impromptu/impromptuSurvey/impromptuSurvey",
     "pages/impromptu/impromptuMeeting/impromptuMeeting",
     "pages/impromptu/impromptuRoom/impromptuRoom",
@@ -18,7 +21,7 @@
     "pages/studyDetail/studyDetail",
     "pages/scoreManage/scoreManage",
     "pages/checkin/checkin",
-    "pages/studyManage/studyManage",
+    
     "pages/studyShow/studyShow",
     "pages/index2/index2",
     "pages/meeting/meeting",

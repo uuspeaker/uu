@@ -3,31 +3,36 @@ var config = require('../../config')
 var util = require('../../utils/util.js')
 var dateFormat = require('../../common/dateFormat.js')
 
+var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
+
 Page({
   data: {
-    dateArray: ['今天', '昨天', '前天', '3天前', '4天前', '5天前', '6天前', '7天前'],
-    dateValue: [0,1,2,3,4,5,6,7],
-    timeArray: ['20:00','21:00'],
-    timeValue: [20,21],
+    //tab页数据
+    tabs: ["积分补录"],
+    activeIndex: 0,
+    sliderOffset: 0,
+    sliderLeft: 0,
+    //积分tab页数据
+    userInfo: {},
+    dateArray: ['今天', '昨天', '前天',],
+    dateValue: [0, 1, 2],
+    timeArray: ['20:00', '20:30', '21:00', '21:30', '22:00'],
+    timeValue: [2000, 2030, 2100, 2130, 2200],
     dateIndex: 0,
-    timeIndex: 1 
+    timeIndex: 1
+    //打卡tab页数据
 
   },
-  
-  scoreManage: function (e) {
+
+  studyScore: function (e) {
     console.log(e.detail.value)
     util.showBusy('请求中...')
     var that = this
     var requestData = e.detail.value
-    var now = new Date()
-    var meetingDateMinus = this.data.dateValue[this.data.dateIndex]
-    now.setDate(now.getDate() - meetingDateMinus)
-    requestData.meetingDate = dateFormat.format(now,'yyyyMMdd')
-    requestData.meetingTime = this.data.timeValue[this.data.timeIndex]
     qcloud.request({
       url: `${config.service.host}/weapp/scoreManage`,
       data: requestData,
-      login: false,
+      login: true,
       method: 'post',
       success(result) {
         util.showSuccess('请求成功完成')
@@ -41,6 +46,40 @@ Page({
       }
     })
   },
+
+  studyDuration: function (e) {
+    console.log(e.detail.value)
+    util.showBusy('请求中...')
+    var that = this
+    var requestData = e.detail.value
+    var now = new Date()
+    var studyDateMinus = this.data.dateValue[this.data.dateIndex]
+    now.setDate(now.getDate() - studyDateMinus)
+    requestData.studyDate = dateFormat.format(now, 'yyyyMMdd')
+    //requestData.skey = session.get()
+    console.log(requestData)
+    qcloud.request({
+      url: `${config.service.host}/weapp/studyDuration`,
+      data: requestData,
+      login: true,
+      method: 'post',
+      success(result) {
+        util.showSuccess('请求成功完成')
+        that.setData({
+          applyResult: result.data.data
+        })
+        wx.navigateTo({
+          url: '../studyShow/studyShow',
+        })
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+
+  },
+
   bindDateChange: function (e) {
     this.setData({
       dateIndex: e.detail.value
@@ -52,24 +91,34 @@ Page({
     })
   },
 
-  // initDateFormat: function(){
-  //   Date.prototype.format = function (fmt) { //author: meizz 
-  //     var o = {
-  //       "M+": this.getMonth() + 1, //月份 
-  //       "d+": this.getDate(), //日 
-  //       "h+": this.getHours(), //小时 
-  //       "m+": this.getMinutes(), //分 
-  //       "s+": this.getSeconds(), //秒 
-  //       "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-  //       "S": this.getMilliseconds() //毫秒 
-  //     };
-  //     if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-  //     for (var k in o)
-  //       if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-  //     return fmt;
-  //   }
-  // }
+  toStudyDurationDetail: function () {
+    wx.navigateTo({
+      url: '../studyDurationDetail',
+    })
+  },
 
+  toStudyScoreDetail: function () {
+    wx.navigateTo({
+      url: '../studyScoreDetail',
+    })
+  },
 
-})
+  onLoad: function () {
 
+    var that = this;
+    wx.getSystemInfo({
+      success: function (res) {
+        that.setData({
+          sliderLeft: (res.windowWidth / that.data.tabs.length - sliderWidth) / 2,
+          sliderOffset: res.windowWidth / that.data.tabs.length * that.data.activeIndex
+        });
+      }
+    });
+  },
+  tabClick: function (e) {
+    this.setData({
+      sliderOffset: e.currentTarget.offsetLeft,
+      activeIndex: e.currentTarget.id
+    });
+  }
+});

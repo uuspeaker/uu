@@ -67,6 +67,8 @@ router.get('/studyManage', controllers.studyManage)
 //学习积分详情
 router.get('/studyScore', controllers.studyScore.get)
 router.post('/studyScore', controllers.studyScore.post)
+//积分补录
+router.post('/scoreManage', controllers.scoreManage.post)
 //学习积分详情
 router.get('/leaderDetail', controllers.leaderDetail.get)
 //查询积分榜

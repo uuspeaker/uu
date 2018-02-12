@@ -21,7 +21,13 @@
         "mkdir-p": "0.0.7",
         "mysql": "^2.14.1",
         "pify": "^2.3.0",
-        "wafer-node-sdk": "^1.1.1"
+        "wafer-node-sdk": "^1.1.1",
+        "log4js": "^2.3.12",
+        "md5": "^2.2.1",
+        "rd": "^1.1.2",
+        "request": "^2.81.0",
+        "redis": "^2.8.0",
+        "sync-request": "^4.1.0"
     },
     "devDependencies": {
         "babel-eslint": "^7.1.0",

@@ -6,7 +6,6 @@ module.exports = {
   post: async ctx => {
     var userId = await userInfo.getOpenId(ctx)
     var meetingDate = ctx.request.body.meetingDate
-    var meetingTime = ctx.request.body.meetingTime
     var isJoinMeeting = ctx.request.body.isJoinMeeting
     var isSpeaker = ctx.request.body.isSpeaker
     var isEvaluator = ctx.request.body.isEvaluator
@@ -16,8 +15,7 @@ module.exports = {
     //删除原有记录
     await mysql('user_score_detail').where({
       user_id: userId,
-      meeting_date: meetingDate,
-      meeting_time: meetingTime
+      meeting_date: meetingDate
     }).del()
 
     //更新参会记录
@@ -25,8 +23,8 @@ module.exports = {
       await mysql('user_score_detail').insert(
         {
           user_id: userId,
+          room_id: meetingDate,
           meeting_Date: meetingDate,
-          meeting_time: meetingTime,
           score_type: 1
         })
     }
@@ -36,8 +34,8 @@ module.exports = {
       await mysql('user_score_detail').insert(
         {
           user_id: userId,
+          room_id: meetingDate,
           meeting_Date: meetingDate,
-          meeting_time: meetingTime,
           score_type: 2
         })
     }
@@ -47,8 +45,8 @@ module.exports = {
       await mysql('user_score_detail').insert(
         {
           user_id: userId,
+          room_id: meetingDate,
           meeting_Date: meetingDate,
-          meeting_time: meetingTime,
           score_type: 3
         })
     }
@@ -58,8 +56,8 @@ module.exports = {
       await mysql('user_score_detail').insert(
         {
           user_id: userId,
+          room_id: meetingDate,
           meeting_Date: meetingDate,
-          meeting_time: meetingTime,
           score_type: 4
         })
     }
@@ -69,8 +67,8 @@ module.exports = {
       await mysql('user_score_detail').insert(
         {
           user_id: userId,
+          room_id: meetingDate,
           meeting_Date: meetingDate,
-          meeting_time: meetingTime,
           score_type: 5
         })
     }
@@ -80,7 +78,7 @@ module.exports = {
     //查询用户ID
     var userId = await userInfo.getOpenId(ctx)
     //获取用户参会明细
-    var scoreDetail = await mysql("user_score_detail").select('meeting_date', 'meeting_time', 'score_type').where({ user_id: userId }).orderBy('meeting_date', 'desc')
+    var scoreDetail = await mysql("user_score_detail").where({ user_id: userId }).orderBy('meeting_date', 'desc')
     ctx.state.data = scoreDetail
   }
 }
