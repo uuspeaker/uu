@@ -39,7 +39,7 @@
         <view>
           <image class="uu-code" src='../../images/launchStudy/prepare.png'></image>
         </view>
-        <view style>备稿</view>
+        <view style>直播间</view>
       </view>
     </view>
     <view class='workshop' data-item='5' bindtap='pressView' style='{{viewStyle[5]}}'>

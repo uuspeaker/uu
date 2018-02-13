@@ -65,7 +65,7 @@ Page({
 
   toPreparedMeeting: function () {
     wx.navigateTo({
-      url: '../prepared/preparedMeeting/preparedMeeting',
+      url: '../multiroom/roomlist/roomlist',
     })
   },
 

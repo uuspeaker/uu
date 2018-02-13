@@ -6,6 +6,7 @@
 var host = 'https://r3uhpu7v.qcloud.la';
 
 var config = {
+  url: 'https://lvb.qcloud.com',
 
     // 下面的地址配合云端 Demo 工作
     service: {

@@ -5,6 +5,8 @@ const router = require('koa-router')({
     prefix: '/weapp'
 })
 const controllers = require('../controllers')
+const multi_room = require('../multi_room')
+const multiRoomPrefix = '/multi_room'
 
 // 从 sdk 中取出中间件
 // 这里展示如何使用 Koa 中间件完成登录态的颁发与验证
@@ -103,4 +105,9 @@ router.put('/impromptu.impromptuSurvey', controllers.impromptu.impromptuSurvey.p
 router.post('/impromptu.impromptuSurvey', controllers.impromptu.impromptuSurvey.post)
 //即兴会议投票
 router.post('/impromptu.impromptuVote', controllers.impromptu.impromptuVote.post)
+
+/**
+ * 获取云通信登录所需信息的接口 - 服务器会随机分配用户id 用于后面的进房和出房操作。
+ */
+router.post(multiRoomPrefix + '/get_im_login_info', multi_room.get_im_login_info)
 module.exports = router
