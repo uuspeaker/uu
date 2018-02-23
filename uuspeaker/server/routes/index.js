@@ -109,5 +109,5 @@ router.post('/impromptu.impromptuVote', controllers.impromptu.impromptuVote.post
 /**
  * 获取云通信登录所需信息的接口 - 服务器会随机分配用户id 用于后面的进房和出房操作。
  */
-router.post(multiRoomPrefix + '/get_im_login_info', multi_room.get_im_login_info)
+//router.post(multiRoomPrefix + '/get_im_login_info', multi_room.get_im_login_info)
 module.exports = router

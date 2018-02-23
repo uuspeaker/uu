@@ -86,6 +86,12 @@ Page({
     })
   },
 
+  toMyTarget: function(){
+    wx.navigateTo({
+      url: '../myTarget/myTarget',
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */

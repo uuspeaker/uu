@@ -1,0 +1,90 @@
+<form bindsubmit="openImpromptuRoom">
+  <view class="weui-cells weui-cells_after-title">
+
+    <view class="weui-cells__title">语言</view>
+    <view class="weui-cells weui-cells_after-title">
+      <radio-group bindchange="languageChange" name="language">
+        <label class="weui-cell weui-check__label" wx:for="{{languageItems}}" wx:key="value">
+          <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
+
+          <view class="weui-cell__bd">{{item.name}}</view>
+          <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+            <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+          </view>
+        </label>
+      </radio-group>
+    </view>
+
+    <view class="weui-cells__title">模式</view>
+    <view class="weui-cells weui-cells_after-title">
+      <radio-group bindchange="modeChange" name="mode">
+        <label class="weui-cell weui-check__label" wx:for="{{modeItems}}" wx:key="value">
+          <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
+
+          <view class="weui-cell__bd">{{item.name}}</view>
+          <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+            <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+          </view>
+        </label>
+      </radio-group>
+    </view>
+
+    <view class="weui-cells__title">时间</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">日期</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker name="startDate" mode="date" value="{{startDate}}" start="{{startDate}}" end="" bindchange="bindDateChange">
+            <view class="weui-input">{{startDate}}</view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">开始时间</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker name="startTime" mode="time" value="{{startTime}}" bindchange="bindStartTimeChange">
+            <view class="weui-input">{{startTime}}</view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">结束时间</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker name="endTime" mode="time" value="{{endTime}}" bindchange="bindEndTimeChange">
+            <view class="weui-input">{{endTime}}</view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">公告</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input name="notice" class="weui-input" placeholder='请输入YY房间号等信息' value='{{notice}}' />
+        </view>
+      </view>
+
+    </view>
+  </view>
+
+  <view class="weui-flex bottom">
+    <block wx:if="{{operation == 'modify'}}">
+      <view class="weui-flex__item" bindtap='cancelImpromptuRoom'>
+        <button class="">取消</button>
+      </view>
+      </block>
+      <view class="weui-flex__item">
+        <button class="weui-btn" type="primary" formType="submit">保存</button>
+      </view>
+    
+  </view>
+</form>
