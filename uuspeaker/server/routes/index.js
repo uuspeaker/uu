@@ -105,6 +105,10 @@ router.put('/impromptu.impromptuSurvey', controllers.impromptu.impromptuSurvey.p
 router.post('/impromptu.impromptuSurvey', controllers.impromptu.impromptuSurvey.post)
 //即兴会议投票
 router.post('/impromptu.impromptuVote', controllers.impromptu.impromptuVote.post)
+//用户目标管理
+router.get('/target.myTarget', controllers.target.myTarget.get)
+router.put('/target.myTarget', controllers.target.myTarget.put)
+router.post('/target.myTarget', controllers.target.myTarget.post)
 
 /**
  * 获取云通信登录所需信息的接口 - 服务器会随机分配用户id 用于后面的进房和出房操作。

@@ -1,90 +1,65 @@
-<form bindsubmit="openImpromptuRoom">
-  <view class="weui-cells weui-cells_after-title">
+<form bindsubmit="addUserTarget">
+  <view class=" ">
 
-    <view class="weui-cells__title">语言</view>
+    <view class="weui-cells__title">
+      <view>请制定一个符合SMART原则的目标</view>
+      <view style='font-size:11px'>1. 绩效指标必须是具体的（Specific）</view>
+      <view style='font-size:11px'>2. 绩效指标必须是可以衡量的（Measurable）</view>
+      <view style='font-size:11px'>3. 绩效指标必须是可以达到的（Attainable）</view>
+      <view style='font-size:11px'>4. 绩效指标是要与其他目标具有一定的相关性(Relevant)</view>
+      <view style='font-size:11px'>5.绩效指标必须具有明确的截止期限（Time-bound）</view>
+    </view>
     <view class="weui-cells weui-cells_after-title">
-      <radio-group bindchange="languageChange" name="language">
-        <label class="weui-cell weui-check__label" wx:for="{{languageItems}}" wx:key="value">
-          <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
-
-          <view class="weui-cell__bd">{{item.name}}</view>
-          <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
-            <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
-          </view>
-        </label>
-      </radio-group>
+      <view class="weui-cell weui-cell_switch">
+        <view class="weui-cell__bd">
+          <textarea name="targetContent" placeholder='目标描述'></textarea>
+        </view>
+      </view>
     </view>
 
-    <view class="weui-cells__title">模式</view>
+    <view class="weui-cells__title">你准备多久完成？</view>
     <view class="weui-cells weui-cells_after-title">
-      <radio-group bindchange="modeChange" name="mode">
-        <label class="weui-cell weui-check__label" wx:for="{{modeItems}}" wx:key="value">
-          <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
 
-          <view class="weui-cell__bd">{{item.name}}</view>
-          <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
-            <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
-          </view>
-        </label>
-      </radio-group>
-    </view>
-
-    <view class="weui-cells__title">时间</view>
-    <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
-          <view class="weui-label">日期</view>
+          <view class="weui-label">计划学习</view>
         </view>
         <view class="weui-cell__bd">
-          <picker name="startDate" mode="date" value="{{startDate}}" start="{{startDate}}" end="" bindchange="bindDateChange">
-            <view class="weui-input">{{startDate}}</view>
+          <input name="duration" class="weui-input" placeholder='单位（小时）' value='{{notice}}' />
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">计划完成</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker name="endDate" mode="date" value="{{endDate}}" start="{{endDate}}" end="" bindchange="bindDateChange">
+            <view class="weui-input">{{endDate}}</view>
           </picker>
         </view>
       </view>
 
-      <view class="weui-cell weui-cell_input">
-        <view class="weui-cell__hd">
-          <view class="weui-label">开始时间</view>
-        </view>
-        <view class="weui-cell__bd">
-          <picker name="startTime" mode="time" value="{{startTime}}" bindchange="bindStartTimeChange">
-            <view class="weui-input">{{startTime}}</view>
-          </picker>
-        </view>
-      </view>
-
-      <view class="weui-cell weui-cell_input">
-        <view class="weui-cell__hd">
-          <view class="weui-label">结束时间</view>
-        </view>
-        <view class="weui-cell__bd">
-          <picker name="endTime" mode="time" value="{{endTime}}" bindchange="bindEndTimeChange">
-            <view class="weui-input">{{endTime}}</view>
-          </picker>
-        </view>
-      </view>
-
-      <view class="weui-cell weui-cell_input">
-        <view class="weui-cell__hd">
-          <view class="weui-label">公告</view>
-        </view>
-        <view class="weui-cell__bd">
-          <input name="notice" class="weui-input" placeholder='请输入YY房间号等信息' value='{{notice}}' />
-        </view>
-      </view>
-
     </view>
+
+    <view class="weui-cells__title">你是否愿意接受他人的督促？</view>
+
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_switch">
+        <view class="weui-cell__bd">是否接受督促</view>
+        <view class="weui-cell__ft">
+          <switch name="isSupervised" checked />
+        </view>
+      </view> 
+    </view>
+
   </view>
 
   <view class="weui-flex bottom">
-    <block wx:if="{{operation == 'modify'}}">
-      <view class="weui-flex__item" bindtap='cancelImpromptuRoom'>
-        <button class="">取消</button>
-      </view>
-      </block>
-      <view class="weui-flex__item">
-        <button class="weui-btn" type="primary" formType="submit">保存</button>
-      </view>
     
+    <view class="weui-flex__item">
+      <button class="weui-btn" type="primary" formType="submit">保存</button>
+    </view>
+
   </view>
 </form>
