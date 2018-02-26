@@ -7,7 +7,7 @@ var roomId = ''
 Page({
   data: {
     userInfo: {},
-    endDate: dateFormat.format(new Date(), 'yyyy-MM-dd'),
+    endDate: '',
     operation: 'add'
   },
 
@@ -42,5 +42,13 @@ Page({
       endDate: e.detail.value
     })
   },
+
+  onLoad: function(){
+    var endDate = new Date()
+    endDate.setMonth(endDate.getMonth() + 1)
+    this.setData({
+      endDate: dateFormat.format(endDate, 'yyyy-MM-dd')
+    })
+  }
 
 });

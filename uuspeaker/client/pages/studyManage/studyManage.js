@@ -88,7 +88,7 @@ Page({
 
   toMyTarget: function(){
     wx.navigateTo({
-      url: '../myTarget/myTarget',
+      url: '../target/myTargetDetail/myTargetDetail',
     })
   },
 

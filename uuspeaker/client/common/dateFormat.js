@@ -18,7 +18,7 @@ var format = (date, fmt) => {
   return date.format(fmt)
 }
 
-var getTimeNotice= function(noticeDate) {
+var getTimeNotice = function (noticeDate) {
   var now = new Date()
   var targetDate = new Date(noticeDate)
   var day = Math.floor((now - targetDate) / (24 * 60 * 60 * 1000))
@@ -62,6 +62,29 @@ var getTimeNoticeFuture = function (noticeDate,time) {
   }
 }
 
+var getTimeNoticeFuture2 = function (noticeDate) {
+  var now = new Date()
+  now.setHours(0)
+  now.setMinutes(0)
+  now.setSeconds(0)
+  now.setMilliseconds(0)
+  var targetDate = new Date(noticeDate)
+  targetDate.setHours(0)
+  targetDate.setMinutes(0)
+  targetDate.setSeconds(0)
+  targetDate.setMilliseconds(0)
+  var between = (targetDate - now) / (24 * 60 * 60 * 1000)
+  if (between == 0) {
+    return '今天' 
+  } else if (between == 1) {
+    return '明天'
+  } else if (between == 2) {
+    return '后天' 
+  } else {
+    return this.format(targetDate, 'yyyy年MM月dd日') 
+  }
+}
+
 var getWeek = function(dateString) {
   var date;
   if (dateString == null || typeof dateString == "undefined") {
@@ -75,4 +98,4 @@ var getWeek = function(dateString) {
   return "星期" + "日一二三四五六".charAt(date.getDay());
 }
 
-module.exports = { format, getTimeNotice, getTimeNoticeFuture,getWeek}
+module.exports = { format, getTimeNotice, getTimeNoticeFuture,getTimeNoticeFuture2,getWeek}

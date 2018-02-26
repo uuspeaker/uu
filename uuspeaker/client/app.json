@@ -2,13 +2,16 @@
 {
   "pages": [
     "pages/launchStudy/launchStudy",
+    "pages/studyManage/studyManage",
+    "pages/target/myTargetDetail/myTargetDetail",
+    
     "pages/target/myTarget/myTarget",
     "pages/multiroom/roomlist/roomlist",
     "pages/multiroom/room/room",
     "pages/multiroom/roomname/roomname",
     "pages/cameraview/cameraview",
     "pages/prepared/preparedMeeting/preparedMeeting",
-    "pages/studyManage/studyManage",
+    
     "pages/index/index",
     "pages/impromptu/impromptuIndex/impromptuIndex",
     "pages/impromptu/impromptuSurveyDetail/impromptuSurveyDetail",
