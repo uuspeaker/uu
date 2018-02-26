@@ -5,14 +5,6 @@
   </view>
 </template>
 
-
-<view class="weui-cell write">
-  <view class="weui-cell__bd"></view>
-  <view class="weui-cell__ft" bindtap='writeArticle'>
-    <image class="commentImg" src='../../../images/reportShow/write.png' />
-  </view>
-</view>
-
 <template name="scoreDetailTemplate">
   <view class="weui-cell ">
     <view class="weui-cell__hd" style='vertical-align: text-top;'>
@@ -24,6 +16,7 @@
       <view class="weui-cell weui-cell_access title">
         <view style='padding-left:0px'>{{user_info.nickName}}的目标</view>
       </view>
+      
 
 <view class="weui-article__p article" style='height:100%'>
         <rich-text>{{target_content}}</rich-text>

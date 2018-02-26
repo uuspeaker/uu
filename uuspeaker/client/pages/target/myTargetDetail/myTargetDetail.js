@@ -35,7 +35,9 @@ Page({
       data: queryData,
       method: 'get',
       success(result) {
-        if (result.data.data == '') return;
+        if (result.data.data == '') {
+          that.writeArticle()
+        }
         //util.showSuccess('请求成功完成')
         var resultData = []
         if (queryFlag == 0) {

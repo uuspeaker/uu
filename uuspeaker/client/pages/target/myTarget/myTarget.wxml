@@ -3,11 +3,11 @@
 
     <view class="weui-cells__title">
       <view>请制定一个符合SMART原则的目标</view>
-      <view style='font-size:11px'>1. 绩效指标必须是具体的（Specific）</view>
-      <view style='font-size:11px'>2. 绩效指标必须是可以衡量的（Measurable）</view>
-      <view style='font-size:11px'>3. 绩效指标必须是可以达到的（Attainable）</view>
-      <view style='font-size:11px'>4. 绩效指标是要与其他目标具有一定的相关性(Relevant)</view>
-      <view style='font-size:11px'>5.绩效指标必须具有明确的截止期限（Time-bound）</view>
+      <view style='font-size:11px'>1. 目标必须是具体的（Specific）</view>
+      <view style='font-size:11px'>2. 目标必须是可以衡量的（Measurable）</view>
+      <view style='font-size:11px'>3. 目标必须是可以达到的（Attainable）</view>
+      <view style='font-size:11px'>4. 目标是要与其他目标具有一定的相关性(Relevant)</view>
+      <view style='font-size:11px'>5.目标必须具有明确的截止期限（Time-bound）</view>
     </view>
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_switch">

@@ -2,10 +2,9 @@
 {
   "pages": [
     "pages/launchStudy/launchStudy",
-    "pages/studyManage/studyManage",
     "pages/target/myTargetDetail/myTargetDetail",
-    
     "pages/target/myTarget/myTarget",
+    "pages/studyManage/studyManage",
     "pages/multiroom/roomlist/roomlist",
     "pages/multiroom/room/room",
     "pages/multiroom/roomname/roomname",
