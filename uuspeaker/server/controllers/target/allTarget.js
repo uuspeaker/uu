@@ -5,39 +5,6 @@ const uuid = require('../../common/uuid')
 var impromptuRoomService = require('../../service/impromptuRoomService');
 
 module.exports = {
-  post: async ctx => {
-    var targetId = uuid.v1()
-    var userId = await userInfo.getOpenId(ctx)
-    var targetContent = ctx.request.body.targetContent
-    var duration = ctx.request.body.duration
-    var endDate = ctx.request.body.endDate
-    var isSupervised = ctx.request.body.isSupervised
-
-    //var meetingUser = JSON.parse(meetingUserStr)
-    await mysql('user_target').where({ target_id: targetId, }).del()
-    await mysql('user_target').insert(
-      {
-        target_id: targetId,
-        user_id: userId,
-        target_content: targetContent,
-        duration: duration,
-        end_date: endDate,
-        is_supervised: isSupervised,
-        target_status: 1
-      })
-  },
-
-  put: async ctx => {
-    var targetStatus = ctx.request.body.targetStatus 
-    var targetId = ctx.request.body.targetId 
-    if(targetStatus == 2){
-      await mysql('user_target').update({ target_status: targetStatus, finish_date: new Date() }).where({ target_id: targetId})
-    } else if (targetStatus == 3) {
-      await mysql('user_target').update({ target_status: targetStatus }).where({ target_id: targetId })
-    }
-    
-
-  },
 
   get: async ctx => {
     var userId = await userInfo.getOpenId(ctx)
@@ -50,15 +17,15 @@ module.exports = {
     var targetReport = []
     //查询最近10条信息
     if (queryFlag == 0) {
-      targetReport = await mysql("user_target").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_target.user_id').select('user_target.*', 'cSessionInfo.user_info').where({user_id: userId}).orderBy('user_target.create_date', 'desc').limit(limit).offset(offset)
+      targetReport = await mysql("user_target").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_target.user_id').select('user_target.*', 'cSessionInfo.user_info').where({ target_status: 1 }).orderBy('user_target.create_date', 'desc').limit(limit).offset(offset)
     }
     //查询前10条信息,此种方式会导致10(limit)条之外的数据无法查询到,因影响不大,使用此种简单但不完备的方式
     if (queryFlag == 1) {
-      targetReport = await mysql("user_target").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_target.user_id').select('user_target.*', 'cSessionInfo.user_info').where({ user_id: userId }).orderBy('user_target.create_date', 'desc').where('user_target.create_date', '>', new Date(firstReportTime)).limit(limit).offset(offset)
+      targetReport = await mysql("user_target").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_target.user_id').select('user_target.*', 'cSessionInfo.user_info').where({ target_status: 1 }).orderBy('user_target.create_date', 'desc').where('user_target.create_date', '>', new Date(firstReportTime)).limit(limit).offset(offset)
     }
     //查询后10条信息
     if (queryFlag == 2) {
-      targetReport = await mysql("user_target").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_target.user_id').select('user_target.*', 'cSessionInfo.user_info').where({ user_id: userId }).orderBy('user_target.create_date', 'desc').where('user_target.create_date', '<', new Date(lastReportTime)).limit(limit).offset(offset)
+      targetReport = await mysql("user_target").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_target.user_id').select('user_target.*', 'cSessionInfo.user_info').where({ target_status: 1 }).orderBy('user_target.create_date', 'desc').where('user_target.create_date', '<', new Date(lastReportTime)).limit(limit).offset(offset)
     }
 
     ctx.state.data = {
@@ -67,7 +34,7 @@ module.exports = {
     }
     for (var i = 0; i < targetReport.length; i++) {
       //若有一条目标数据，则标示此客户已经制定目标
-      if (targetReport[i].target_status == 1){
+      if (targetReport[i].target_status == 1) {
         ctx.state.data.haveTarget = 1
       }
       //获取复盘人用户昵称及头像

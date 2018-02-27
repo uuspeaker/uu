@@ -15,7 +15,7 @@ Page({
     targetReportData: [],
     showComment: false,
     commentValue: '',
-    haveTarget:'0' 
+    haveTarget: '0'
   },
 
   writeArticle: function () {
@@ -31,7 +31,7 @@ Page({
     var queryData = { 'queryFlag': queryFlag, 'firstReportTime': firstReportTime, 'lastReportTime': lastReportTime }
     console.log(queryData)
     qcloud.request({
-      url: `${config.service.host}/weapp/target.myTarget`,
+      url: `${config.service.host}/weapp/target.allTarget`,
       login: true,
       data: queryData,
       method: 'get',
@@ -82,7 +82,7 @@ Page({
       var endDate = new Date(data[i].end_date)
       var finishDate = new Date(data[i].finish_date)
       data[i].createDateStr = dateFormat.getTimeNotice(createDate)
-      data[i].planDateStr = dateFormat.format(createDate,'yyyy年MM月dd日')
+      data[i].planDateStr = dateFormat.format(createDate, 'yyyy年MM月dd日')
       data[i].endDateStr = dateFormat.format(endDate, 'yyyy年MM月dd日')
       data[i].finishDateStr = dateFormat.format(finishDate, 'yyyy年MM月dd日')
       var commentData = data[i].commentList
@@ -241,7 +241,7 @@ Page({
     })
   },
 
-  compose: function(e){
+  compose: function (e) {
     var targetId = e.currentTarget.dataset.target_id
     this.updateTargetStatus(targetId, 3)
   },
@@ -252,10 +252,10 @@ Page({
   },
 
 
-  updateTargetStatus: function(targetId, status){
+  updateTargetStatus: function (targetId, status) {
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/target.myTarget`,
+      url: `${config.service.host}/weapp/target.allTarget`,
       login: true,
       data: { 'targetId': targetId, 'targetStatus': status },
       method: 'put',

@@ -1,7 +1,9 @@
 
 {
   "pages": [
+    "pages/impromptu/impromptuIndex/impromptuIndex",
     "pages/launchStudy/launchStudy",
+    "pages/target/allTargetDetail/allTargetDetail",
     "pages/target/myTargetDetail/myTargetDetail",
     "pages/target/myTarget/myTarget",
     "pages/studyManage/studyManage",
@@ -12,7 +14,7 @@
     "pages/prepared/preparedMeeting/preparedMeeting",
     
     "pages/index/index",
-    "pages/impromptu/impromptuIndex/impromptuIndex",
+    
     "pages/impromptu/impromptuSurveyDetail/impromptuSurveyDetail",
     "pages/impromptu/impromptuVote/impromptuVote",
     
@@ -67,7 +69,7 @@
         "selectedIconPath": "images/tabbar/discover2.png",
         "iconPath": "images/tabbar/discover1.png",
         "pagePath": "pages/allReport/allReport",
-        "text": "发现"
+        "text": "复盘"
       },
       {
         "selectedIconPath": "images/tabbar/user2.png",

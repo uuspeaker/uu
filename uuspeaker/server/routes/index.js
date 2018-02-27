@@ -109,7 +109,8 @@ router.post('/impromptu.impromptuVote', controllers.impromptu.impromptuVote.post
 router.get('/target.myTarget', controllers.target.myTarget.get)
 router.put('/target.myTarget', controllers.target.myTarget.put)
 router.post('/target.myTarget', controllers.target.myTarget.post)
-
+//所有用户目标查询
+router.get('/target.allTarget', controllers.target.allTarget.get)
 /**
  * 获取云通信登录所需信息的接口 - 服务器会随机分配用户id 用于后面的进房和出房操作。
  */

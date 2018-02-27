@@ -10,7 +10,7 @@ Page({
       roomname: '',       // 房间名称
       username: '',       // 用户名称
       config: {           //cameraview对应的配置项
-        aspect: '3:4',     //设置画面比例，取值为'3:4'或者'9:16'
+        //aspect: '3:4',     //设置画面比例，取值为'3:4'或者'9:16'
         minBitrate: 200,   //设置码率范围为[minBitrate,maxBitrate]，四人建议设置为200~400
         maxBitrate: 1000,
         beauty: 1,        //美颜程度，取值为0~9
@@ -20,8 +20,8 @@ Page({
         operate: ''       //设置操作类型，目前只有一种'stop'，表示停止
       },            
       styles: {           //设置cameraview的大小
-        width: '49vw',
-        height: '65.33vw'
+        // width: '49vw',
+        // height: '65.33vw'
         // width: '32vw',
         // height: '40vw'
       },

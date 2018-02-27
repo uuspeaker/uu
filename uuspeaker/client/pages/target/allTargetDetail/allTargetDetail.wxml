@@ -14,15 +14,7 @@
     </view>
     <view class="weui-cell__bd" style='padding-left:30px;'>
       <view class="weui-cell weui-cell_access title">
-        <view class="weui-cell__bd" style='padding-left:0px'>目标描述</view>
-        <view class="weui-cell__ft title" >
-        <block wx:if='{{target_status == 1}}'>
-        <text data-target_id='{{target_id}}' bindtap='despose'>作废</text>
-        <text data-target_id='{{target_id}}' bindtap='complete' style='padding-left:10px'>完成</text>
-        </block>
-        </view>
-        <block wx:if='{{target_status == 2}}'>已完成</block>
-        <block wx:if='{{target_status == 3}}'>已作废</block>
+        <view class="weui-cell__bd" style='padding-left:0px'>{{user_info.nickName}}的目标</view>
       </view>
 
       <view class="weui-article__p article" style='height:100%'>
@@ -86,10 +78,3 @@
   <textarea class="textarea" id="comment" placeholder="请输入内容" bindinput="setCommentValue" value='{{commentValue}}'> </textarea>
 </modal>
 
-<view class="weui-flex bottom">
-    <block wx:if="{{haveTarget == 0}}">
-      <view class="weui-flex__item">
-        <button class="weui-btn" type="primary" bindtap='writeArticle'>制定目标</button>
-      </view>
-      </block>
-  </view>

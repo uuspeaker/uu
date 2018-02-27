@@ -34,14 +34,15 @@
         <text wx:if="{{mode == 1}}">【普通模式】</text> 
         <text wx:if="{{mode == 2}}">【疯狂模式】</text>
         <text wx:if="{{mode == 3}}">【娱乐模式】</text>
-        <text wx:if="{{mode == 4}}">【对抗模式】</text></view>
+        <text wx:if="{{mode == 4}}">【对抗模式】</text>
+        </view>
       </view>
       <view >
-        <view class=" date">  {{startDateStr}}<block wx:if="{{isHost == true && survey_status == 1}}"> <text class='delete' data-room_id="{{room_id}}" data-user_id='{{user_id}}' data-start_date='{{start_date}}' data-start_time='{{start_time}}' data-end_time='{{end_time}}' data-mode='{{mode}}' data-language='{{language}}' data-notice='{{notice}}' data-is_host='{{isHost}}' catchtap='updateImpromptuRoom'>编辑</text> </block>
+        <view class=" date">  {{startDateStr}}<block wx:if="{{isHost == true && survey_status == 1}}"> <text class='delete' data-room_id="{{room_id}}" data-user_id='{{user_id}}' data-start_date='{{start_date}}' data-start_time='{{start_time}}' data-end_time='{{end_time}}' data-mode='{{mode}}' data-language='{{language}}' data-notice='{{notice}}' data-is_host='{{isHost}}'  catchtap='updateImpromptuRoom'>编辑</text> </block>
         </view>
       </view>
     </view>
-    <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0" > </view>
+    <view style="font-weight:bold" data-user_name='{{user_info.nickName}}' data-mode='{{mode}}' catchtap='createRoom'>启动</view>
   </view>
 </template>
 

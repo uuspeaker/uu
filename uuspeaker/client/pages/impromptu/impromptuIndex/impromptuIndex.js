@@ -13,7 +13,8 @@ Page({
     textStyle: [],
     rooms: [],
     modeItems: [ '普通模式','疯狂模式', '娱乐模式','对抗模式'],
-    languageItems: ['中文', 'English']
+    languageItems: ['中文', 'English'],
+    tapTime: ''
   },
 
   initViewStyle: function () {
@@ -96,6 +97,28 @@ Page({
       + '&language=' + e.currentTarget.dataset.language
       + '&notice=' + e.currentTarget.dataset.notice
     })
+  },
+
+  // 进入rtcroom页面
+  createRoom: function (e) {
+    var self = this;
+    // 防止两次点击操作间隔太快
+    var nowTime = new Date();
+    if (nowTime - this.data.tapTime < 1000) {
+      return;
+    }
+    var mode = e.currentTarget.dataset.mode
+    var roomName = e.currentTarget.dataset.user_name + '的房间（' + this.data.modeItems[mode-1] + '）'
+    var url = '../../multiroom/room/room?type=create&roomName=' + roomName + '&userName=' + e.currentTarget.dataset.user_name;
+    wx.navigateTo({
+      url: url
+    });
+    wx.showToast({
+      title: '进入房间',
+      icon: 'success',
+      duration: 1000
+    })
+    self.setData({ 'tapTime': nowTime });
   },
 
   /**

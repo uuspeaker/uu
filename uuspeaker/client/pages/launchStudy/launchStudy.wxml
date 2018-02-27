@@ -4,11 +4,11 @@
     <view class='welcome-tip'>欢迎光临</view>
   </view>
   <view class="weui-flex__item ">
-    <view class='guideline' style="{{viewStyle[1]}}" data-item='1' bindtap='pressView'>
+    <view class='guideline' style="{{viewStyle[1]}}" data-item='1' bindtap='toStudyTarget'>
         <view>
           <image class="uu-code" src='../../images/launchStudy/guideline.png'></image>
         </view>
-        <view>新手试炼</view>
+        <view>学习目标</view>
     </view>
 
     <view class='advance' style="{{viewStyle[2]}}" data-item='2' bindtap='pressView'>

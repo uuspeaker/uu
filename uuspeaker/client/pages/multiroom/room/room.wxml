@@ -45,12 +45,6 @@
 	</view> 
 	<view class="operate">
 		<view class='img-box'>
-			<image src='../../Resources/{{config.camera? "camera" : "camera-gray"}}.png' bindtap="changeCamera"></image>
-		</view>
-		<view class='img-box'>
-			<image src='../../Resources/{{config.beauty? "beauty" : "beauty-dis"}}.png' bindtap="setBeauty"></image>
-		</view>
-		<view class='img-box'>
 			<image src='../../Resources/{{config.muted ? "mic-dis" : "mic"}}.png'  bindtap="changeMute"></image>
 		</view>
 		<view class='img-box'>

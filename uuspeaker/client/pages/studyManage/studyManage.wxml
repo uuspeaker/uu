@@ -91,7 +91,7 @@
         <view>
           <image src="../../images/studyManage/article.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
         </view>
-        <view class="weui-cell__bd">我的发言</view>
+        <view class="weui-cell__bd">我的复盘</view>
         <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
       </view>
 
@@ -102,16 +102,6 @@
         <view class="weui-cell__bd">我的影响</view>
         <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
       </view>
-
-      <view class="weui-cell weui-cell_access" bindtap=''>
-        <view>
-          <image src="../../images/studyManage/honor.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
-        </view>
-        <view class="weui-cell__bd">我的荣誉（建设中）</view>
-        <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
-      </view>
-
-      
 
     </view>
   </view>

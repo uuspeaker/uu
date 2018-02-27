@@ -28,8 +28,8 @@
 	position: relative; 
 	display: inline-block; 
 	overflow: hidden;
-	width: 49vw;
-	height: 65.33vw; 
+	width: 32vw;
+	height: 40vw; 
 	text-align: center;
   margin-bottom: 2vw;
   vertical-align: top;
