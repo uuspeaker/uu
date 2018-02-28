@@ -29,8 +29,8 @@ const CONF = {
     live: {
       appID: 1255773188,
       bizid:20363,
-      pushSecretKey:1,
-      APIKey:1,
+      pushSecretKey:'4a43a87b03e6085a44e76705a9d02686',
+      APIKey:'0b8414ceddf4a196d1b6f7ff273b9b80',
       validTime:3600*24*7
     },
 

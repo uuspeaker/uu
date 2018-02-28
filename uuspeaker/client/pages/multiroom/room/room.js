@@ -233,6 +233,7 @@ Page({
      */
     onLoad: function (options) {
       console.log('room.js onLoad');
+      console.log(options)
       var time = new Date();
       time = time.getHours() + ':' + time.getMinutes() + ':' + time.getSeconds();
       console.log('*************开始多人音视频：' + time + '**************');

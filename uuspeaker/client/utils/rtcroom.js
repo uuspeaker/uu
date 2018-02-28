@@ -109,6 +109,7 @@ function init(options) {
 	accountInfo.accountType = options.data.accType;
   accountInfo.userName = options.data.userName || userName[Math.floor(Math.random()*10)] || accountInfo.userID;
 	accountInfo.userAvatar = '123';
+  console.log(options)
 	// 登录IM
 	loginIM({
     success: options.success,

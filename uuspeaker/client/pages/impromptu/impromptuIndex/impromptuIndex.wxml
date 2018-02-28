@@ -42,7 +42,7 @@
         </view>
       </view>
     </view>
-    <view style="font-weight:bold" data-user_name='{{user_info.nickName}}' data-mode='{{mode}}' catchtap='createRoom'>启动</view>
+    <view style="font-weight:bold" data-user_name='{{user_info.nickName}}' data-mode='{{mode}}' data-room_id="{{room_id}}" catchtap='createRoom'>启动</view>
   </view>
 </template>
 
