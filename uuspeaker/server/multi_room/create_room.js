@@ -20,7 +20,7 @@ module.exports = async (ctx, next) => {
 
   var roomID;
 
-  // while (1) {
+  while (1) {
     roomID = ctx.request.body.roomId;
     if (roommgr.isRoomExist(roomID)) {
       console.log('room already exist roomId: ' + ctx.request.body.roomId + ' roomName: ' + ctx.request.body.roomName)
@@ -35,14 +35,14 @@ module.exports = async (ctx, next) => {
       console.log('immgr.createGroup ' + result)
       if (result.ErrorCode == 0 || result.ErrorCode == 10025)
       {
-        
+        break
       }
     }catch(e){
       log.logError(ctx, e, 0);
       ctx.body = roommgr.getErrMsg(6);
       return;
     }
-  // }
+  }
 
   var txTime = new Date();
   txTime.setTime(txTime.getTime() + config.live.validTime * 1000);

@@ -37,7 +37,7 @@ const CONF = {
     //云通信相关配置
     im: {
       sdkAppID: 1400063484,
-      accountType: 21916,
+      accountType: '21916',
       administrator: 'tianhan',
       privateKey: '-----BEGIN PRIVATE KEY-----\r\n' +
       'MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgGjEGt3r1oaS1Xqn4\r\n' +

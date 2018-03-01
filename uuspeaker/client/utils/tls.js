@@ -1,6 +1,6 @@
 var encrypt = require('encrypt.js');
 
-var sdkappid = 10001;
+var sdkappid = 1400063484;
 function anologin(cb){
       wx.request({
             url: 'https://tls.qcloud.com/anologin', //仅为示例，并非真实的接口地址

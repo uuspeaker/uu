@@ -59,7 +59,8 @@ Component({
     init: function () {
       // 重置用户名，因为一开始用户名是空的
       this.setData({
-        username: this.data.username
+        username: this.data.username,
+        roomid: this.data.roomid
       });
       this.getPushURL();
     },
@@ -72,6 +73,7 @@ Component({
             pushURL: ret.pushURL
           });
           self.setListener();
+          self.createRoom()
           self.data.role == 'enter' && self.enterRoom();
           // 小程序开发工具测试代码
           // self.data.role == 'enter' && self.joinPusher();

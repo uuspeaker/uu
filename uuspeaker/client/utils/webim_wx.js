@@ -568,6 +568,7 @@ var webim = { // namespace object webim
     var SDK = {
         'VERSION': '1.7.0',//sdk版本号
         'APPID': '537048168'//web im sdk 版本 APPID
+        //'APPID': '537048168'//web im sdk 版本 APPID
     };
 
     //是否启用正式环境，默认启用

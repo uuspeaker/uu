@@ -241,13 +241,14 @@ Page({
     this.data.role = options.type;
     this.data.roomid = options.roomID;
     this.data.roomname = options.roomName;
-    this.data.username = options.userName;
+    //this.data.username = options.userName;
     this.setData({
       role: this.data.role,
       roomid: this.data.roomid,
       roomname: this.data.roomname,
-      username: this.data.username
+      //username: this.data.username
     });
+    this.initUserInfo()
   },
 
   /**
@@ -255,21 +256,21 @@ Page({
    */
   onReady: function () {
     var self = this;
-    if (!self.data.username) {
-      wx.showModal({
-        title: '提示',
-        content: '登录信息还未获取到，请稍后再试',
-        showCancel: false,
-        complete: function () {
-          var pages = getCurrentPages();
-          console.log(pages, pages.length, pages[pages.length - 1].__route__);
-          if (pages.length > 1 && (pages[pages.length - 1].__route__ == 'pages/impromptu/room/room')) {
-            wx.navigateBack({ delta: 1 });
-          }
-        }
-      });
-      return;
-    }
+    // if (!self.data.username) {
+    //   wx.showModal({
+    //     title: '提示',
+    //     content: '登录信息还未获取到，请稍后再试',
+    //     showCancel: false,
+    //     complete: function () {
+    //       var pages = getCurrentPages();
+    //       console.log(pages, pages.length, pages[pages.length - 1].__route__);
+    //       if (pages.length > 1 && (pages[pages.length - 1].__route__ == 'pages/impromptu/room/room')) {
+    //         wx.navigateBack({ delta: 1 });
+    //       }
+    //     }
+    //   });
+    //   return;
+    // }
     // 设置房间标题
     wx.setNavigationBarTitle({ title: self.data.roomname });
   },
@@ -309,6 +310,26 @@ Page({
       members: self.data.members
     });
   },
+
+  initUserInfo: function () {
+    var that = this
+    wx.getUserInfo({
+      withCredentials: false,
+      lang: '',
+      success(result) {
+        that.setData({
+          username: result.userInfo.nickName
+        })
+      },
+      fail(error) {
+        util.showModel('请求失败', error)
+        console.log('request fail', error)
+      },
+      complete: function (res) {
+
+      },
+    })
+  },  
 
   /**
    * 生命周期函数--监听页面隐藏

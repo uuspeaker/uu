@@ -111,10 +111,10 @@ function init(options) {
 	accountInfo.userAvatar = '123';
   console.log(options)
 	// 登录IM
-	// loginIM({
-  //   success: options.success,
-  //   fail: options.fail
-  // });
+	loginIM({
+    success: options.success,
+    fail: options.fail
+  });
 }
 
 /**
@@ -566,6 +566,8 @@ function getPushers(options) {
 		});
 		return; 
 	}
+  console.log('getPushers')
+  console.log(roomInfo)
 	request({
 		url: 'get_pushers',
 		data: { roomID: roomInfo.roomID },
@@ -675,6 +677,7 @@ function proto_createRoom(options) {
 				return;
 			}
 			console.log('创建房间成功');
+      console.log(ret)
 			roomInfo.roomID = ret.data.roomID;
 			if(roomInfo.isDestory) {
 				roomInfo.isDestory = false;
