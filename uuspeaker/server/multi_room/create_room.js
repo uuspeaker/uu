@@ -7,6 +7,7 @@ const log = require('../log')
 module.exports = async (ctx, next) => {
   if (!ctx.request.body ||
     !ctx.request.body.roomName ||
+    !ctx.request.body.roomId ||
     !ctx.request.body.userID ||
     !ctx.request.body.userName ||
     !ctx.request.body.userAvatar ||
@@ -19,26 +20,29 @@ module.exports = async (ctx, next) => {
 
   var roomID;
 
-  while (1) {
-    roomID = liveutil.genRoomId();
-    while (roommgr.isRoomExist(roomID)) {
-      roomID = liveutil.genRoomId();
+  // while (1) {
+    roomID = ctx.request.body.roomId;
+    if (roommgr.isRoomExist(roomID)) {
+      console.log('room already exist roomId: ' + ctx.request.body.roomId + ' roomName: ' + ctx.request.body.roomName)
+      return
     }
 
+    console.log('init room roomId: ' + ctx.request.body.roomId + ' roomName: ' + ctx.request.body.roomName)
     var result;
     try{
       result = await immgr.createGroup(roomID, ctx.request.body.roomName);
       result = JSON.parse(result);
+      console.log('immgr.createGroup ' + result)
       if (result.ErrorCode == 0 || result.ErrorCode == 10025)
       {
-        break;
+        
       }
     }catch(e){
       log.logError(ctx, e, 0);
       ctx.body = roommgr.getErrMsg(6);
       return;
     }
-  }
+  // }
 
   var txTime = new Date();
   txTime.setTime(txTime.getTime() + config.live.validTime * 1000);

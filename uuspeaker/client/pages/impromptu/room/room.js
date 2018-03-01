@@ -17,16 +17,17 @@ Page({
       muted: false,     //设置推流是否静音
       debug: false,     //是否显示log
       camera: true,     //设置前后置摄像头，true表示前置
+      enableCamera: true, //关闭摄像头
       operate: ''       //设置操作类型，目前只有一种'stop'，表示停止
     },
     styles: {           //设置cameraview的大小
       // width: '49vw',
       // height: '65.33vw'
-      // width: '32vw',
-      // height: '40vw'
+      width: '32vw',
+      height: '40vw'
     },
     event: 0,               //推流事件透传
-    members: new Array(memberSize),  //多人其他用户信息
+    members: new Array(memberSize - 1),  //多人其他用户信息
     isShow: false,          // 是否显示页面
     exit: 0
   },

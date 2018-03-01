@@ -104,7 +104,7 @@ Component({
       });
     },
     // 加入推流
-    joinPusher: function() {
+    joinPusher: function () {
       var self = this;
       rtcroom.joinPusher({
         data: {
@@ -131,6 +131,7 @@ Component({
       rtcroom.createRoom({
         data: {
           roomName: self.data.roomname,
+          roomId: self.data.roomid,
           pushURL: self.data.pushURL
         },
         success: function (ret) {
@@ -149,11 +150,11 @@ Component({
       });
     },
     // 退出房间
-    exitRoom: function() {
+    exitRoom: function () {
       rtcroom.exitRoom({});
     },
     // 推流事件 
-    onPush: function(e) {
+    onPush: function (e) {
       var self = this;
       if (!self.data.pusherContext) {
         self.data.pusherContext = wx.createLivePusherContext('rtcpusher');
@@ -227,9 +228,9 @@ Component({
       }
     },
     // 标签错误处理
-    onError: function(e) {
+    onError: function (e) {
       var self = this;
-      console.log('错误处理',e);
+      console.log('错误处理', e);
       e.detail.errCode == 10001 ? (e.detail.errMsg = '未获取到摄像头功能权限，请删除小程序后重新打开') : '';
       e.detail.errCode == 10002 ? (e.detail.errMsg = '未获取到录音功能权限，请删除小程序后重新打开') : '';
       // 触发外部事件
@@ -240,14 +241,14 @@ Component({
       }, {});
     },
     // 发送评论
-    sendRoomTextMsg: function(msg) {
+    sendRoomTextMsg: function (msg) {
       // 评论为空则不发布，trim评论信息
       if (!msg.replace(/^\s*|\s*$/g, '')) return;
       rtcroom.sendRoomTextMsg({
         data: { msg: msg },
         success: function (ret) {
           console.log('发送评论成功');
-         
+
         }
       });
     },
@@ -285,7 +286,7 @@ Component({
         type: 'onMemberJoin',
         members: ret.pushers
       }, {});
-    
+
     },
     // 有人退群通知
     onPhserQuit: function (ret) {
@@ -302,31 +303,31 @@ Component({
     // 房间解散通知
     onRoomClose: function (ret) {
       var self = this;
-      console.log('收到解散通知');   
-    
+      console.log('收到解散通知');
+
       // 触发外部事件
       self.triggerEvent('notify', {
         type: 'onRoomClose',
         errCode: ret.errCode,
         errMsg: ret.errMsg
-      }, {}); 
+      }, {});
     },
     // 评论消息通知
-    onRecvRoomTextMsg: function(ret) {
+    onRecvRoomTextMsg: function (ret) {
       var self = this;
       // 触发外部事件
       self.triggerEvent('notify', {
         type: 'onRecvRoomTextMsg',
         content: ret
-      }, {});  
+      }, {});
     }
   },
   // 组件布局完成
   ready: function () {
-    console.log('初始化data',this.data);
-    wx.showLoading({
-      title: '进入房间中'
-    })
+    console.log('初始化data', this.data);
+    // wx.showLoading({
+    //   title: '进入房间中'
+    // })
     // 布局完成开始初始化
     this.init();
   },

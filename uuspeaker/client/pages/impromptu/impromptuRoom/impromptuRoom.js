@@ -10,7 +10,7 @@ Page({
       { name: '普通模式', value: '1', checked: true},
       { name: '疯狂模式', value: '2' },
       { name: '娱乐模式', value: '3' },
-      { name: '对抗模式', value: '4' }
+      { name: 'PK模式', value: '4' }
     ],
     languageItems: [
       { name: '中文', value: '1', checked: true },

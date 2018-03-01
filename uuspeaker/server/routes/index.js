@@ -171,6 +171,9 @@ router.post(multiRoomPrefix + '/delete_pusher', multi_room.delete_pusher)
  */
 router.post(multiRoomPrefix + '/pusher_heartbeat', multi_room.pusher_heartbeat)
 
+//房间是否存在
+router.post('/multi_room.isRoomExist', multi_room.isRoomExist)
+
 //------------------------------------- 提取log辅助函数 --------------------------------------------------
 /**
  * 辅助接口 - 用于获取业务后台的日志文件列表。

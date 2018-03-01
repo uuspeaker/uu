@@ -14,7 +14,7 @@
   </view>
   <view class="weui-flex__item normal yellow" style="{{viewStyle[3]}}" data-item='3' bindtap='pressView'>
     <view> <image class="uu-code" src='../../../images/impromptuIndex/compete.png'></image></view>
-    <view >对抗模式</view>
+    <view >PK模式</view>
   </view>
 </view>
 <view class="weui-cells__title">房间信息：</view>
@@ -34,7 +34,7 @@
         <text wx:if="{{mode == 1}}">【普通模式】</text> 
         <text wx:if="{{mode == 2}}">【疯狂模式】</text>
         <text wx:if="{{mode == 3}}">【娱乐模式】</text>
-        <text wx:if="{{mode == 4}}">【对抗模式】</text>
+        <text wx:if="{{mode == 4}}">【PK模式】</text>
         </view>
       </view>
       <view >
@@ -42,7 +42,7 @@
         </view>
       </view>
     </view>
-    <view style="font-weight:bold" data-user_name='{{user_info.nickName}}' data-mode='{{mode}}' data-room_id="{{room_id}}" catchtap='createRoom'>启动</view>
+    <view style="font-weight:bold" data-user_name='{{user_info.nickName}}' data-mode='{{mode}}' data-room_id="{{room_id}}" catchtap='createAndGoRoom'>开始会议</view>
   </view>
 </template>
 

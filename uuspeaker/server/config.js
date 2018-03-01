@@ -58,6 +58,25 @@ const CONF = {
         uploadFolder: ''
     },
 
+    /**
+   * 多人音视频房间相关参数
+   */
+    multi_room: {
+      // 房间容量上限
+      maxMembers: 9,
+
+      // 心跳超时 单位秒
+      heartBeatTimeout: 20,
+
+      // 空闲房间超时 房间创建后一直没有人进入，超过给定时间将会被后台回收，单位秒
+      maxIdleDuration: 30
+    },
+
+    /**
+   * 辅助功能 后台日志文件获取相关 当前后台服务的访问域名。
+   */
+    selfHost: "https://drourwkp.qcloud.la",
+
     // 微信登录态有效期
     wxLoginExpires: 7200,
     wxMessageToken: 'abcdefgh'

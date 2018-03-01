@@ -8,7 +8,7 @@ var webimhandler = require('webim_handler.js');
 var tls = require('tls.js');
 var encrypt = require('encrypt.js');
 
-var serverDomain = '',		// 后台域名
+var serverDomain = 'https://r3uhpu7v.qcloud.la/',		// 后台域名
 	heart = '',				// 判断心跳变量
 	requestSeq = 0,			// 请求id
 	requestTask = [],		// 请求task
@@ -111,10 +111,10 @@ function init(options) {
 	accountInfo.userAvatar = '123';
   console.log(options)
 	// 登录IM
-	loginIM({
-    success: options.success,
-    fail: options.fail
-  });
+	// loginIM({
+  //   success: options.success,
+  //   fail: options.fail
+  // });
 }
 
 /**
@@ -662,7 +662,8 @@ function proto_createRoom(options) {
 			roomName: roomInfo.roomName,
 			userName: accountInfo.userName,
 			userAvatar: accountInfo.userAvatar,
-			pushURL: options.data.pushURL
+			pushURL: options.data.pushURL,
+      roomId: options.data.roomId
 		},
 		success: function(ret) {
 			if(ret.data.code) {

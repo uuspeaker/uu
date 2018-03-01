@@ -102,7 +102,7 @@ Page({
   },
 
   // 进入rtcroom页面
-  createRoom: function (e) {
+  createAndGoRoom: function (e) {
     var self = this;
     // 防止两次点击操作间隔太快
     var nowTime = new Date();
@@ -112,43 +112,34 @@ Page({
     var mode = e.currentTarget.dataset.mode
     var roomID = e.currentTarget.dataset.room_id
     var roomName = e.currentTarget.dataset.user_name + '的房间（' + this.data.modeItems[mode-1] + '）'
-    var url = '../room/room?type=create&roomName=' + roomName + '&roomID=' + roomID + '&userName=' + e.currentTarget.dataset.user_name;
-    wx.navigateTo({
-      url: url
-    });
-    wx.showToast({
-      title: '进入房间',
-      icon: 'success',
-      duration: 1000
+
+    qcloud.request({
+      url: `${config.service.host}/weapp/multi_room.isRoomExist`,
+      login: true,
+      data: { 'roomId': roomID},
+      method: 'post',
+      success(result) {
+        console.log(result)
+        var isRoomExist = result.data
+        var enterType = 'create'
+        if (isRoomExist == 'true'){
+          enterType = 'enter'
+        }
+        var url = '../room/room?type=' + enterType + '&roomName=' + roomName + '&roomID=' + roomID + '&userName=' + e.currentTarget.dataset.user_name;
+        wx.navigateTo({
+          url: url
+        });
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
     })
+
+    
+
     self.setData({ 'tapTime': nowTime });
   },
-
-  // 进入rtcroom页面
-  goRoom: function (e) {
-    // 防止两次点击操作间隔太快
-    var nowTime = new Date();
-    if (nowTime - this.data.tapTime < 1000) {
-      return;
-    }
-    if (e.currentTarget.dataset.num > 9) {
-      wx.showModal({
-        title: '提示',
-        content: '房间人数已满',
-        showCancel: false,
-        complete: function () { }
-      });
-      return;
-    }
-    var mode = e.currentTarget.dataset.mode
-    var roomID = e.currentTarget.dataset.room_id
-    var roomName = e.currentTarget.dataset.user_name + '的房间（' + this.data.modeItems[mode - 1] + '）'
-    var url = '../room/room?type=create&roomName=' + roomName + '&roomID=' + roomID + '&userName=' + e.currentTarget.dataset.user_name;
-    wx.navigateTo({ url: url });
-    this.setData({ 'tapTime': nowTime });
-  },
-
-  
 
   /**
    * 生命周期函数--监听页面加载
@@ -180,6 +171,7 @@ Page({
     // })
     // rtcroom初始化
     var self = this;
+    this.getRoomList(function () { });
     console.log(this.data);
     getlogininfo.getLoginInfo({
       type: 'multi_room',
@@ -204,6 +196,42 @@ Page({
             wx.navigateBack({});
           }
         });
+      }
+    });
+  },
+
+  // 拉取房间列表
+  getRoomList: function (callback) {
+    var self = this;
+    // if (!self.data.isGetLoginInfo) {
+    //   wx.showModal({
+    //     title: '提示',
+    //     content: '登录信息初始化中，请稍后再试',
+    //     showCancel: false
+    //   })
+    //   return;
+    // }
+    rtcroom.getRoomList({
+      data: {
+        index: 0,
+        cnt: 20
+      },
+      success: function (ret) {
+        self.setData({
+          roomList: ret.rooms
+        });
+        console.log('拉取房间列表成功');
+        console.log(ret.rooms)
+        callback && callback();
+      },
+      fail: function (ret) {
+        console.log(ret);
+        wx.showModal({
+          title: '提示',
+          content: ret.errMsg,
+          showCancel: false
+        });
+        callback && callback();
       }
     });
   },
