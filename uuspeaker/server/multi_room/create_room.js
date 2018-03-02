@@ -24,6 +24,10 @@ module.exports = async (ctx, next) => {
     roomID = ctx.request.body.roomId;
     if (roommgr.isRoomExist(roomID)) {
       console.log('room already exist roomId: ' + ctx.request.body.roomId + ' roomName: ' + ctx.request.body.roomName)
+      var ret = roommgr.getErrMsg(0);
+      ret.roomID = roomID;
+      ctx.body = ret;
+      log.logResponse(ctx, 0);
       return
     }
 

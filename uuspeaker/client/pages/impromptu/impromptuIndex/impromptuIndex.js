@@ -113,35 +113,36 @@ Page({
     var mode = e.currentTarget.dataset.mode
     var roomID = e.currentTarget.dataset.room_id
     var roomName = e.currentTarget.dataset.user_name + '的房间（' + this.data.modeItems[mode-1] + '）'
-    var url = '../room/room?type=enter&roomName=' + roomName + '&roomID=' + roomID + '&hostName=' + e.currentTarget.dataset.user_name + '&userName=' + this.data.userName;
-    wx.navigateTo({
-      url: url
-    });
+    // var url = '../room/room?type=enter&roomName=' + roomName + '&roomID=' + roomID + '&hostName=' + e.currentTarget.dataset.user_name + '&userName=' + this.data.userName;
+    // wx.navigateTo({
+    //   url: url
+    // });
 
-    // qcloud.request({
+    qcloud.request({
       
-    //   url: `${config.service.host}/weapp/multi_room.isRoomExist`,
-    //   login: true,
-    //   data: { 'roomId': roomID},
-    //   method: 'post',
-    //   success(result) {
-    //     console.log(result)
-    //     var isRoomExist = result.data
-    //     var enterType = 'create'
-    //     if (isRoomExist == 'true'){
-    //       enterType = 'enter'
-    //     }
-    //     var url = '../room/room?type=' + enterType + '&roomName=' + roomName + '&roomID=' + roomID + '&hostName=' + e.currentTarget.dataset.user_name + '&userName=' + self.data.userName;
-    //     console.log(url)
-    //     wx.navigateTo({
-    //       url: url
-    //     });
-    //   },
-    //   fail(error) {
-    //     util.showModel('请求失败', error);
-    //     console.log('request fail', error);
-    //   }
-    // })
+      url: `${config.service.host}/weapp/multi_room.isRoomExist`,
+      login: true,
+      data: { 'roomId': roomID},
+      method: 'post',
+      success(result) {
+        console.log('multi_room.isRoomExist')
+        console.log(result)
+        var isRoomExist = result.data.isRoomExist
+        var enterType = 'create'
+        if (isRoomExist){
+          enterType = 'enter'
+        }
+        var url = '../room/room?type=' + enterType + '&roomName=' + roomName + '&roomID=' + roomID + '&hostName=' + e.currentTarget.dataset.user_name + '&userName=' + self.data.userName;
+        console.log(url)
+        wx.navigateTo({
+          url: url
+        });
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
 
     
 

@@ -73,7 +73,7 @@ Component({
             pushURL: ret.pushURL
           });
           self.setListener();
-          self.createRoom()
+          //self.createRoom()
           self.data.role == 'enter' && self.enterRoom();
           // 小程序开发工具测试代码
           // self.data.role == 'enter' && self.joinPusher();

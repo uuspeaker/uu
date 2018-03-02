@@ -89,7 +89,7 @@ function onTimer() {
 		while (j < rooms[i].pushers.length) {
 			if (rooms[i].pushers[j].userID == rooms[i].roomCreator)
 			{
-				room_has_creator = 1;
+				room_has_creator = 1; 
 			}
 
 			// 超时处理
@@ -137,8 +137,10 @@ function onTimer() {
 			}
 		}
 		// 房主退群则解散该群
-		if ((rooms[i].pushers.length == 0 && (timeSpan(rooms[i].ts) > config.multi_room.maxIdleDuration || flag == 1)) 
-		|| room_create_timeout == 1 || room_has_creator == 0) {
+		// if ((rooms[i].pushers.length == 0 && (timeSpan(rooms[i].ts) > config.multi_room.maxIdleDuration || flag == 1)) 
+		// || room_create_timeout == 1 || room_has_creator == 0) {
+    //不需要房间创建者离开后就删除房间,作废此逻辑room_has_creator == 0 room_create_timeout == 1 
+    if ((rooms[i].pushers.length == 0 && (timeSpan(rooms[i].ts) > config.multi_room.maxIdleDuration || flag == 1))) {
 			log.warn("onTimer delete room " + rooms[i].roomID);
 			var roomID = rooms[i].roomID;
 			rooms.splice(i, 1);
@@ -344,12 +346,13 @@ function addMember(roomID, userID, userName, userAvatar, pushURL, accelerateURL)
 * 房间成员操作接口 - delMember 删除房间成员
  */
 function delMember(roomID, userID) {
-	if (isRoomCreator(roomID, userID))
-	{
-		delRoom(roomID);
-		immgr.destroyGroup(roomID);
-	}
-	else if (isMember(roomID, userID)) {
+	// if (isRoomCreator(roomID, userID))
+	// {
+	// 	delRoom(roomID);
+	// 	immgr.destroyGroup(roomID);
+	// }
+	// else 
+  if (isMember(roomID, userID)) {
 		for (i in rooms) {
 			if (rooms[i].roomID == roomID) {
 				for (var j = 0; j < rooms[i].pushers.length; j++) {

@@ -838,6 +838,9 @@ function exitRoom(options) {
 	webimhandler.quitBigGroup();	// 退出IM大群
 	if(roomInfo.isDestory) return;
 	roomInfo.isDestory = true;
+  console.log('exitRoom')
+  console.log(roomInfo)
+  console.log(accountInfo)
 	request({
 		url: 'delete_pusher',
 		data: {
@@ -846,7 +849,7 @@ function exitRoom(options) {
 		},
 		success: function(ret) {
 			if(ret.data.code) {
-				console.log('退出房间失败:',ret);
+				console.log('退出房间失败1:',ret);
 				options.fail && options.fail({
 					errCode: ret.data.code,
 					errMsg: ret.data.message + '[' + ret.data.code + ']'
@@ -858,14 +861,14 @@ function exitRoom(options) {
 			options.success && options.success({});
 		},
 		fail: function(ret) {
-			console.log('退出房间失败:',ret);
+			console.log('退出房间失败2:',ret);
 			if(ret.errMsg == 'request:fail timeout') {
 				var errCode = -1;
 				var errMsg = '网络请求超时，请检查网络状态';
 			}
 			options.fail && options.fail({
 				errCode: errCode || -1,
-				errMsg: errMsg || '退出房间失败'
+				errMsg: errMsg || '退出房间失败3'
 			});
 		}
 	});

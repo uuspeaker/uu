@@ -38,7 +38,7 @@
         <cover-view class='loading' wx:if="{{item.loading}}">
             <cover-image src="/pages/Resources/loading_image0.png"></cover-image>
         </cover-view>
-        <cover-image  class='character' src="/pages/Resources/mask.png"></cover-image>
+        <cover-image  class='character' src="{{item.userAvatar}}"></cover-image>
         <cover-view class='character' style='padding: 0 5px;'>{{item.userName}}</cover-view>
       </live-player>  
     </view> 
@@ -51,5 +51,5 @@
 			<image src='../../Resources/{{config.debug? "log" : "log2"}}.png'  bindtap="showLog"></image>
 		</view>
 	</view>
-</view><!--pages/impromptu/room/room.wxml-->
-<text>pages/impromptu/room/room.wxml</text>
+</view>
+
