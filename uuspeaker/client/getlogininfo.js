@@ -17,6 +17,7 @@ function getLoginInfo(options) {
           withCredentials: false,
           success: function (ret) {
             options.userName = ret.userInfo.nickName;
+            options.userAvatar = ret.userInfo.avatarUrl;
             proto_getLoginInfo(options);
           },
           fail: function() {
@@ -66,6 +67,7 @@ function proto_getLoginInfo(options) {
       console.log('获取IM登录信息成功: ', ret.data);
       ret.data.serverDomain = config.url + '/weapp/' + options.type + '/';
       ret.data.userName = options.userName;
+      ret.data.userAvatar = options.userAvatar;
       switch (options.type) {
         case 'multi_room': {
           rtcroom.init({

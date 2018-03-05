@@ -102,6 +102,8 @@ function init(options) {
 		});
 		return;
 	}
+  console.log('rtcroom.init')
+  console.log(options.data)
 	serverDomain = options.data.serverDomain;
 	accountInfo.userID = options.data.userID;
 	accountInfo.userSig = options.data.userSig;

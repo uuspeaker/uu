@@ -113,10 +113,6 @@ Page({
     var mode = e.currentTarget.dataset.mode
     var roomID = e.currentTarget.dataset.room_id
     var roomName = e.currentTarget.dataset.user_name + '的房间（' + this.data.modeItems[mode-1] + '）'
-    // var url = '../room/room?type=enter&roomName=' + roomName + '&roomID=' + roomID + '&hostName=' + e.currentTarget.dataset.user_name + '&userName=' + this.data.userName;
-    // wx.navigateTo({
-    //   url: url
-    // });
 
     qcloud.request({
       
@@ -144,8 +140,6 @@ Page({
       }
     })
 
-    
-
     self.setData({ 'tapTime': nowTime });
   },
 
@@ -169,18 +163,8 @@ Page({
   },
 
   onReady: function () {
-    // rtcroom.init({
-    //   data: ret.data,
-    //   success: options.success,
-    //   fail: options.fail
-    // });
-    // wx.showLoading({
-    //   title: '登录信息获取中',
-    // })
-    // rtcroom初始化
     var self = this;
-    this.getRoomList(function () { });
-    console.log(this.data);
+    //this.getRoomList(function () { });
     getlogininfo.getLoginInfo({
       type: 'multi_room',
       success: function (ret) {
@@ -207,42 +191,5 @@ Page({
       }
     });
   },
-
-  // 拉取房间列表
-  getRoomList: function (callback) {
-    var self = this;
-    // if (!self.data.isGetLoginInfo) {
-    //   wx.showModal({
-    //     title: '提示',
-    //     content: '登录信息初始化中，请稍后再试',
-    //     showCancel: false
-    //   })
-    //   return;
-    // }
-    rtcroom.getRoomList({
-      data: {
-        index: 0,
-        cnt: 20
-      },
-      success: function (ret) {
-        self.setData({
-          roomList: ret.rooms
-        });
-        console.log('拉取房间列表成功');
-        console.log(ret.rooms)
-        callback && callback();
-      },
-      fail: function (ret) {
-        console.log(ret);
-        wx.showModal({
-          title: '提示',
-          content: ret.errMsg,
-          showCancel: false
-        });
-        callback && callback();
-      }
-    });
-  },
-
 
 })

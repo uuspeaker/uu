@@ -1,4 +1,4 @@
-<view class='container-box'>
+<view>
 	<view> 
   <!--
     role: 表示双人会话的角色，取值'enter'表示加入者，'create'表示创建者
@@ -21,8 +21,8 @@
       operate="{{operate}}"
       bindnotify="onNotify">
     </cameraview>
-		<view class="player-box" wx:for="{{members}}" wx:key="userID"> 
-      <view class='poster'></view>   
+    
+		<view wx:for="{{members}}" wx:key="userID"> 
       <live-player
         id="{{item.userID}}"
         autoplay
@@ -35,20 +35,61 @@
         debug="{{config.debug}}"
         background-mute="{{true}}"
         bindstatechange="onPlay">
-        <cover-view class='loading' wx:if="{{item.loading}}">
-            <cover-image src="/pages/Resources/loading_image0.png"></cover-image>
-        </cover-view>
-        <cover-image  class='character' src="{{item.userAvatar}}"></cover-image>
-        <cover-view class='character' style='padding: 0 5px;'>{{item.userName}}</cover-view>
       </live-player>  
     </view> 
 	</view> 
+
+  <view class="weui-flex">
+  <view class="weui-flex__item" class='userPic'>
+    <view ><image class="user-pic" src="{{userInfo.avatarUrl}}"></image></view>
+    <view class='userName'>{{userInfo.nickName}}</view>
+  </view>
+  <block wx:for="{{members}}" wx:key="userID"> 
+  <view class="weui-flex__item" class='userPic'>
+    <view ><image class="user-pic" src="{{item.userAvatar}}"></image></view>
+    <view class='userName'>{{item.userName}}</view>
+  </view>
+  </block> 
+  </view>
+
+<view class="page">
+    <view class="page__bd page__bd_spacing">
+  <template name="scoreDetailTemplate">
+  <view class="weui-flex ">
+    <view class="weui-flex__item" >
+      <view> <image class="user-pic" src="{{userAvatar}}" /></view>
+    </view>
+    <view class="weui-flex__item" >
+      <view>{{comment}}</view>
+    </view>
+     <view class="weui-flex__item" >
+      <view> <image class="user-pic" src="" /></view>
+    </view>
+  </view>
+</template>
+   </view>
+</view>
+
+<view class="page">
+    <view class="page__bd page__bd_spacing"> 
+
+        <view class="weui-flex">
+            <view><view class="placeholder"><image class="user-pic" src="{{userInfo.avatarUrl}}"></image></view></view>
+            <view class="weui-flex__item"><view class="placeholder">fdsfsdfs</view></view>
+            <view><view class="placeholder"><image class="user-pic" src=""></image></view></view>
+        </view>
+    </view>
+</view>
+
+  <view class="weui-cells weui-cells_after-title">
+  <block wx:for="{{commentData}}">
+    <template is="scoreDetailTemplate" data="{{...item}}" />
+  </block>
+</view>
+
 	<view class="operate">
 		<view class='img-box'>
 			<image src='../../Resources/{{config.muted ? "mic-dis" : "mic"}}.png'  bindtap="changeMute"></image>
-		</view>
-		<view class='img-box'>
-			<image src='../../Resources/{{config.debug? "log" : "log2"}}.png'  bindtap="showLog"></image>
 		</view>
 	</view>
 </view>
