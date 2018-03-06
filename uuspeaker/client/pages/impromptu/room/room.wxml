@@ -1,6 +1,6 @@
 <view>
-	<view> 
-  <!--
+  <view>
+    <!--
     role: 表示双人会话的角色，取值'enter'表示加入者，'create'表示创建者
     roomid: 房间id，role为'enter'时需要传入
     roomname: 房间名称，role为'create'时需要传入
@@ -10,87 +10,85 @@
     styles: 设置cameraview的大小，eg:{width: '49vw', height: '65.33vw'}
     bindnotify: 内部事件通知，具体请参考pages/multiroom/room/room.js的实现
     -->
-		<cameraview 
-      role="{{role}}"
-      roomid="{{roomid}}" 
-      roomname="{{roomname}}" 
-      username="{{username}}" 
-      event="{{event}}" 
-      config="{{config}}"
-      styles="{{styles}}"
-      operate="{{operate}}"
-      bindnotify="onNotify">
+    <cameraview role="{{role}}" roomid="{{roomid}}" roomname="{{roomname}}" username="{{username}}" event="{{event}}" config="{{config}}" styles="{{styles}}" operate="{{operate}}" bindnotify="onNotify">
     </cameraview>
-    
-		<view wx:for="{{members}}" wx:key="userID"> 
-      <live-player
-        id="{{item.userID}}"
-        autoplay
-        mode="RTC"
-        wx:if="{{item.accelerateURL}}"
-        object-fit="fillCrop"
-        min-cache="0.1"
-        max-cache="0.3"
-        src="{{item.accelerateURL}}" 
-        debug="{{config.debug}}"
-        background-mute="{{true}}"
-        bindstatechange="onPlay">
-      </live-player>  
-    </view> 
-	</view> 
 
+    <view wx:for="{{members}}" wx:key="userID">
+      <live-player id="{{item.userID}}" autoplay mode="RTC" wx:if="{{item.accelerateURL}}" object-fit="fillCrop" min-cache="0.1" max-cache="0.3" src="{{item.accelerateURL}}" debug="{{config.debug}}" background-mute="{{true}}" bindstatechange="onPlay">
+      </live-player>
+    </view>
+  </view>
+
+  <!--参会人员头像展示-->
+  <view class="top">
   <view class="weui-flex">
-  <view class="weui-flex__item" class='userPic'>
-    <view ><image class="user-pic" src="{{userInfo.avatarUrl}}"></image></view>
-    <view class='userName'>{{userInfo.nickName}}</view>
+    <view class="weui-flex__item"></view>
   </view>
-  <block wx:for="{{members}}" wx:key="userID"> 
-  <view class="weui-flex__item" class='userPic'>
-    <view ><image class="user-pic" src="{{item.userAvatar}}"></image></view>
-    <view class='userName'>{{item.userName}}</view>
-  </view>
-  </block> 
-  </view>
-
-<view class="page">
-    <view class="page__bd page__bd_spacing">
-  <template name="scoreDetailTemplate">
-  <view class="weui-flex ">
-    <view class="weui-flex__item" >
-      <view> <image class="user-pic" src="{{userAvatar}}" /></view>
+  <view class="weui-flex speechArea">
+    <view class="weui-flex__item ">
+      <view>
+        <image class="user-pic" src="{{userInfo.avatarUrl}}"></image>
+      </view>
+      <view class='userName'>{{userInfo.nickName}}</view>
     </view>
-    <view class="weui-flex__item" >
-      <view>{{comment}}</view>
-    </view>
-     <view class="weui-flex__item" >
-      <view> <image class="user-pic" src="" /></view>
-    </view>
-  </view>
-</template>
-   </view>
-</view>
-
-<view class="page">
-    <view class="page__bd page__bd_spacing"> 
-
-        <view class="weui-flex">
-            <view><view class="placeholder"><image class="user-pic" src="{{userInfo.avatarUrl}}"></image></view></view>
-            <view class="weui-flex__item"><view class="placeholder">fdsfsdfs</view></view>
-            <view><view class="placeholder"><image class="user-pic" src=""></image></view></view>
+    <block wx:for="{{members}}" wx:key="userID">
+      <view class="weui-flex__item ">
+        <view>
+          <image class="user-pic" src="{{item.userAvatar}}"></image>
         </view>
-    </view>
-</view>
+        <view class='userName'>{{item.userName}}</view>
+      </view>
+    </block>
+  </view>
+  </view>
 
-  <view class="weui-cells weui-cells_after-title">
-  <block wx:for="{{commentData}}">
+
+  <!--聊天记录展示-->
+  <template name="scoreDetailTemplate">
+    <block wx:if="{{isMine==0}}">
+      <view class="weui-flex dialogArea">
+        <view>
+          <view class="placeholder dialog-pic">
+            <image class="dialog-pic" src="{{user_info.avatarUrl}}"></image>
+          </view>
+        </view>
+        <view class="weui-flex__item ">
+          <view class=" userDialog tip left"><rich-text>{{comment}}</rich-text></view>
+        </view>
+        <view class="placeholder dialog-pic"></view>
+      </view>
+    </block>
+    <block wx:if="{{isMine==1}}">
+      <view class="weui-flex dialogArea">
+        <view class="placeholder dialog-pic"></view>
+        <view class="weui-flex__item ">
+          <view class=" myDialog tip right"><rich-text>{{comment}}</rich-text></view>
+        </view>
+        <view>
+          <view class="placeholder dialog-pic">
+            <image class="dialog-pic" src="{{user_info.avatarUrl}}"></image>
+          </view>
+        </view>
+      </view>
+    </block>
+  </template>
+ 
+  <view style='padding-top:90px'>
+  <block wx:for="{{dialog}}">
     <template is="scoreDetailTemplate" data="{{...item}}" />
   </block>
+  </view>
 </view>
 
-	<view class="operate">
-		<view class='img-box'>
-			<image src='../../Resources/{{config.muted ? "mic-dis" : "mic"}}.png'  bindtap="changeMute"></image>
-		</view>
-	</view>
-</view>
+<view style='padding-bottom:110px'> </view>
 
+<form bindsubmit='saveComment'>
+  <view class="weui-flex bottom commentArea" >
+    <view class="weui-flex__item" >
+      <textarea class='commentInput' name='comment' value='{{comment}}' fixed='true' bindtap='focusComment' cursor-spacing='50'></textarea>
+    </view>
+    <view class="weui-flex__item" class="commentBotton">
+      <button form-type='submit'>发送</button>
+    </view>
+  </view>
+</form>

@@ -2,8 +2,9 @@
 {
   "pages": [
     "pages/launchStudy/launchStudy",
-    "pages/impromptu/room/room",
     "pages/impromptu/impromptuIndex/impromptuIndex",
+    "pages/impromptu/room/room",
+    "pages/impromptu/impromptuDialog/impromptuDialog",
     "pages/target/allTargetDetail/allTargetDetail",
     "pages/target/myTargetDetail/myTargetDetail",
     "pages/target/myTarget/myTarget",

@@ -1,5 +1,13 @@
 var rtcroom = require('../../../utils/rtcroom.js');
+var qcloud = require('../../../vendor/wafer2-client-sdk/index')
+var config = require('../../../config')
+var util = require('../../../utils/util.js')
+
 var memberSize = 9
+var queryFlag = 0
+var firstCommentTime = ''
+var lastCommentTime = ''
+
 Page({
   /**
    * 页面的初始数据
@@ -27,7 +35,8 @@ Page({
       //height: '40vw'
     },
     userInfo: {},
-    commentData: [{ userName: 23, userAvatar: "https://wx.qlogo.cn/mmopen/vi_32/td7fs4gViaTbiapawxWiaxZKyJISqvcvNfjtphNtYhRXcZDqT9U6l0fatjq8waEL74CSIsyVOWwXpIx3utaj9N28Q/0",comment:1432423423}],
+    dialog: [],
+    comment:'',
     event: 0,               //推流事件透传
     members: [{}, {}, {}, {}, {}, {}, {}, {}, {}],  //多人其他用户信息
     isShow: false,          // 是否显示页面
@@ -206,18 +215,6 @@ Page({
       members: self.data.members
     })
   },
-  changeCamera: function () {
-    this.data.config.camera = !this.data.config.camera;
-    this.setData({
-      config: this.data.config
-    });
-  },
-  setBeauty: function () {
-    this.data.config.beauty = (this.data.config.beauty == 0 ? 5 : 0);
-    this.setData({
-      config: this.data.config
-    });
-  },
   changeMute: function () {
     this.data.config.muted = !this.data.config.muted;
     this.setData({
@@ -229,6 +226,93 @@ Page({
     this.setData({
       config: this.data.config
     });
+  },
+
+  queryDialog: function(e){
+    var that = this
+    var queryData = { 'queryFlag': queryFlag, 'firstCommentTime': firstCommentTime, 'lastCommentTime': lastCommentTime, 'roomId': this.data.roomid }
+    qcloud.request({
+      url: `${config.service.host}/weapp/impromptu.impromptuDialog`,
+      data: queryData,
+      login: true,
+      method: 'get',
+      success(result) {
+        if (result.data.data == '') return;
+        console.log(result)
+        var resultData = []
+        if (queryFlag == 0) {
+          resultData = result.data.data
+        } else if (queryFlag == 1) {
+          resultData = [].concat(result.data.data, that.data.dialog)
+        } else if (queryFlag == 2) {
+          resultData = [].concat(that.data.dialog, result.data.data)
+        }
+        that.setData({
+          dialog: resultData
+        })
+
+        if (queryFlag != 1){
+        wx.pageScrollTo({
+          scrollTop: 100000000,
+          duration: 300
+        })
+      }
+        
+        that.refreshCommentId()
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
+  //保存第一条和最后一条数据的id,上拉和下拉的时候查询用
+  refreshCommentId: function () {
+    var length = this.data.dialog.length
+    firstCommentTime = this.data.dialog[0].create_date
+    lastCommentTime = this.data.dialog[length - 1].create_date
+  },
+
+  saveComment: function (e) {
+    var requestData = e.detail.value
+    requestData.roomId = this.data.roomid
+    console.log('saveComment')
+    console.log(requestData)
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/impromptu.impromptuDialog`,
+      data: requestData,
+      login: true,
+      method: 'post',
+      success(result) {
+        //that.updateDialog(requestData.comment)
+        queryFlag = 2
+        that.queryDialog()
+        that.setData({
+          comment: ''
+        })
+        wx.pageScrollTo({
+          scrollTop: 100000000,
+          duration: 300
+        })
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
+  updateDialog:function(comment){
+    var newComment = {}
+    newComment.user_info = this.data.userInfo
+    newComment.comment = comment
+    requestData.isMine = 1
+    var data = this.data.dialog.push(newComment)
+    this.setData({
+      dialog: data
+    })
   },
 
   /**
@@ -251,6 +335,7 @@ Page({
       //username: this.data.username
     });
     this.initUserInfo()
+    this.queryDialog()
   },
 
   /**
@@ -258,21 +343,6 @@ Page({
    */
   onReady: function () {
     var self = this;
-    // if (!self.data.username) {
-    //   wx.showModal({
-    //     title: '提示',
-    //     content: '登录信息还未获取到，请稍后再试',
-    //     showCancel: false,
-    //     complete: function () {
-    //       var pages = getCurrentPages();
-    //       console.log(pages, pages.length, pages[pages.length - 1].__route__);
-    //       if (pages.length > 1 && (pages[pages.length - 1].__route__ == 'pages/impromptu/room/room')) {
-    //         wx.navigateBack({ delta: 1 });
-    //       }
-    //     }
-    //   });
-    //   return;
-    // }
     // 设置房间标题
     wx.setNavigationBarTitle({ title: self.data.roomname });
   },
@@ -350,18 +420,17 @@ Page({
     console.log('room.js onUnload');
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh: function () {
-
+    queryFlag = 1
+    this.queryDialog()
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    queryFlag = 2
+    this.queryDialog()
   },
 
   /**

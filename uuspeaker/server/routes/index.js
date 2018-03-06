@@ -108,6 +108,9 @@ router.put('/impromptu.impromptuSurvey', controllers.impromptu.impromptuSurvey.p
 router.post('/impromptu.impromptuSurvey', controllers.impromptu.impromptuSurvey.post)
 //即兴会议投票
 router.post('/impromptu.impromptuVote', controllers.impromptu.impromptuVote.post)
+//即兴会议用户对话
+router.post('/impromptu.impromptuDialog', controllers.impromptu.impromptuDialog.post)
+router.get('/impromptu.impromptuDialog', controllers.impromptu.impromptuDialog.get)
 //用户目标管理
 router.get('/target.myTarget', controllers.target.myTarget.get)
 router.put('/target.myTarget', controllers.target.myTarget.put)

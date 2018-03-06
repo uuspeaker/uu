@@ -235,7 +235,6 @@ Page({
     //console.log(uuid.v1())
   },
 
-
   onPullDownRefresh: function () {
     queryFlag = 1
     this.queryStudyReport()
