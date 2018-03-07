@@ -293,7 +293,9 @@ Page({
       login: true,
       method: 'post',
       success(result) {
-        that.updateDialog(requestData.comment)
+        //that.updateDialog(requestData.comment)
+        queryFlag = 2
+        that.queryDialog()
         that.setData({
           comment: ''
         })
