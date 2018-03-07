@@ -36,7 +36,7 @@ var serverDomain = 'https://r3uhpu7v.qcloud.la/',		// 后台域名
 		onPusherJoin: function () { },			// 进房通知
 		onPhserQuit: function () { },			// 退房通知
 		onRoomClose: function() {},				// 群解散通知
-		onRecvRoomTextMsg: function() {}		// 消息通知
+		onRecvRoomTextMsg: function() {},		// 消息通知
 	};
 
 // 随机昵称
@@ -103,17 +103,18 @@ function init(options) {
 		return;
 	}
   console.log('rtcroom.init')
-  console.log(options.data)
+  console.log(options)
 	serverDomain = options.data.serverDomain;
 	accountInfo.userID = options.data.userID;
 	accountInfo.userSig = options.data.userSig;
 	accountInfo.sdkAppID = options.data.sdkAppID;
 	accountInfo.accountType = options.data.accType;
   accountInfo.userName = options.data.userName || userName[Math.floor(Math.random()*10)] || accountInfo.userID;
-	accountInfo.userAvatar = '123';
+  accountInfo.userAvatar = options.data.userAvatar;
   console.log(options)
 	// 登录IM
 	loginIM({
+    roomID: options.roomID,
     success: options.success,
     fail: options.fail
   });
@@ -217,10 +218,10 @@ function loginIM(options) {
 	};
 
 	if (accountInfo.accountMode == 1) { //托管模式
-		webimhandler.sdkLogin(loginInfo, listeners, others, 0, afterLoginIM, options);
+		webimhandler.sdkLogin(loginInfo, listeners, others, roomInfo.roomID, afterLoginIM, options);
 	} else { //独立模式
 		//sdk登录
-		webimhandler.sdkLogin(loginInfo, listeners, others, 0, afterLoginIM, options);
+    webimhandler.sdkLogin(loginInfo, listeners, others, roomInfo.roomID, afterLoginIM, options);
 	}
 }
 function afterLoginIM(options) {

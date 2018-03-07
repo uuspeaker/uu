@@ -189,6 +189,7 @@ function applyJoinBigGroup(groupId, callback, callbackOptions) {
             //JoinedSuccess:加入成功; WaitAdminApproval:等待管理员审批
             if (resp.JoinedStatus && resp.JoinedStatus == 'JoinedSuccess') {
                 webim.Log.info('进群成功');
+                console.log('进群成功')
                 selToID = groupId;
                 callback && callback({
                     errCode: 0,
@@ -196,6 +197,7 @@ function applyJoinBigGroup(groupId, callback, callbackOptions) {
                 });
             } else {
                 console.error('进群失败');
+                console.log('进群失败')
                 callback && callback({
                     errCode: 999,
                     errMsg: 'IM进群失败',

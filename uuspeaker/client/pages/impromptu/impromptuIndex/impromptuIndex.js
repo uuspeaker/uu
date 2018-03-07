@@ -15,7 +15,7 @@ Page({
     textStyle: [],
     rooms: [],
     userName: '12',
-    modeItems: [ '普通模式','疯狂模式', '娱乐模式','对抗模式'],
+    modeItems: ['普通模式', '疯狂模式', '娱乐模式', '对抗模式'],
     languageItems: ['中文', 'English'],
     tapTime: ''
   },
@@ -67,19 +67,19 @@ Page({
   formatDate: function () {
     var data = this.data.rooms
     for (var i = 0; i < data.length; i++) {
-      data[i].startDateStr = dateFormat.getTimeNoticeFuture(data[i].start_date, data[i].start_time)  
+      data[i].startDateStr = dateFormat.getTimeNoticeFuture(data[i].start_date, data[i].start_time)
     }
     this.setData({
       rooms: data
     })
   },
 
-  toImpromptuMeeting: function(e){
+  toImpromptuMeeting: function (e) {
     var roomId = e.currentTarget.dataset.room_id
     var userId = e.currentTarget.dataset.user_id
-    
+
     wx.navigateTo({
-      url: '../impromptuMeeting/impromptuMeeting?'+ '&roomId=' + e.currentTarget.dataset.room_id
+      url: '../impromptuMeeting/impromptuMeeting?' + '&roomId=' + e.currentTarget.dataset.room_id
     })
   },
 
@@ -112,23 +112,23 @@ Page({
     }
     var mode = e.currentTarget.dataset.mode
     var roomID = e.currentTarget.dataset.room_id
-    var roomName = e.currentTarget.dataset.user_name + '的房间（' + this.data.modeItems[mode-1] + '）'
+    var roomName =  this.data.modeItems[mode - 1]
 
     qcloud.request({
-      
+
       url: `${config.service.host}/weapp/multi_room.isRoomExist`,
       login: true,
-      data: { 'roomId': roomID},
+      data: { 'roomId': roomID },
       method: 'post',
       success(result) {
         console.log('multi_room.isRoomExist')
         console.log(result)
         var isRoomExist = result.data.isRoomExist
         var enterType = 'create'
-        if (isRoomExist){
+        if (isRoomExist) {
           enterType = 'enter'
         }
-        var url = '../room/room?type=' + enterType + '&roomName=' + roomName + '&roomID=' + roomID + '&hostName=' + e.currentTarget.dataset.user_name + '&userName=' + self.data.userName;
+        var url = '../room/room?type=' + enterType + '&roomName=' + roomName + '&roomID=' + roomID 
         console.log(url)
         wx.navigateTo({
           url: url
@@ -151,10 +151,10 @@ Page({
     //this.queryImpromptuRooms()
   },
 
-  onShow: function(options){
+  onShow: function (options) {
     this.initViewStyle()
     this.queryImpromptuRooms()
-    
+
   },
 
   onPullDownRefresh: function () {

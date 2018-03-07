@@ -2,6 +2,7 @@ var rtcroom = require('../../../utils/rtcroom.js');
 var qcloud = require('../../../vendor/wafer2-client-sdk/index')
 var config = require('../../../config')
 var util = require('../../../utils/util.js')
+var dateFormat = require('../../../common/dateFormat.js')
 
 var memberSize = 9
 var queryFlag = 0
@@ -36,7 +37,7 @@ Page({
     },
     userInfo: {},
     dialog: [],
-    comment:'',
+    comment: '',
     event: 0,               //推流事件透传
     members: [{}, {}, {}, {}, {}, {}, {}, {}, {}],  //多人其他用户信息
     isShow: false,          // 是否显示页面
@@ -228,7 +229,7 @@ Page({
     });
   },
 
-  queryDialog: function(e){
+  queryDialog: function (e) {
     var that = this
     var queryData = { 'queryFlag': queryFlag, 'firstCommentTime': firstCommentTime, 'lastCommentTime': lastCommentTime, 'roomId': this.data.roomid }
     qcloud.request({
@@ -250,20 +251,25 @@ Page({
         that.setData({
           dialog: resultData
         })
-
-        if (queryFlag != 1){
-        wx.pageScrollTo({
-          scrollTop: 100000000,
-          duration: 300
-        })
-      }
-        
+        //将时间格式化显示
+        that.formatDate()
         that.refreshCommentId()
       },
       fail(error) {
         util.showModel('请求失败', error);
         console.log('request fail', error);
       }
+    })
+  },
+
+  formatDate: function () {
+    var data = this.data.dialog
+    for (var i = 0; i < data.length; i++) {
+      var createDate = new Date(data[i].create_date)
+      data[i].createDateStr = dateFormat.getTimeNotice(createDate)
+    }
+    this.setData({
+      dialog: data
     })
   },
 
@@ -277,6 +283,7 @@ Page({
   saveComment: function (e) {
     var requestData = e.detail.value
     requestData.roomId = this.data.roomid
+    rtcroom.sendRoomTextMsg({ 'data': { 'msg': requestData.comment}})
     console.log('saveComment')
     console.log(requestData)
     var that = this
@@ -286,16 +293,14 @@ Page({
       login: true,
       method: 'post',
       success(result) {
-        //that.updateDialog(requestData.comment)
-        queryFlag = 2
-        that.queryDialog()
+        that.updateDialog(requestData.comment)
         that.setData({
           comment: ''
         })
-        wx.pageScrollTo({
-          scrollTop: 100000000,
-          duration: 300
-        })
+        // wx.pageScrollTo({
+        //   scrollTop: Number.MAX_SAFE_INTEGER,
+        //   duration: 300
+        // })
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -304,15 +309,16 @@ Page({
     })
   },
 
-  updateDialog:function(comment){
+  updateDialog: function (comment) {
     var newComment = {}
     newComment.user_info = this.data.userInfo
     newComment.comment = comment
-    requestData.isMine = 1
+    newComment.isMine = 1
     var data = this.data.dialog.push(newComment)
     this.setData({
       dialog: data
     })
+    that.formatDate()
   },
 
   /**
@@ -343,14 +349,35 @@ Page({
    */
   onReady: function () {
     var self = this;
+    rtcroom.setListener({
+      onRecvRoomTextMsg: self.onRecvRoomTextMsg
+    });
     // 设置房间标题
     wx.setNavigationBarTitle({ title: self.data.roomname });
+  },
+
+  onRecvRoomTextMsg: function (ret) {
+    console.log('onRecvRoomTextMsg')
+    console.log(ret)
+    var self = this;
+    var newDialog = self.data.dialog.push({
+      comment: ret.textMsg,
+      user_info: { 'nickName': ret.nickName, 'avatarUrl': ret.headPic},
+      create_date: ret.time
+    });
+    self.setData({
+      dialog: newDialog,
+    });
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    queryFlag = 0
+    firstCommentTime = ''
+    lastCommentTime = ''
+    this.queryDialog()
     var self = this;
     console.log('room.js onShow');
     // 点圈圈退出
@@ -402,7 +429,7 @@ Page({
 
       },
     })
-  },  
+  },
 
   /**
    * 生命周期函数--监听页面隐藏
@@ -429,8 +456,8 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    queryFlag = 2
-    this.queryDialog()
+    // queryFlag = 2
+    // this.queryDialog()
   },
 
   /**

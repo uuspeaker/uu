@@ -62,7 +62,7 @@
       <view class="weui-flex dialogArea">
         <view class="placeholder dialog-pic"></view>
         <view class="weui-flex__item ">
-          <view class=" myDialog tip right"><rich-text>{{comment}}</rich-text></view>
+          <view class=" myDialog tip right"><rich-text>{{createDateStr}} {{comment}}</rich-text></view>
         </view>
         <view>
           <view class="placeholder dialog-pic">
@@ -85,7 +85,7 @@
 <form bindsubmit='saveComment'>
   <view class="weui-flex bottom commentArea" >
     <view class="weui-flex__item" >
-      <textarea class='commentInput' name='comment' value='{{comment}}' fixed='true' bindtap='focusComment' cursor-spacing='50'></textarea>
+      <textarea class='commentInput' name='comment' value='{{comment}}' fixed='true'  cursor-spacing='50'></textarea>
     </view>
     <view class="weui-flex__item" class="commentBotton">
       <button form-type='submit'>发送</button>

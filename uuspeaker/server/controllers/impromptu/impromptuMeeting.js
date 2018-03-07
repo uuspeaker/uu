@@ -1,6 +1,5 @@
 const { mysql } = require('../../qcloud')
 const userInfoService = require('../../service/userInfoService')
-const dateUtil = require('../../common/dateUtil')
 const uuid = require('../../common/uuid.js');
 var impromptuMeetingService = require('../../service/impromptuMeetingService');
 

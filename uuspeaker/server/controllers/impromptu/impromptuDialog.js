@@ -1,6 +1,5 @@
 const { mysql } = require('../../qcloud')
 const userInfo = require('../../common/userInfo')
-const dateUtil = require('../../common/dateUtil')
 const uuid = require('../../common/uuid');
 
 module.exports = {
