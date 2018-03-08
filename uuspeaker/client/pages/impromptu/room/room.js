@@ -39,6 +39,7 @@ Page({
     dialog: [],
     comment: '',
     event: 0,               //推流事件透传
+    isTop: 0,
     members: [{}, {}, {}, {}, {}, {}, {}, {}, {}],  //多人其他用户信息
     isShow: false,          // 是否显示页面
     exit: 0
@@ -54,6 +55,29 @@ Page({
   onNotify: function (e) {
     var self = this;
     switch (e.detail.type) {
+      case 'onRecvRoomTextMsg': {
+        console.log('onRecvRoomTextMsg')
+        console.log(e)
+        if(e.detail.content.headPic != undefined){
+          var self = this;
+          var isMine = 0
+          if (e.detail.content.headPic == self.data.userInfo.avatarUrl){
+            isMine = 1
+          }
+          self.data.dialog.push({
+            comment: e.detail.content.textMsg,
+            user_info: { 'nickName': e.detail.content.nickName, 'avatarUrl': e.detail.content.headPic },
+            //create_date: e.detail.content.time,
+            isMine: isMine
+          });
+          console.log(self.data.dialog)
+          self.setData({
+            dialog: self.data.dialog,
+          });
+          self.formatDate()
+        }
+        break
+      }
       case 'onGetMemberList': {
         /*
           进入房间后，房间内目前已经有哪些用户通过此通知返回，可以根据此通知来展示其他用户视频信息，
@@ -232,13 +256,19 @@ Page({
   queryDialog: function (e) {
     var that = this
     var queryData = { 'queryFlag': queryFlag, 'firstCommentTime': firstCommentTime, 'lastCommentTime': lastCommentTime, 'roomId': this.data.roomid }
+    console.log(queryData)
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.impromptuDialog`,
       data: queryData,
       login: true,
       method: 'get',
       success(result) {
-        if (result.data.data == '') return;
+        if (result.data.data == '') {
+          that.setData({
+            isTop: 1
+          })
+          return
+          }
         console.log(result)
         var resultData = []
         if (queryFlag == 0) {
@@ -280,11 +310,25 @@ Page({
     lastCommentTime = this.data.dialog[length - 1].create_date
   },
 
+  toBottom: function(){
+    wx.pageScrollTo({
+      scrollTop: Number.MAX_SAFE_INTEGER,
+      duration: 300
+    })
+  },
+
   saveComment: function (e) {
-    var requestData = e.detail.value
-    requestData.roomId = this.data.roomid
-    rtcroom.sendRoomTextMsg({ 'data': { 'msg': requestData.comment}})
     console.log('saveComment')
+    console.log(e)
+    var requestData = {
+      comment: e.detail.value,
+      roomId: this.data.roomid
+    }
+    rtcroom.sendRoomTextMsg({ 'data': { 'msg': requestData.comment}})
+    this.setData({
+      comment: ''
+    })
+    
     console.log(requestData)
     var that = this
     qcloud.request({
@@ -293,14 +337,8 @@ Page({
       login: true,
       method: 'post',
       success(result) {
-        that.updateDialog(requestData.comment)
-        that.setData({
-          comment: ''
-        })
-        // wx.pageScrollTo({
-        //   scrollTop: Number.MAX_SAFE_INTEGER,
-        //   duration: 300
-        // })
+        //that.updateDialog(requestData.comment)
+        
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -314,9 +352,9 @@ Page({
     newComment.user_info = this.data.userInfo
     newComment.comment = comment
     newComment.isMine = 1
-    var data = this.data.dialog.push(newComment)
+    this.data.dialog.push(newComment)
     this.setData({
-      dialog: data
+      dialog: this.data.dialog
     })
     that.formatDate()
   },
@@ -341,7 +379,8 @@ Page({
       //username: this.data.username
     });
     this.initUserInfo()
-    this.queryDialog()
+    // queryFlag = 0
+    // this.queryDialog()
   },
 
   /**
@@ -349,26 +388,23 @@ Page({
    */
   onReady: function () {
     var self = this;
-    rtcroom.setListener({
-      onRecvRoomTextMsg: self.onRecvRoomTextMsg
-    });
     // 设置房间标题
     wx.setNavigationBarTitle({ title: self.data.roomname });
   },
 
-  onRecvRoomTextMsg: function (ret) {
-    console.log('onRecvRoomTextMsg')
-    console.log(ret)
-    var self = this;
-    var newDialog = self.data.dialog.push({
-      comment: ret.textMsg,
-      user_info: { 'nickName': ret.nickName, 'avatarUrl': ret.headPic},
-      create_date: ret.time
-    });
-    self.setData({
-      dialog: newDialog,
-    });
-  },
+  // onRecvRoomTextMsg: function (ret) {
+  //   console.log('onRecvRoomTextMsg')
+  //   console.log(ret)
+  //   var self = this;
+  //   var newDialog = self.data.dialog.push({
+  //     comment: ret.textMsg,
+  //     user_info: { 'nickName': ret.nickName, 'avatarUrl': ret.headPic},
+  //     create_date: ret.time
+  //   });
+  //   self.setData({
+  //     dialog: newDialog,
+  //   });
+  // },
 
   /**
    * 生命周期函数--监听页面显示
@@ -448,16 +484,9 @@ Page({
   },
 
   onPullDownRefresh: function () {
+    if(this.data.isTop == 1)return;
     queryFlag = 1
     this.queryDialog()
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-    // queryFlag = 2
-    // this.queryDialog()
   },
 
   /**

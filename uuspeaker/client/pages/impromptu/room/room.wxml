@@ -19,27 +19,28 @@
     </view>
   </view>
 
+<view style='padding-bottom:100px'> 
   <!--参会人员头像展示-->
   <view class="top">
-  <view class="weui-flex">
-    <view class="weui-flex__item"></view>
-  </view>
-  <view class="weui-flex speechArea">
-    <view class="weui-flex__item ">
-      <view>
-        <image class="user-pic" src="{{userInfo.avatarUrl}}"></image>
-      </view>
-      <view class='userName'>{{userInfo.nickName}}</view>
+    <view class="weui-flex">
+      <view class="weui-flex__item"></view>
     </view>
-    <block wx:for="{{members}}" wx:key="userID">
+    <view class="weui-flex speechArea">
       <view class="weui-flex__item ">
         <view>
-          <image class="user-pic" src="{{item.userAvatar}}"></image>
+          <image class="user-pic" src="{{userInfo.avatarUrl}}"></image>
         </view>
-        <view class='userName'>{{item.userName}}</view>
+        <view class='userName'>{{userInfo.nickName}}</view>
       </view>
-    </block>
-  </view>
+      <block wx:for="{{members}}" wx:key="userID">
+        <view class="weui-flex__item ">
+          <view>
+            <image class="user-pic" src="{{item.userAvatar}}"></image>
+          </view>
+          <view class='userName'>{{item.userName}}</view>
+        </view>
+      </block>
+    </view>
   </view>
 
 
@@ -53,7 +54,9 @@
           </view>
         </view>
         <view class="weui-flex__item ">
-          <view class=" userDialog tip left"><rich-text>{{comment}}</rich-text></view>
+          <view class=" userDialog tip left">
+            <rich-text>{{comment}}</rich-text>
+          </view>
         </view>
         <view class="placeholder dialog-pic"></view>
       </view>
@@ -62,7 +65,9 @@
       <view class="weui-flex dialogArea">
         <view class="placeholder dialog-pic"></view>
         <view class="weui-flex__item ">
-          <view class=" myDialog tip right"><rich-text>{{createDateStr}} {{comment}}</rich-text></view>
+          <view class=" myDialog tip right">
+            <rich-text>{{comment}}</rich-text>
+          </view>
         </view>
         <view>
           <view class="placeholder dialog-pic">
@@ -72,23 +77,26 @@
       </view>
     </block>
   </template>
- 
+
   <view style='padding-top:90px'>
-  <block wx:for="{{dialog}}">
-    <template is="scoreDetailTemplate" data="{{...item}}" />
-  </block>
+    <block wx:for="{{dialog}}">
+      <template is="scoreDetailTemplate" data="{{...item}}" />
+    </block>
   </view>
 </view>
 
-<view style='padding-bottom:110px'> </view>
+</view>
 
-<form bindsubmit='saveComment'>
-  <view class="weui-flex bottom commentArea" >
-    <view class="weui-flex__item" >
-      <textarea class='commentInput' name='comment' value='{{comment}}' fixed='true'  cursor-spacing='50'></textarea>
+<form bindsubmit=''>
+  <view class="weui-flex bottom commentArea">
+    <view class="weui-flex__item">
+      <image class='mic-pic' src='../../Resources/{{config.muted ? "mic-dis" : "mic"}}.png' bindtap="changeMute"></image>
     </view>
-    <view class="weui-flex__item" class="commentBotton">
-      <button form-type='submit'>发送</button>
+    <view class="weui-flex__item">
+      <textarea class='commentInput' name='comment' value='{{comment}}' fixed='true' cursor-spacing='50' bindfocus='toBottom' adjust-position='false'  bindconfirm="saveComment"></textarea>
+    </view>
+    <view class=" commentBotton" >
+      
     </view>
   </view>
 </form>
