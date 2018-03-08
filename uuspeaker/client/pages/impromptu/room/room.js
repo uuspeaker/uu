@@ -337,20 +337,6 @@ Page({
       login: true,
       method: 'post',
       success(result) {
-        //that.updateDialog(requestData.comment)
-<<<<<<< HEAD
-        
-=======
-        queryFlag = 2
-        that.queryDialog()
-        that.setData({
-          comment: ''
-        })
-        // wx.pageScrollTo({
-        //   scrollTop: Number.MAX_SAFE_INTEGER,
-        //   duration: 300
-        // })
->>>>>>> b2b25e3e9b7ac37b01892735b6e871d775fb524f
       },
       fail(error) {
         util.showModel('请求失败', error);
