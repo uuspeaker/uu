@@ -1,4 +1,4 @@
-<!--任务栏-->
+<!--任务栏>
 <view class="weui-flex" style='width:85%'>
   <view class="weui-flex__item normal green" style="{{viewStyle[0]}}" data-item='0' bindtap='pressView'>
     <view> <image class="uu-code" src='../../../images/impromptuIndex/normal.png'></image></view>
@@ -16,7 +16,7 @@
     <view> <image class="uu-code" src='../../../images/impromptuIndex/compete.png'></image></view>
     <view >PK模式</view>
   </view>
-</view>
+</view-->
 <view class="weui-cells__title">房间信息：</view>
 <!--报名展示-->
 

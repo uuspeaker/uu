@@ -417,7 +417,7 @@ function pusherHeartBeat(options) {
 	}
 }
 function proto_pusherHeartBeat(){
-	console.log('心跳请求');
+	//console.log('心跳请求');
 	request({
 		url: 'pusher_heartbeat',
 		data: {
@@ -429,7 +429,7 @@ function proto_pusherHeartBeat(){
 				console.log('心跳失败：',ret);
 				return;
 			}
-			console.log('心跳成功',ret);
+			//console.log('心跳成功',ret);
 		},
 		fail: function(ret) {
 			console.log('心跳失败：',ret);

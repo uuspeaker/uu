@@ -40,6 +40,8 @@ Page({
     comment: '',
     event: 0,               //推流事件透传
     isTop: 0,
+    speakNotice: 'speak',
+    userPicNotice: 'user-pic',
     members: [{}, {}, {}, {}, {}, {}, {}, {}, {}],  //多人其他用户信息
     isShow: false,          // 是否显示页面
     exit: 0
@@ -97,10 +99,13 @@ Page({
         e.detail.members.forEach(function (val) {
           val.loading = false;
           val.playerContext = wx.createLivePlayerContext(val.userID);
+          
         });
         for (var i = 0; i < memberSize; i++) {
           if (e.detail.members[i]) {
             self.data.members[i] = e.detail.members[i];
+            self.data.members[i].userPicMode = 'user-pic-speak'
+            self.data.members[i].mute = false
           }
         }
         // 页面处于隐藏时候不触发渲染
@@ -118,6 +123,8 @@ Page({
           for (var i = 0; i < memberSize; i++) {
             if (!self.data.members[i].userID) {
               self.data.members[i] = val;
+              self.data.members[i].userPicMode = 'user-pic-speak'
+              self.data.members[i].mute = false
               break;
             }
           }
@@ -221,25 +228,67 @@ Page({
       if (e.currentTarget.id == val.userID) {
         switch (e.detail.code) {
           case 2007: {
-            console.log('视频播放loading: ', e);
+            console.log('播放loading: ', e);
             val.loading = true;
             break;
           }
           case 2004: {
-            console.log('视频播放开始: ', e);
+            console.log('播放开始: ', e);
             val.loading = false;
             break;
           }
+          case 2005: {
+            val.speakNotice = 'speak'
+            self.setData({
+              members: self.data.members
+            })
+            setTimeout(self.keepSilence, 200, val.userID)
+            break;
+          }
           default: {
-            console.log('拉流情况：', e);
+            console.log('拉流情况：', e); 
           }
         }
       }
     });
+    
+  },
+
+  keepSilence: function(userId){
+    var self = this
+    self.data.members.forEach(function (val) {
+      if (userId == val.userID) {
+        val.speakNotice = 'silence'
+      }
+    })
     self.setData({
       members: self.data.members
     })
   },
+
+  setSilent: function (e) {
+    var userAvatar = e.currentTarget.dataset.user_avatar
+    var self = this
+    self.data.members.forEach(function (val) {
+      if (userAvatar == val.userAvatar) {
+        //若原来是静音,则点击后打开声音且将用户图片设置为全展示
+        if (val.mute){
+          val.userPicMode = 'user-pic-speak'
+          val.mute = false
+          //val.playerContext.mute(false)
+        }else{
+          val.userPicMode = 'user-pic-silent'
+          val.mute = true
+          //val.playerContext.mute(true)
+        }
+        self.setData({
+          members: self.data.members
+        })
+        return
+      }
+    })
+  },
+
   changeMute: function () {
     this.data.config.muted = !this.data.config.muted;
     this.setData({

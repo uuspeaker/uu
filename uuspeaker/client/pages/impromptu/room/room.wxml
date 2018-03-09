@@ -14,7 +14,7 @@
     </cameraview>
 
     <view wx:for="{{members}}" wx:key="userID">
-      <live-player id="{{item.userID}}" autoplay mode="RTC" wx:if="{{item.accelerateURL}}" object-fit="fillCrop" min-cache="0.1" max-cache="0.3" src="{{item.accelerateURL}}" debug="{{config.debug}}" background-mute="{{true}}" bindstatechange="onPlay">
+      <live-player id="{{item.userID}}" autoplay mode="RTC" wx:if="{{item.accelerateURL}}" object-fit="fillCrop" min-cache="0.1" max-cache="0.3" src="{{item.accelerateURL}}" debug="{{config.debug}}" mute="{{mute}}" background-mute="{{true}}" bindstatechange="onPlay">
       </live-player>
     </view>
   </view>
@@ -26,18 +26,18 @@
       <view class="weui-flex__item"></view>
     </view>
     <view class="weui-flex speechArea">
-      <view class="weui-flex__item ">
+      <view class="weui-flex__item item">
         <view>
           <image class="user-pic" src="{{userInfo.avatarUrl}}"></image>
         </view>
-        <view class='userName'>{{userInfo.nickName}}</view>
+        <view class='userName '>{{userInfo.nickName}}</view>
       </view>
       <block wx:for="{{members}}" wx:key="userID">
-        <view class="weui-flex__item ">
+        <view class="weui-flex__item itemClass">
           <view>
-            <image class="user-pic" src="{{item.userAvatar}}"></image>
+            <image class="user-pic {{item.speakNotice}} {{item.userPicMode}}" data-user_avatar="{{item.userAvatar}}" src="{{item.userAvatar}}" bindtap='setSilent'></image>
           </view>
-          <view class='userName'>{{item.userName}}</view>
+          <view class='userName '>{{item.userName}}</view>
         </view>
       </block>
     </view>
@@ -88,12 +88,12 @@
 </view>
 
 <form bindsubmit=''>
-  <view class="weui-flex bottom commentArea">
+  <view class="weui-flex  commentArea">
     <view class="weui-flex__item">
       <image class='mic-pic' src='../../Resources/{{config.muted ? "mic-dis" : "mic"}}.png' bindtap="changeMute"></image>
     </view>
     <view class="weui-flex__item">
-      <textarea class='commentInput' name='comment' value='{{comment}}' fixed='true' cursor-spacing='50' bindfocus='toBottom' adjust-position='false'  bindconfirm="saveComment"></textarea>
+      <textarea class='commentInput' name='comment' value='{{comment}}' fixed='true' cursor-spacing='50'  adjust-position='false' bindfocus='toBottom'  bindconfirm="saveComment"></textarea>
     </view>
     <view class=" commentBotton" >
       

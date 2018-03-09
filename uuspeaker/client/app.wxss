@@ -9,11 +9,6 @@ page {
   bottom: 0px;
   width: 100%;
 }
-.user-pic{
-width: 40px; 
-height: 40px; 
-padding-right: 10px;
-}
 .green{
   background-color: rgb(136, 186, 71);
 }

@@ -3,22 +3,60 @@
   top:0px;
   width: 100%;
   z-index:999;
+  margin:0px 0px 2px 0px; 
   background-color: white;
+  box-shadow: 2px 2px 5px 2px #888888;
+  border-style: solid;
+  border-width: 1px;
+  border-color: gainsboro;
 }
 
+.speak1{
+  padding-top: 0px;
+  border: 2px; 
+  background-color: greenyellow; 
+}
+.silence1{
+  padding-top: 0px;
+  border: 2px; 
+  background-color: gainsboro; 
+}
+.speak{
+  box-shadow: 0px 0px 2px 3px rgb(136, 186, 71);
+}
+.silence{
+  box-shadow: 0px 0px 0px 0px ;
+}
 .speechArea{
-  margin: 10px 15px 5px 15px;
+  margin: 10px 5px 5px 5px;
+}
+
+.itemClass{
+  margin-left: 3px; 
+  margin-right: 5px; 
 }
 
 .user-pic {
-  width: 50px;
-  height: 50px;
-  border-radius: 3px;
+  width: 45px;
+  height: 45px;
+  border-radius: 35px;
+}
+
+.user-pic-speak {
+  opacity:1;
+}
+
+.user-pic-silent {
+  opacity:0.3;
 }
 
 .userName {
   font-size: 13px;
   text-align:center;
+  width:45px; 
+  overflow:hidden;  
+  text-overflow:ellipsis; 
+  white-space:nowrap;
 }
 
 .player-box {
@@ -68,8 +106,8 @@ live-player {
 }
 
 .dialog-pic {
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
 }
 
 
@@ -128,13 +166,16 @@ live-player {
 .mic-pic {
   width: 40px;
   height: 40px;
-
+  padding-right: 15px;
 }
 .commentArea {
   background-color: gainsboro;
   margin-top: 15px;
   padding: 8px;
-  border-radius: 10px 10px 10px 10px; 
+  border-radius: 10px 10px 0px 0px; 
+  position: fixed;
+  bottom: 0px;
+  width: 96%
 }
 
 .commentInput {
@@ -152,7 +193,9 @@ live-player {
 
 .button{
   font-size: 15px;
-
 }
+
+
+
 
 
