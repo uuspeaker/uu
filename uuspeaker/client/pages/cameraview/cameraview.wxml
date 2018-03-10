@@ -14,7 +14,7 @@
       beauty="{{config.beauty}}"
       muted="{{config.muted}}"
       waiting-image="https://mc.qcloudimg.com/static/img/daeed8616ac5df256c0591c22a65c4d3/pause_publish.jpg"
-      background-mute="{{true}}"
+      
       debug="{{config.debug}}"
       bindstatechange="onPush"
       enable-camera="{{config.enableCamera}}"

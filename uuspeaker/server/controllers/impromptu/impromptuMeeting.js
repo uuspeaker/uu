@@ -15,6 +15,12 @@ module.exports = {
         user_id: userId,
         role_type: roleType
       })
+
+    var amount = await mysql('meeting_apply').count('user_id as amount').where({ room_id: roomId })
+
+    await mysql('room_impromptu').update({
+      people_amount: amount[0].amount
+      }).where({ room_id: roomId })
   },
 
   del: async ctx => {
@@ -26,6 +32,16 @@ module.exports = {
       room_id: roomId,
       user_id: userId,
     }).del()
+
+    var amount = await mysql('meeting_apply').count('user_id as amount').where({ room_id: roomId })
+
+    await mysql('room_impromptu').update({
+      people_amount: amount[0].amount
+    }).where({ room_id: roomId })
+
+    // await mysql('room_impromptu').update({
+    //   people_amount: people_amount - 1
+    // }).where({ room_id: roomId })
   },
 
   get: async ctx => {
@@ -36,12 +52,12 @@ module.exports = {
     roomInfo[0].userInfo = await userInfoService.getUserInfo(roomInfo[0].user_id)
     var isJoin = false
     var isHost = false
+    if (roomInfo[0].user_id == userId) {
+      isHost = true
+    }
     for(var i=0; i<meetingUser.length; i++){
       if(meetingUser[i].user_id == userId){
         isJoin = true
-      }
-      if (roomInfo[0].user_id == userId) {
-        isHost = true
       }
       //若投票已经完成则查询出本场最佳
       if (roomInfo[0].survey_status == 3){

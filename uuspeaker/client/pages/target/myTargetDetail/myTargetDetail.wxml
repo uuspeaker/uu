@@ -76,6 +76,14 @@
   </view>
 </template>
 
+<view class="weui-cell write">
+  <view class="weui-cell__bd myReport" catchtap='toAllTarget'>更多</view>
+  <block wx:if="{{haveTarget == 0}}">
+  <view class="weui-cell__ft" catchtap='writeArticle'>
+    <image class="commentImg" src='../../../images/reportShow/write.png' />
+  </view>
+  </block>
+</view>
 <view class="weui-cells weui-cells_after-title">
   <block wx:for="{{targetReportData}}">
     <template is="scoreDetailTemplate" data="{{...item}}" />
@@ -86,10 +94,4 @@
   <textarea class="textarea" id="comment" placeholder="请输入内容" bindinput="setCommentValue" value='{{commentValue}}'> </textarea>
 </modal>
 
-<view class="weui-flex bottom">
-    <block wx:if="{{haveTarget == 0}}">
-      <view class="weui-flex__item">
-        <button class="weui-btn" type="primary" bindtap='writeArticle'>制定目标</button>
-      </view>
-      </block>
-  </view>
+

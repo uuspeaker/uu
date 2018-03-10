@@ -18,6 +18,12 @@ Page({
     haveTarget:'0' 
   },
 
+  toAllTarget: function(){
+    wx.navigateTo({
+      url: '../allTargetDetail/allTargetDetail',
+    })
+  },
+
   writeArticle: function () {
     wx.navigateTo({
       url: '../myTarget/myTarget',
@@ -38,7 +44,7 @@ Page({
       success(result) {
         console.log(result)
         var targetReport = result.data.data.targetReport
-        if (targetReport == '') {
+        if (queryFlag == 0 && targetReport == '') {
           that.writeArticle()
         }
         //util.showSuccess('请求成功完成')

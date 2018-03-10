@@ -10,6 +10,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    modeItems: ['即兴演讲', '备稿演讲', '工作坊'],
     meetingUser: {},
     roomId: {},
     userInfo: {},
@@ -17,6 +18,60 @@ Page({
     roomInfo:{},
     isHost:'',
     totalScore: 0
+  },
+
+  updateImpromptuRoom: function (e) {
+    wx.navigateTo({
+      url: '../impromptuRoom/impromptuRoom?operation=modify'
+      + '&roomId=' + e.currentTarget.dataset.room_id
+      + '&startDate=' + e.currentTarget.dataset.start_date
+      + '&startTime=' + e.currentTarget.dataset.start_time
+      + '&endTime=' + e.currentTarget.dataset.end_time
+      + '&mode=' + e.currentTarget.dataset.mode
+      + '&language=' + e.currentTarget.dataset.language
+      + '&notice=' + e.currentTarget.dataset.notice
+    })
+  },
+
+  // 进入rtcroom页面
+  createAndGoRoom: function (e) {
+    var self = this;
+    // 防止两次点击操作间隔太快
+    var nowTime = new Date();
+    if (nowTime - this.data.tapTime < 1000) {
+      return;
+    }
+    var mode = e.currentTarget.dataset.mode
+    var roomID = e.currentTarget.dataset.room_id
+    var roomName = this.data.modeItems[mode - 1]
+
+    qcloud.request({
+
+      url: `${config.service.host}/weapp/multi_room.isRoomExist`,
+      login: true,
+      data: { 'roomId': roomID },
+      method: 'post',
+      success(result) {
+        console.log('multi_room.isRoomExist')
+        console.log(result)
+        var isRoomExist = result.data.isRoomExist
+        var enterType = 'create'
+        if (isRoomExist) {
+          enterType = 'enter'
+        }
+        var url = '../room/room?type=' + enterType + '&roomName=' + roomName + '&roomID=' + roomID
+        console.log(url)
+        wx.navigateTo({
+          url: url
+        });
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+
+    self.setData({ 'tapTime': nowTime });
   },
 
   //查询用户参会数据

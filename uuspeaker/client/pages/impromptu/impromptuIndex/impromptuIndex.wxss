@@ -1,4 +1,9 @@
-
+.commentImg{
+  width: 16px;
+  height: 16px;
+  position: fixed;
+  right: 15px;
+}
 .normal {
   height: 85px;
   width: 20%;

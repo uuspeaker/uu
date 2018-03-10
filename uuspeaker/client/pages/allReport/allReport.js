@@ -23,6 +23,12 @@ Page({
     })
   },
 
+  toMyReport: function(){
+    wx.navigateTo({
+      url: '../myReport/myReport',
+    })
+  },
+
   //查询最新复盘列表,包含点赞及评论
   queryStudyReport: function (e) {
     //util.showBusy('请求中...')
@@ -230,7 +236,8 @@ Page({
     })
   },
 
-  onLoad: function (e) {
+  onShow: function (e) {
+    queryFlag = 0
     this.queryStudyReport()
     //console.log(uuid.v1())
   },

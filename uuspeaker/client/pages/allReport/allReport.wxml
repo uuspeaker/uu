@@ -1,13 +1,12 @@
 <template name="commentTemplate">
   <view class="weui-flex" style='background-color: #F6F6F6;padding-left:5px;padding-bottom:1px' >
-    <view class="commentTitle ">{{user_info.nickName}}：</view>
-    <view class="commentText ">{{comment}}</view>
+    <view ><text class="commentTitle ">{{user_info.nickName}}：</text><text class="commentText ">{{comment}}</text></view>
   </view>
 </template>
 
 
 <view class="weui-cell write">
-  <view class="weui-cell__bd"></view>
+  <view class="weui-cell__bd myReport" bindtap='toMyReport'>我的</view>
   <view class="weui-cell__ft" bindtap='writeArticle'>
     <image class="commentImg" src='../../images/reportShow/write.png' />
   </view>
@@ -68,7 +67,7 @@
   </view>
 </template>
 
-<view class="weui-cells weui-cells_after-title">
+<view class="weui-cells weui-cells_after-title" >
   <block wx:for="{{studyReportData}}">
     <template is="scoreDetailTemplate" data="{{...item}}" />
   </block>

@@ -22,6 +22,12 @@ Page({
       url: '../writeArticle/writeArticle',
     })
   },
+
+  toAllReport: function(){
+    wx.navigateTo({
+      url: '../allReport/allReport',
+    })
+  },
   
 
   //查询最新复盘列表,包含点赞及评论
@@ -281,7 +287,8 @@ Page({
     })
   },
 
-  onLoad: function (e) {    
+  onShow: function (e) {
+    queryFlag = 0    
     this.queryStudyReport()
     //console.log(uuid.v1())
   },
@@ -289,12 +296,12 @@ Page({
 
   onPullDownRefresh: function () {
     queryFlag = 1
-    this.onLoad()
+    this.queryStudyReport()
   },
 
   onReachBottom: function () {
     queryFlag = 2
-    this.onLoad()
+    this.queryStudyReport()
   },
 
 

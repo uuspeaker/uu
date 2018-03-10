@@ -15,7 +15,7 @@ Page({
     textStyle: [],
     rooms: [],
     userName: '12',
-    modeItems: ['普通模式', '疯狂模式', '娱乐模式', '对抗模式'],
+    modeItems: ['即兴演讲', '备稿演讲', '工作坊'],
     languageItems: ['中文', 'English'],
     tapTime: ''
   },

@@ -38,9 +38,6 @@ Page({
       success(result) {
         console.log(result)
         var targetReport = result.data.data.targetReport
-        if (targetReport == '') {
-          that.writeArticle()
-        }
         //util.showSuccess('请求成功完成')
         var resultData = []
         if (queryFlag == 0) {

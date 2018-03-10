@@ -12,6 +12,7 @@
 	},
 	"appid": "wxef60ee565b6fa65f",
 	"projectname": "uuspeaker",
+	"libVersion": "1.9.1",
 	"condition": {
 		"search": {
 			"current": -1,

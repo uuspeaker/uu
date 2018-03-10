@@ -14,7 +14,7 @@
     </cameraview>
 
     <view wx:for="{{members}}" wx:key="userID">
-      <live-player id="{{item.userID}}" autoplay mode="RTC" wx:if="{{item.accelerateURL}}" object-fit="fillCrop" min-cache="0.1" max-cache="0.3" src="{{item.accelerateURL}}" debug="{{config.debug}}" mute="{{mute}}" background-mute="{{true}}" bindstatechange="onPlay">
+      <live-player id="{{item.userID}}" autoplay mode="RTC" wx:if="{{item.accelerateURL}}" object-fit="fillCrop" min-cache="0.1" max-cache="0.3" src="{{item.accelerateURL}}" debug="{{config.debug}}" muted="{{item.muted}}"  bindstatechange="onPlay">
       </live-player>
     </view>
   </view>
@@ -26,7 +26,7 @@
       <view class="weui-flex__item"></view>
     </view>
     <view class="weui-flex speechArea">
-      <view class="weui-flex__item item">
+      <view class="weui-flex__item itemClass">
         <view>
           <image class="user-pic" src="{{userInfo.avatarUrl}}"></image>
         </view>
@@ -42,6 +42,7 @@
       </block>
     </view>
   </view>
+
 
 
   <!--聊天记录展示-->
@@ -88,7 +89,9 @@
 </view>
 
 <form bindsubmit=''>
+
   <view class="weui-flex  commentArea">
+  
     <view class="weui-flex__item">
       <image class='mic-pic' src='../../Resources/{{config.muted ? "mic-dis" : "mic"}}.png' bindtap="changeMute"></image>
     </view>
@@ -99,4 +102,5 @@
       
     </view>
   </view>
+
 </form>

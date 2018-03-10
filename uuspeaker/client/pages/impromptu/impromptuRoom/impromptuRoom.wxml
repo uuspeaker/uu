@@ -69,7 +69,7 @@
           <view class="weui-label">公告</view>
         </view>
         <view class="weui-cell__bd">
-          <input name="notice" class="weui-input" placeholder='请输入YY房间号等信息' value='{{notice}}' />
+          <input name="notice" class="weui-input" placeholder='' value='{{notice}}' />
         </view>
       </view>
 

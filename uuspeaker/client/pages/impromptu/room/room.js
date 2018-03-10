@@ -60,10 +60,10 @@ Page({
       case 'onRecvRoomTextMsg': {
         console.log('onRecvRoomTextMsg')
         console.log(e)
-        if(e.detail.content.headPic != undefined){
+        if (e.detail.content.headPic != undefined) {
           var self = this;
           var isMine = 0
-          if (e.detail.content.headPic == self.data.userInfo.avatarUrl){
+          if (e.detail.content.headPic == self.data.userInfo.avatarUrl) {
             isMine = 1
           }
           self.data.dialog.push({
@@ -99,13 +99,13 @@ Page({
         e.detail.members.forEach(function (val) {
           val.loading = false;
           val.playerContext = wx.createLivePlayerContext(val.userID);
-          
+
         });
         for (var i = 0; i < memberSize; i++) {
           if (e.detail.members[i]) {
             self.data.members[i] = e.detail.members[i];
             self.data.members[i].userPicMode = 'user-pic-speak'
-            self.data.members[i].mute = false
+            self.data.members[i].muted = 0
           }
         }
         // 页面处于隐藏时候不触发渲染
@@ -124,7 +124,7 @@ Page({
             if (!self.data.members[i].userID) {
               self.data.members[i] = val;
               self.data.members[i].userPicMode = 'user-pic-speak'
-              self.data.members[i].mute = false
+              self.data.members[i].muted = 0
               break;
             }
           }
@@ -238,23 +238,24 @@ Page({
             break;
           }
           case 2005: {
-            val.speakNotice = 'speak'
-            self.setData({
-              members: self.data.members
-            })
-            setTimeout(self.keepSilence, 200, val.userID)
+            console.log('播放中: ', e);
+            // val.speakNotice = 'speak'
+            // self.setData({
+            //   members: self.data.members
+            // })
+            // setTimeout(self.keepSilence, 200, val.userID)
             break;
           }
           default: {
-            console.log('拉流情况：', e); 
+            console.log('拉流情况：', e);
           }
         }
       }
     });
-    
+
   },
 
-  keepSilence: function(userId){
+  keepSilence: function (userId) {
     var self = this
     self.data.members.forEach(function (val) {
       if (userId == val.userID) {
@@ -272,13 +273,13 @@ Page({
     self.data.members.forEach(function (val) {
       if (userAvatar == val.userAvatar) {
         //若原来是静音,则点击后打开声音且将用户图片设置为全展示
-        if (val.mute){
+        if (val.muted) {
           val.userPicMode = 'user-pic-speak'
-          val.mute = false
+          val.muted = 0
           //val.playerContext.mute(false)
-        }else{
+        } else {
           val.userPicMode = 'user-pic-silent'
-          val.mute = true
+          val.muted = 1
           //val.playerContext.mute(true)
         }
         self.setData({
@@ -317,7 +318,7 @@ Page({
             isTop: 1
           })
           return
-          }
+        }
         console.log(result)
         var resultData = []
         if (queryFlag == 0) {
@@ -359,7 +360,7 @@ Page({
     lastCommentTime = this.data.dialog[length - 1].create_date
   },
 
-  toBottom: function(){
+  toBottom: function () {
     wx.pageScrollTo({
       scrollTop: Number.MAX_SAFE_INTEGER,
       duration: 300
@@ -373,11 +374,11 @@ Page({
       comment: e.detail.value,
       roomId: this.data.roomid
     }
-    rtcroom.sendRoomTextMsg({ 'data': { 'msg': requestData.comment}})
+    rtcroom.sendRoomTextMsg({ 'data': { 'msg': requestData.comment } })
     this.setData({
       comment: ''
     })
-    
+
     console.log(requestData)
     var that = this
     qcloud.request({
@@ -531,7 +532,7 @@ Page({
   },
 
   onPullDownRefresh: function () {
-    if(this.data.isTop == 1)return;
+    if (this.data.isTop == 1) return;
     queryFlag = 1
     this.queryDialog()
   },

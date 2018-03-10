@@ -1,8 +1,9 @@
 
 {
   "pages": [
-    "pages/launchStudy/launchStudy",
     "pages/impromptu/impromptuIndex/impromptuIndex",
+    "pages/recordSpeech/recordSpeech",
+    "pages/launchStudy/launchStudy",
     "pages/impromptu/room/room",
     "pages/impromptu/impromptuDialog/impromptuDialog",
     "pages/target/allTargetDetail/allTargetDetail",
@@ -53,20 +54,8 @@
       {
         "selectedIconPath": "images/tabbar/study2.png",
         "iconPath": "images/tabbar/study1.png",
-        "pagePath": "pages/launchStudy/launchStudy",
-        "text": "报名"
-      },
-      {
-        "selectedIconPath": "images/tabbar/studyRank2.png",
-        "iconPath": "images/tabbar/studyRank1.png",
-        "pagePath": "pages/studyRank/studyRank",
-        "text": "学习榜"
-      },
-      {
-        "selectedIconPath": "images/tabbar/leaderRank2.png",
-        "iconPath": "images/tabbar/leaderRank1.png",
-        "pagePath": "pages/leaderRank/leaderRank",
-        "text": "影响榜"
+        "pagePath": "pages/impromptu/impromptuIndex/impromptuIndex",
+        "text": "学习"
       },
       {
         "selectedIconPath": "images/tabbar/discover2.png",
@@ -74,6 +63,19 @@
         "pagePath": "pages/allReport/allReport",
         "text": "复盘"
       },
+      {
+        "selectedIconPath": "images/tabbar/target2.png",
+        "iconPath": "images/tabbar/target1.png",
+        "pagePath": "pages/target/myTargetDetail/myTargetDetail",
+        "text": "目标"
+      },
+      {
+        "selectedIconPath": "images/tabbar/studyRank2.png",
+        "iconPath": "images/tabbar/studyRank1.png",
+        "pagePath": "pages/studyRank/studyRank",
+        "text": "荣誉"
+      },
+      
       {
         "selectedIconPath": "images/tabbar/user2.png",
         "iconPath": "images/tabbar/user1.png",

@@ -7,10 +7,9 @@ var roomId = ''
 Page({
   data: {
     modeItems: [
-      { name: '普通模式', value: '1', checked: true},
-      { name: '疯狂模式', value: '2' },
-      { name: '娱乐模式', value: '3' },
-      { name: 'PK模式', value: '4' }
+      { name: '即兴演讲', value: '1', checked: true},
+      { name: '备稿演讲', value: '2' },
+      { name: '工作坊', value: '3' }
     ],
     languageItems: [
       { name: '中文', value: '1', checked: true },
@@ -88,8 +87,8 @@ Page({
       method: 'delete',
       success(result) {
         util.showSuccess('已成功取消会议')
-        wx.navigateBack({
-          url: '../impromptuIndex/impromptuIndex?isUpdate=true',
+        wx.reLaunch({
+          url: '../impromptuIndex/impromptuIndex',
         })
       },
       fail(error) {
@@ -118,9 +117,7 @@ Page({
         that.setData({
           applyResult: result.data.data
         })
-        wx.navigateBack({
-          url: '../impromptuIndex/impromptuIndex?isUpdate=true',
-        })
+        wx.navigateBack()
       },
       fail(error) {
         util.showModel('请求失败', error);

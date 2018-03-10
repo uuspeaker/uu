@@ -33,6 +33,9 @@ Page({
         that.setData({
           applyResult: result.data.data
         })
+        wx.navigateBack({
+          
+        })
       },
       fail(error) {
         util.showModel('请求失败', error);
