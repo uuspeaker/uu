@@ -9,6 +9,36 @@ var queryFlag = 0
 var firstCommentTime = ''
 var lastCommentTime = ''
 
+const recorderManager = wx.getRecorderManager()
+const innerAudioContext = wx.createInnerAudioContext();
+var tempFilePath = ''
+recorderManager.onStart(() => {
+  console.log('recorder start')
+})
+recorderManager.onResume(() => {
+  console.log('recorder resume')
+})
+recorderManager.onPause(() => {
+  console.log('recorder pause')
+})
+recorderManager.onStop((res) => {
+  console.log('recorder stop', res)
+  tempFilePath = res.tempFilePath
+})
+recorderManager.onFrameRecorded((res) => {
+  const { frameBuffer } = res
+  console.log('frameBuffer.byteLength', frameBuffer.byteLength)
+})
+
+const options = {
+  duration: 600000,
+  sampleRate: 44100,
+  numberOfChannels: 1,
+  encodeBitRate: 192000,
+  format: 'mp3',
+  frameSize: 50
+}
+
 Page({
   /**
    * 页面的初始数据
@@ -512,6 +542,26 @@ Page({
       complete: function (res) {
 
       },
+    })
+  },
+
+  start: function () {
+    recorderManager.start(options)
+  },
+
+  stop: function () {
+    recorderManager.stop();
+  },
+
+  play: function () {
+    innerAudioContext.autoplay = true
+    innerAudioContext.src = tempFilePath,
+      innerAudioContext.onPlay(() => {
+        console.log('开始播放')
+      })
+    innerAudioContext.onError((res) => {
+      console.log(res.errMsg)
+      console.log(res.errCode)
     })
   },
 

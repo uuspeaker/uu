@@ -22,16 +22,23 @@
 <view style='padding-bottom:100px'> 
   <!--参会人员头像展示-->
   <view class="top">
-    <view class="weui-flex">
-      <view class="weui-flex__item"></view>
-    </view>
+   
     <view class="weui-flex speechArea">
-      <view class="weui-flex__item itemClass">
-        <view>
-          <image class="user-pic" src="{{userInfo.avatarUrl}}"></image>
-        </view>
-        <view class='userName '>{{userInfo.nickName}}</view>
+      <view class="weui-flex__item itemClass" >
+        <image class="my-pic" src="{{userInfo.avatarUrl}}"></image>
       </view>
+      <view class="weui-flex__item itemClass" bindtap="start">
+        录音
+      </view>
+      <view class="weui-flex__item itemClass" bindtap="stop">
+        停止
+      </view>
+      <view class="weui-flex__item itemClass" bindtap="play">
+        播放
+      </view>
+      </view>
+
+      <view class="weui-flex ">
       <block wx:for="{{members}}" wx:key="userID">
         <view class="weui-flex__item itemClass">
           <view>
@@ -40,7 +47,8 @@
           <view class='userName '>{{item.userName}}</view>
         </view>
       </block>
-    </view>
+      </view>
+    
   </view>
 
 

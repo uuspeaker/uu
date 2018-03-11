@@ -1,5 +1,5 @@
 <form bindsubmit="openImpromptuRoom">
-  <view class="weui-cells weui-cells_after-title">
+  <view >
 
     <view class="weui-cells__title">语言</view>
     <view class="weui-cells weui-cells_after-title">
@@ -77,13 +77,12 @@
   </view>
 
   <view class="weui-flex bottom">
-    <block wx:if="{{operation == 'modify'}}">
-      <view class="weui-flex__item" bindtap='cancelImpromptuRoom'>
-        <button class="">取消</button>
-      </view>
-      </block>
+
       <view class="weui-flex__item">
         <button class="weui-btn" type="primary" formType="submit">保存</button>
+        <block wx:if="{{operation == 'modify'}}">
+        <button  bindtap='cancelImpromptuRoom'>取消</button>
+        </block>
       </view>
     
   </view>

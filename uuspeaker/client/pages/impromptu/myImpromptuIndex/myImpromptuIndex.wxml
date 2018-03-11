@@ -1,14 +1,4 @@
 
-
-<view class="weui-cell write">
-  <view class="weui-cell__bd myReport" bindtap='toMyRoom'>我的</view>
-  <view class="weui-cell__ft" >
-    <image class="commentImg" bindtap='openImpromptuRoom' src='../../../images/impromptuIndex/add.png' />
-  </view>
-</view>
-<!--报名展示-->
-
-
 <template name="scoreDetailTemplate">
   <view class="weui-cell" data-room_id="{{room_id}}" data-user_id='{{user_id}}' data-start_date='{{start_date}}' data-start_time='{{start_time}}' data-end_time='{{end_time}}' data-mode='{{mode}}' data-language='{{language}}' data-notice='{{notice}}' data-is_host='{{isHost}}' data-survey_status='{{survey_status}}' bindtap="toImpromptuMeeting">
     <view class="user-avatar" >
@@ -30,6 +20,7 @@
         <text style='color:grey;' wx:elif="{{timeStatus == 3 && survey_status ==3}}">已完成</text>
         </text>
         </view>
+        
       </view>
       <view >
         <view class=" date">  {{startDateStr}}<text class='right'>{{people_amount}}人已报名</text></view>
@@ -38,9 +29,37 @@
   </view>
 </template>
 
-<view class="weui-cells weui-cells_after-title">
-  <block wx:for="{{rooms}}" wx:key="item">
-    <template is="scoreDetailTemplate" data="{{...item}}" />
-  </block>
-</view>
+<view class="page">
+  <view class="page__bd">
+    <view class="weui-tab">
+      <view class="weui-navbar">
+        <block wx:for="{{tabs}}" wx:key="*this">
+          <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+            <view class="weui-navbar__title">{{item}}</view>
+          </view>
+        </block>
+        <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+      </view>
+<view class="weui-tab__panel">
+        <!--tab1-->
+        <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+          <view class="weui-cells weui-cells_after-title">
+            <block wx:for="{{myRooms}}">
+              <template is="scoreDetailTemplate" data="{{...item}}" />
+            </block>
+          </view>
+        </view>
 
+        <!--tab2-->
+        <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+          <view class="weui-cells weui-cells_after-title">
+            <block wx:for="{{myJoinRooms}}">
+              <template is="scoreDetailTemplate" data="{{...item}}" />
+            </block>
+          </view>
+        </view>
+
+      </view>
+    </view>
+  </view>
+</view>

@@ -33,36 +33,16 @@ var getTimeNotice = function (noticeDate) {
   } else if (day >= 1 && day < 7) {
     return day + '天前'
   } else {
-    return this.format(targetDate, 'yyyy年MM月dd日 hh:mm')
+    if (now.getFullYear() == targetDate.getFullYear()) {
+      return this.format(targetDate, 'M月d日 hh:mm')
+    }else{
+      return this.format(targetDate, 'yyyy年M月d日 hh:mm')
+    }
+    
   }
 }
 
-var getTimeNoticeFuture = function (noticeDate,time) {
-  var now = new Date()
-  now.setHours(0) 
-  now.setMinutes(0) 
-  now.setSeconds(0) 
-  now.setMilliseconds(0) 
-  var targetDate = new Date(noticeDate)
-  targetDate.setHours(0)
-  targetDate.setMinutes(0)
-  targetDate.setSeconds(0)
-  targetDate.setMilliseconds(0) 
-  var between = (targetDate - now) / (24 * 60 * 60 * 1000)
-  if (between < 0) {
-    return '已过期'
-  } else if (between == 0){
-    return '今天' + ' ' + time + '（' + this.getWeek(noticeDate) + ')'
-  } else if (between == 1) {
-    return '明天' + ' ' + time + '（' + this.getWeek(noticeDate) + ')'
-  } else if (between == 2) {
-    return '后天' + ' ' + time + '（' + this.getWeek(noticeDate) + ')'
-  }else {
-    return this.format(targetDate, 'yyyy年MM月dd日') + '（' + this.getWeek(noticeDate) + ')'
-  }
-}
-
-var getTimeNoticeFuture2 = function (noticeDate) {
+var getTimeNoticeFuture = function (noticeDate, time) {
   var now = new Date()
   now.setHours(0)
   now.setMinutes(0)
@@ -75,13 +55,59 @@ var getTimeNoticeFuture2 = function (noticeDate) {
   targetDate.setMilliseconds(0)
   var between = (targetDate - now) / (24 * 60 * 60 * 1000)
   if (between == 0) {
-    return '今天' 
+    return '今天' + ' ' + time + '（' + this.getWeek(noticeDate) + ')'
   } else if (between == 1) {
-    return '明天'
+    return '明天' + ' ' + time + '（' + this.getWeek(noticeDate) + ')'
   } else if (between == 2) {
-    return '后天' 
+    return '后天' + ' ' + time + '（' + this.getWeek(noticeDate) + ')'
   } else {
-    return this.format(targetDate, 'yyyy年MM月dd日') 
+    if (now.getFullYear() == targetDate.getFullYear()){
+      return this.format(targetDate, 'M月d日 ') + time + '（' + this.getWeek(noticeDate) + ') ' 
+    }else{
+      return this.format(targetDate, 'yyyy年M月d日 ') + time + '（' + this.getWeek(noticeDate) + ') ' 
+    }
+  }
+}
+
+var getTimeNoticeFuture2 = function (noticeDate, time) {
+  var now = new Date()
+  now.setHours(0)
+  now.setMinutes(0)
+  now.setSeconds(0)
+  now.setMilliseconds(0)
+  var targetDate = new Date(noticeDate)
+  targetDate.setHours(0)
+  targetDate.setMinutes(0)
+  targetDate.setSeconds(0)
+  targetDate.setMilliseconds(0)
+  var between = (targetDate - now) / (24 * 60 * 60 * 1000)
+  if (between == 0) {
+    return '今天' + ' ' + time
+  } else if (between == 1) {
+    return '明天' + ' ' + time
+  } else if (between == 2) {
+    return '后天' + ' ' + time
+  } else {
+    if (now.getFullYear() == targetDate.getFullYear()) {
+      return this.format(targetDate, 'M月d日 ') + time + '（' + this.getWeek(noticeDate) + ') '
+    } else {
+      return this.format(targetDate, 'yyyy年M月d日 ') + time + '（' + this.getWeek(noticeDate) + ') '
+    }
+  }
+}
+
+var getTimeStatus = function (noticeDate, begin, end) {
+  var now = new Date()
+  var nowStr = this.format(now,'yyyy-MM-ddhh:mi')
+  var beginTime = noticeDate + begin
+  var endTime = noticeDate + end
+
+  if (nowStr < beginTime) {
+    return 1
+  } else if (nowStr > endTime) {
+    return 3
+  } else {
+    return 2
   }
 }
 
@@ -98,4 +124,4 @@ var getWeek = function(dateString) {
   return "星期" + "日一二三四五六".charAt(date.getDay());
 }
 
-module.exports = { format, getTimeNotice, getTimeNoticeFuture,getTimeNoticeFuture2,getWeek}
+module.exports = { format, getTimeNotice, getTimeNoticeFuture, getTimeNoticeFuture2, getWeek, getTimeStatus}

@@ -93,11 +93,16 @@ router.post('/commentReport', controllers.commentReport.post)
 router.get('/myReport', controllers.myReport.get)
 router.post('/myReport', controllers.myReport.post)
 router.delete('/myReport', controllers.myReport.del)
-//我的即兴房间
+//所有即兴房间
 router.get('/impromptu.impromptuRoom', controllers.impromptu.impromptuRoom.get)
 router.post('/impromptu.impromptuRoom', controllers.impromptu.impromptuRoom.post)
 router.delete('/impromptu.impromptuRoom', controllers.impromptu.impromptuRoom.del)
 router.put('/impromptu.impromptuRoom', controllers.impromptu.impromptuRoom.put)
+//我的即兴房间
+router.get('/impromptu.myImpromptuRoom', controllers.impromptu.myImpromptuRoom.get)
+router.post('/impromptu.myImpromptuRoom', controllers.impromptu.myImpromptuRoom.post)
+router.delete('/impromptu.myImpromptuRoom', controllers.impromptu.myImpromptuRoom.del)
+router.put('/impromptu.myImpromptuRoom', controllers.impromptu.myImpromptuRoom.put)
 //即兴会议
 router.get('/impromptu.impromptuMeeting', controllers.impromptu.impromptuMeeting.get)
 router.post('/impromptu.impromptuMeeting', controllers.impromptu.impromptuMeeting.post)

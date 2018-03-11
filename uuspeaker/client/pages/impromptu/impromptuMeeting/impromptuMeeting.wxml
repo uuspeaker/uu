@@ -104,7 +104,7 @@
     <block wx:if="{{isJoin == false && roomInfo.survey_status == 1}}">
     <view  data-roletype='1' bindtap='applyMeeting'>报名</view>
     </block>
-    <block wx:if="{{isJoin == false && roomInfo.people_amount >= 9}}">
+    <block wx:elif="{{isJoin == false && roomInfo.people_amount >= 9}}">
     <view class='disable'>已满</view>
     </block>
     <block wx:elif="{{isJoin == true && roomInfo.survey_status == 1}}">
@@ -116,7 +116,7 @@
   </view>
   <view class="weui-flex__item seperator">
     <block wx:if="{{isJoin == true}}">
-    <view data-mode='{{roomInfo.mode}}' data-room_id="{{room_id}}" bindtap='createAndGoRoom'>参会</view>
+    <view data-mode='{{roomInfo.mode}}' data-room_id="{{roomInfo.room_id}}" bindtap='createAndGoRoom'>参会</view>
     </block>
     <block wx:else>
     <view class='disable'>参会</view>

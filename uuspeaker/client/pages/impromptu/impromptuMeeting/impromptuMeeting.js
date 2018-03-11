@@ -2,6 +2,7 @@ var qcloud = require('../../../vendor/wafer2-client-sdk/index')
 var config = require('../../../config')
 var util = require('../../../utils/util.js')
 var dateFormat = require('../../../common/dateFormat')
+var getlogininfo = require('../../../getlogininfo.js');
 
 //包含房间信息，房主信息
 Page({
@@ -193,6 +194,28 @@ Page({
     wx.navigateTo({
       url: '../../writeArticle/writeArticle?roomId=' + this.data.roomId
     })
+  },
+
+  onReady: function () {
+    var self = this;
+    //this.getRoomList(function () { });
+    getlogininfo.getLoginInfo({
+      type: 'multi_room',
+      success: function (ret) {
+      },
+      fail: function (ret) {
+        self.data.isGetLoginInfo = false;
+        wx.hideLoading();
+        wx.showModal({
+          title: '获取登录信息失败',
+          content: ret.errMsg,
+          showCancel: false,
+          complete: function () {
+            wx.navigateBack({});
+          }
+        });
+      }
+    });
   },
 
   /**

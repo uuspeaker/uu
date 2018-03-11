@@ -2,7 +2,7 @@
 {
   "pages": [
     "pages/impromptu/impromptuIndex/impromptuIndex",
-    "pages/recordSpeech/recordSpeech",
+    "pages/impromptu/myImpromptuIndex/myImpromptuIndex",
     "pages/launchStudy/launchStudy",
     "pages/impromptu/room/room",
     "pages/impromptu/impromptuDialog/impromptuDialog",
