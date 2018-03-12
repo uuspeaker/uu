@@ -3,6 +3,8 @@
   "pages": [
     "pages/impromptu/impromptuIndex/impromptuIndex",
     "pages/impromptu/myImpromptuIndex/myImpromptuIndex",
+    "pages/index/index",
+    "pages/chat/chat",
     "pages/launchStudy/launchStudy",
     "pages/impromptu/room/room",
     "pages/impromptu/impromptuDialog/impromptuDialog",
@@ -17,7 +19,7 @@
     "pages/cameraview/cameraview",
     "pages/prepared/preparedMeeting/preparedMeeting",
     
-    "pages/index/index",
+    
     
     "pages/impromptu/impromptuSurveyDetail/impromptuSurveyDetail",
     "pages/impromptu/impromptuVote/impromptuVote",

@@ -11,24 +11,6 @@ var lastCommentTime = ''
 
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext();
-var tempFilePath = ''
-recorderManager.onStart(() => {
-  console.log('recorder start')
-})
-recorderManager.onResume(() => {
-  console.log('recorder resume')
-})
-recorderManager.onPause(() => {
-  console.log('recorder pause')
-})
-recorderManager.onStop((res) => {
-  console.log('recorder stop', res)
-  tempFilePath = res.tempFilePath
-})
-recorderManager.onFrameRecorded((res) => {
-  const { frameBuffer } = res
-  console.log('frameBuffer.byteLength', frameBuffer.byteLength)
-})
 
 const options = {
   duration: 600000,
@@ -457,8 +439,53 @@ Page({
       //username: this.data.username
     });
     this.initUserInfo()
+    this.initAudio()
     // queryFlag = 0
     // this.queryDialog()
+  },
+
+  initAudio: function(){
+    recorderManager.onStart(() => {
+      console.log('recorder start')
+    })
+    recorderManager.onResume(() => {
+      console.log('recorder resume')
+    })
+    recorderManager.onPause(() => {
+      console.log('recorder pause')
+    })
+    recorderManager.onStop((res) => {
+      var that = this
+      console.log('recorder stop', res)
+      wx.uploadFile({
+        url: `${config.service.host}/weapp/impromptu.impromptuAudio`,
+        filePath: res.tempFilePath,
+        name: 'file',
+
+        success: function (res) {
+          that.showSuccess('上传音频成功')
+          res = JSON.parse(res.data)
+          console.log(res)
+        },
+
+        fail: function (e) {
+          console.error(e)
+        }
+      })
+    })
+    // 显示成功提示
+    
+    recorderManager.onFrameRecorded((res) => {
+      const { frameBuffer } = res
+      console.log('frameBuffer.byteLength', frameBuffer.byteLength)
+    })
+  },
+
+  showSuccess: function (text){
+    wx.showToast({
+      title: text,
+      icon: 'success'
+    });
   },
 
   /**

@@ -107,6 +107,9 @@ router.put('/impromptu.myImpromptuRoom', controllers.impromptu.myImpromptuRoom.p
 router.get('/impromptu.impromptuMeeting', controllers.impromptu.impromptuMeeting.get)
 router.post('/impromptu.impromptuMeeting', controllers.impromptu.impromptuMeeting.post)
 router.delete('/impromptu.impromptuMeeting', controllers.impromptu.impromptuMeeting.del)
+//即兴会议音频管理
+router.post('/impromptu.impromptuAudio', controllers.impromptu.impromptuAudio)
+
 //即兴会议发起投票问卷
 router.get('/impromptu.impromptuSurvey', controllers.impromptu.impromptuSurvey.get)
 router.put('/impromptu.impromptuSurvey', controllers.impromptu.impromptuSurvey.put)
