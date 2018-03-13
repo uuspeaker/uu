@@ -2,8 +2,8 @@
 {
   "pages": [
     "pages/impromptu/impromptuIndex/impromptuIndex",
-    "pages/impromptu/myImpromptuIndex/myImpromptuIndex",
     "pages/index/index",
+    "pages/impromptu/myImpromptuIndex/myImpromptuIndex",
     "pages/chat/chat",
     "pages/launchStudy/launchStudy",
     "pages/impromptu/room/room",

@@ -8,6 +8,10 @@ const CONF = {
     // 微信小程序 App Secret
     appSecret: 'cf3b448c2afd8f1426327c0f8992962c',
 
+    qcloudAppId: '1255773188',
+    qcloudSecretId: 'AKIDCcKCVdh9kQBqbhML3307HfZJA8WL36hj',
+    qcloudSecretKey: 'oTzYBIIU2OaG74zBFmhSRTihp0Nshcfq',
+
     // 是否使用腾讯云代理登录小程序
     useQcloudLogin: true,
 
@@ -53,9 +57,9 @@ const CONF = {
          */
         region: 'ap-guangzhou',
         // Bucket 名称
-        fileBucket: 'qcloudtest',
+        fileBucket: 'uuspeaker',
         // 文件夹
-        uploadFolder: ''
+        uploadFolder: 'audio'
     },
 
     /**

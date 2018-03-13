@@ -457,11 +457,13 @@ Page({
     recorderManager.onStop((res) => {
       var that = this
       console.log('recorder stop', res)
+      var now =  new Date()
+      var audioName = dateFormat.format(now, 'yyyy-MM-dd hh:mi:ss')
       wx.uploadFile({
         url: `${config.service.host}/weapp/impromptu.impromptuAudio`,
         filePath: res.tempFilePath,
         name: 'file',
-
+        formData: { roomId: this.data.roomid, audioName: audioName},
         success: function (res) {
           that.showSuccess('上传音频成功')
           res = JSON.parse(res.data)
