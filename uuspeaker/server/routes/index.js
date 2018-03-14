@@ -107,8 +107,14 @@ router.put('/impromptu.myImpromptuRoom', controllers.impromptu.myImpromptuRoom.p
 router.get('/impromptu.impromptuMeeting', controllers.impromptu.impromptuMeeting.get)
 router.post('/impromptu.impromptuMeeting', controllers.impromptu.impromptuMeeting.post)
 router.delete('/impromptu.impromptuMeeting', controllers.impromptu.impromptuMeeting.del)
-//即兴会议音频管理
+//即兴会议音频上传
 router.post('/impromptu.impromptuAudio', controllers.impromptu.impromptuAudio)
+
+//即兴会议音频管理
+router.get('/impromptu.userAudio', controllers.impromptu.userAudio.get)
+router.post('/impromptu.userAudio', controllers.impromptu.userAudio.post)
+router.put('/impromptu.userAudio', controllers.impromptu.userAudio.put)
+router.delete('/impromptu.userAudio', controllers.impromptu.userAudio.del)
 
 //即兴会议发起投票问卷
 router.get('/impromptu.impromptuSurvey', controllers.impromptu.impromptuSurvey.get)
@@ -127,94 +133,44 @@ router.post('/target.myTarget', controllers.target.myTarget.post)
 router.get('/target.allTarget', controllers.target.allTarget.get)
 
 //------------------------------------ 多人房间接口 ---------------------------------------------------
-/**
- * 获取云通信登录所需信息的接口 - 针对接口给定的userId派发 IM 的userSig。
- */
+//获取云通信登录所需信息的接口 - 针对接口给定的userId派发 IM 的userSig。
 router.post(multiRoomPrefix + '/login', account.login)
-
-/**
- * 登出接口什么也没做
- */
+//登出接口什么也没做
 router.post(multiRoomPrefix + '/logout', account.logout)
-
-/**
- * 获取云通信登录所需信息的接口 - 服务器会随机分配用户id 用于后面的进房和出房操作。
- */
+//获取云通信登录所需信息的接口 - 服务器会随机分配用户id 用于后面的进房和出房操作。
 router.post(multiRoomPrefix + '/get_im_login_info', multi_room.get_im_login_info)
-
-/**
- * 获取推流地址
- */
+//获取推流地址
 router.post(multiRoomPrefix + '/get_push_url', multi_room.get_push_url)
-
-/**
- * 多人 - 获取房间列表接口 -
- */
+//多人 - 获取房间列表接口 -
 router.post(multiRoomPrefix + '/get_room_list', multi_room.get_room_list)
-
-/**
- * 多人 - 获取房间成员列表接口 -
- */
+//多人 - 获取房间成员列表接口 -
 router.post(multiRoomPrefix + '/get_pushers', multi_room.get_pushers)
-
-/**
- * 多人 - 创建房间接口 - 
- */
+//多人 - 创建房间接口 - 
 router.post(multiRoomPrefix + '/create_room', multi_room.create_room)
-
-/**
- * 多人 - 销毁房间接口 - 
- */
+//多人 - 销毁房间接口 - 
 router.post(multiRoomPrefix + '/destroy_room', multi_room.destroy_room)
-
-/**
- * 多人 - 进入房间接口 - 客户端配合云通信的 群组消息 通知房间其他成员，您进入房间。
- */
+//多人 - 进入房间接口 - 客户端配合云通信的 群组消息 通知房间其他成员，您进入房间。
 router.post(multiRoomPrefix + '/add_pusher', multi_room.add_pusher)
-
-/**
- * 多人 - 离开房间接口 - 客户端配合云通信的 群组消息 通知房间其他成员，您离开房间。
- */
+//多人 - 离开房间接口 - 客户端配合云通信的 群组消息 通知房间其他成员，您离开房间。
 router.post(multiRoomPrefix + '/delete_pusher', multi_room.delete_pusher)
-
-/**
- * 多人 - 房间成员心跳接口 - 客户端需要定时调用这个接口维持和server的心跳。
- */
+//多人 - 房间成员心跳接口 - 客户端需要定时调用这个接口维持和server的心跳。
 router.post(multiRoomPrefix + '/pusher_heartbeat', multi_room.pusher_heartbeat)
-
 //房间是否存在
 router.post('/multi_room.isRoomExist', multi_room.isRoomExist)
 
 //------------------------------------- 提取log辅助函数 --------------------------------------------------
-/**
- * 辅助接口 - 用于获取业务后台的日志文件列表。
- */
+//辅助接口 - 用于获取业务后台的日志文件列表。
 router.get(utilsPrefix + '/logfilelist', utils.logfilelist);
-
-/**
- * 辅助接口 - 用户获取业务后台的指定日志文件。
- */
+// 辅助接口 - 用户获取业务后台的指定日志文件。
 router.get(utilsPrefix + '/getlogfile', utils.getlogfile);
-
-/**
- * 辅助接口 - 用于检查config.js 相关配置是否正确。
- */
+// 辅助接口 - 用于检查config.js 相关配置是否正确。
 router.get(utilsPrefix + '/check_config', utils.test_config)
 
 // -------------------------------------- 直播demo辅助接口 -------------------------------------------------
-/**
- * 直播接口 - 获取推流地址
- */
+//直播接口 - 获取推流地址
 router.get(utilsPrefix + '/get_test_pushurl', utils.get_test_pushurl)
-
-/**
- * 直播接口 - 获取播放地址
- */
+// 直播接口 - 获取播放地址
 router.get(utilsPrefix + '/get_test_rtmpaccurl', utils.get_test_rtmpaccurl)
-
-/**
- * 
- */
 router.post(utilsPrefix + '/get_login_info', utils.get_login_info)
 
 module.exports = router

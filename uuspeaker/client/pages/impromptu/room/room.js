@@ -3,11 +3,13 @@ var qcloud = require('../../../vendor/wafer2-client-sdk/index')
 var config = require('../../../config')
 var util = require('../../../utils/util.js')
 var dateFormat = require('../../../common/dateFormat.js')
+var uuid = require('../../../common/uuid.js')
 
 var memberSize = 9
 var queryFlag = 0
 var firstCommentTime = ''
 var lastCommentTime = ''
+var tempFilePath = ''
 
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext();
@@ -28,8 +30,12 @@ Page({
   data: {
     role: 'enter',      // 表示双人会话的角色，取值'enter'表示加入者，'create'表示创建者
     roomid: '',         // 房间id
+    userId: '',
     roomname: '',       // 房间名称
     username: '',       // 用户名称
+    isRecord: 0,
+    showSpeechTitle: false, //标题输入框
+    speechTitle: '',
     config: {           //cameraview对应的配置项
       //aspect: '3:4',     //设置画面比例，取值为'3:4'或者'9:16'
       minBitrate: 200,   //设置码率范围为[minBitrate,maxBitrate]，四人建议设置为200~400
@@ -431,12 +437,12 @@ Page({
     this.data.role = options.type;
     this.data.roomid = options.roomID;
     this.data.roomname = options.roomName;
-    //this.data.username = options.userName;
+    this.data.userId = options.userId;
     this.setData({
       role: this.data.role,
       roomid: this.data.roomid,
       roomname: this.data.roomname,
-      //username: this.data.username
+      userId: this.data.userId
     });
     this.initUserInfo()
     this.initAudio()
@@ -455,27 +461,8 @@ Page({
       console.log('recorder pause')
     })
     recorderManager.onStop((res) => {
-      var that = this
-      console.log('recorder stop', res)
-      var now =  new Date()
-      var audioName = dateFormat.format(now, 'yyyy-MM-dd hh:mi:ss')
-      wx.uploadFile({
-        url: `${config.service.host}/weapp/impromptu.impromptuAudio`,
-        filePath: res.tempFilePath,
-        name: 'file',
-        formData: { roomId: this.data.roomid, audioName: audioName},
-        success: function (res) {
-          that.showSuccess('上传音频成功')
-          res = JSON.parse(res.data)
-          console.log(res)
-        },
-
-        fail: function (e) {
-          console.error(e)
-        }
-      })
+      tempFilePath = res.tempFilePath
     })
-    // 显示成功提示
     
     recorderManager.onFrameRecorded((res) => {
       const { frameBuffer } = res
@@ -574,12 +561,83 @@ Page({
     })
   },
 
-  start: function () {
+  startRecord: function () {
     recorderManager.start(options)
+    this.setData({
+      isRecord: 1
+    })
   },
 
-  stop: function () {
+  stopRecord: function () {
     recorderManager.stop();
+    this.setData({
+      isRecord: 0
+    })
+    this.showSpeechTitleView()
+  },
+
+  //显示标题输入框
+  showSpeechTitleView: function () {
+    this.setData({
+      showSpeechTitle: true
+    })
+  },
+
+  //点击取消隐藏评论框
+  cancelRecord: function (e) {
+    this.setData({
+      showSpeechTitle: false,
+      speechTitle: ''
+    })
+  },
+
+  setSpeechTitle: function (e) {
+    this.setData({
+      speechTitle: e.detail.value
+    })
+
+  },
+
+  saveRecord: function () {
+    this.setData({
+      showSpeechTitle: false,
+    })
+    var that = this
+    console.log('save recorder')
+    var now = new Date()
+    
+    var audioId = uuid.v1()
+    wx.uploadFile({
+      url: `${config.service.host}/weapp/impromptu.impromptuAudio`,
+      filePath: tempFilePath,
+      name: 'file',
+      success: function (res) {
+        that.showSuccess('录音已保存')
+        res = JSON.parse(res.data)
+        console.log(res)
+      },
+
+      fail: function (e) {
+        console.error(e)
+      }
+    })
+
+    qcloud.request({
+
+      url: `${config.service.host}/weapp/impromptu.userAudio`,
+      login: true,
+      data: { roomId: this.data.roomid, audioName: this.data.speechTitle, userId: this.data.userId, audioId: audioId,},
+      method: 'post',
+      success(result) {
+        console.log(result)
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+
+    
   },
 
   play: function () {
@@ -593,6 +651,8 @@ Page({
       console.log(res.errCode)
     })
   },
+
+
 
   /**
    * 生命周期函数--监听页面隐藏

@@ -47,7 +47,7 @@ Page({
     var roomName = this.data.modeItems[mode - 1]
 
     qcloud.request({
-
+      
       url: `${config.service.host}/weapp/multi_room.isRoomExist`,
       login: true,
       data: { 'roomId': roomID },
@@ -60,7 +60,7 @@ Page({
         if (isRoomExist) {
           enterType = 'enter'
         }
-        var url = '../room/room?type=' + enterType + '&roomName=' + roomName + '&roomID=' + roomID
+        var url = '../room/room?type=' + enterType + '&roomName=' + roomName + '&roomID=' + roomID + '&userId=' + self.data.roomInfo.user_id
         console.log(url)
         wx.navigateTo({
           url: url
@@ -193,6 +193,12 @@ Page({
   toReport: function () {
     wx.navigateTo({
       url: '../../writeArticle/writeArticle?roomId=' + this.data.roomId
+    })
+  },
+
+  toUserAudio: function () {
+    wx.navigateTo({
+      url: '../../impromptu/userAudio/userAudio?roomId=' + this.data.roomId
     })
   },
 

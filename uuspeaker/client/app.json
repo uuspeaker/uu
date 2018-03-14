@@ -2,6 +2,7 @@
 {
   "pages": [
     "pages/impromptu/impromptuIndex/impromptuIndex",
+    "pages/impromptu/userAudio/userAudio",
     "pages/index/index",
     "pages/impromptu/myImpromptuIndex/myImpromptuIndex",
     "pages/chat/chat",

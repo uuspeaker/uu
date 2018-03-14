@@ -1,0 +1,33 @@
+
+<template name="scoreDetailTemplate">
+  <view class="weui-cell" >
+    <view class="user-avatar" >
+      <image class="user-pic" src="{{user_info.avatarUrl}}" />
+    </view>
+    <view class="weui-cell__bd" >
+    <view class="title" >
+        <view style='padding-left:0px'>
+        <text>【{{audio_name}}】</text>
+        <text class='right'></text>
+        </view>
+      </view>
+      <view >
+        <view class=" date">  {{createDateStr}}</view>
+      </view>
+      
+    </view>
+    <block wx:if="{{isPlay == 0}}">
+        <view class='right ' data-src='{{src}}' bindtap='playAudio'><image class="audio" src="../../../images/userAudio/start.png" /></view>
+        </block>
+        <block wx:if="{{isPlay == 1}}">
+        <view class='right link' data-src='{{src}}' bindtap='stopAudio'><image class="audio" src="../../../images/userAudio/stop.png" /></view>
+        </block>
+  </view>
+</template>
+
+<view class="weui-cells weui-cells_after-title">
+  <block wx:for="{{audios}}" wx:key="item">
+    <template is="scoreDetailTemplate" data="{{...item}}" />
+  </block>
+</view>
+

@@ -47,7 +47,7 @@ const form = new multiparty.Form({
  */
 
     // 初始化 sdk
-const upload = (req,fileName) => {
+const upload = (req) => {
      
 
     return new Promise((resolve, reject) => {
@@ -55,13 +55,10 @@ const upload = (req,fileName) => {
         form.parse(req, (err, fields = {}, files = {}) => {
             err ? reject(err) : resolve({fields, files})
         })
-    }).then(({files}) => {
-        if (!(fieldName in files)) {
-            debug('%s: 请求中没有名称为 %s 的field，请检查请求或 SDK 初始化配置', ERRORS.ERR_REQUEST_LOST_FIELD, fieldName)
-            throw new Error(ERRORS.ERR_REQUEST_LOST_FIELD)
-        }
+    }).then(({fields,files}) => {
 
         const imageFile = files.file[0]
+        const audioId = fields.audioId[0]
 
         // 判断文件类型
         const buffer = readChunk.sync(imageFile.path, 0, 262)
@@ -75,7 +72,7 @@ const upload = (req,fileName) => {
             Bucket: config.cos.fileBucket,
             Region: config.cos.region,
             //Key: `${uploadFolder}${imgKey}`,
-            Key: fileName + resultType.ext,
+            Key: `${uploadFolder}${audioId}.${resultType.ext}`,
             Body: fs.createReadStream(srcpath),
             ContentLength: imageFile.size
         }

@@ -25,17 +25,18 @@
    
     <view class="weui-flex speechArea">
       <view class="weui-flex__item itemClass" >
-        <image class="my-pic" src="{{userInfo.avatarUrl}}"></image>
+        <image class="my-pic" src="{{userInfo.avatarUrl}}"/>
+        <block wx:if="{{isRecord == 0}}">
+        <image bindtap="startRecord" class="audio" src="../../../images/userAudio/record.png" />
+        </block>
+        <block wx:if="{{isRecord == 1}}">
+        <image bindtap="stopRecord" class="audio" src="../../../images/userAudio/stop.png" />
+        </block>
       </view>
-      <view class="weui-flex__item itemClass" bindtap="start">
-        录音
+      <view class="weui-flex__item itemClass">
+        
       </view>
-      <view class="weui-flex__item itemClass" bindtap="stop">
-        停止
-      </view>
-      <view class="weui-flex__item itemClass" bindtap="play">
-        播放
-      </view>
+
       </view>
 
       <view class="weui-flex ">
@@ -112,3 +113,6 @@
   </view>
 
 </form>
+<modal class="modal" hidden="{{!showSpeechTitle}}" title="保存演讲录音" confirm-text="保存" cancel-text="取消" bindcancel="cancelRecord" bindconfirm="saveRecord">
+  <input  placeholder="请输入演讲标题" bindinput="setSpeechTitle" value='{{speechTitle}}' > </input>
+</modal>

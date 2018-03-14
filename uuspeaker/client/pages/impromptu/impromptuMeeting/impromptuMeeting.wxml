@@ -79,14 +79,16 @@
           <text wx:if="{{roomInfo.mode == 1}}">【即兴演讲】</text>
           <text wx:if="{{roomInfo.mode == 2}}">【备稿演讲】</text>
           <text wx:if="{{roomInfo.mode == 3}}">【工作坊】</text>
+          <text class='link' bindtap='toUserAudio'>录音</text>
         </view>
       </view>
-      <view class=" date">{{roomInfo.startDateStr}}</view>
+      <view class="date">{{roomInfo.startDateStr}}</view>
+      
     </view>
   </view>
 
   <view class="page__bd">
-    <view class="weui-cells__title notice">公告：{{roomInfo.notice}}</view>
+    <view class="weui-cells__title"><text class='notice'>公告：{{roomInfo.notice}}</text></view>
     <view class="page">
       <view class="weui-cells weui-cells_after-title">
         <block wx:for="{{meetingUser}}" wx:key="item">
