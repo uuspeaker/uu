@@ -16,9 +16,9 @@ const innerAudioContext = wx.createInnerAudioContext();
 
 const options = {
   duration: 600000,
-  sampleRate: 44100,
+  sampleRate: 16000,
   numberOfChannels: 1,
-  encodeBitRate: 192000,
+  encodeBitRate: 24000,
   format: 'mp3',
   frameSize: 50
 }
@@ -602,17 +602,25 @@ Page({
     this.setData({
       showSpeechTitle: false,
     })
-    var that = this
+    
     console.log('save recorder')
     var now = new Date()
-    
     var audioId = uuid.v1()
-    wx.uploadFile({
+    
+    //this.saveAudio(audioId)
+    setTimeout(this.saveAudio,500,audioId)
+    this.saveAudioData(audioId) 
+  },
+
+  saveAudio: function (audioId){
+    var that = this
+    const uploadTask = wx.uploadFile({
       url: `${config.service.host}/weapp/impromptu.impromptuAudio`,
       filePath: tempFilePath,
       name: 'file',
+      formData: { audioId: audioId, },
       success: function (res) {
-        that.showSuccess('录音已保存')
+        that.showSuccess('录音文件上传中')
         res = JSON.parse(res.data)
         console.log(res)
       },
@@ -622,11 +630,19 @@ Page({
       }
     })
 
-    qcloud.request({
+    uploadTask.onProgressUpdate((res) => {
+      this.showSuccess('' + res.progress + '%')
+      console.log('上传进度', res.progress)
+      console.log('已经上传的数据长度', res.totalBytesSent)
+      console.log('预期需要上传的数据总长度', res.totalBytesExpectedToSend)
+    })
+  },
 
+  saveAudioData: function (audioId) {
+    qcloud.request({
       url: `${config.service.host}/weapp/impromptu.userAudio`,
       login: true,
-      data: { roomId: this.data.roomid, audioName: this.data.speechTitle, userId: this.data.userId, audioId: audioId,},
+      data: { roomId: this.data.roomid, audioName: this.data.speechTitle, userId: this.data.userId, audioId: audioId, },
       method: 'post',
       success(result) {
         console.log(result)
@@ -636,8 +652,6 @@ Page({
         console.log('request fail', error);
       }
     })
-
-    
   },
 
   play: function () {
