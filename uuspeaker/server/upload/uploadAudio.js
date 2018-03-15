@@ -29,7 +29,7 @@ const regionMap = {
  */
 
 // 初始化 sdk
-const upload = (req) => {
+const upload = async (req) => {
   const cos = new CosSdk({
     AppId: config.qcloudAppId,
     SecretId: config.qcloudSecretId,
@@ -37,10 +37,42 @@ const upload = (req) => {
     Domain: `http://${config.cos.fileBucket}-${config.qcloudAppId}.cos.${config.cos.region}.myqcloud.com/`
   })
 
-  const maxSize = config.cos.maxSize ? config.cos.maxSize : 10
-  const fieldName = config.cos.fieldName ? config.cos.fieldName : 'file'
-
   debug('Cos sdk init finished')
+
+  // 处理文件上传
+  const { fields, files } = await resolveUploadFileFromRequest(req)
+
+  // 从 req 读取文件
+
+    console.log('files is', files)
+    var file = files.file[0]
+    var audioId = fields.audioId[0]
+    console.log('audioId is', audioId)
+
+    // 生成上传传参数
+    var srcpath = file.path
+    var uploadFolder = config.cos.uploadFolder ? config.cos.uploadFolder + '/' : ''
+
+    cos.sliceUploadFile({
+      Bucket: config.cos.fileBucket,
+      Region: config.cos.region,
+      Key: `${uploadFolder}${audioId}.mp3`,
+      FilePath: file.path
+    }, function (err, data) {
+      console.log(err, data);
+      fs.unlink(file.path, (err) => { console.log(err) })
+    });
+  
+}
+
+/**
+ * 从请求体重解析出文件
+ * 并将文件缓存到 /tmp 目录下
+ * @param {HTTP INCOMING MESSAGE} req
+ * @return {Promise}
+ */
+function resolveUploadFileFromRequest(request) {
+  const maxSize = config.cos.maxSize ? config.cos.maxSize : 10
 
   // 初始化 multiparty
   const form = new multiparty.Form({
@@ -50,48 +82,12 @@ const upload = (req) => {
     uploadDir: '/tmp'
   })
 
-  // 从 req 读取文件
-  form.parse(req, (err, fields = [], files = []) => {
-    try{
-    console.log('files is', files)
-    var file = files.file[0]
-    var audioId = fields.audioId[0]
-    console.log('audioId is', audioId)
-
-    // 生成上传传参数
-    var srcpath = file.path
-    var uploadFolder = config.cos.uploadFolder ? config.cos.uploadFolder + '/' : ''
-    // var params = {
-    //   Bucket: config.cos.fileBucket,
-    //   Region: config.cos.region,
-    //   //Key: `${uploadFolder}${imgKey}`,
-    //   Key: `${uploadFolder}${audioId}.${resultType.ext}`,
-    //   Body: fs.createReadStream(srcpath),
-    //   ContentLength: imageFile.size
-    // }
-
-    cos.sliceUploadFile({
-      Bucket: config.cos.fileBucket,
-      Region: config.cos.region,
-      Key: `${uploadFolder}${audioId}.mp3`,
-      FilePath: file.path
-    }, function (err, data) {
-      console.log(err, data);
-      //fs.unlink(file.path, (err) => { console.log(err) })
-    });
-    }catch(e){
-      console.log('upload fail',e)
-    }
-
-    // // 上传图片
-    // cos.putObject(params, (err, data) => {
-    //   console.log(err)
-    //   //fs.unlink(srcpath, (err) => { console.log(err) })
-    // })
-
-})
-
-    
+  return new Promise((resolve, reject) => {
+    // 从 req 读取文件
+    form.parse(request, (err, fields = {}, files = {}) => {
+      err ? reject(err) : resolve({ fields, files })
+    })
+  })
 }
 
 module.exports = { upload }

@@ -16,11 +16,10 @@ const innerAudioContext = wx.createInnerAudioContext();
 
 const options = {
   duration: 600000,
-  sampleRate: 16000,
+  sampleRate: 44100,
   numberOfChannels: 1,
-  encodeBitRate: 24000,
-  format: 'mp3',
-  frameSize: 50
+  encodeBitRate: 192000,
+  format: 'mp3'
 }
 
 var timeDuration = 0 //演讲时间
@@ -637,7 +636,7 @@ Page({
       url: `${config.service.host}/weapp/impromptu.impromptuAudio`,
       filePath: tempFilePath,
       name: 'file',
-      formData: { audioId: audioId, },
+      formData: { audioId: audioId},
       success: function (res) {
         console.log(res)
       },
