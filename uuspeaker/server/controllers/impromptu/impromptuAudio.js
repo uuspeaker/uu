@@ -5,8 +5,8 @@ const userInfo = require('../../common/userInfo')
 const multiparty = require('multiparty')
 
 module.exports = async ctx => {
-  var audioId = uuid.v1()
-  const data = uploadAudio.upload(ctx.req)
+
+  const data = await uploadAudio.upload(ctx.req)
 
   ctx.state.data = data
 }

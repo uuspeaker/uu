@@ -18,6 +18,17 @@ var format = (date, fmt) => {
   return date.format(fmt)
 }
 
+var getSimpleFormatDate = function (noticeDate) {
+  var now =  new Date()
+  var targetDate = new Date(noticeDate)
+  if(now.getFullYear() == targetDate.getFullYear()){
+    return this.format(targetDate, 'M月d日 hh:mm')
+  }else{
+    return this.format(targetDate, 'yyyy年M月d日 hh:mm')
+  }
+
+}
+
 var getTimeNotice = function (noticeDate) {
   var now = new Date()
   var targetDate = new Date(noticeDate)
@@ -124,4 +135,21 @@ var getWeek = function(dateString) {
   return "星期" + "日一二三四五六".charAt(date.getDay());
 }
 
-module.exports = { format, getTimeNotice, getTimeNoticeFuture, getTimeNoticeFuture2, getWeek, getTimeStatus}
+var getFormatDuration = function (timeDuration) {
+  var hour = Math.floor(timeDuration / (60 * 60))
+  var minute = Math.floor(timeDuration / 60)
+  var second = Math.floor(timeDuration % 60)
+  var durationStr = ''
+  if (hour != 0){
+    durationStr = durationStr + hour + '小时'
+  }
+  if (minute != 0) {
+    durationStr = durationStr + minute + '分'
+  }
+  if (second != 0) {
+    durationStr = durationStr + second + '秒'
+  }
+  return '（' + durationStr + '）'
+}
+
+module.exports = { format, getTimeNotice, getTimeNoticeFuture, getTimeNoticeFuture2, getWeek, getTimeStatus, getSimpleFormatDate, getFormatDuration}

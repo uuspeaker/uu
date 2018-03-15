@@ -24,22 +24,10 @@
   <view class="top">
    
     <view class="weui-flex speechArea">
-      <view class="weui-flex__item itemClass" >
-        <image class="my-pic" src="{{userInfo.avatarUrl}}"/>
-        <block wx:if="{{isRecord == 0}}">
-        <image bindtap="startRecord" class="audio" src="../../../images/userAudio/record.png" />
-        </block>
-        <block wx:if="{{isRecord == 1}}">
-        <image bindtap="stopRecord" class="audio" src="../../../images/userAudio/stop.png" />
-        </block>
-      </view>
-      <view class="weui-flex__item itemClass">
+      <view class="weui-flex__item itemClass" bindtap="changeMute">
+        <image class="my-pic {{hostUserPicMode}}" src="{{userInfo.avatarUrl}}"/>
         
       </view>
-
-      </view>
-
-      <view class="weui-flex ">
       <block wx:for="{{members}}" wx:key="userID">
         <view class="weui-flex__item itemClass">
           <view>
@@ -51,8 +39,6 @@
       </view>
     
   </view>
-
-
 
   <!--聊天记录展示-->
   <template name="scoreDetailTemplate">
@@ -97,22 +83,49 @@
 
 </view>
 
-<form bindsubmit=''>
 
-  <view class="weui-flex  commentArea">
+
+
+<view class="bottom">
+<!--计时显示区域-->
+<block wx:if="{{showSpeechTime == 1}}">
+<view class="weui-flex timeArea">
+
+<view class="weui-flex__item speechButton">
+<view class='timeButton'>
+  <block wx:if="{{isStop == 0}}">
+  <view bindtap='stopTime'>结 束</view>
+  </block>
+  <block wx:if="{{isStop == 1}}">
+  <view bindtap='startTime'>开 始</view>
+  </block>
+  </view>
+</view>
+
+<view class="weui-flex__item timeCard" style='{{timeNoticeBackground}}'>
+  <view>{{minute}}:{{second}}</view>
+</view>
+</view>
+</block>
+<!--聊天输入框区域-->
+<form bindsubmit=''>
+  <view class="weui-flex commentArea">
   
     <view class="weui-flex__item">
-      <image class='mic-pic' src='../../Resources/{{config.muted ? "mic-dis" : "mic"}}.png' bindtap="changeMute"></image>
+      <image class='mic-pic' src='../../../images/room/time.png' bindtap="showSpeechTime"></image>
     </view>
     <view class="weui-flex__item">
       <textarea class='commentInput' name='comment' value='{{comment}}' fixed='true' cursor-spacing='50'  adjust-position='false' bindfocus='toBottom'  bindconfirm="saveComment"></textarea>
     </view>
-    <view class=" commentBotton" >
-      
+    <view class=" commentBotton" bindtap='showTimeArea'>
+    
     </view>
   </view>
-
 </form>
+</view>
 <modal class="modal" hidden="{{!showSpeechTitle}}" title="保存演讲录音" confirm-text="保存" cancel-text="取消" bindcancel="cancelRecord" bindconfirm="saveRecord">
-  <input  placeholder="请输入演讲标题" bindinput="setSpeechTitle" value='{{speechTitle}}' > </input>
+<block wx:if="{{percent != 0}}">
+                <progress percent="{{percent}}" />
+</block>
+  <input  placeholder="请输入演讲标题" bindconfirm="setSpeechTitle" value='{{speechTitle}}' > </input>
 </modal>

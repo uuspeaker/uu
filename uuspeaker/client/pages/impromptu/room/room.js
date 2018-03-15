@@ -23,6 +23,9 @@ const options = {
   frameSize: 50
 }
 
+var timeDuration = 0 //演讲时间
+var timeLimit = 120  //演讲总时间
+
 Page({
   /**
    * 页面的初始数据
@@ -34,8 +37,19 @@ Page({
     roomname: '',       // 房间名称
     username: '',       // 用户名称
     isRecord: 0,
+    hostUserPicMode: 1,    // 静音样式
+
     showSpeechTitle: false, //标题输入框
+    showStartSpeech: true,
     speechTitle: '',
+    percent: 0,
+
+    showSpeechTime: 0,
+    minute: '00',
+    second: '00',
+    isStop: 1,
+    timeNoticeBackground: '',
+
     config: {           //cameraview对应的配置项
       //aspect: '3:4',     //设置画面比例，取值为'3:4'或者'9:16'
       minBitrate: 200,   //设置码率范围为[minBitrate,maxBitrate]，四人建议设置为200~400
@@ -310,9 +324,17 @@ Page({
 
   changeMute: function () {
     this.data.config.muted = !this.data.config.muted;
-    this.setData({
-      config: this.data.config
-    });
+    if (this.data.config.muted){
+      this.setData({
+        config: this.data.config,
+        hostUserPicMode: 'user-pic-silent'
+      });
+    }else{
+      this.setData({
+        config: this.data.config,
+        hostUserPicMode: 'user-pic-speak'
+      });
+    }
   },
   showLog: function () {
     this.data.config.debug = !this.data.config.debug;
@@ -595,14 +617,11 @@ Page({
     this.setData({
       speechTitle: e.detail.value
     })
+    this.saveRecord()
 
   },
 
   saveRecord: function () {
-    this.setData({
-      showSpeechTitle: false,
-    })
-    
     console.log('save recorder')
     var now = new Date()
     var audioId = uuid.v1()
@@ -620,8 +639,6 @@ Page({
       name: 'file',
       formData: { audioId: audioId, },
       success: function (res) {
-        that.showSuccess('录音文件上传中')
-        res = JSON.parse(res.data)
         console.log(res)
       },
 
@@ -631,7 +648,16 @@ Page({
     })
 
     uploadTask.onProgressUpdate((res) => {
-      this.showSuccess('' + res.progress + '%')
+      this.setData({
+        percent: res.progress
+      })
+      if (res.progress == 100){
+        this.setData({
+          showSpeechTitle: false,
+          percent: 0
+        })
+        that.showSuccess('录音文件上传成功')
+      }
       console.log('上传进度', res.progress)
       console.log('已经上传的数据长度', res.totalBytesSent)
       console.log('预期需要上传的数据总长度', res.totalBytesExpectedToSend)
@@ -639,10 +665,15 @@ Page({
   },
 
   saveAudioData: function (audioId) {
+    var audioName = this.data.speechTitle
+    if (audioName == ''){
+      var now = new Date()
+      audioName = dateFormat.format(now, 'yyyy-MM-dd hh:mm')
+    }
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.userAudio`,
       login: true,
-      data: { roomId: this.data.roomid, audioName: this.data.speechTitle, userId: this.data.userId, audioId: audioId, },
+      data: { roomId: this.data.roomid, audioName: audioName, userId: this.data.userId, audioId: audioId, timeDuration: timeDuration},
       method: 'post',
       success(result) {
         console.log(result)
@@ -664,6 +695,65 @@ Page({
       console.log(res.errMsg)
       console.log(res.errCode)
     })
+  },
+
+  showSpeechTime: function(){
+    if(this.data.showSpeechTime == 1){
+      this.setData({
+        showSpeechTime: 0
+      })
+    }else{
+      this.setData({
+        showSpeechTime: 1
+      })
+    }
+  },
+
+  stopTime: function () {
+    this.stopRecord()
+    this.setData({
+      isStop: 1
+    })
+  },
+
+  startTime: function () {
+    this.startRecord()
+    this.setData({
+      isStop: 0
+    })
+    timeDuration = 0
+    this.recordTime()
+  },
+
+  recordTime: function () {
+    if (this.data.isStop == 1) return
+    var timeNoticeBackground = ''
+    if (timeDuration >= timeLimit) {
+      timeNoticeBackground = 'background-color:red'
+    } else if (timeDuration >= timeLimit - 30) {
+      timeNoticeBackground = 'background-color:yellow'
+    } else if (timeDuration >= timeLimit - 60) {
+      timeNoticeBackground = 'background-color:green'
+    } else {
+
+    }
+    var minute = this.formatTime(timeDuration / 60)
+    var second = this.formatTime(timeDuration % 60)
+    this.setData({
+      minute: minute,
+      second: second,
+      timeNoticeBackground: timeNoticeBackground
+    })
+    timeDuration++
+    setTimeout(this.recordTime, 1000)
+  },
+
+  formatTime: function (time) {
+    var formatedTime = Math.floor(time)
+    if (formatedTime < 10) {
+      formatedTime = '0' + formatedTime
+    }
+    return formatedTime
   },
 
 

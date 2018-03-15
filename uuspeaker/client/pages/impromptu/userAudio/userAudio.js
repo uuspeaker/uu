@@ -42,7 +42,9 @@ Page({
   formatDateAndStatus: function (src) {
     var data = this.data.audios
     for (var i = 0; i < data.length; i++) {
-      data[i].createDateStr = dateFormat.format(new Date(data[i].create_date), 'yyyy年M月d日 hh:mm')
+      var now = new Date()
+      data[i].createDateStr = dateFormat.getSimpleFormatDate(data[i].create_date)
+      data[i].timeDurationStr = dateFormat.getFormatDuration(data[i].time_duration)
       if(data[i].src == src){
         data[i].isPlay = 1
       }else{

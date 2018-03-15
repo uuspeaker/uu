@@ -20,25 +20,7 @@ const regionMap = {
   'eu-frankfurt': 'ger'
 }
 
-const cos = new CosSdk({
-  AppId: config.qcloudAppId,
-  SecretId: config.qcloudSecretId,
-  SecretKey: config.qcloudSecretKey,
-  Domain: `http://${config.cos.fileBucket}-${config.qcloudAppId}.cos.${config.cos.region}.myqcloud.com/`
-})
 
-const maxSize = config.cos.maxSize ? config.cos.maxSize : 10
-const fieldName = config.cos.fieldName ? config.cos.fieldName : 'file'
-
-debug('Cos sdk init finished')
-
-// 初始化 multiparty
-const form = new multiparty.Form({
-  encoding: 'utf8',
-  maxFilesSize: maxSize * 1024 * 1024,
-  autoFiles: true,
-  uploadDir: '/tmp'
-})
 
 /**
  * 对象上传 API
@@ -48,6 +30,25 @@ const form = new multiparty.Form({
 
 // 初始化 sdk
 const upload = (req) => {
+  const cos = new CosSdk({
+    AppId: config.qcloudAppId,
+    SecretId: config.qcloudSecretId,
+    SecretKey: config.qcloudSecretKey,
+    Domain: `http://${config.cos.fileBucket}-${config.qcloudAppId}.cos.${config.cos.region}.myqcloud.com/`
+  })
+
+  const maxSize = config.cos.maxSize ? config.cos.maxSize : 10
+  const fieldName = config.cos.fieldName ? config.cos.fieldName : 'file'
+
+  debug('Cos sdk init finished')
+
+  // 初始化 multiparty
+  const form = new multiparty.Form({
+    encoding: 'utf8',
+    maxFilesSize: maxSize * 1024 * 1024,
+    autoFiles: true,
+    uploadDir: '/tmp'
+  })
 
   // 从 req 读取文件
   form.parse(req, (err, fields = [], files = []) => {

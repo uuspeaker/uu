@@ -236,6 +236,8 @@ Page({
     })
   },
 
+  preventTouchMove: function(){},
+
   onShow: function (e) {
     queryFlag = 0
     this.queryStudyReport()

@@ -12,7 +12,7 @@
         </view>
       </view>
       <view >
-        <view class=" date">  {{createDateStr}}</view>
+        <view class=" date">  {{createDateStr}} {{timeDurationStr}}</view>
       </view>
       
     </view>

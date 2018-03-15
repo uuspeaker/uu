@@ -162,16 +162,22 @@ live-player {
   height: 40px;
   padding-right: 15px;
 }
-.commentArea {
-  background-color: gainsboro;
-  margin-top: 15px;
-  padding: 8px;
-  border-radius: 10px 10px 0px 0px; 
+.bottom{
   position: fixed;
   bottom: 0px;
+}
+.timeArea {
+  background-color: white;
+  padding: 8px;
+  border-radius: 10px 10px 0px 0px; 
   width: 96%
 }
-
+.commentArea {
+  background-color: gainsboro;
+  padding: 8px;
+  border-radius: 10px 10px 0px 0px; 
+  width: 96%
+}
 .commentInput {
   border-radius: 5px;
   background-color: white;
@@ -187,6 +193,31 @@ live-player {
 
 .button{
   font-size: 15px;
+}
+
+.timeNotice{
+  background-color: greenyellow;
+  background-blend-mode: tr
+}
+startSpeech{
+  font-weight: bold;
+  font-size: 21px;
+}
+.timeCard{
+  border-radius: 5px 5px 5px 5px;
+  box-shadow: 0px 0px 5px 1px gainsboro;
+  font-size: 35px;
+  font-weight: bold;
+  text-align: center;
+  margin: 5px;
+}
+.timeButton{
+  border-radius: 5px 5px 5px 5px;
+  box-shadow: 0px 0px 5px 1px gainsboro;
+  font-size: 35px;
+  font-weight: bold;
+  text-align: center;
+  margin: 5px;
 }
 
 
