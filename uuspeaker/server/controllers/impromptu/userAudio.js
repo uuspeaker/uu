@@ -10,13 +10,15 @@ module.exports = {
     var roomId = ctx.request.body.roomId
     var audioName = ctx.request.body.audioName
     var timeDuration = ctx.request.body.timeDuration
+    var audioText = ctx.request.body.audioText
 
     await mysql('impromptu_audio').insert({
       audio_id: audioId,
       audio_name: audioName,
       user_id: userId,
       room_id: roomId,
-      time_duration: timeDuration
+      time_duration: timeDuration,
+      audio_text: audioText
     })
   },
 

@@ -89,6 +89,9 @@
 <view class="bottom">
 <!--计时显示区域-->
 <block wx:if="{{showSpeechTime == 1}}">
+<block wx:if="{{percent != 0}}">
+   <progress percent="{{percent}}" />
+</block>
 <view class="weui-flex timeArea">
 
 <view class="weui-flex__item speechButton">
@@ -112,7 +115,7 @@
   <view class="weui-flex commentArea">
   
     <view class="weui-flex__item">
-      <image class='mic-pic' src='../../../images/room/time.png' bindtap="showSpeechTime"></image>
+      <image class='time-pic' src='../../../images/room/time.png' bindtap="showSpeechTime"></image>
     </view>
     <view class="weui-flex__item">
       <textarea class='commentInput' name='comment' value='{{comment}}' fixed='true' cursor-spacing='50'  adjust-position='false' bindfocus='toBottom'  bindconfirm="saveComment"></textarea>
@@ -124,8 +127,6 @@
 </form>
 </view>
 <modal class="modal" hidden="{{!showSpeechTitle}}" title="保存演讲录音" confirm-text="保存" cancel-text="取消" bindcancel="cancelRecord" bindconfirm="saveRecord">
-<block wx:if="{{percent != 0}}">
-                <progress percent="{{percent}}" />
-</block>
+
   <input  placeholder="请输入演讲标题" bindconfirm="setSpeechTitle" value='{{speechTitle}}' > </input>
 </modal>

@@ -108,7 +108,7 @@ router.get('/impromptu.impromptuMeeting', controllers.impromptu.impromptuMeeting
 router.post('/impromptu.impromptuMeeting', controllers.impromptu.impromptuMeeting.post)
 router.delete('/impromptu.impromptuMeeting', controllers.impromptu.impromptuMeeting.del)
 //即兴会议音频上传
-router.post('/impromptu.impromptuAudio', controllers.impromptu.impromptuAudio)
+router.post('/impromptu.impromptuAudio', controllers.impromptu.impromptuAudio.post)
 
 //即兴会议音频管理
 router.get('/impromptu.userAudio', controllers.impromptu.userAudio.get)

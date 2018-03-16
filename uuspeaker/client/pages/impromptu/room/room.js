@@ -16,9 +16,9 @@ const innerAudioContext = wx.createInnerAudioContext();
 
 const options = {
   duration: 600000,
-  sampleRate: 44100,
+  sampleRate: 24000,
   numberOfChannels: 1,
-  encodeBitRate: 192000,
+  encodeBitRate: 96000,
   format: 'mp3'
 }
 
@@ -605,7 +605,7 @@ Page({
   },
 
   //点击取消隐藏评论框
-  cancelRecord: function (e) {
+  cancelRecord: function () {
     this.setData({
       showSpeechTitle: false,
       speechTitle: ''
@@ -622,23 +622,38 @@ Page({
 
   saveRecord: function () {
     console.log('save recorder')
+    this.cancelRecord()
     var now = new Date()
     var audioId = uuid.v1()
     
     //this.saveAudio(audioId)
     setTimeout(this.saveAudio,500,audioId)
-    this.saveAudioData(audioId) 
+    //this.saveAudioData(audioId) 
   },
 
   saveAudio: function (audioId){
     var that = this
+    var audioName = this.data.speechTitle
+    if (audioName == '') {
+      var now = new Date()
+      audioName = dateFormat.format(now, 'yyyy-MM-dd hh:mm')
+    }
     const uploadTask = wx.uploadFile({
       url: `${config.service.host}/weapp/impromptu.impromptuAudio`,
       filePath: tempFilePath,
       name: 'file',
-      formData: { audioId: audioId},
+      formData: { roomId: this.data.roomid, audioName: audioName, userId: this.data.userId, audioId: audioId, timeDuration: timeDuration },
       success: function (res) {
-        console.log(res)
+        console.log('audioArr',res)
+        var audioArr = JSON.parse(res.data);
+        const audioText = audioArr.data.reduce((pre, cur, idx) => {
+          if (cur.code == 0) {
+            pre += cur.text;
+          }
+          return pre
+        }, '')
+        console.log('audioText', audioText)
+        that.saveAudioData(audioId, audioText) 
       },
 
       fail: function (e) {
@@ -655,7 +670,7 @@ Page({
           showSpeechTitle: false,
           percent: 0
         })
-        that.showSuccess('录音文件上传成功')
+        that.showSuccess('录音已保存')
       }
       console.log('上传进度', res.progress)
       console.log('已经上传的数据长度', res.totalBytesSent)
@@ -663,7 +678,7 @@ Page({
     })
   },
 
-  saveAudioData: function (audioId) {
+  saveAudioData: function (audioId, audioText) {
     var audioName = this.data.speechTitle
     if (audioName == ''){
       var now = new Date()
@@ -672,7 +687,7 @@ Page({
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.userAudio`,
       login: true,
-      data: { roomId: this.data.roomid, audioName: audioName, userId: this.data.userId, audioId: audioId, timeDuration: timeDuration},
+      data: { roomId: this.data.roomid, audioName: audioName, userId: this.data.userId, audioId: audioId, timeDuration: timeDuration, audioText: audioText},
       method: 'post',
       success(result) {
         console.log(result)

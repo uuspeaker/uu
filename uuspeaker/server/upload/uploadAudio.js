@@ -29,7 +29,7 @@ const regionMap = {
  */
 
 // 初始化 sdk
-const upload = async (req) => {
+const upload = async (fields, files) => {
   const cos = new CosSdk({
     AppId: config.qcloudAppId,
     SecretId: config.qcloudSecretId,
@@ -40,7 +40,7 @@ const upload = async (req) => {
   debug('Cos sdk init finished')
 
   // 处理文件上传
-  const { fields, files } = await resolveUploadFileFromRequest(req)
+  //const { fields, files } = await resolveUploadFileFromRequest(req)
 
   // 从 req 读取文件
 
@@ -60,7 +60,7 @@ const upload = async (req) => {
       FilePath: file.path
     }, function (err, data) {
       console.log(err, data);
-      fs.unlink(file.path, (err) => { console.log(err) })
+      //fs.unlink(file.path, (err) => { console.log(err) })
     });
   
 }
