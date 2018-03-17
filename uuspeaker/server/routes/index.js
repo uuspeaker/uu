@@ -116,6 +116,13 @@ router.post('/impromptu.userAudio', controllers.impromptu.userAudio.post)
 router.put('/impromptu.userAudio', controllers.impromptu.userAudio.put)
 router.delete('/impromptu.userAudio', controllers.impromptu.userAudio.del)
 
+//即兴会议音频管理
+router.get('/impromptu.myAudio', controllers.impromptu.myAudio.get)
+router.post('/impromptu.myAudio', controllers.impromptu.myAudio.post)
+router.put('/impromptu.myAudio', controllers.impromptu.myAudio.put)
+router.delete('/impromptu.myAudio', controllers.impromptu.myAudio.del)
+
+
 //即兴会议发起投票问卷
 router.get('/impromptu.impromptuSurvey', controllers.impromptu.impromptuSurvey.get)
 router.put('/impromptu.impromptuSurvey', controllers.impromptu.impromptuSurvey.put)
@@ -172,5 +179,8 @@ router.get(utilsPrefix + '/get_test_pushurl', utils.get_test_pushurl)
 // 直播接口 - 获取播放地址
 router.get(utilsPrefix + '/get_test_rtmpaccurl', utils.get_test_rtmpaccurl)
 router.post(utilsPrefix + '/get_login_info', utils.get_login_info)
+
+// 语音识别
+router.post('/recognize', controllers.recognize)
 
 module.exports = router

@@ -1,7 +1,5 @@
 const debug = require('debug')('qcloud-sdk[CosUploader]')
 const multiparty = require('multiparty')
-const readChunk = require('read-chunk')
-const shortid = require('shortid')
 const fs = require('fs')
 const fileType = require('file-type')
 const CosSdk = require('cos-nodejs-sdk-v5')
@@ -29,7 +27,7 @@ const regionMap = {
  */
 
 // 初始化 sdk
-const upload = async (fields, files) => {
+const upload = async (ctx) => {
   const cos = new CosSdk({
     AppId: config.qcloudAppId,
     SecretId: config.qcloudSecretId,
@@ -40,7 +38,7 @@ const upload = async (fields, files) => {
   debug('Cos sdk init finished')
 
   // 处理文件上传
-  //const { fields, files } = await resolveUploadFileFromRequest(req)
+  const { fields, files } = await resolveUploadFileFromRequest(ctx.req)
 
   // 从 req 读取文件
 
@@ -60,7 +58,7 @@ const upload = async (fields, files) => {
       FilePath: file.path
     }, function (err, data) {
       console.log(err, data);
-      //fs.unlink(file.path, (err) => { console.log(err) })
+      fs.unlink(file.path, (err) => { console.log(err) })
     });
   
 }

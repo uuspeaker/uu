@@ -1,0 +1,26 @@
+<form bindsubmit="modifyAudio">
+  <view class="weui-cells__title">请修改演讲稿</view>
+  <view class="weui-cells weui-cells_after-title">
+
+    <view class="weui-cell weui-cell_input weui-cell_vcode">
+      <view class="weui-cell__hd">
+        <view class="weui-label">演讲题目：</view>
+      </view>
+      <view class="weui-cell__bd">
+        <input name="audioName" class="weui-input" placeholder='' value='{{audioName}}' />
+      </view>
+    </view>
+  </view>
+
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell">
+      <view class="weui-cell__bd">
+        <textarea name="audioText" placeholder-class="textarea" class="weui-textarea" value='{{audioText}}' placeholder="" style="height: 20em" maxlength='2000' auto-focus/>
+        <view class="weui-textarea-counter">0/2000</view>
+      </view>
+    </view>
+  </view>
+  <button class="weui-btn" type="primary" data-action='post' formType="submit">保存</button>
+  <button class="weui-btn" bindtap="deleteAudio">删除</button>
+
+</form>

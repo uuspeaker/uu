@@ -16,9 +16,9 @@ const innerAudioContext = wx.createInnerAudioContext();
 
 const options = {
   duration: 600000,
-  sampleRate: 24000,
+  sampleRate: 44100,
   numberOfChannels: 1,
-  encodeBitRate: 96000,
+  encodeBitRate: 192000,
   format: 'mp3'
 }
 
@@ -594,7 +594,8 @@ Page({
     this.setData({
       isRecord: 0
     })
-    this.showSpeechTitleView()
+    //this.showSpeechTitleView()
+    this.saveRecord()
   },
 
   //显示标题输入框
@@ -644,15 +645,13 @@ Page({
       name: 'file',
       formData: { roomId: this.data.roomid, audioName: audioName, userId: this.data.userId, audioId: audioId, timeDuration: timeDuration },
       success: function (res) {
-        console.log('audioArr',res)
-        var audioArr = JSON.parse(res.data);
-        const audioText = audioArr.data.reduce((pre, cur, idx) => {
-          if (cur.code == 0) {
-            pre += cur.text;
-          }
-          return pre
-        }, '')
-        console.log('audioText', audioText)
+        var audioText =''
+        // console.log('audioArr',res)
+        // var audioArr = JSON.parse(res.data);
+        // for (var i = 0; i < audioArr.length; i++){
+        //   audioText = audioText + audioArr[i].text
+        // }
+        // console.log('audioText', audioText)
         that.saveAudioData(audioId, audioText) 
       },
 

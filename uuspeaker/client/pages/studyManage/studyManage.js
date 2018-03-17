@@ -86,6 +86,12 @@ Page({
     })
   },
 
+  toSpeechAudio: function () {
+    wx.navigateTo({
+      url: '../impromptu/myAudio/myAudio',
+    })
+  },
+
   toMyTarget: function(){
     wx.navigateTo({
       url: '../target/myTargetDetail/myTargetDetail',

@@ -24,20 +24,12 @@ module.exports = {
 
   put: async ctx => {
     var audioId = ctx.request.body.audioId
-    var viewType = ctx.request.body.viewType
-    if (viewType == 'view'){
-      var audioView = await mysql('impromptu_audio').select('view_amount').where({ audio_id: audioId })
-      await mysql('impromptu_audio').update({
-        view_amount: audioView[0].view_amount + 1
-      }).where({ audio_id: audioId })
-    }
-    if (viewType == 'like') {
-      var audioView = await mysql('impromptu_audio').select('like_amount').where({ audio_id: audioId })
-      await mysql('impromptu_audio').update({
-        like_amount: audioView[0].like_amount + 1
-      }).where({ audio_id: audioId })
-    }
-    
+    var audioName = ctx.request.body.audioName
+    var audioText = ctx.request.body.audioText
+    await mysql('impromptu_audio').update({
+      audio_name: audioName,
+      audio_text: audioText
+    }).where({ audio_id: audioId })
   },
 
   del: async ctx => {
@@ -48,18 +40,27 @@ module.exports = {
 
   get: async ctx => {
     var userId = await userInfo.getOpenId(ctx)
-    var roomId = ctx.query.roomId
+    var queryFlag = ctx.query.queryFlag
+    var firstAudioTime = ctx.query.firstAudioTime
+    var lastAudioTime = ctx.query.lastAudioTime
+    var limit = 10
+    var offset = 0
+    var audioData
 
-    var audioData = await mysql('impromptu_audio').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').select('impromptu_audio.*', 'cSessionInfo.user_info').orderBy('impromptu_audio.create_date', 'asc').where({ room_id: roomId })
+    if (queryFlag == 0) {
+      audioData = await mysql('impromptu_audio').where({ user_id: userId }).limit(limit).offset(offset).orderBy('impromptu_audio.create_date', 'desc')
+    }
+    if (queryFlag == 1) {
+      audioData = await mysql('impromptu_audio').where({ user_id: userId }).andWhere('impromptu_audio.create_date', '>', new Date(firstAudioTime)).orderBy('impromptu_audio.create_date', 'desc')
+    }
+    if (queryFlag == 2) {
+      audioData = await mysql('impromptu_audio').where({ user_id: userId }).limit(limit).offset(offset).andWhere('impromptu_audio.create_date', '<', new Date(lastAudioTime)).orderBy('impromptu_audio.create_date', 'desc')
+    }
     
+
     var uploadFolder = config.cos.uploadFolder ? config.cos.uploadFolder + '/' : ''
     for (var i = 0; i < audioData.length; i++) {
-      audioData[i].user_info = userInfo.getUserInfo(audioData[i].user_info)
-      audioData[i].isMine = 0
       audioData[i].src = `http://${config.cos.fileBucket}-${config.qcloudAppId}.cos.${config.cos.region}.myqcloud.com/${uploadFolder}${audioData[i].audio_id}.mp3`
-      if (userId == audioData[i].user_id) {
-        audioData[i].isMine = 1
-      }
     }
     ctx.state.data = audioData
   },

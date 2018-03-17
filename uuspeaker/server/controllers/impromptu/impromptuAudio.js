@@ -7,61 +7,30 @@ const multiparty = require('multiparty')
 const config = require('../../config')
 const fs = require('fs')
 
-module.exports = {
 
-  post: async ctx => {
-    const { fields, files } = await resolveUploadFileFromRequest(ctx.req)
-    var file = files.file[0]
+var post = async (ctx) => {
+    // const { fields, files } = await resolveUploadFileFromRequest(ctx.req)
     try {
       //保存音频文件
-      uploadAudio.upload(fields, files)
+       uploadAudio.upload(ctx)
       //将音频转化成文字
-      var audioArr = await audioToText(files)
-      ctx.state.data = audioArr
-      //将音频及文字保存到数据库
-      // var userId = fields.userId[0]
-      // var audioId = fields.audioId[0]
-      // var roomId = fields.roomId[0]
-      // var audioName = fields.audioName[0]
-      // var timeDuration = fields.timeDuration[0]
-
-      // var audioText = await voice.getAudioText(audioTextArr)
-      // console.log('audioText', audioText)
-      // for (var i = 0; i < audioTextArr.length; i++) {
-      //   audioText = audioText + audioTextArr[i].text
-      // }
-      // console.log('audioText', audioText)
-    //   if (audioText == undefined){
-    //     audioText = ''
-    //   } 
-    //   var data = mysql('impromptu_audio').insert({
-    //     audio_id: audioId,
-    //     audio_name: audioName,
-    //     user_id: userId,
-    //     room_id: roomId,
-    //     audio_text: audioText,
-    //     time_duration: timeDuration
-    //   })
-    //   ctx.state.data = audioText
+      // var audioArr = await audioToText(files)
+      // ctx.state.data = audioArr
     } catch (e) {
       console.log('imromptuAudio fail', e)
     } finally {
-      if (files.file[0]) {
-        fs.unlink(files.file[0].path, (err) => { console.log(err) })
-      }
+      // if (files.file[0]) {
+      //   fs.unlink(files.file[0].path, (err) => { console.log(err) })
+      // }
     }
-
-  },
-
-}
-
-/**
+  }
+  /**
  * 从请求体重解析出文件
  * 并将文件缓存到 /tmp 目录下
  * @param {HTTP INCOMING MESSAGE} req
  * @return {Promise}
  */
-function resolveUploadFileFromRequest(request) {
+var resolveUploadFileFromRequest = async (request) => {
   const maxSize = config.cos.maxSize ? config.cos.maxSize : 10
 
   // 初始化 multiparty
@@ -79,3 +48,7 @@ function resolveUploadFileFromRequest(request) {
     })
   })
 }
+
+
+
+    module.exports = { post }
