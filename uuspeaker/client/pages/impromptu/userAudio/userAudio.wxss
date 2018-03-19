@@ -40,7 +40,6 @@ padding-right: 10px;
 .like{
 width: 18px; 
 height: 18px; 
-
 }
 .user-pic{
 width: 50px; 
