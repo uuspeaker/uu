@@ -4,7 +4,7 @@ var util = require('../../../utils/util.js')
 var dateFormat = require('../../../common/dateFormat.js')
 
 const innerAudioContext = wx.createInnerAudioContext()
-
+var showTimes = 0
 
 Page({
 
@@ -13,7 +13,9 @@ Page({
    */
   data: {
     audios: {},
-    roomId: ''
+    roomId: '',
+    audioLikeUser: [],
+    currentLikeUser: []
   },
 
   //查询最新房间信息
@@ -39,6 +41,29 @@ Page({
     })
   },
 
+  //查询点赞用户信息
+  queryAudioLikeUser: function (e) {
+    //util.showBusy('请求中...')
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/impromptu.likeAudio`,
+      login: true,
+      method: 'get',
+      data: { audioId: e.currentTarget.dataset.audio_id },
+      success(result) {
+        console.log(result)
+        that.setData({
+          audioLikeUser: result.data.data
+        })
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
+
   formatDateAndStatus: function (src) {
     var data = this.data.audios
     for (var i = 0; i < data.length; i++) {
@@ -49,8 +74,24 @@ Page({
         data[i].isPlay = 1
       }else{
         data[i].isPlay = 0
+      }      
+    }
+    console.log(data)
+    this.setData({
+      audios: data
+    })
+  },
+
+  switchPlayStatus: function (src) {
+    var data = this.data.audios
+    for (var i = 0; i < data.length; i++) {
+      var now = new Date()
+      data[i].timeDurationStr = dateFormat.getFormatDuration(data[i].time_duration)
+      if (data[i].src == src) {
+        data[i].isPlay = 1
+      } else {
+        data[i].isPlay = 0
       }
-      
     }
     console.log(data)
     this.setData({
@@ -59,25 +100,8 @@ Page({
   },
 
   playAudio: function(e){
-    var src = e.currentTarget.dataset.src
-    innerAudioContext.autoplay = true
-    innerAudioContext.src = src
-    this.formatDateAndStatus(src)
-
-    var that = this
-    qcloud.request({
-      url: `${config.service.host}/weapp/impromptu.userAudio`,
-      login: true,
-      method: 'put',
-      data: { audioId: e.currentTarget.dataset.audio_id ,viewType: 'view'},
-      success(result) {
-        that.updateViewAmount(e.currentTarget.dataset.audio_id,'view')
-      },
-      fail(error) {
-        util.showModel('请求失败', error);
-        console.log('request fail', error);
-      }
-    })
+    this.queryAudioLikeUser(e)
+    this.updateViewAndLikeTimes(e)   
   },
 
   updateViewAmount: function (audioId, viewType){
@@ -93,6 +117,29 @@ Page({
     }
     this.setData({
       audios: data
+    })
+  },
+
+  updateViewAndLikeTimes:function(e){
+    var src = e.currentTarget.dataset.src
+    var audioId = e.currentTarget.dataset.audio_id
+    innerAudioContext.autoplay = true
+    innerAudioContext.src = src
+    this.formatDateAndStatus(src)
+
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/impromptu.userAudio`,
+      login: true,
+      method: 'put',
+      data: { audioId: audioId, viewType: 'view' },
+      success(result) {
+        that.updateViewAmount(audioId, 'view')
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
     })
   },
 
@@ -127,7 +174,8 @@ Page({
     this.queryImpromptuAudios()
 
     innerAudioContext.onPlay(() => {
-      console.log('开始播放')
+      console.log('开始播放', innerAudioContext.currentTime)
+      this.showLikeUser()
     })
     innerAudioContext.onError((res) => {
       console.log(res.errMsg)
@@ -135,10 +183,34 @@ Page({
     })
     innerAudioContext.onStop((res) => {
       this.formatDateAndStatus()
+      this.setData({
+        currentLikeUser: []
+      })
     })
     innerAudioContext.onEnded((res) => {
       this.formatDateAndStatus()
+      this.setData({
+        currentLikeUser: []
+      })
     })
+  },
+
+  showLikeUser: function(){
+    var likeUser = []
+    var length = this.data.audioLikeUser.length
+    for (var i = 0; i < innerAudioContext.duration; i++){
+      if (currentTime == this.data.audioLikeUser[i].like_moment){
+        likeUser = [].concat(likeUser,this.data.audioLikeUser[i])
+      }
+    }
+    this.setData({
+      currentLikeUser: likeUser
+    })
+    showTimes++
+    if (showTimes <= innerAudioContext.duration){
+      console.log('currentTime', Math.floor(innerAudioContext.currentTime))
+    }
+    
   },
 
 })

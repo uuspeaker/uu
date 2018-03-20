@@ -25,6 +25,8 @@ const options = {
 var timeDuration = 0 //演讲时间
 var timeLimit = 120  //演讲总时间
 
+var audioId = ''
+
 Page({
   /**
    * 页面的初始数据
@@ -625,14 +627,13 @@ Page({
     console.log('save recorder')
     this.cancelRecord()
     var now = new Date()
-    var audioId = uuid.v1()
     
     //this.saveAudio(audioId)
-    setTimeout(this.saveAudio,500,audioId)
+    setTimeout(this.saveAudio,500)
     //this.saveAudioData(audioId) 
   },
 
-  saveAudio: function (audioId){
+  saveAudio: function (){
     var that = this
     var audioName = this.data.speechTitle
     if (audioName == '') {
@@ -652,7 +653,7 @@ Page({
         //   audioText = audioText + audioArr[i].text
         // }
         // console.log('audioText', audioText)
-        that.saveAudioData(audioId, audioText) 
+        that.updateAudioData()
       },
 
       fail: function (e) {
@@ -677,7 +678,7 @@ Page({
     })
   },
 
-  saveAudioData: function (audioId, audioText) {
+  saveAudioData: function () {
     var audioName = this.data.speechTitle
     if (audioName == ''){
       var now = new Date()
@@ -686,8 +687,24 @@ Page({
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.userAudio`,
       login: true,
-      data: { roomId: this.data.roomid, audioName: audioName, userId: this.data.userId, audioId: audioId, timeDuration: timeDuration, audioText: audioText},
+      data: { roomId: this.data.roomid, audioName: audioName, userId: this.data.userId, audioId: audioId, timeDuration: timeDuration},
       method: 'post',
+      success(result) {
+        console.log(result)
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
+  updateAudioData: function () {
+    qcloud.request({
+      url: `${config.service.host}/weapp/impromptu.updateAudio`,
+      login: true,
+      data: { audioId: audioId, timeDuration: timeDuration},
+      method: 'put',
       success(result) {
         console.log(result)
       },
@@ -735,6 +752,8 @@ Page({
       isStop: 0
     })
     timeDuration = 0
+    audioId = uuid.v1()
+    this.saveAudioData()
     this.recordTime()
   },
 
@@ -767,6 +786,22 @@ Page({
       formatedTime = '0' + formatedTime
     }
     return formatedTime
+  },
+
+  likeAudio: function(){
+    qcloud.request({
+      url: `${config.service.host}/weapp/impromptu.likeAudio`,
+      login: true,
+      data: { roomId: this.data.roomid},
+      method: 'post',
+      success(result) {
+        console.log(result)
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
   },
 
 

@@ -11,29 +11,48 @@
         </view>
       </view>
       <view>
-        <view class=" date"> {{createDateStr}} {{timeDurationStr}} <image class="like" data-audio_id='{{audio_id}}' bindtap='likeIt' src="../../../images/userAudio/like.png" /> {{like_amount}}</view>
+        <view class=" date"> {{createDateStr}} {{timeDurationStr}}
+          <image class="like" data-audio_id='{{audio_id}}' bindtap='likeIt' src="../../../images/userAudio/like.png" /> {{like_amount}}</view>
       </view>
 
     </view>
-    <view><view>
-    <block wx:if="{{isPlay == 0}}">
-      <view class='right ' data-src='{{src}}' data-audio_id='{{audio_id}}' bindtap='playAudio'>
-        <image class="audio" src="../../../images/userAudio/start.png" />
+    <view>
+      <view>
+        <block wx:if="{{isPlay == 0}}">
+          <view class='right ' data-src='{{src}}' data-audio_id='{{audio_id}}' bindtap='playAudio'>
+            <image class="audio" src="../../../images/userAudio/start.png" />
+          </view>
+        </block>
+        <block wx:if="{{isPlay == 1}}">
+          <view class='right link' data-src='{{src}}' bindtap='stopAudio'>
+            <image class="audio" src="../../../images/userAudio/stop.png" />
+          </view>
+        </block>
       </view>
-    </block>
-    <block wx:if="{{isPlay == 1}}">
-      <view class='right link' data-src='{{src}}' bindtap='stopAudio'>
-        <image class="audio" src="../../../images/userAudio/stop.png" />
-      </view>
-    </block>
-    </view>
-    <view class='date'>{{view_amount}} 次</view>
+      <view class='date'>{{view_amount}} 次</view>
     </view>
   </view>
 </template>
 
+<template name="likeUserTemplate">
+<view class="weui-cell__bd">{{like_moment}}
+</view>
+  <view class="weui-cell__bd">
+    <view class="user-avatar">
+      <image class="user-like-pic" src="{{user_info.avatarUrl}}" />
+      <image class="like" data-audio_id='{{audio_id}}' src="../../../images/userAudio/like.png" />
+    </view>
+   </view> 
+</template>
+
+
 <view class="weui-cells weui-cells_after-title">
   <block wx:for="{{audios}}" wx:key="item">
     <template is="scoreDetailTemplate" data="{{...item}}" />
+  </block>
+</view>
+<view class="weui-cells weui-cells_after-title">
+  <block wx:for="{{currentLikeUser}}" wx:key="item">
+    <template is="likeUserTemplate" data="{{...item}}" />
   </block>
 </view>
