@@ -51,6 +51,8 @@ Page({
     isStop: 1,
     timeNoticeBackground: '',
 
+    audioType: 1, //演讲类型.1,演讲 2,点评
+
     config: {           //cameraview对应的配置项
       //aspect: '3:4',     //设置画面比例，取值为'3:4'或者'9:16'
       minBitrate: 200,   //设置码率范围为[minBitrate,maxBitrate]，四人建议设置为200~400
@@ -687,7 +689,7 @@ Page({
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.userAudio`,
       login: true,
-      data: { roomId: this.data.roomid, audioName: audioName, userId: this.data.userId, audioId: audioId, timeDuration: timeDuration},
+      data: { roomId: this.data.roomid, audioName: audioName, userId: this.data.userId, audioId: audioId, timeDuration: timeDuration, audioType: this.data.audioType},
       method: 'post',
       success(result) {
         console.log(result)
@@ -804,7 +806,17 @@ Page({
     })
   },
 
-
+  changeAudioType: function(){
+    if(this.data.audioType ==1){
+      this.setData({
+        audioType: 2
+      })
+    }else{
+      this.setData({
+        audioType: 1
+      })
+    }
+  },
 
   /**
    * 生命周期函数--监听页面隐藏

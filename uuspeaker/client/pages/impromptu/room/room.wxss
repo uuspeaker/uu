@@ -221,6 +221,11 @@ startSpeech{
   text-align: center;
   margin: 5px;
 }
+.audioType{
+  font-size: 25px;
+  text-align: center;
+  align-content: center;
+}
 
 
 

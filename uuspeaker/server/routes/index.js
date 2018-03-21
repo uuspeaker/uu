@@ -114,6 +114,8 @@ router.post('/impromptu.likeAudio', controllers.impromptu.likeAudio.post)
 router.get('/impromptu.likeAudio', controllers.impromptu.likeAudio.get)
 //即兴会议音频更新状态
 router.put('/impromptu.updateAudio', controllers.impromptu.updateAudio.put)
+//即兴会议音频详情
+router.get('/impromptu.audioDetail', controllers.impromptu.audioDetail.get)
 
 //即兴会议音频管理
 router.get('/impromptu.userAudio', controllers.impromptu.userAudio.get)

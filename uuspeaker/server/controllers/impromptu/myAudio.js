@@ -48,13 +48,13 @@ module.exports = {
     var audioData
 
     if (queryFlag == 0) {
-      audioData = await mysql('impromptu_audio').where({ user_id: userId }).limit(limit).offset(offset).orderBy('impromptu_audio.create_date', 'desc')
+      audioData = await mysql('impromptu_audio').where({ user_id: userId, audio_type: 1, audio_status: 2 }).limit(limit).offset(offset).orderBy('impromptu_audio.create_date', 'desc')
     }
     if (queryFlag == 1) {
-      audioData = await mysql('impromptu_audio').where({ user_id: userId }).andWhere('impromptu_audio.create_date', '>', new Date(firstAudioTime)).orderBy('impromptu_audio.create_date', 'desc')
+      audioData = await mysql('impromptu_audio').where({ user_id: userId, audio_type: 1, audio_status: 2 }).andWhere('impromptu_audio.create_date', '>', new Date(firstAudioTime)).orderBy('impromptu_audio.create_date', 'desc')
     }
     if (queryFlag == 2) {
-      audioData = await mysql('impromptu_audio').where({ user_id: userId }).limit(limit).offset(offset).andWhere('impromptu_audio.create_date', '<', new Date(lastAudioTime)).orderBy('impromptu_audio.create_date', 'desc')
+      audioData = await mysql('impromptu_audio').where({ user_id: userId, audio_type: 1, audio_status: 2 }).limit(limit).offset(offset).andWhere('impromptu_audio.create_date', '<', new Date(lastAudioTime)).orderBy('impromptu_audio.create_date', 'desc')
     }
     
 

@@ -36,15 +36,19 @@
 }
 
 .audio {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border-radius: 3px;
   padding-right: 10px;
 }
 
-.like {
-  width: 18px;
-  height: 18px;
+.like{
+width: 18px; 
+height: 18px; 
+padding-left: 10px;
+margin-top: 5px;
+position: relative;
+  top: 4px;
 }
 
 .user-pic {
@@ -58,13 +62,9 @@
   height: 30px;
   border-radius: 10px;
 }
-
-.date {
-  padding: 5px;
+.small-grey{
   font-size: 13px;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  word-break: break-all;
-  color: grey;
-  padding-right: 10px;
+  color:#888888;
+  font-weight: normal;
+  
 }

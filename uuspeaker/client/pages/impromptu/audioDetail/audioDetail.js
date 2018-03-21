@@ -12,25 +12,28 @@ Page({
    * 页面的初始数据
    */
   data: {
-    audios: {},
-    roomId: '',
-    audioLikeUser: [],
-    currentLikeUser: []
+    audioId: 'ef2316b0-2cbf-11e8-aaad-b14a08eb0823',
+    audioDataLike: [],
+    audios:[],
+    audioDataLike:[],
+    audioDataComment:[]
   },
 
   //查询最新房间信息
-  queryImpromptuAudios: function (e) {
+  queryAudioDetail: function (e) {
     //util.showBusy('请求中...')
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/impromptu.userAudio`,
+      url: `${config.service.host}/weapp/impromptu.audioDetail`,
       login: true,
       method: 'get',
-      data: { roomId: this.data.roomId},
+      data: { audioId: this.data.audioId },
       success(result) {
         console.log(result)
         that.setData({
-          audios: result.data.data
+          audios: result.data.data.audioData,
+          audioDataLike: result.data.data.audioDataLike,
+          audioDataComment: result.data.data.audioDataComment
         })
         that.formatDateAndStatus()
       },
@@ -41,45 +44,29 @@ Page({
     })
   },
 
-  //查询点赞用户信息
-  queryAudioLikeUser: function (e) {
-    //util.showBusy('请求中...')
-    var that = this
-    qcloud.request({
-      url: `${config.service.host}/weapp/impromptu.likeAudio`,
-      login: true,
-      method: 'get',
-      data: { audioId: e.currentTarget.dataset.audio_id },
-      success(result) {
-        console.log(result)
-        that.setData({
-          audioLikeUser: result.data.data
-        })
-      },
-      fail(error) {
-        util.showModel('请求失败', error);
-        console.log('request fail', error);
-      }
+  formatDateAndStatus: function (src) {
+    var audios = this.doFormatDateAndStatus(this.data.audios,src)
+    var audioDataLike = this.doFormatDateAndStatus(this.data.audioDataLike, src)
+    var audioDataComment = this.doFormatDateAndStatus(this.data.audioDataComment, src)
+    this.setData({
+      audios: audios,
+      audioDataLike: audioDataLike,
+      audioDataComment: audioDataComment
     })
   },
 
-
-  formatDateAndStatus: function (src) {
-    var data = this.data.audios
+  doFormatDateAndStatus: function(data,src){
     for (var i = 0; i < data.length; i++) {
       var now = new Date()
       data[i].createDateStr = dateFormat.getSimpleFormatDate(data[i].create_date)
       data[i].timeDurationStr = dateFormat.getFormatDuration(data[i].time_duration)
-      if(data[i].src == src){
+      if (data[i].src == src) {
         data[i].isPlay = 1
-      }else{
+      } else {
         data[i].isPlay = 0
-      }      
+      }
     }
-    console.log(data)
-    this.setData({
-      audios: data
-    })
+    return data
   },
 
   switchPlayStatus: function (src) {
@@ -99,12 +86,12 @@ Page({
     })
   },
 
-  playAudio: function(e){
-    this.queryAudioLikeUser(e)
-    this.updateViewAndLikeTimes(e)   
+  playAudio: function (e) {
+    
+    this.updateViewAndLikeTimes(e)
   },
 
-  updateViewAmount: function (audioId, viewType){
+  updateViewAmount: function (audioId, viewType) {
     var data = this.data.audios
     for (var i = 0; i < data.length; i++) {
       if (data[i].audio_id == audioId && viewType == 'view') {
@@ -120,7 +107,7 @@ Page({
     })
   },
 
-  updateViewAndLikeTimes:function(e){
+  updateViewAndLikeTimes: function (e) {
     var src = e.currentTarget.dataset.src
     var audioId = e.currentTarget.dataset.audio_id
     innerAudioContext.autoplay = true
@@ -143,7 +130,7 @@ Page({
     })
   },
 
-  likeIt: function(e){
+  likeIt: function (e) {
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.userAudio`,
@@ -151,7 +138,7 @@ Page({
       method: 'put',
       data: { audioId: e.currentTarget.dataset.audio_id, viewType: 'like' },
       success(result) {
-        that.updateViewAmount(e.currentTarget.dataset.audio_id,'like')
+        that.updateViewAmount(e.currentTarget.dataset.audio_id, 'like')
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -169,9 +156,9 @@ Page({
   onLoad: function (options) {
     console.log(options)
     this.setData({
-      roomId: options.roomId
+      audioId: options.audioId
     })
-    this.queryImpromptuAudios()
+    this.queryAudioDetail()
 
     innerAudioContext.onPlay(() => {
       console.log('开始播放', innerAudioContext.currentTime)
@@ -192,30 +179,6 @@ Page({
       this.setData({
         currentLikeUser: []
       })
-    })
-  },
-
-  showLikeUser: function(){
-    var likeUser = []
-    var length = this.data.audioLikeUser.length
-    for (var i = 0; i < innerAudioContext.duration; i++){
-      if (currentTime == this.data.audioLikeUser[i].like_moment){
-        likeUser = [].concat(likeUser,this.data.audioLikeUser[i])
-      }
-    }
-    this.setData({
-      currentLikeUser: likeUser
-    })
-    showTimes++
-    if (showTimes <= innerAudioContext.duration){
-      console.log('currentTime', Math.floor(innerAudioContext.currentTime))
-    }
-    
-  },
-
-  toAudioDetail: function(e){
-    wx.navigateTo({
-      url: '../audioDetail/audioDetail?audioId=' + e.currentTarget.dataset.audio_id,
     })
   },
 

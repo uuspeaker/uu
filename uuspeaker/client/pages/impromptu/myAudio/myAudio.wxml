@@ -4,8 +4,9 @@
     <view class="weui-cell__bd" >
     <view class="title" >
         <view style='padding-left:0px'>
-        <text>【{{audio_name}}】</text>
-        <text class='right'></text>
+        <text>{{user_info.nickName}} </text>
+          <text>{{audio_name}}</text>
+          <text class='right'></text>
         </view>
       </view>
       <view >

@@ -10,14 +10,41 @@ module.exports = {
     var roomId = ctx.request.body.roomId
     var audioName = ctx.request.body.audioName
     var timeDuration = ctx.request.body.timeDuration
+    var audioType = ctx.request.body.audioType
 
-    await mysql('impromptu_audio').insert({
-      audio_id: audioId,
-      audio_name: audioName,
-      user_id: userId,
-      room_id: roomId,
-      time_duration: timeDuration
-    })
+    //如果是演讲,直接保存
+    if (audioType == 1){
+      await mysql('impromptu_audio').insert({
+        audio_id: audioId,
+        audio_name: audioName,
+        user_id: userId,
+        room_id: roomId,
+        time_duration: timeDuration,
+        audio_type: audioType
+      })
+    }else{//如果是点评,则保存并更新演讲的点评次数
+      var audioData = await mysql('impromptu_audio').where({ room_id: roomId, audio_type: 1, audio_status: 2 }).orderBy('impromptu_audio.create_date', 'desc')
+
+      if (audioData.length > 0) {
+        //更新演讲的点评次数
+        await mysql('impromptu_audio').update({
+          comment_amount: audioData[0].comment_amount + 1
+        }).where({ audio_id: audioData[0].audio_id })
+
+        await mysql('impromptu_audio').insert({
+          audio_id: audioId,
+          audio_name: audioName,
+          user_id: userId,
+          room_id: roomId,
+          time_duration: timeDuration,
+          audio_type: audioType,
+          relate_audio: audioData[0].audio_id
+        })
+      }
+    }
+
+    
+    
   },
 
   put: async ctx => {
@@ -48,7 +75,7 @@ module.exports = {
     var userId = await userInfo.getOpenId(ctx)
     var roomId = ctx.query.roomId
 
-    var audioData = await mysql('impromptu_audio').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').select('impromptu_audio.*', 'cSessionInfo.user_info').orderBy('impromptu_audio.create_date', 'asc').where({ room_id: roomId })
+    var audioData = await mysql('impromptu_audio').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').select('impromptu_audio.*', 'cSessionInfo.user_info').orderBy('impromptu_audio.create_date', 'asc').where({ room_id: roomId, audio_type: 1, audio_status:2 })
     
     var uploadFolder = config.cos.uploadFolder ? config.cos.uploadFolder + '/' : ''
     for (var i = 0; i < audioData.length; i++) {

@@ -2,8 +2,9 @@
 {
   "pages": [
     "pages/impromptu/impromptuIndex/impromptuIndex",
-    "pages/studyIndex/studyIndex",
+    "pages/impromptu/audioDetail/audioDetail",
     "pages/audioTest/audioTest",
+    "pages/studyIndex/studyIndex",
     "pages/impromptu/myAudioManage/myAudioManage",
     "pages/impromptu/userAudio/userAudio",
     "pages/impromptu/myAudio/myAudio",
