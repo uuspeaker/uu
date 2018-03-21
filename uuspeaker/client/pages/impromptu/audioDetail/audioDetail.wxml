@@ -19,17 +19,17 @@
       </view>
     </view>
     <block wx:if="{{audios[0].isPlay == 0}}">
-      <view class='right ' data-src='{{src}}' bindtap='playAudio'>
+      <view class='right ' data-src='{{audios[0].src}}' data-audio_id='{{audios[0].audio_id}}' bindtap='playAudio'>
         <image class="audio" src="../../../images/userAudio/start.png" />
       </view>
     </block>
     <block wx:if="{{audios[0].isPlay == 1}}">
-      <view class='right link' data-src='{{src}}' bindtap='stopAudio'>
+      <view class='right link' data-src='{{audios[0].src}}' data-audio_id='{{audios[0].audio_id}}' bindtap='stopAudio'>
         <image class="audio" src="../../../images/userAudio/stop.png" />
       </view>
     </block>
   </view>
-
+<!--点赞展示页面-->
   <block wx:if="{{audioDataLike.length > 0}}">
     <view class="weui-cell">
       <image class="audio-pic" style="margin-right:10px" src="../../../images/studyIndex/like.png"></image>
@@ -38,7 +38,7 @@
       </block>
     </view>
   </block>
-
+<!--点评展示页面-->
   <block wx:if="{{audioDataComment.length > 0}}">
     <view class="weui-cell">
       <image class="audio-pic" style="margin-right:10px" src="../../../images/studyIndex/comment.png"></image>
@@ -61,13 +61,13 @@
       </view>
     </view>
       </block>
-       <block wx:if="{{audios[0].isPlay == 0}}">
-      <view class='right ' data-src='{{src}}' bindtap='playAudio'>
+       <block wx:if="{{item.isPlay == 0}}">
+      <view class='right ' data-src='{{item.src}}' data-audio_id='{{item.audio_id}}' bindtap='playAudio'>
         <image class="audio" src="../../../images/userAudio/start.png" />
       </view>
     </block>
-    <block wx:if="{{audios[0].isPlay == 1}}">
-      <view class='right link' data-src='{{src}}' bindtap='stopAudio'>
+    <block wx:if="{{item.isPlay == 1}}">
+      <view class='right link' data-src='{{item.src}}' data-audio_id='{{item.audio_id}}' bindtap='stopAudio'>
         <image class="audio" src="../../../images/userAudio/stop.png" />
       </view>
     </block>
