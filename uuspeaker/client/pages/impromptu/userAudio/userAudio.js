@@ -175,7 +175,6 @@ Page({
 
     innerAudioContext.onPlay(() => {
       console.log('开始播放', innerAudioContext.currentTime)
-      this.showLikeUser()
     })
     innerAudioContext.onError((res) => {
       console.log(res.errMsg)
@@ -193,24 +192,6 @@ Page({
         currentLikeUser: []
       })
     })
-  },
-
-  showLikeUser: function(){
-    var likeUser = []
-    var length = this.data.audioLikeUser.length
-    for (var i = 0; i < innerAudioContext.duration; i++){
-      if (currentTime == this.data.audioLikeUser[i].like_moment){
-        likeUser = [].concat(likeUser,this.data.audioLikeUser[i])
-      }
-    }
-    this.setData({
-      currentLikeUser: likeUser
-    })
-    showTimes++
-    if (showTimes <= innerAudioContext.duration){
-      console.log('currentTime', Math.floor(innerAudioContext.currentTime))
-    }
-    
   },
 
   toAudioDetail: function(e){

@@ -40,9 +40,10 @@
   </block>
 <!--点评展示页面-->
   <block wx:if="{{audioDataComment.length > 0}}">
-    <view class="weui-cell">
+   <block wx:for="{{audioDataComment}}" wx:key="item">
+    <view class="weui-cell" bindtap='toAudioDetail' data-audio_id='{{item.audio_id}}'>
       <image class="audio-pic" style="margin-right:10px" src="../../../images/studyIndex/comment.png"></image>
-      <block wx:for="{{audioDataComment}}" wx:key="item">
+     
         <view class="user-avatar">
           <image class="user-like-pic" src="{{item.user_info.avatarUrl}}"></image>
         </view>
@@ -60,8 +61,7 @@
         <view>{{item.createDateStr}} {{item.timeDurationStr}} </view>
       </view>
     </view>
-      </block>
-       <block wx:if="{{item.isPlay == 0}}">
+    <block wx:if="{{item.isPlay == 0}}">
       <view class='right ' data-src='{{item.src}}' data-audio_id='{{item.audio_id}}' bindtap='playAudio'>
         <image class="audio" src="../../../images/userAudio/start.png" />
       </view>
@@ -71,7 +71,10 @@
         <image class="audio" src="../../../images/userAudio/stop.png" />
       </view>
     </block>
+      
+       
     </view>
+    </block>
   </block>
   
 </view>
@@ -97,7 +100,7 @@
 </view>
 
 <view class="weui-flex bottom">
-  <view class="weui-flex__item note-btn" style="background: orange" bindtouchstart="voiceStartRecord" bindtouchend="voiceEndRecord">
+  <view class="weui-flex__item note-btn" style="background: orange" data-audio_id='{{audios[0].audio_id}}' bindtap="likeIt">
     <image class="audio-pic" src="../../../images/audioDetail/like.png"></image>
 
   </view>

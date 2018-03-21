@@ -162,7 +162,6 @@ Page({
 
     innerAudioContext.onPlay(() => {
       console.log('开始播放', innerAudioContext.currentTime)
-      this.showLikeUser()
     })
     innerAudioContext.onError((res) => {
       console.log(res.errMsg)
@@ -179,6 +178,12 @@ Page({
       this.setData({
         currentLikeUser: []
       })
+    })
+  },
+
+  toAudioDetail: function (e) {
+    wx.navigateTo({
+      url: '../audioDetail/audioDetail?audioId=' + e.currentTarget.dataset.audio_id,
     })
   },
 
