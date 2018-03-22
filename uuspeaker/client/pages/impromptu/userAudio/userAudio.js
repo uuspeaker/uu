@@ -171,7 +171,6 @@ Page({
     this.setData({
       roomId: options.roomId
     })
-    this.queryImpromptuAudios()
 
     innerAudioContext.onPlay(() => {
       console.log('开始播放', innerAudioContext.currentTime)
@@ -192,6 +191,10 @@ Page({
         currentLikeUser: []
       })
     })
+  },
+
+  onShow: function(){
+    this.queryImpromptuAudios()
   },
 
   toAudioDetail: function(e){
