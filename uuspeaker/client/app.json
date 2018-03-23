@@ -1,10 +1,12 @@
 
 {
   "pages": [
+    "pages/task/taskIndex/taskIndex",
+    "pages/task/makeTodayPlan/makeTodayPlan",
+    "pages/studyIndex/studyIndex",
     "pages/impromptu/impromptuIndex/impromptuIndex",
     "pages/impromptu/audioDetail/audioDetail",
     "pages/audioTest/audioTest",
-    "pages/studyIndex/studyIndex",
     "pages/impromptu/myAudioManage/myAudioManage",
     "pages/impromptu/userAudio/userAudio",
     "pages/impromptu/myAudio/myAudio",
@@ -24,8 +26,6 @@
     "pages/multiroom/roomname/roomname",
     "pages/cameraview/cameraview",
     "pages/prepared/preparedMeeting/preparedMeeting",
-    
-    
     
     "pages/impromptu/impromptuSurveyDetail/impromptuSurveyDetail",
     "pages/impromptu/impromptuVote/impromptuVote",

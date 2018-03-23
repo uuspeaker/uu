@@ -1,0 +1,106 @@
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell">
+    <view class="user-avatar">
+      <image class="user-pic" src="{{audios[0].user_info.avatarUrl}}" />
+    </view>
+    <view class="weui-cell__bd">
+      <view class="title">
+        <view style='padding-left:10px'>
+          <text>{{audios[0].user_info.nickName}} </text>
+          <text>{{audios[0].audio_name}}</text>
+          <text class='right'></text>
+        </view>
+      </view>
+      <view>
+
+      </view>
+      <view class="weui-flex__item date">
+        <view>{{audios[0].createDateStr}} {{audios[0].timeDurationStr}} </view>
+      </view>
+    </view>
+    <block wx:if="{{audios[0].isPlay == 0}}">
+      <view class='right ' data-src='{{audios[0].src}}' data-audio_id='{{audios[0].audio_id}}' bindtap='playAudio'>
+        <image class="audio" src="../../../images/userAudio/start.png" />
+      </view>
+    </block>
+    <block wx:if="{{audios[0].isPlay == 1}}">
+      <view class='right link' data-src='{{audios[0].src}}' data-audio_id='{{audios[0].audio_id}}' bindtap='stopAudio'>
+        <image class="audio" src="../../../images/userAudio/stop.png" />
+      </view>
+    </block>
+  </view>
+<!--点赞展示页面-->
+  <block wx:if="{{audioDataLike.length > 0}}">
+    <view class="weui-cell">
+      <image class="audio-pic" style="margin-right:10px" src="../../../images/studyIndex/like.png"></image>
+      <block wx:for="{{audioDataLike}}" wx:key="item">
+        <image class="user-like-pic" src="{{item.user_info.avatarUrl}}"></image>
+      </block>
+    </view>
+  </block>
+<!--点评展示页面-->
+  <block wx:if="{{audioDataComment.length > 0}}">
+   <block wx:for="{{audioDataComment}}" wx:key="item">
+    <view class="weui-cell" bindtap='toAudioDetail' data-audio_id='{{item.audio_id}}'>
+      <image class="audio-pic" style="margin-right:10px" src="../../../images/studyIndex/comment.png"></image>
+     
+        <view class="user-avatar">
+          <image class="user-like-pic" src="{{item.user_info.avatarUrl}}"></image>
+        </view>
+<view class="weui-cell__bd">
+      <view class="title">
+        <view style='padding-left:10px'>
+          <text>{{item.user_info.nickName}} </text>
+          <text class='right'></text>
+        </view>
+      </view>
+      <view>
+
+      </view>
+      <view class="weui-flex__item date">
+        <view>{{item.createDateStr}} {{item.timeDurationStr}} </view>
+      </view>
+    </view>
+    <block wx:if="{{item.isPlay == 0}}">
+      <view class='right ' data-src='{{item.src}}' data-audio_id='{{item.audio_id}}' bindtap='playAudio'>
+        <image class="audio" src="../../../images/userAudio/start.png" />
+      </view>
+    </block>
+    <block wx:if="{{item.isPlay == 1}}">
+      <view class='right link' data-src='{{item.src}}' data-audio_id='{{item.audio_id}}' bindtap='stopAudio'>
+        <image class="audio" src="../../../images/userAudio/stop.png" />
+      </view>
+    </block>
+      
+       
+    </view>
+    </block>
+  </block>
+  
+</view>
+
+
+
+
+
+<block wx:if="{{commentList.length > 0}}">
+  <view style='background-color: #F6F6F6;padding-left:5px;padding-bottom:3px'></view>
+  <block wx:for="{{commentList}}" wx:for-item="item">
+    <template is="commentTemplate" data="{{...item}}" />
+  </block>
+  <view style='background-color: #F6F6F6;padding-left:5px;padding-bottom:2px'></view>
+  <view class='line'></view>
+</block>
+
+
+<view class="weui-cells weui-cells_after-title">
+  <block wx:for="{{currentLikeUser}}" wx:key="item">
+    <template is="likeUserTemplate" data="{{...item}}" />
+  </block>
+</view>
+
+<view class="weui-flex bottom">
+  <view class="weui-flex__item note-btn" bindtouchstart="startRecord" bindtouchend="stopRecord">
+    <image class="audio-pic" src="../../../images/audioDetail/voice.png"></image>
+  </view>
+</view>
