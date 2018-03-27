@@ -16,7 +16,7 @@
         <text wx:if="{{totalScore >= 300 && totalScore < 500}}">Lv7：铂金演讲君</text>
         <text wx:if="{{totalScore >= 500 && totalScore < 700}}">Lv8：钻石演讲君</text>
         <text wx:if="{{totalScore >= 700 && totalScore < 1000}}">Lv9：星耀演讲君</text>
-        <text wx:if="{{totalScore >= 1000}}">Lv10：王者演讲君】</text>
+        <text wx:if="{{totalScore >= 1000}}">Lv10：王者演讲君</text>
       </view>
     </view>
     <view class="weui-cell__ft totoalScore">
@@ -33,17 +33,14 @@
         <view class="weui-flex" style='font-size:15px'>+70分</view>
       </view>
       <view class="weui-flex__item">
-        <view class='small-grey'>完美达标</view>
-        <view class="weui-flex" style='font-size:15px'>+10分</view>
+        <view class='small-grey'>点赞加分</view>
+        <view class="weui-flex" style='font-size:15px'>+18分</view>
       </view>
       <view class="weui-flex__item">
-        <view class='small-grey'>BUFF</view>
-        <view class="weui-flex" style='font-size:15px'>+10%</view>
+        <view class='small-grey'>点评加分</view>
+        <view class="weui-flex" style='font-size:15px'>+30分</view>
       </view>
-      <view class="weui-flex__item">
-        <view class='small-grey'>奖励积分</view>
-        <view class="weui-flex" style='font-size:15px'>+5分</view>
-      </view>
+      
     </view>
   </view>
 </view>
@@ -57,7 +54,7 @@
       <image class="user-pic" src="../../../images/studyIndex/plan.png" />
     </view>
     <view class="weui-cell__bd title">
-      <view>【今日计划】<text class='small-grey'>（早起）+5</text></view>
+      <view>【今日计划】<text class='small-grey'>（早）+10</text></view>
       <view class="small-grey">
       <image class="like" src="../../../images/studyIndex/view.png" /> 100
       <image class="like" src="../../../images/studyIndex/like.png" /> 32   
@@ -72,7 +69,7 @@
 
   <view class="weui-cell" bindtap='toTodayPlan'>
     <view class="user-avatar">
-      <image class="user-pic" src="../../../images/studyIndex/plan.png" />
+      <image class="user-pic" src="../../../images/studyIndex/like1.png" />
     </view>
     <view class="weui-cell__bd title">
       <view>【每日一赞】<text class='small-grey'></text></view>
@@ -88,12 +85,12 @@
     </view>
   </view>
 
-   <view class="weui-cell" bindtap='toTodayPlan'>
+  <view class="weui-cell">
     <view class="user-avatar">
-      <image class="user-pic" src="../../../images/studyIndex/plan.png" />
+      <image class="user-pic" src="../../../images/studyIndex/study.png" />
     </view>
     <view class="weui-cell__bd title">
-      <view>【每日一动】<text class='small-grey'></text></view>
+      <view>【每日一讲】</view>
       <view class="small-grey">
       <image class="like" src="../../../images/studyIndex/view.png" /> 100
       <image class="like" src="../../../images/studyIndex/like.png" /> 32   
@@ -101,10 +98,29 @@
       </view>
     </view>
     <view class="weui-cell__ft">
-      <text style='color:grey;font-weight:bold'>已完成</text>
-      <text class='small-grey'> (1/1)</text>
+      <text style='color:rgb(228, 140, 58);font-weight:bold'>进行中</text>
+      <text class='small-grey'> (2/3)</text>
     </view>
   </view>
+
+  <view class="weui-cell">
+    <view class="user-avatar">
+      <image class="user-pic" src="../../../images/studyIndex/comment2.png" />
+    </view>
+    <view class="weui-cell__bd title">
+      <view>【每日一评】</view>
+      <view class="small-grey">
+      <image class="like" src="../../../images/studyIndex/view.png" /> 100
+      <image class="like" src="../../../images/studyIndex/like.png" /> 32   
+      <image class="like" src="../../../images/studyIndex/comment.png" /> 20 
+      </view>
+    </view>
+    <view class="weui-cell__ft">
+      <text style='color:rgb(228, 140, 58);font-weight:bold'>进行中</text>
+      <text class='small-grey'> (2/3)</text>
+    </view>
+  </view>
+
 
   <view class="weui-cell">
     <view class="user-avatar">
@@ -124,41 +140,7 @@
     </view>
   </view>
 
-  <view class="weui-cell">
-    <view class="user-avatar">
-      <image class="user-pic" src="../../../images/studyManage/study.png" />
-    </view>
-    <view class="weui-cell__bd title">
-      <view>【今日学习】</view>
-      <view class="small-grey">
-      <image class="like" src="../../../images/studyIndex/view.png" /> 100
-      <image class="like" src="../../../images/studyIndex/like.png" /> 32   
-      <image class="like" src="../../../images/studyIndex/comment.png" /> 20 
-      </view>
-    </view>
-    <view class="weui-cell__ft">
-      <text style='color:rgb(228, 140, 58);font-weight:bold'>进行中</text>
-      <text class='small-grey'> (2/3)</text>
-    </view>
-  </view>
-
-  <view class="weui-cell">
-    <view class="user-avatar">
-      <image class="user-pic" src="../../../images/studyIndex/focus.png" />
-    </view>
-    <view class="weui-cell__bd title">
-      <view>【今日冥想】</view>
-      <view class="small-grey">
-      <image class="like" src="../../../images/studyIndex/view.png" /> 100
-      <image class="like" src="../../../images/studyIndex/like.png" /> 32   
-      <image class="like" src="../../../images/studyIndex/comment.png" /> 20 
-      </view>
-    </view>
-    <view class="weui-cell__ft">
-      <text style='color:rgb(228, 140, 58);font-weight:bold'>进行中</text>
-      <text class='small-grey'> (2/3)</text>
-    </view>
-  </view>
+  
   
 </view>
 </view>

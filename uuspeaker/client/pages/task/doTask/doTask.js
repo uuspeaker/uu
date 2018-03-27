@@ -8,6 +8,7 @@ const innerAudioContext = wx.createInnerAudioContext()
 var showTimes = 0
 var audioId = ''
 var tempFilePath = ''
+var taskType = 1
 
 const recorderManager = wx.getRecorderManager()
 
@@ -42,7 +43,7 @@ Page({
     this.setData({
       isRecord: 0
     })
-    this.saveAudio()
+    
   },
 
   saveAudio: function () {
@@ -53,7 +54,7 @@ Page({
       url: `${config.service.host}/weapp/impromptu.impromptuAudio`,
       filePath: tempFilePath,
       name: 'file',
-      formData: { audioId: audioId},
+      formData: { audioId: audioId },
       success: function (res) {
         that.saveAudioRecord()
       },
@@ -66,9 +67,9 @@ Page({
 
   saveAudioRecord: function () {
     qcloud.request({
-      url: `${config.service.host}/weapp/task.makeTodayPlan`,
+      url: `${config.service.host}/weapp/task.userTask`,
       login: true,
-      data: { audioId: audioId, timeDuration: timeDuration },
+      data: { audioId: audioId, taskType: taskType, timeDuration: timeDuration },
       method: 'post',
       success(result) {
         console.log(result)
@@ -86,6 +87,7 @@ Page({
     })
     recorderManager.onStop((res) => {
       tempFilePath = res.tempFilePath
+      this.saveAudio()
     })
   },
 

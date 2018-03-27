@@ -129,6 +129,12 @@ router.post('/impromptu.myAudio', controllers.impromptu.myAudio.post)
 router.put('/impromptu.myAudio', controllers.impromptu.myAudio.put)
 router.delete('/impromptu.myAudio', controllers.impromptu.myAudio.del)
 
+//任务管理
+router.get('/task.userTask', controllers.task.userTask.get)
+router.post('/task.userTask', controllers.task.userTask.post)
+//个人介绍管理
+router.get('/task.userIntroduce', controllers.task.userIntroduce.get)
+router.post('/task.userIntroduce', controllers.task.userIntroduce.post)
 
 //即兴会议发起投票问卷
 router.get('/impromptu.impromptuSurvey', controllers.impromptu.impromptuSurvey.get)

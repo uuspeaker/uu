@@ -60,7 +60,7 @@ Page({
 
   toTodayPlan: function () {
     wx.navigateTo({
-      url: '../makeTodayPlan/makeTodayPlan',
+      url: '../doTask/doTask',
     })
   },
 

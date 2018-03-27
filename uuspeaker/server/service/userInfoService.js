@@ -74,6 +74,13 @@ var getScore = async (userId,scoreType) => {
   return totalScoreRes[0]['totalScore']
 }
 
+var saveIntroduction = async (audioId, userId) => {
+  await mysql('user_info').insert({
+    user_id: userId,
+    introduce_audio_id: audioId
+  })
+}
+
 module.exports = { 
   getOpenId, 
   getTailoredUserInfo, 
@@ -83,5 +90,6 @@ module.exports = {
   getEvaluatorScore,
   getHostScore,
   getReportScore,
-  getUserInfo
+  getUserInfo,
+  saveIntroduction
   }

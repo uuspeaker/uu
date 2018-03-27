@@ -165,10 +165,24 @@ var getSpeechAudioByRoom = async (roomId,  userId) => {
 }
 
 /**
+ * 保存演讲记录 
+ * 返回：
+ */
+var saveAudio = async (audioId, userId, timeDuration) => {
+  await mysql('impromptu_audio').insert({
+    audio_id: audioId,
+    user_id: userId,
+    time_duration: timeDuration,
+    audio_type: 1,
+    audio_status: 2
+  })
+}
+
+/**
  * 删除某个音频
  */
 var deleteAudio = async (audioId) => {
   await mysql('impromptu_audio').where({ audio_id: audioId }).del()
 }
 
-module.exports = { likeAudio, viewAudio, getAudioLikeUser, getSpeakingAudio, startSpeechAudio, completeSpeechAudio,evaluateLatestAudio, evaluateAudio, getSpeechAudioByRoom }
+module.exports = { likeAudio, viewAudio, getAudioLikeUser, getSpeakingAudio, startSpeechAudio, completeSpeechAudio, evaluateLatestAudio, evaluateAudio, getSpeechAudioByRoom,saveAudio }
