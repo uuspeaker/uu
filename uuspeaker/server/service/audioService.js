@@ -178,11 +178,17 @@ var saveAudio = async (audioId, userId, timeDuration) => {
   })
 }
 
+var getSrc = async (audioId) => {
+  var uploadFolder = config.cos.uploadFolder ? config.cos.uploadFolder + '/' : ''
+  var src = `http://${config.cos.fileBucket}-${config.qcloudAppId}.cos.${config.cos.region}.myqcloud.com/${uploadFolder}${audioId}.mp3`
+  return src
+}
+
 /**
  * 删除某个音频
  */
 var deleteAudio = async (audioId) => {
-  await mysql('impromptu_audio').where({ audio_id: audioId }).del()
+ await mysql('impromptu_audio').where({ audio_id: audioId }).del()
 }
 
-module.exports = { likeAudio, viewAudio, getAudioLikeUser, getSpeakingAudio, startSpeechAudio, completeSpeechAudio, evaluateLatestAudio, evaluateAudio, getSpeechAudioByRoom,saveAudio }
+module.exports = { likeAudio, viewAudio, getAudioLikeUser, getSpeakingAudio, startSpeechAudio, completeSpeechAudio, evaluateLatestAudio, evaluateAudio, getSpeechAudioByRoom, saveAudio, getSrc }

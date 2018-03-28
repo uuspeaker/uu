@@ -5,7 +5,7 @@
       <image class="user-pic" src="{{userInfo.avatarUrl}}" />
     </view>
     <view class="weui-cell__bd">
-      <view>{{userInfo.nickName}}</view>
+      <view class='link' bindtap='toUserIntroduction'>{{userInfo.nickName}}</view>
       <view style="font-size: 13px;color: #888888;padding-top:5px">
         <text wx:if="{{totalScore == 0}}">Lv1：乞丐演讲君</text>
         <text wx:if="{{totalScore >= 1 && totalScore < 20}}">Lv2：贫民演讲君</text>

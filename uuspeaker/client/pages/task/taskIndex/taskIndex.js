@@ -12,7 +12,8 @@ Page({
 
     scoreData: {},
     userInfo: {},
-    totalScore: 0
+    totalScore: 0,
+
   },
 
   //查询用户参会数据
@@ -64,13 +65,18 @@ Page({
     })
   },
 
+  toUserIntroduction: function () {
+    wx.navigateTo({
+      url: '../userIntroduction/userIntroduction',
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.initUserInfo();
-    this.queryUserScore();
+    this.initUserInfo()
+    this.queryUserScore()
   },
 
 

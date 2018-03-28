@@ -74,11 +74,20 @@ var getScore = async (userId,scoreType) => {
   return totalScoreRes[0]['totalScore']
 }
 
+//保存用户个人介绍
 var saveIntroduction = async (audioId, userId) => {
-  await mysql('user_info').insert({
+  await mysql('user_introduction').insert({
     user_id: userId,
     introduce_audio_id: audioId
   })
+}
+
+//查询用户个人介绍
+var getIntroduction = async (userId) => {
+  var data = await mysql('user_introduction').where({
+    user_id: userId
+  }).orderBy('create_date','desc')
+    return data
 }
 
 module.exports = { 
@@ -91,5 +100,6 @@ module.exports = {
   getHostScore,
   getReportScore,
   getUserInfo,
-  saveIntroduction
+  saveIntroduction,
+  getIntroduction
   }

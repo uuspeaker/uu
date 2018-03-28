@@ -6,6 +6,11 @@ margin-top: 0px;
 margin-bottom: 10px;
 background:#F6F6F6;
 }
+.link {
+  font-size: 17px;
+  font-weight: bold;
+  color: #576b95;
+}
 .small-grey{
   font-size: 13px;
   color:#888888;

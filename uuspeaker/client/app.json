@@ -1,11 +1,11 @@
 
 {
   "pages": [
+    "pages/task/taskIndex/taskIndex",
+    "pages/task/userIntroduction/userIntroduction",
     "pages/impromptu/impromptuIndex/impromptuIndex",
-    "pages/user/userInfo/userInfo",
     "pages/task/doTask/doTask",
     "pages/task/makeTodayPlan/makeTodayPlan",
-    "pages/task/taskIndex/taskIndex",
     "pages/studyIndex/studyIndex",
     "pages/impromptu/audioDetail/audioDetail",
     "pages/audioTest/audioTest",
