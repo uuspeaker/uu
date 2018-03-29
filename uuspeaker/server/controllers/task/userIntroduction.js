@@ -2,27 +2,30 @@ const { mysql } = require('../../qcloud')
 const userInfoService = require('../../service/userInfoService')
 const uuid = require('../../common/uuid');
 const audioService = require('../../service/audioService')
-const config = require('../../config')
+const uploadAudio = require('../../upload/uploadAudio')
 
 module.exports = {
   post: async ctx => {
     var userId = await userInfoService.getOpenId(ctx)
     var audioId = ctx.request.body.audioId
+    var oldAudioId = ctx.request.body.oldAudioId
     //var taskType = ctx.request.body.taskType
     var timeDuration = ctx.request.body.timeDuration
-
-    await audioService.saveAudio(audioId, userId, timeDuration)
+    if (oldAudioId != '0') {
+      uploadAudio.deleteObject(oldAudioId)
+      await audioService.deleteAudio(oldAudioId)
+      await userInfoService.deleteIntroduction(userId)
+    }
+    
     await userInfoService.saveIntroduction(audioId, userId)
-
+    await audioService.saveAudio(audioId, userId, timeDuration)
+    
+    
   },
 
   get: async ctx => {
     var userId = await userInfoService.getOpenId(ctx)
     var audioData = await userInfoService.getIntroduction(userId)
-    var uploadFolder = config.cos.uploadFolder ? config.cos.uploadFolder + '/' : ''
-    for (var i = 0; i < audioData.length; i++) {
-      audioData[i].src = `http://${config.cos.fileBucket}-${config.qcloudAppId}.cos.${config.cos.region}.myqcloud.com/${uploadFolder}${audioData[i].introduce_audio_id}.mp3`
-    }
     ctx.state.data = audioData
   },
 

@@ -1,7 +1,6 @@
 var config = require('../config')
 var uuid = require('uuid.js')
 const recorderManager = wx.getRecorderManager()
-var audioId = ''
 var tempFilePath = '1'
 
 const options = {
@@ -20,7 +19,11 @@ recorderManager.onStop((res) => {
   tempFilePath = res.tempFilePath
 })
 
-const saveAudio = () => {
+const getSrc = () =>{
+  return tempFilePath
+}
+
+const saveAudio = (audioId) => {
   console.log('tempFilePath', tempFilePath)
   const uploadTask = wx.uploadFile({
     url: `${config.service.host}/weapp/impromptu.impromptuAudio`,
@@ -39,8 +42,6 @@ const saveAudio = () => {
 
 const start = () => {
   recorderManager.start(options)
-  audioId = uuid.v1()
-  return audioId
 } 
 
 const stop = () => {

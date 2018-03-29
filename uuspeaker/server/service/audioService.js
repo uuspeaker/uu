@@ -156,7 +156,7 @@ var getSpeechAudioByRoom = async (roomId,  userId) => {
   for (var i = 0; i < audioData.length; i++) {
     audioData[i].user_info = userInfo.getUserInfo(audioData[i].user_info)
     audioData[i].isMine = 0
-    audioData[i].src = `http://${config.cos.fileBucket}-${config.qcloudAppId}.cos.${config.cos.region}.myqcloud.com/${uploadFolder}${audioData[i].audio_id}.mp3`
+    audioData[i].src = `https://${config.cos.fileBucket}-${config.qcloudAppId}.cos.${config.cos.region}.myqcloud.com/${uploadFolder}${audioData[i].audio_id}.mp3`
     if (userId == audioData[i].user_id) {
       audioData[i].isMine = 1
     }
@@ -178,9 +178,9 @@ var saveAudio = async (audioId, userId, timeDuration) => {
   })
 }
 
-var getSrc = async (audioId) => {
+var getSrc =  (audioId) => {
   var uploadFolder = config.cos.uploadFolder ? config.cos.uploadFolder + '/' : ''
-  var src = `http://${config.cos.fileBucket}-${config.qcloudAppId}.cos.${config.cos.region}.myqcloud.com/${uploadFolder}${audioId}.mp3`
+  var src = `https://${config.cos.fileBucket}-${config.qcloudAppId}.cos.${config.cos.region}.myqcloud.com/${uploadFolder}${audioId}.mp3`
   return src
 }
 
@@ -191,4 +191,4 @@ var deleteAudio = async (audioId) => {
  await mysql('impromptu_audio').where({ audio_id: audioId }).del()
 }
 
-module.exports = { likeAudio, viewAudio, getAudioLikeUser, getSpeakingAudio, startSpeechAudio, completeSpeechAudio, evaluateLatestAudio, evaluateAudio, getSpeechAudioByRoom, saveAudio, getSrc }
+module.exports = { likeAudio, viewAudio, getAudioLikeUser, getSpeakingAudio, startSpeechAudio, completeSpeechAudio, evaluateLatestAudio, evaluateAudio, getSpeechAudioByRoom, saveAudio, getSrc, deleteAudio }

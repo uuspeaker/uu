@@ -23,6 +23,7 @@
   font-size: 18px;
   color:#888888;
   margin-top: 20px; 
+  font-weight: bold;
 }
 .content{
   font-size:32px;
@@ -39,7 +40,7 @@
 }
 .note-btn {
     width: 50rpx;
-    height: 120rpx;
+    height: 130rpx;
     background: rgb(136, 186, 71);
     border-radius: 50%;
     display: flex;

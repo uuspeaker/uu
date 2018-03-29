@@ -1,5 +1,5 @@
 const { mysql } = require('../qcloud')
-//const uuid = require('node-uuid')
+const audioService = require('../service/audioService.js')
 
 /**
  * 获取用户ID 
@@ -87,7 +87,17 @@ var getIntroduction = async (userId) => {
   var data = await mysql('user_introduction').where({
     user_id: userId
   }).orderBy('create_date','desc')
+  for (var i = 0; i < data.length; i++) {
+    data[i].src = audioService.getSrc(data[i].introduce_audio_id)
+  }
     return data
+}
+
+//删除用户个人介绍
+var deleteIntroduction = async (userId) => {
+  await mysql('user_introduction').where({
+    user_id: userId
+  }).del()
 }
 
 module.exports = { 
@@ -101,5 +111,6 @@ module.exports = {
   getReportScore,
   getUserInfo,
   saveIntroduction,
-  getIntroduction
+  getIntroduction,
+  deleteIntroduction
   }

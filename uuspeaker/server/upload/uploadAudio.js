@@ -63,6 +63,26 @@ const upload = async (ctx) => {
   
 }
 
+const deleteObject = async (audioId) => {
+  const cos = new CosSdk({
+    AppId: config.qcloudAppId,
+    SecretId: config.qcloudSecretId,
+    SecretKey: config.qcloudSecretKey,
+    Domain: `http://${config.cos.fileBucket}-${config.qcloudAppId}.cos.${config.cos.region}.myqcloud.com/`
+  })
+
+  var uploadFolder = config.cos.uploadFolder ? config.cos.uploadFolder + '/' : ''
+
+  cos.deleteOjbect({
+    Bucket: config.cos.fileBucket,
+    Region: config.cos.region,
+    Key: `${uploadFolder}${audioId}.mp3`
+  }, function (err, data) {
+    console.log(err, data);
+  });
+
+}
+
 /**
  * 从请求体重解析出文件
  * 并将文件缓存到 /tmp 目录下
@@ -88,5 +108,5 @@ function resolveUploadFileFromRequest(request) {
   })
 }
 
-module.exports = { upload }
+module.exports = { upload, deleteObject }
 

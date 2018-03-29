@@ -5,8 +5,8 @@ var audioService = require('../../../common/audioService.js')
 var uuid = require('../../../common/uuid.js')
 
 const innerAudioContext = wx.createInnerAudioContext()
+
 var showTimes = 0
-var audioId = ''
 var timeDuration = 0
 var startDate
 var endDate
@@ -21,16 +21,17 @@ Page({
   data: {
     hasIntroduction: 0,
     isPlay: 0,
-    userIntroduction: {}
+    userIntroduction: {},
+    oldAudioId: '0',
   },
 
-  startRecord: function () {
-    audioId = audioService.start()
+  startRecord: function () { 
+    audioService.start()
     startDate = new Date()
   },
 
   stopRecord: function () {
-    audioService.stop();
+    audioService.stop()
     endDate = new Date()
     timeDuration = Math.floor((endDate - startDate)/1000)
     console.log('timeDuration', timeDuration)
@@ -38,7 +39,8 @@ Page({
       util.showModel('录音太短', '请录制一段超过10秒的自我介绍');
       return
     }
-    setTimeout(audioService.saveAudio, 300)
+    var audioId = uuid.v1()
+    setTimeout(audioService.saveAudio, 300, audioId)
     
     if (this.data.hasIntroduction == 1){
       var that = this
@@ -47,7 +49,7 @@ Page({
         content: '是否替换原有介绍？',
         success: function (sm) {
           if (sm.confirm) {
-            that.saveAudioRecord()
+            that.saveAudioRecord(audioId)
           } else if (sm.cancel) {
             console.log('用户点击取消')
           }
@@ -62,19 +64,20 @@ Page({
     
   },
 
-  saveAudioRecord: function () {
+  saveAudioRecord: function (audioId) {
     console.log('saveAudioRecord')
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/task.userIntroduction`,
       login: true,
-      data: { audioId: audioId, timeDuration: timeDuration},
+      data: { audioId: audioId, timeDuration: timeDuration, oldAudioId: this.data.oldAudioId},
       method: 'post',
       success(result) {
+        util.showSuccess('录音保存成功')
         that.setData({
           hasIntroduction: 1
         })
-        
+        that.getUserIntroduction()
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -91,17 +94,21 @@ Page({
       data: {},
       method: 'get',
       success(result) {
-        console.log(result.data.data)
+        //console.log(result.data.data)
         if (result.data.data.length == 0) {
           that.setData({
             userIntroduction: result.data.data[0],
             hasIntroduction: 0
           })
+          
         } else {
           that.setData({
             userIntroduction: result.data.data[0],
-            hasIntroduction: 1
+            hasIntroduction: 1,
+            oldAudioId: result.data.data[0].introduce_audio_id
           })
+          innerAudioContext.src = result.data.data[0].src
+          console.log('src', innerAudioContext.src)
         }
       },
       fail(error) {
@@ -124,8 +131,8 @@ Page({
   },
 
   play: function(){
-    innerAudioContext.src = this.data.userIntroduction.src
     innerAudioContext.play()
+    console.log('play', innerAudioContext.autoplay)
     this.setData({
       isPlay: 1
     })
@@ -139,7 +146,24 @@ Page({
   },
 
   onLoad: function(){
+    var that = this
     this.getUserIntroduction()
+    innerAudioContext.onError((res) => {
+      console.log(res.errMsg)
+      console.log(res.errCode)
+    })
+    innerAudioContext.onStop((res) => {
+      console.log('onStop')
+      that.setData({
+        isPlay: 0
+      })
+    })
+    innerAudioContext.onEnded((res) => {
+      console.log('onEnd')
+      that.setData({
+        isPlay: 0
+      })
+    })
   }
 
 })

@@ -8,7 +8,7 @@
 
 <view class="weui-flex bottom">
 
-  <view class="weui-flex__item note-btn" style="background: grey" data-audio_id='{{audios[0].audio_id}}' bindtap="likeIt">
+  <view class="weui-flex__item note-btn" style="background: grey" data-audio_id='{{audios[0].audio_id}}' >
   <block wx:if="{{hasIntroduction == 1}}">
     <block wx:if="{{isPlay == 0}}">
     <image class="audio-pic" style="left: 5px;position: relative" bindtap='play' src="../../../images/userIntroduction/play.png"></image> 
