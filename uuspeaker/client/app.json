@@ -62,6 +62,12 @@
     "borderStyle": "white",
     "list": [
       {
+        "selectedIconPath": "images/tabbar/target2.png",
+        "iconPath": "images/tabbar/target1.png",
+        "pagePath": "pages/task/taskIndex/taskIndex",
+        "text": "任务"
+      },
+      {
         "selectedIconPath": "images/tabbar/study2.png",
         "iconPath": "images/tabbar/study1.png",
         "pagePath": "pages/impromptu/impromptuIndex/impromptuIndex",
@@ -72,12 +78,6 @@
         "iconPath": "images/tabbar/discover1.png",
         "pagePath": "pages/allReport/allReport",
         "text": "复盘"
-      },
-      {
-        "selectedIconPath": "images/tabbar/target2.png",
-        "iconPath": "images/tabbar/target1.png",
-        "pagePath": "pages/target/myTargetDetail/myTargetDetail",
-        "text": "目标"
       },
       {
         "selectedIconPath": "images/tabbar/studyRank2.png",
