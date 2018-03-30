@@ -31,8 +31,6 @@
 </template>
 
 <template name="likeUserTemplate">
-<view class="weui-cell__bd">{{like_moment}}
-</view>
   <view class="weui-cell__bd">
     <view class="user-avatar">
       <image class="user-like-pic" src="{{user_info.avatarUrl}}" />

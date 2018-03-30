@@ -1,5 +1,6 @@
 const { mysql } = require('../qcloud')
 const audioService = require('../service/audioService.js')
+const userInfoService = require('../service/userInfoService.js')
 const dateUtil = require('../common/dateUtil')
 /**
  * 完成演讲任务 
@@ -17,26 +18,62 @@ var saveTask = async (taskId, taskType, userId, timeDuration) => {
 }
 
 /**
- * 完成演讲任务 
+ * 查询我当天的任务 
  * 返回：
  */
-var getTodayTask = async (userId,taskType) => {
+var getAllMyTodayTask = async (userId) => {
   var taskDate = new Date()
   taskDate.setHours(0)
   taskDate.setMinutes(0)
   taskDate.setSeconds(0)
-  var taskData
-  if (taskType == 0){
-    taskData = await mysql('user_task').select('user_task.task_type','impromptu_audio.*').innerJoin('impromptu_audio', 'impromptu_audio.audio_id', 'user_task.task_id').where(
+
+   var taskData = await mysql('user_task').select('user_task.task_type','impromptu_audio.*').innerJoin('impromptu_audio', 'impromptu_audio.audio_id', 'user_task.task_id').where(
       'user_task.user_id', userId
     ).andWhere('user_task.create_date', '>', taskDate)
-  }else{
-    taskData = await mysql('user_task').select('user_task.task_type', 'impromptu_audio.*').innerJoin('impromptu_audio', 'impromptu_audio.audio_id', 'user_task.task_id').where(
+  
+  return taskData
+}
+
+/**
+ * 查询我所有的任务 
+ * 返回：
+ */
+var getMyTask = async (userId, taskType) => {
+  var limit = 30
+  var offset = 0
+  var taskDate = new Date()
+  taskDate.setHours(0)
+  taskDate.setMinutes(0)
+  taskDate.setSeconds(0)
+
+  var taskData = await mysql('user_task').select('user_task.task_type', 'cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('impromptu_audio', 'impromptu_audio.audio_id', 'user_task.task_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_task.user_id').where(
       'user_task.user_id', userId
-    ).andWhere({ task_type: taskType }).andWhere('user_task.create_date', '>', taskDate)   
-  }
+   ).andWhere({ task_type: taskType }).orderBy('create_date', 'desc').limit(limit).offset(offset)
+
   for (var i = 0; i < taskData.length; i++) {
     taskData[i].src = audioService.getSrc(taskData[i].audio_id)
+    taskData[i].user_info = userInfoService.getTailoredUserInfo(taskData[i].user_info)
+  }
+  return taskData
+}
+
+/**
+ * 查询我所有的任务 
+ * 返回：
+ */
+var getUserTask = async (taskType) => {
+  var limit = 20
+  var offset = 0
+  var taskDate = new Date()
+  taskDate.setHours(0)
+  taskDate.setMinutes(0)
+  taskDate.setSeconds(0)
+
+  var taskData = await mysql('user_task').select('user_task.task_type', 'cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('impromptu_audio', 'impromptu_audio.audio_id', 'user_task.task_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_task.user_id').where({ task_type: taskType }).andWhere('user_task.create_date', '>', taskDate).orderBy('impromptu_audio.like_amount', 'desc').limit(limit).offset(offset)
+
+  for (var i = 0; i < taskData.length; i++) {
+    taskData[i].src = audioService.getSrc(taskData[i].audio_id)
+    taskData[i].user_info = userInfoService.getTailoredUserInfo(taskData[i].user_info)
   }
   return taskData
 }
@@ -48,5 +85,11 @@ var deleteTask = async (taskId) => {
   }).del()
 }
 
+//点评任务
+var evaluateTask = async (taskAudioId, evaluationAudioId, userId, timeDuration) => {
+  audioService.evaluateAudio('', evaluationAudioId, '', userId, timeDuration, taskAudioId)
+}
 
-module.exports = { saveTask, getTodayTask, deleteTask}
+
+
+module.exports = { saveTask, getAllMyTodayTask, getMyTask, getUserTask, deleteTask, evaluateTask}

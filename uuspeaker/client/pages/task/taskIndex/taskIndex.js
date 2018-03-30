@@ -54,11 +54,12 @@ Page({
     //util.showBusy('请求中...')
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/task.userTask`,
+      url: `${config.service.host}/weapp/task.taskIndex`,
       login: true,
       method: 'get',
       data:{taskType: 0},
       success(result) {
+        if (result.data.data.length == 0)return
         console.log(result.data.data)
         that.setData({
           userTask: result.data.data,
@@ -83,6 +84,7 @@ Page({
         return data[i]
       }  
     }
+    return { view_amount: 0, like_amount: 0, comment_amount: 0, isComplete: 0 }
   },
 
   calculateScore: function(){

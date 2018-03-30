@@ -635,6 +635,7 @@ Page({
     //this.saveAudioData(audioId) 
   },
 
+  //保存录音文件
   saveAudio: function (){
     var that = this
     var audioName = this.data.speechTitle
@@ -649,12 +650,6 @@ Page({
       formData: { roomId: this.data.roomid, audioName: audioName, userId: this.data.userId, audioId: audioId, timeDuration: timeDuration },
       success: function (res) {
         var audioText =''
-        // console.log('audioArr',res)
-        // var audioArr = JSON.parse(res.data);
-        // for (var i = 0; i < audioArr.length; i++){
-        //   audioText = audioText + audioArr[i].text
-        // }
-        // console.log('audioText', audioText)
         that.updateAudioData()
       },
 

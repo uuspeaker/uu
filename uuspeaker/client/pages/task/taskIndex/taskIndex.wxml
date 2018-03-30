@@ -62,7 +62,7 @@
       </view>
     </view>
     <view class="weui-cell__ft rightItem">
-    <block wx:if="{{planData == ''}}">
+    <block wx:if="{{planData.isComplete == 0}}">
     <text style='color:rgb(228, 140, 58);font-weight:bold'>进行中</text>
       </block>
       <block wx:else>

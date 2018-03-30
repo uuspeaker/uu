@@ -7,7 +7,7 @@
       <view class="title">
         <view style='padding-left:10px'>
           <text>{{audios[0].user_info.nickName}} </text>
-          <text>{{audios[0].audio_name}}</text>
+
           <text class='right'></text>
         </view>
       </view>
@@ -62,12 +62,12 @@
       </view>
     </view>
     <block wx:if="{{item.isPlay == 0}}">
-      <view class='right ' data-src='{{item.src}}' data-audio_id='{{item.audio_id}}' bindtap='playAudio'>
+      <view class='right ' data-src='{{item.src}}' data-audio_id='{{item.audio_id}}' catchtap='playAudio'>
         <image class="audio" src="../../../images/userAudio/start.png" />
       </view>
     </block>
     <block wx:if="{{item.isPlay == 1}}">
-      <view class='right link' data-src='{{item.src}}' data-audio_id='{{item.audio_id}}' bindtap='stopAudio'>
+      <view class='right link' data-src='{{item.src}}' data-audio_id='{{item.audio_id}}' catchtap='stopAudio'>
         <image class="audio" src="../../../images/userAudio/stop.png" />
       </view>
     </block>
@@ -100,11 +100,8 @@
 </view>
 
 <view class="weui-flex bottom">
-  <view class="weui-flex__item note-btn" style="background: orange" data-audio_id='{{audios[0].audio_id}}' bindtap="likeIt">
-    <image class="audio-pic" src="../../../images/audioDetail/like.png"></image>
 
-  </view>
-  <view class="weui-flex__item note-btn" bindtouchstart="voiceStartRecord" bindtouchend="voiceEndRecord">
+  <view class="weui-flex__item note-btn" bindtouchstart="startRecord" bindtouchend="stopRecord">
     <image class="audio-pic" src="../../../images/audioDetail/voice.png"></image>
   </view>
 </view>

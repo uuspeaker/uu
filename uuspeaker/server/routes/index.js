@@ -128,10 +128,12 @@ router.get('/impromptu.myAudio', controllers.impromptu.myAudio.get)
 router.post('/impromptu.myAudio', controllers.impromptu.myAudio.post)
 router.put('/impromptu.myAudio', controllers.impromptu.myAudio.put)
 router.delete('/impromptu.myAudio', controllers.impromptu.myAudio.del)
-
+//任务查询
+router.get('/task.taskIndex', controllers.task.taskIndex.get)
 //任务管理
 router.get('/task.userTask', controllers.task.userTask.get)
 router.post('/task.userTask', controllers.task.userTask.post)
+router.put('/task.userTask', controllers.task.userTask.put)
 //个人介绍管理
 router.get('/task.userIntroduction', controllers.task.userIntroduction.get)
 router.post('/task.userIntroduction', controllers.task.userIntroduction.post)

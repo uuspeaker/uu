@@ -6,6 +6,7 @@ const audioService = require('../../service/audioService')
 const uploadAudio = require('../../upload/uploadAudio')
 
 module.exports = {
+  //完成当天任务
   post: async ctx => {
     var userId = await userInfo.getOpenId(ctx)
     var taskId = ctx.request.body.taskId
@@ -21,11 +22,28 @@ module.exports = {
 
   },
 
+  //点评任务音频
+  put: async ctx => {
+    var userId = await userInfo.getOpenId(ctx)
+    var taskAudioId = ctx.request.body.taskAudioId
+    var evaluationAudioId = ctx.request.body.evaluationAudioId
+    var timeDuration = ctx.request.body.timeDuration
+    await userTaskService.evaluateTask(taskAudioId, evaluationAudioId, userId, timeDuration)
+
+  },
+
+  //查询用户历史任务及所有用户当天的任务
   get: async ctx => {
     var userId = await userInfo.getOpenId(ctx)
     var taskType = ctx.query.taskType
-    var taskDate = await userTaskService.getTodayTask(userId, taskType)
-    ctx.state.data = taskDate
+
+     var myTaskData = await userTaskService.getMyTask(userId, taskType)
+
+    var allTaskData = await userTaskService.getUserTask(taskType)
+    ctx.state.data = {
+      myTaskData: myTaskData,
+      allTaskData: allTaskData
+    }
 
   },
 

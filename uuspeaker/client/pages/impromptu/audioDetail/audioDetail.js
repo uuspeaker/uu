@@ -2,9 +2,14 @@ var qcloud = require('../../../vendor/wafer2-client-sdk/index')
 var config = require('../../../config')
 var util = require('../../../utils/util.js')
 var dateFormat = require('../../../common/dateFormat.js')
+var audioService = require('../../../common/audioService.js')
+const uuid = require('../../../common/uuid');
 
 const innerAudioContext = wx.createInnerAudioContext()
 var showTimes = 0
+var startDate
+var endDate
+var timeDuration = 0
 
 Page({
 
@@ -12,7 +17,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    audioId: 'ef2316b0-2cbf-11e8-aaad-b14a08eb0823',
+    audioId: '',
     audioDataLike: [],
     audios:[],
     audioDataLike:[],
@@ -153,13 +158,60 @@ Page({
     this.formatDateAndStatus()
   },
 
+  startRecord: function () {
+    audioService.start()
+    startDate = new Date()
+  },
+
+  stopRecord: function () {
+    audioService.stop()
+    endDate = new Date()
+    timeDuration = Math.floor((endDate - startDate) / 1000)
+    console.log('timeDuration', timeDuration)
+    if (timeDuration <= 1) {
+      util.showModel('录音太短', '请录制一段超过3秒的语音');
+      return
+    }
+
+      var that = this
+      wx.showModal({
+        title: '提示',
+        content: '是否确定提交？',
+        success: function (sm) {
+          if (sm.confirm) {
+            var evaluationAudioId = uuid.v1()
+            setTimeout(audioService.saveAudio, 300, evaluationAudioId)
+            that.saveAudioRecord(evaluationAudioId)
+          } else if (sm.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+  },
+
+  saveAudioRecord: function (evaluationAudioId) {
+    var that =  this
+    qcloud.request({
+      url: `${config.service.host}/weapp/task.userTask`,
+      login: true,
+      data: { evaluationAudioId: evaluationAudioId, taskAudioId:this.data.audioId,timeDuration: timeDuration, audioType: 2 },
+      method: 'put',
+      success(result) {
+        console.log(result)
+        that.queryAudioDetail()
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
   onLoad: function (options) {
     console.log(options)
     this.setData({
       audioId: options.audioId
     })
-    this.queryAudioDetail()
-
     innerAudioContext.onPlay(() => {
       console.log('开始播放', innerAudioContext.currentTime)
     })
@@ -179,6 +231,11 @@ Page({
         currentLikeUser: []
       })
     })
+  },
+
+  onShow: function (options) {
+    
+    this.queryAudioDetail()
   },
 
   toAudioDetail: function (e) {

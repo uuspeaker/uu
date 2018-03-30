@@ -11,7 +11,7 @@ const config = require('../config')
  * 返回：0-之前已经点赞 1-点赞成功
  */
 var likeAudio = async (audioId,userId) => {
-  var audioLikeUser = await mysql('impromptu_audio_like').where({ audio_id: audioId,use_id: userId })
+  var audioLikeUser = await mysql('impromptu_audio_like').where({ audio_id: audioId,user_id: userId })
   if (audioLikeUser.length == 0){
     var audioView = await mysql('impromptu_audio').select('like_amount').where({ audio_id: audioId })
     await mysql('impromptu_audio').update({
