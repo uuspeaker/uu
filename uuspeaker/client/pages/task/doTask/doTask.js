@@ -52,7 +52,7 @@ Page({
       util.showModel('录音太短', '请录制一段超过10秒的语音');
       return
     }
-    
+    var taskId = uuid.v1()
     if (this.data.isCompleteTask == 1) {
       var that = this
       wx.showModal({
@@ -60,7 +60,6 @@ Page({
         content: '是否替换原有介绍？',
         success: function (sm) {
           if (sm.confirm) {
-            var taskId = uuid.v1()
             setTimeout(audioService.saveAudio, 300, taskId)
             that.saveAudioRecord(taskId)
           } else if (sm.cancel) {
@@ -69,6 +68,7 @@ Page({
         }
       })
     } else {
+      setTimeout(audioService.saveAudio, 300, taskId)
       this.saveAudioRecord(taskId)
       this.setData({
         isCompleteTask: 1

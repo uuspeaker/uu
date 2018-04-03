@@ -13,15 +13,9 @@ Page({
     scoreData: {},
     userInfo: {},
     totalScore: 0,
-    planData: {view_amount:0,like_amount:0,comment_amount:0,isComplete:0},
-    reviewData: { view_amount: 0, like_amount: 0, comment_amount: 0, isComplete: 0 },
-    likeData: { view_amount: 0, like_amount: 0, comment_amount: 0, isComplete: 0 },
-    speechData: { view_amount: 0, like_amount: 0, comment_amount: 0, isComplete: 0 },
-    evaluateData: { view_amount: 0, like_amount: 0, comment_amount: 0, isComplete: 0 },
 
     totalTaskScore: 0,
-    baseScore: 0,
-    likeScore: 0,
+    speechScore: 0,
     commentScore: 0,
 
   },
@@ -59,17 +53,14 @@ Page({
       method: 'get',
       data:{taskType: 0},
       success(result) {
-        if (result.data.data.length == 0)return
-        console.log(result.data.data)
+        console.log('timeDurationAll',result.data.data)
         that.setData({
-          userTask: result.data.data,
-          planData: that.getTargetTaskData(result.data.data,1),
-          reviewData: that.getTargetTaskData(result.data.data, 2),
-          likeData: that.getTargetTaskData(result.data.data, 3),
-          speechData: that.getTargetTaskData(result.data.data, 4),
-          EvaluateData: that.getTargetTaskData(result.data.data, 5),
+          timeDurationAll: result.data.data,
         })
-        that.calculateScore()
+        that.setData({
+          speechScore: that.getTotalTimeDuration(1),
+          commentScore: that.getTotalTimeDuration(2)
+        })
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -87,24 +78,14 @@ Page({
     return { view_amount: 0, like_amount: 0, comment_amount: 0, isComplete: 0 }
   },
 
-  calculateScore: function(){
-    var data = this.data.userTask
-    var totalTaskScore = 0
-    var baseScore = 0
-    var likeScore = 0
-    var commentScore = 0
-    for (var i = 0; i < data.length; i++) {
-      baseScore = baseScore + 50
-      likeScore = likeScore + data[i].like_amount
-      commentScore = commentScore + (10 * data[i].comment_amount)
+  getTotalTimeDuration: function(audioType){
+    var timeDurationAll = this.data.timeDurationAll
+    for (var i = 0; i<timeDurationAll.length; i++){
+      if (timeDurationAll[i].audio_type == audioType){
+        return Math.floor(timeDurationAll[i].totalDuration/60)
+      }
     }
-    totalTaskScore = baseScore + likeScore + commentScore 
-    this.setData({
-      totalTaskScore: totalTaskScore,
-      baseScore: baseScore,
-      likeScore: likeScore,
-      commentScore: commentScore,
-    })
+    return 0
   },
 
   initUserInfo: function () {
@@ -127,10 +108,15 @@ Page({
     })
   },
 
-  toDoTask: function (e) {
-    var taskType = e.currentTarget.dataset.task_type
+  toThirtySeconds: function (e) {
     wx.navigateTo({
-      url: '../doTask/doTask?taskType=' + taskType,
+      url: '../thirtySeconds/thirtySeconds',
+    })
+  },
+  
+  toImpromptuIndex: function (e) {
+    wx.navigateTo({
+      url: '../../impromptu/impromptuIndex/impromptuIndex',
     })
   },
 

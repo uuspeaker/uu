@@ -23,12 +23,6 @@ height: 50px;
 display: block;
 border-radius: 6px;
 }
-.task-pic{
-width: 110px; 
-height: 110px; 
-display: block;
-border-radius: 6px;
-}
 .totoalScore{
   margin-right:20px;
   color: black;
@@ -63,13 +57,4 @@ height: 40px;
 }
 .rightItem{
   margin-right: 20px; 
-}
-.middle{
-  font-size: 15px;
-  color:#888888;
-  font-weight: bold;
-  padding-left: 17px;
-}
-.later{
-  opacity: 0.2
-}
+}/* pages/task/taskIndex2/taskIndex2.wxss */

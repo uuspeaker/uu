@@ -191,4 +191,16 @@ var deleteAudio = async (audioId) => {
  await mysql('impromptu_audio').where({ audio_id: audioId }).del()
 }
 
-module.exports = { likeAudio, viewAudio, getAudioLikeUser, getSpeakingAudio, startSpeechAudio, completeSpeechAudio, evaluateLatestAudio, evaluateAudio, getSpeechAudioByRoom, saveAudio, getSrc, deleteAudio }
+/**
+ * 查询当天演讲练习时间
+ */
+var queryAudioDuration = async (userId) => {
+  var audioDate = new Date()
+  audioDate.setHours(0)
+  audioDate.setMinutes(0)
+  audioDate.setSeconds(0)
+  var todayTimeDuration = await mysql('impromptu_audio').select('audio_type', mysql.raw("count(time_duration) as totalDuration")).where({ user_id: userId }).andWhere('create_date', '>', audioDate).groupBy('audio_type')
+  return todayTimeDuration
+}
+
+module.exports = { likeAudio, viewAudio, getAudioLikeUser, getSpeakingAudio, startSpeechAudio, completeSpeechAudio, evaluateLatestAudio, evaluateAudio, getSpeechAudioByRoom, saveAudio, getSrc, deleteAudio, queryAudioDuration }

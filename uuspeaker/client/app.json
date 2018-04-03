@@ -2,6 +2,8 @@
 {
   "pages": [
     "pages/task/taskIndex/taskIndex",
+    "pages/task/thirtySeconds/thirtySeconds",
+    "pages/task/taskIndex2/taskIndex2",
     "pages/task/doTask/doTask",
     "pages/task/userIntroduction/userIntroduction",
     "pages/impromptu/impromptuIndex/impromptuIndex",
@@ -65,19 +67,14 @@
         "selectedIconPath": "images/tabbar/target2.png",
         "iconPath": "images/tabbar/target1.png",
         "pagePath": "pages/task/taskIndex/taskIndex",
-        "text": "任务"
+        "text": "练习"
       },
-      {
-        "selectedIconPath": "images/tabbar/study2.png",
-        "iconPath": "images/tabbar/study1.png",
-        "pagePath": "pages/impromptu/impromptuIndex/impromptuIndex",
-        "text": "学习"
-      },
+
       {
         "selectedIconPath": "images/tabbar/discover2.png",
         "iconPath": "images/tabbar/discover1.png",
         "pagePath": "pages/allReport/allReport",
-        "text": "复盘"
+        "text": "听演讲"
       },
       {
         "selectedIconPath": "images/tabbar/studyRank2.png",
