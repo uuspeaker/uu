@@ -3,7 +3,6 @@
   "pages": [
     "pages/task/taskIndex/taskIndex",
     "pages/task/thirtySeconds/thirtySeconds",
-    "pages/task/taskIndex2/taskIndex2",
     "pages/task/doTask/doTask",
     "pages/task/userIntroduction/userIntroduction",
     "pages/impromptu/impromptuIndex/impromptuIndex",
