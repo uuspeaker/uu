@@ -1,6 +1,7 @@
 
 {
   "pages": [
+    "pages/speech/speechSubject/speechSubject",
     "pages/task/taskIndex/taskIndex",
     "pages/task/addSpecialTask/addSpecialTask",
     "pages/task/specialTask/specialTask",

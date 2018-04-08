@@ -160,6 +160,12 @@ router.put('/target.myTarget', controllers.target.myTarget.put)
 router.post('/target.myTarget', controllers.target.myTarget.post)
 //所有用户目标查询
 router.get('/target.allTarget', controllers.target.allTarget.get)
+//演讲题目管理
+router.get('/speech.speechService', controllers.speech.speechService.get)
+router.post('/speech.speechService', controllers.speech.speechService.post)
+router.put('/speech.speechService', controllers.speech.speechService.put)
+
+
 
 //------------------------------------ 多人房间接口 ---------------------------------------------------
 //获取云通信登录所需信息的接口 - 针对接口给定的userId派发 IM 的userSig。

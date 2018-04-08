@@ -59,7 +59,7 @@
         <view>
           <image class="task-pic" src="../../../images/studyIndex/plan.png" />
         </view>
-        <view class='middle'>自由练习</view>
+        <view class='middle'>任务练习</view>
       </view>
       <view class='later'>
         <view >

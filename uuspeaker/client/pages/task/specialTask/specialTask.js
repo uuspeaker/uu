@@ -198,7 +198,7 @@ Page({
 
   toAudioDetail: function (e) {
     wx.navigateTo({
-      url: '../audioDetail/audioDetail?audioId=' + e.currentTarget.dataset.audio_id,
+      url: '../../impromptu/audioDetail/audioDetail?audioId=' + e.currentTarget.dataset.audio_id,
     })
   },
 

@@ -1,0 +1,22 @@
+<view class="weui-tab__content">
+  <form bindsubmit="saveSpeechSuject">
+    <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell">
+      <view class="weui-cell__hd">
+        <view class="weui-label">演讲主题</view>
+      </view>
+      <view class="weui-cell__bd">
+        <input name="speechSubject" class="weui-input" placeholder='请输入演讲主题' value='{{taskName}}' />
+      </view></view>
+      <view class="weui-cell">
+
+        <view class="weui-cell__bd">
+
+          <textarea name="speechNames" placeholder-class="textarea" class="weui-textarea" placeholder="请输入演讲题目，不同题目间回车换行分割" style="height: 23em" maxlength='2000' auto-focus/>
+          <view class="weui-textarea-counter"></view>
+        </view>
+      </view>
+    </view>
+    <button class="weui-btn" type="primary" data-action='post' formType="submit">保存</button>
+  </form>
+</view>
