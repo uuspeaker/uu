@@ -108,9 +108,15 @@ Page({
     })
   },
 
-  toThirtySeconds: function (e) {
+  toDailyTask: function (e) {
     wx.navigateTo({
-      url: '../thirtySeconds/thirtySeconds',
+      url: '../dailyTask/dailyTask',
+    })
+  },
+
+  toSpecialTask: function (e) {
+    wx.navigateTo({
+      url: '../specialTask/specialTask',
     })
   },
   

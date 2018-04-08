@@ -49,23 +49,23 @@
       自己练
     </view>
     <view class="weui-cell" data-task_type='1'>
-      <view bindtap='toThirtySeconds'>
+      <view bindtap='toDailyTask'>
         <view>
           <image class="task-pic" src="../../../images/studyIndex/plan.png" />
         </view>
-        <view class='middle'>每天30秒</view>
+        <view class='middle'>日常练习</view>
       </view>
-      <view class='later'>
+      <view bindtap='toSpecialTask'>
         <view>
           <image class="task-pic" src="../../../images/studyIndex/plan.png" />
         </view>
-        <view class='middle'>即兴2分钟</view>
+        <view class='middle'>自由练习</view>
       </view>
       <view class='later'>
         <view >
           <image class="task-pic"  src="../../../images/studyIndex/plan.png" />
         </view>
-        <view class='middle'>备稿7分钟</view>
+        <view class='middle'>即兴练习</view>
       </view>
     </view>
   </view>

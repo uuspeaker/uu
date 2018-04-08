@@ -168,9 +168,10 @@ var getSpeechAudioByRoom = async (roomId,  userId) => {
  * 保存演讲记录 
  * 返回：
  */
-var saveAudio = async (audioId, userId, timeDuration) => {
+var saveAudio = async (audioId, audioName, userId, timeDuration) => {
   await mysql('impromptu_audio').insert({
     audio_id: audioId,
+    audio_name: audioName,
     user_id: userId,
     time_duration: timeDuration,
     audio_type: 1,

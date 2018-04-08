@@ -1,0 +1,59 @@
+
+<view class="weui-cell write">
+  <view class="weui-cell__bd myReport" bindtap='toAllSpecialTask'>所有</view>
+  <view class="weui-cell__ft" >
+    <image class="commentImg" bindtap='addSpecialTask' src='../../../images/impromptuIndex/add.png' />
+  </view>
+</view>
+<template name="scoreDetailTemplate">
+  <view class="weui-cell" bindtap='toAudioDetail' data-audio_id='{{audio_id}}'>
+    <view class="user-avatar">
+      <image class="user-pic" src="{{user_info.avatarUrl}}" />
+    </view>
+    <view class="weui-cell__bd">
+      <view class="title">
+        <view style='padding-left:10px'>
+          <text>{{user_info.nickName}} </text>
+          <text>{{audio_name}}</text>
+          <text class='right'></text>
+        </view>
+      </view>
+      <view>
+        <view class="small-grey">
+        <image class="like" src="../../../images/studyIndex/view.png" /> {{view_amount}}
+      <image class="like" src="../../../images/studyIndex/like.png" /> {{like_amount}}   
+      <image class="like" src="../../../images/studyIndex/comment.png" /> {{comment_amount}}
+          {{timeDurationStr}} 
+          </view>
+      </view>
+
+    </view>
+    <block wx:if="{{isPlay == 0}}">
+        <view class='right ' data-src='{{src}}' data-audio_id='{{audio_id}}' catchtap='playAudio'><image class="audio" src="../../../images/userAudio/start.png" /></view>
+        </block>
+        <block wx:if="{{isPlay == 1}}">
+        <view class='right link' data-src='{{src}}' data-audio_id='{{audio_id}}' catchtap='stopAudio'><image class="audio" src="../../../images/userAudio/stop.png" /></view>
+        </block>
+  </view>
+</template>
+
+<template name="likeUserTemplate">
+  <view class="weui-cell__bd">
+    <view class="user-avatar">
+      <image class="user-like-pic" src="{{user_info.avatarUrl}}" />
+      <image class="like" data-audio_id='{{audio_id}}' src="../../../images/userAudio/like.png" />
+    </view>
+   </view> 
+</template>
+
+
+<view class="weui-cells weui-cells_after-title">
+  <block wx:for="{{audios}}" wx:key="item">
+    <template is="scoreDetailTemplate" data="{{...item}}" />
+  </block>
+</view>
+<view class="weui-cells weui-cells_after-title">
+  <block wx:for="{{currentLikeUser}}" wx:key="item">
+    <template is="likeUserTemplate" data="{{...item}}" />
+  </block>
+</view>

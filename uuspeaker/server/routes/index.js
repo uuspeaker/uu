@@ -132,10 +132,15 @@ router.delete('/impromptu.myAudio', controllers.impromptu.myAudio.del)
 router.get('/task.taskIndex', controllers.task.taskIndex.get)
 //30秒任务查询
 router.get('/task.thirtySeconds', controllers.task.thirtySeconds.get)
-//任务管理
+//日常任务管理
 router.get('/task.userTask', controllers.task.userTask.get)
 router.post('/task.userTask', controllers.task.userTask.post)
 router.put('/task.userTask', controllers.task.userTask.put)
+//个人自定义任务管理
+router.get('/task.specialTask', controllers.task.specialTask.get)
+router.post('/task.specialTask', controllers.task.specialTask.post)
+//所有自定义任务管理
+router.get('/task.allSpecialTask', controllers.task.allSpecialTask.get)
 //个人介绍管理
 router.get('/task.userIntroduction', controllers.task.userIntroduction.get)
 router.post('/task.userIntroduction', controllers.task.userIntroduction.post)

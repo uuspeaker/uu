@@ -2,8 +2,11 @@
 {
   "pages": [
     "pages/task/taskIndex/taskIndex",
-    "pages/task/thirtySeconds/thirtySeconds",
+    "pages/task/addSpecialTask/addSpecialTask",
+    "pages/task/specialTask/specialTask",
+    "pages/task/allSpecialTask/allSpecialTask",
     "pages/task/doTask/doTask",
+    "pages/task/dailyTask/dailyTask",
     "pages/task/userIntroduction/userIntroduction",
     "pages/impromptu/impromptuIndex/impromptuIndex",
     "pages/task/makeTodayPlan/makeTodayPlan",
@@ -66,22 +69,15 @@
         "selectedIconPath": "images/tabbar/target2.png",
         "iconPath": "images/tabbar/target1.png",
         "pagePath": "pages/task/taskIndex/taskIndex",
-        "text": "练习"
+        "text": "学习"
       },
 
       {
         "selectedIconPath": "images/tabbar/discover2.png",
         "iconPath": "images/tabbar/discover1.png",
         "pagePath": "pages/allReport/allReport",
-        "text": "听演讲"
-      },
-      {
-        "selectedIconPath": "images/tabbar/studyRank2.png",
-        "iconPath": "images/tabbar/studyRank1.png",
-        "pagePath": "pages/studyRank/studyRank",
-        "text": "荣誉"
-      },
-      
+        "text": "交流"
+      },   
       {
         "selectedIconPath": "images/tabbar/user2.png",
         "iconPath": "images/tabbar/user1.png",

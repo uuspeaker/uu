@@ -14,7 +14,7 @@ var saveTask = async (taskId, taskType, userId, timeDuration) => {
     task_status: 2
   })
 
-  await audioService.saveAudio(taskId, userId, timeDuration)
+  await audioService.saveAudio(taskId,'', userId, timeDuration)
 }
 
 /**
@@ -90,6 +90,53 @@ var evaluateTask = async (taskAudioId, evaluationAudioId, userId, timeDuration) 
   audioService.evaluateAudio('', evaluationAudioId, '', userId, timeDuration, taskAudioId)
 }
 
+/**
+ * 保存用户自定义任务任
+ * 返回：
+ */
+var saveSpecialTask = async (taskId, taskName, userId, timeDuration) => {
+  await mysql('user_special_task').insert({
+    task_id: taskId,
+    user_id: userId
+  })
+
+  await audioService.saveAudio(taskId, taskName, userId, timeDuration)
+}
+
+/**
+ * 查询我所有的自定义任务 
+ * 返回：
+ */
+var getMySpecialTask = async (userId) => {
+  var limit = 20
+  var offset = 0
+
+  var taskData = await mysql('user_special_task').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('impromptu_audio', 'impromptu_audio.audio_id', 'user_special_task.task_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_special_task.user_id').where({ 'user_special_task.user_id': userId }).limit(limit).offset(offset)
+
+  for (var i = 0; i < taskData.length; i++) {
+    taskData[i].src = audioService.getSrc(taskData[i].audio_id)
+    taskData[i].user_info = userInfoService.getTailoredUserInfo(taskData[i].user_info)
+  }
+  return taskData
+}
+
+/**
+ * 查询所有的自定义任务 
+ * 返回：
+ */
+var getAllSpecialTask = async () => {
+  var limit = 20
+  var offset = 0
+
+  var taskData = await mysql('user_special_task').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('impromptu_audio', 'impromptu_audio.audio_id', 'user_special_task.task_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_special_task.user_id').orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+
+  for (var i = 0; i < taskData.length; i++) {
+    taskData[i].src = audioService.getSrc(taskData[i].audio_id)
+    taskData[i].user_info = userInfoService.getTailoredUserInfo(taskData[i].user_info)
+  }
+  return taskData
+}
 
 
-module.exports = { saveTask, getAllMyTodayTask, getMyTask, getUserTask, deleteTask, evaluateTask}
+
+module.exports = { saveTask, getAllMyTodayTask, getMyTask, getUserTask, deleteTask, evaluateTask, saveSpecialTask, getMySpecialTask, getAllSpecialTask}

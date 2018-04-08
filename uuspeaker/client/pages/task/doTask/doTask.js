@@ -184,7 +184,7 @@ Page({
         this.setData({
           userTask: myTaskData,
           isCompleteTask: 1,
-          oldTaskId: myTaskData[0].task_id
+          oldTaskId: myTaskData[0].audio_id
         })
         innerAudioContext.src = myTaskData[0].src
         console.log('src', innerAudioContext.src)
