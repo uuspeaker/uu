@@ -6,8 +6,8 @@ var impromptuRoomService = require('../../service/impromptuRoomService');
 module.exports = {
   post: async ctx => {
     var userId = await userInfo.getOpenId(ctx)
-    var mode = ctx.request.body.mode
-    var language = ctx.request.body.language
+    var title = ctx.request.body.title
+    var maxAmount = ctx.request.body.maxAmount
     var startDate = ctx.request.body.startDate
     var startTime = ctx.request.body.startTime
     var endTime = ctx.request.body.endTime
@@ -17,8 +17,8 @@ module.exports = {
       {
         room_id: uuid.v1(),
         user_id: userId,
-        mode: mode,
-        language: language,
+        title: title,
+        max_amount: maxAmount,
         start_date: startDate,
         start_time: startTime,
         end_time: endTime,
@@ -30,8 +30,8 @@ module.exports = {
   put: async ctx => {
     var userId = await userInfo.getOpenId(ctx)
     var roomId = ctx.request.body.roomId
-    var mode = ctx.request.body.mode
-    var language = ctx.request.body.language
+    var title = ctx.request.body.title
+    var maxAmount = ctx.request.body.maxAmount
     var startDate = ctx.request.body.startDate
     var startTime = ctx.request.body.startTime
     var endTime = ctx.request.body.endTime
@@ -39,12 +39,12 @@ module.exports = {
 
     await mysql('room_impromptu').update(
       {
-        mode: mode,
-        language: language,
         start_date: startDate,
         start_time: startTime,
         end_time: endTime,
-        notice: notice
+        title: title,
+        notice: notice,
+        max_amount: maxAmount
       }).where({
         room_id: roomId,
         user_id: userId

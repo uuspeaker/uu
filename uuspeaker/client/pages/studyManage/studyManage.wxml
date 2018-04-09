@@ -113,7 +113,7 @@
 
       <view class="weui-cell weui-cell_access" bindtap='toSpeechSubject'>
         <view>
-          <image src="../../images/studyManage/record.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+          <image src="../../images/studyManage/subject.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
         </view>
         <view class="weui-cell__bd">我的题目</view>
         <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>

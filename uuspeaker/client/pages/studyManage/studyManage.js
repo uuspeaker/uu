@@ -100,7 +100,7 @@ Page({
 
   toSpeechSubject: function () {
     wx.navigateTo({
-      url: '../speech/speechSubject/speechSubject',
+      url: '../speech/mySpeechSubject/mySpeechSubject',
     })
   },
 

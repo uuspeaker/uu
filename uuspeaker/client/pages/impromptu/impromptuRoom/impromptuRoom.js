@@ -22,7 +22,18 @@ Page({
     notice: '',
     mode:'',
     language:'',
-    operation: 'add'
+    operation: 'add',
+
+    maxAmount: ["1", "2", "3", "4", "5", "6", "7", "8"],
+    maxAmountIndex:0
+  },
+
+  bindMaxAmountyChange: function (e) {
+    console.log('picker country 发生选择改变，携带值为', e.detail.value);
+
+    this.setData({
+      maxAmountIndex: e.detail.value
+    })
   },
 
   languageChange: function (e) {
@@ -100,6 +111,8 @@ Page({
 
   openImpromptuRoom: function (e) {
     var requestData = e.detail.value
+    requestData.maxAmount = this.data.maxAmount[requestData.maxAmount]
+    console.log('requestData',requestData)
     var method = 'post'
     if (this.data.operation == 'modify'){
       method = 'put'
@@ -128,20 +141,22 @@ Page({
 
   onLoad: function (options) {
     console.log(options)
-    if (options.operation == 'modify'){
+    if (options.operation == 'modify' || options.operation == 'view'){
       roomId = options.roomId
       //如果是修改，则默认值为之前保存的值
-      this.data.modeItems[0].checked = false
-      this.data.languageItems[0].checked = false
-      this.data.modeItems[parseInt(options.mode) - 1].checked = true
-      this.data.languageItems[parseInt(options.language) - 1].checked = true
+      // this.data.modeItems[0].checked = false
+      // this.data.languageItems[0].checked = false
+      // this.data.modeItems[parseInt(options.mode) - 1].checked = true
+      // this.data.languageItems[parseInt(options.language) - 1].checked = true
       this.setData({
         startDate: options.startDate,
         startTime: options.startTime,
         endTime: options.endTime,
+        title: options.title,
         notice: options.notice,
-        modeItems: this.data.modeItems,
-        languageItems: this.data.languageItems,
+        maxAmountIndex: options.maxAmount-1,
+        // modeItems: this.data.modeItems,
+        // languageItems: this.data.languageItems,
         operation: options.operation
       })
     }

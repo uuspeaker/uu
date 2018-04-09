@@ -1,32 +1,20 @@
 <form bindsubmit="openImpromptuRoom">
-  <view >
-
-    <view class="weui-cells__title">语言</view>
+  <view>
+    <view class="weui-cells__title">活动</view>
     <view class="weui-cells weui-cells_after-title">
-      <radio-group bindchange="languageChange" name="language">
-        <label class="weui-cell weui-check__label" wx:for="{{languageItems}}" wx:key="value">
-          <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
-
-          <view class="weui-cell__bd">{{item.name}}</view>
-          <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
-            <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
-          </view>
-        </label>
-      </radio-group>
-    </view>
-
-    <view class="weui-cells__title">模式</view>
-    <view class="weui-cells weui-cells_after-title">
-      <radio-group bindchange="modeChange" name="mode">
-        <label class="weui-cell weui-check__label" wx:for="{{modeItems}}" wx:key="value">
-          <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
-
-          <view class="weui-cell__bd">{{item.name}}</view>
-          <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
-            <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
-          </view>
-        </label>
-      </radio-group>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">活动标题</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input name="title" class="weui-input" placeholder='' value='{{title}}' />
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__bd">
+          <textarea name="notice" value='{{notice}}' placeholder-class="textarea" class="weui-textarea" placeholder="请输入活动详情" style="height: 10em" maxlength='2000'/>
+        </view>
+      </view>
     </view>
 
     <view class="weui-cells__title">时间</view>
@@ -64,26 +52,33 @@
         </view>
       </view>
 
-      <view class="weui-cell weui-cell_input">
-        <view class="weui-cell__hd">
-          <view class="weui-label">公告</view>
-        </view>
-        <view class="weui-cell__bd">
-          <input name="notice" class="weui-input" placeholder='' value='{{notice}}' />
-        </view>
-      </view>
-
     </view>
+
+    <view class="weui-cells__title">选择</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_select">
+                <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                    <view class="weui-label">人数</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <picker name="maxAmount" bindchange="bindMaxAmountyChange" value="{{maxAmountIndex}}" range="{{maxAmount}}">
+                        <view class="weui-select weui-select_in-select-after">{{maxAmount[maxAmountIndex]}}</view>
+                    </picker>
+                </view>
+            </view>
+        </view>
   </view>
 
   <view class="weui-flex bottom">
 
-      <view class="weui-flex__item">
-        <button class="weui-btn" type="primary" formType="submit">保存</button>
-        <block wx:if="{{operation == 'modify'}}">
-        <button  bindtap='cancelImpromptuRoom'>取消</button>
-        </block>
-      </view>
-    
+    <view class="weui-flex__item">
+    <block wx:if="{{operation != 'view'}}">
+      <button class="weui-btn" type="primary" formType="submit">保存</button>
+      </block>
+      <block wx:if="{{operation == 'modify'}}">
+        <button bindtap='cancelImpromptuRoom'>取消</button>
+      </block>
+    </view>
+
   </view>
 </form>

@@ -78,5 +78,12 @@
   font-weight: bold;
 }
 
+.article {
+  width: 90%;
+  word-break: keep-all;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 

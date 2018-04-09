@@ -1,0 +1,78 @@
+<template name="commentTemplate">
+  <view class="weui-flex" style='background-color: #F6F6F6;padding-left:5px;padding-bottom:1px' >
+    <view ><text class="commentTitle ">{{user_info.nickName}}：</text><text class="commentText ">{{comment}}</text></view>
+  </view>
+</template>
+
+
+<view class="weui-cell write">
+  <view class="weui-cell__bd myReport" bindtap='toMySpeechSubject'>我的</view>
+  <view class="weui-cell__ft" bindtap='addSpeechSubject'>
+    <image class="commentImg" src='../../../images/reportShow/write.png' />
+  </view>
+</view>
+
+<template name="scoreDetailTemplate">
+  <view class="weui-cell ">
+    <view class="weui-cell__hd" style='vertical-align: text-top;'>
+      <view class="user-avatar">
+        <image class="user-pic" src="{{user_info.avatarUrl}}" />
+      </view>
+    </view>
+    <view class="weui-cell__bd" style='padding-left:30px;'>
+      <view class="weui-cell weui-cell_access title">
+        <view style='padding-left:0px'>主题：{{subject_name}}</view>
+        <block wx:if="{{report_type == '1'}}" >
+          <view style='padding-left:20px' data-room_id='{{room_id}}' bindtap='toImpromptuMeeting'>即兴会议</view>
+       </block>
+      </view>
+      
+      <view class="weui-article__p article" style='height:100%'>
+        <rich-text>{{speech_names}}</rich-text>
+        <view class="weui-flex">
+          <view class="weui-flex__item date">{{createDateStr}}</view>
+          <view class="tooltip">
+            <image class=" commentImg " src='../../../images/reportShow/commentTip.png'>
+              <view class="weui-flex tooltiptext">
+                <view class="weui-flex__item" data-reportid='{{subject_id}}' data-like='{{like}}' bindtap='likeArticle'>
+                  <image class=" commentImg2 " src='../../../images/reportShow/like.png'></image>
+                  <text wx:if="{{like==0}}">赞</text>
+                  <text wx:if="{{like==1}}">取消</text>
+                </view>
+                <view class="weui-flex__item" data-reportid="{{subject_id}}" bindtap='showCommentView'>
+                  <image class=" commentImg2 " src='../../../images/reportShow/comment.png'></image>评论</view>
+              </view>
+            </image>
+          </view>
+        </view>
+        <block wx:if="{{nickNameLikeList.length > 0}}">
+          <block wx:if="{{nickNameLikeStr!=''}}">
+            <view class="commentLike">
+              <image class=" commentImg2 " src='../../../images/reportShow/like2.png'></image>{{nickNameLikeStr}}
+            </view>
+          </block>
+          <view class='line'></view>
+        </block>
+        <block wx:if="{{commentList.length > 0}}">
+          <view style='background-color: #F6F6F6;padding-left:5px;padding-bottom:3px'></view>
+          <block wx:for="{{commentList}}" wx:for-item="item">
+            <template is="commentTemplate" data="{{...item}}" />
+          </block>
+          <view style='background-color: #F6F6F6;padding-left:5px;padding-bottom:2px'></view>
+          <view class='line'></view>
+        </block>
+      </view>
+
+    </view>
+  </view>
+</template>
+
+<view class="weui-cells weui-cells_after-title" >
+  <block wx:for="{{studyReportData}}">
+    <template is="scoreDetailTemplate" data="{{...item}}" />
+  </block>
+</view>
+
+<modal class="modal" hidden="{{!showComment}}" title="请输入评论" confirm-text="提交" cancel-text="取消" bindcancel="cancelComment" bindconfirm="saveComment">
+  <textarea class="textarea" id="comment" placeholder="请输入内容" bindinput="setCommentValue" value='{{commentValue}}' > </textarea>
+</modal>

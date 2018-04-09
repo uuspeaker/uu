@@ -28,8 +28,21 @@ Page({
       + '&startDate=' + e.currentTarget.dataset.start_date
       + '&startTime=' + e.currentTarget.dataset.start_time
       + '&endTime=' + e.currentTarget.dataset.end_time
-      + '&mode=' + e.currentTarget.dataset.mode
-      + '&language=' + e.currentTarget.dataset.language
+      + '&title=' + e.currentTarget.dataset.title
+      + '&maxAmount=' + e.currentTarget.dataset.max_amount
+      + '&notice=' + e.currentTarget.dataset.notice
+    })
+  },
+
+  viewImpromptuRoom: function (e) {
+    wx.navigateTo({
+      url: '../impromptuRoom/impromptuRoom?operation=view'
+      + '&roomId=' + e.currentTarget.dataset.room_id
+      + '&startDate=' + e.currentTarget.dataset.start_date
+      + '&startTime=' + e.currentTarget.dataset.start_time
+      + '&endTime=' + e.currentTarget.dataset.end_time
+      + '&title=' + e.currentTarget.dataset.title
+      + '&maxAmount=' + e.currentTarget.dataset.max_amount
       + '&notice=' + e.currentTarget.dataset.notice
     })
   },

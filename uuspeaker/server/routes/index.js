@@ -161,9 +161,11 @@ router.post('/target.myTarget', controllers.target.myTarget.post)
 //所有用户目标查询
 router.get('/target.allTarget', controllers.target.allTarget.get)
 //演讲题目管理
-router.get('/speech.speechService', controllers.speech.speechService.get)
-router.post('/speech.speechService', controllers.speech.speechService.post)
-router.put('/speech.speechService', controllers.speech.speechService.put)
+router.get('/speech.allSpeechSubject', controllers.speech.allSpeechSubject.get)
+//演讲题目管理
+router.get('/speech.mySpeechSubject', controllers.speech.mySpeechSubject.get)
+router.post('/speech.mySpeechSubject', controllers.speech.mySpeechSubject.post)
+router.delete('/speech.mySpeechSubject', controllers.speech.mySpeechSubject.del)
 
 
 

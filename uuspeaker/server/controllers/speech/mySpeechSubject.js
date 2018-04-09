@@ -12,17 +12,19 @@ module.exports = {
   },
 
   //完成当天任务
-  put: async ctx => {
+  del: async ctx => {
     var subjectId = ctx.request.body.subjectId
-    var speechSubject = ctx.request.body.speechSubject
-    var speechNames = ctx.request.body.speechNames
-    await speechService.modifySpeechSubject(subjectId, speechSubject, speechNames)
+    await speechService.deleteSpeechSubject(subjectId)
   },
 
   get: async ctx => {
     var userId = await userInfo.getOpenId(ctx)
-    var subjectData = await speechService.getMySpeechSubject(userId)
-    ctx.state.data = subjectData
+    var queryFlag = ctx.query.queryFlag
+    var firstReportTime = ctx.query.firstReportTime
+    var lastReportTime = ctx.query.lastReportTime
+    var allSpeechSubject = await speechService.getMySpeechSubject(userId, queryFlag, firstReportTime, lastReportTime)
+
+    ctx.state.data = allSpeechSubject
   },
 
 }

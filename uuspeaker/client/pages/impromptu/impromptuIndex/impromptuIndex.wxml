@@ -16,12 +16,9 @@
     </view>
     <view class="weui-cell__bd" >
     <view class="title" >
-        <view style='padding-left:0px'>
-        <text wx:if="{{language == 1}}">【中文】</text>
-        <text wx:if="{{language == 2}}">【英文】</text>
-        <text wx:if="{{mode == 1}}">【即兴演讲】</text> 
-        <text wx:if="{{mode == 2}}">【备稿演讲】</text>
-        <text wx:if="{{mode == 3}}">【工作坊】</text>
+        <view  class='article' style='padding-left:15px'>
+        <text >{{title}}</text>
+     
         <text class='surveyStatus'>
         <text style='color:rgb(228, 140, 58);' wx:if="{{timeStatus == 1}}">报名中</text>
         <text style='color:rgb(136, 186, 71);' wx:elif="{{timeStatus == 2}}">进行中</text>

@@ -1,4 +1,6 @@
 var qcloud = require('../../../vendor/wafer2-client-sdk/index')
+var config = require('../../../config')
+var util = require('../../../utils/util.js')
 Page({
 
   /**
@@ -11,15 +13,13 @@ Page({
   saveSpeechSuject: function(e){
     var requestData = e.detail.value
     qcloud.request({
-      url: `${config.service.host}/weapp/speech.speechSubject`,
+      url: `${config.service.host}/weapp/speech.mySpeechSubject`,
       data: requestData,
       login: false,
       method: 'post',
       success(result) {
         util.showSuccess('保存成功')
-        that.setData({
-          
-        })
+        
       },
       fail(error) {
         util.showModel('请求失败', error);
