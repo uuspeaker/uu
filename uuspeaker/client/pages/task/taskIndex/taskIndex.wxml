@@ -55,7 +55,7 @@
         </view>
         <view class='middle'>日常练习</view>
       </view>
-      <view bindtap='toSpecialTask'>
+      <view bindtap='toSpecialTaskList'>
         <view>
           <image class="task-pic" src="../../../images/studyIndex/plan.png" />
         </view>

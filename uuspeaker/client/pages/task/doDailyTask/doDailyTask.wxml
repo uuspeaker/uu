@@ -1,0 +1,45 @@
+
+  <block wx:if="{{taskType == 1}}">
+    <view class='pageContent'>
+      <view class='tip'>一句话：</view>
+      <view class='content'>我今年的目标是什么</view>
+      <view class='tip'>一句话：</view>
+      <view class='content'>我今天要做什么</view>
+      <view class='tip'>一句话：</view>
+      <view class='content'>为自己打CALL</view>
+    </view>
+  </block>
+  <block wx:if="{{taskType == 2}}">
+    <view class='pageContent'>
+      <view class='tip'>一句话：</view>
+      <view class='content'>我今天哪里做得好</view>
+      <view class='tip'>一句话：</view>
+      <view class='content'>我哪里可以做得更好</view>
+      <view class='tip'>一句话：</view>
+      <view class='content'>为自己打CALL</view>
+    </view>
+  </block>
+  <block wx:if="{{taskType == 3}}">
+    <view class='pageContent'>
+      <view class='tip'>三十秒：</view>
+      <view class='content'>赞美一个人</view>
+    </view>
+  </block>
+  <block wx:if="{{taskType == 4}}">
+    <view class='pageContent'>
+      <view class='tip'>两分钟：</view>
+      <view class='content'>做一篇即兴演讲</view>
+    </view>
+  </block>
+  <block wx:if="{{taskType == 5}}">
+    <view class='pageContent'>
+      <view class='tip'>一分钟：</view>
+      <view class='content'>给别人做反馈</view>
+    </view>
+  </block>
+  <view class="weui-flex ">
+
+    <view class="weui-flex__item record-button" bindtouchstart="startRecord" bindtouchend="stopRecord">
+      <image class="audio-pic" src="../../../images/audioDetail/voice.png"></image>
+    </view>
+  </view>

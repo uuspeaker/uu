@@ -104,10 +104,10 @@ Page({
     })
   },
 
-  toDoTask: function (e) {
+  toDoDailyTask: function (e) {
     var taskType = e.currentTarget.dataset.task_type
     wx.navigateTo({
-      url: '../doTask/doTask?taskType=' + taskType,
+      url: '../doDailyTask/doDailyTask?taskType=' + taskType,
     })
   },
 

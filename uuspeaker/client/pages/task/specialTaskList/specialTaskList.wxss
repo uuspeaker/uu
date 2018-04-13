@@ -7,14 +7,13 @@
   font-size: 15px;
   font-weight: bold;
   color: #576b95;
+  padding-left: 10px;
 }
-
-.commentImg {
-  width: 16px;
-  height: 16px;
-  position: fixed;
-  right: 15px;
-  top: 10px;
+.title{
+  font-size: 18px;
+  font-weight: bold;
+  color: #576b95;
+  
 }
 
 .normal {
@@ -46,7 +45,7 @@
 width: 18px; 
 height: 18px; 
 padding-left: 10px;
-margin-top: 5px;
+
 position: relative;
   top: 4px;
 }
@@ -66,5 +65,10 @@ position: relative;
   font-size: 13px;
   color:#888888;
   font-weight: normal;
+  padding-left:10px;
+  margin-top: 8px;
+}
+.right{
   
+  right: 10px;
 }

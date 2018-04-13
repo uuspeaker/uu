@@ -14,7 +14,7 @@ var saveTask = async (taskId, taskType, userId, timeDuration) => {
     task_status: 2
   })
 
-  await audioService.saveAudio(taskId,'', userId, timeDuration)
+  await audioService.saveAudio(taskId, '', userId, timeDuration)
 }
 
 /**
@@ -27,10 +27,10 @@ var getAllMyTodayTask = async (userId) => {
   taskDate.setMinutes(0)
   taskDate.setSeconds(0)
 
-   var taskData = await mysql('user_task').select('user_task.task_type','impromptu_audio.*').innerJoin('impromptu_audio', 'impromptu_audio.audio_id', 'user_task.task_id').where(
-      'user_task.user_id', userId
-    ).andWhere('user_task.create_date', '>', taskDate)
-  
+  var taskData = await mysql('user_task').select('user_task.task_type', 'impromptu_audio.*').innerJoin('impromptu_audio', 'impromptu_audio.audio_id', 'user_task.task_id').where(
+    'user_task.user_id', userId
+  ).andWhere('user_task.create_date', '>', taskDate)
+
   return taskData
 }
 
@@ -47,8 +47,8 @@ var getMyTask = async (userId, taskType) => {
   taskDate.setSeconds(0)
 
   var taskData = await mysql('user_task').select('user_task.task_type', 'cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('impromptu_audio', 'impromptu_audio.audio_id', 'user_task.task_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_task.user_id').where(
-      'user_task.user_id', userId
-   ).andWhere({ task_type: taskType }).orderBy('create_date', 'desc').limit(limit).offset(offset)
+    'user_task.user_id', userId
+  ).andWhere({ task_type: taskType }).orderBy('create_date', 'desc').limit(limit).offset(offset)
 
   for (var i = 0; i < taskData.length; i++) {
     taskData[i].src = audioService.getSrc(taskData[i].audio_id)
@@ -107,11 +107,23 @@ var saveSpecialTask = async (taskId, taskName, userId, timeDuration) => {
  * 查询我所有的自定义任务 
  * 返回：
  */
-var getMySpecialTask = async (userId) => {
-  var limit = 20
+var getMySpecialTask = async (userId, queryPageType, firstDataTime, lastDataTime) => {
+  var limit = 10
   var offset = 0
+  var taskData = []
 
-  var taskData = await mysql('user_special_task').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('impromptu_audio', 'impromptu_audio.audio_id', 'user_special_task.task_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_special_task.user_id').where({ 'user_special_task.user_id': userId }).limit(limit).offset(offset)
+  if (queryPageType == 0) {
+    taskData = await mysql('user_special_task').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('impromptu_audio', 'impromptu_audio.audio_id', 'user_special_task.task_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_special_task.user_id').where({ 'user_special_task.user_id': userId }).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+  }
+
+  if (queryPageType == 1) {
+    taskData = await mysql('user_special_task').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('impromptu_audio', 'impromptu_audio.audio_id', 'user_special_task.task_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_special_task.user_id').where({ 'user_special_task.user_id': userId }).andWhere('impromptu_audio.create_date', '>', firstDataTime).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+  }
+
+  if (queryPageType == 2) {
+    taskData = await mysql('user_special_task').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('impromptu_audio', 'impromptu_audio.audio_id', 'user_special_task.task_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_special_task.user_id').where({ 'user_special_task.user_id': userId }).andWhere('impromptu_audio.create_date', '<', lastDataTime).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+  }
+
 
   for (var i = 0; i < taskData.length; i++) {
     taskData[i].src = audioService.getSrc(taskData[i].audio_id)
@@ -124,11 +136,26 @@ var getMySpecialTask = async (userId) => {
  * 查询所有的自定义任务 
  * 返回：
  */
-var getAllSpecialTask = async () => {
-  var limit = 20
+var getAllSpecialTask = async (queryUserType, queryPageType, firstDataTime, lastDataTime) => {
+  var limit = 3
   var offset = 0
+  var orderBy = 'impromptu_audio.create_date'
+  if (queryUserType == 3) {
+    orderBy = 'impromptu_audio.view_amount'
+  }
+  var taskData = []
 
-  var taskData = await mysql('user_special_task').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('impromptu_audio', 'impromptu_audio.audio_id', 'user_special_task.task_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_special_task.user_id').orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+  if (queryPageType == 0) {
+  taskData = await mysql('user_special_task').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('impromptu_audio', 'impromptu_audio.audio_id', 'user_special_task.task_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_special_task.user_id').orderBy(orderBy, 'desc').limit(limit).offset(offset)
+  }
+
+  if (queryPageType == 1) {
+    taskData = await mysql('user_special_task').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('impromptu_audio', 'impromptu_audio.audio_id', 'user_special_task.task_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_special_task.user_id').where('impromptu_audio.create_date', '>', firstDataTime).orderBy(orderBy, 'desc').limit(limit).offset(offset)
+  }
+
+  if (queryPageType == 2) {
+    taskData = await mysql('user_special_task').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('impromptu_audio', 'impromptu_audio.audio_id', 'user_special_task.task_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_special_task.user_id').where('impromptu_audio.create_date', '<', lastDataTime).orderBy(orderBy, 'desc').limit(limit).offset(offset)
+  }
 
   for (var i = 0; i < taskData.length; i++) {
     taskData[i].src = audioService.getSrc(taskData[i].audio_id)
@@ -139,4 +166,4 @@ var getAllSpecialTask = async () => {
 
 
 
-module.exports = { saveTask, getAllMyTodayTask, getMyTask, getUserTask, deleteTask, evaluateTask, saveSpecialTask, getMySpecialTask, getAllSpecialTask}
+module.exports = { saveTask, getAllMyTodayTask, getMyTask, getUserTask, deleteTask, evaluateTask, saveSpecialTask, getMySpecialTask, getAllSpecialTask }

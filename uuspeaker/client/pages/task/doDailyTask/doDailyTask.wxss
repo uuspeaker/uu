@@ -1,0 +1,36 @@
+
+.pageContent{
+  text-align: center;
+  margin-top:60px;
+  align-items: center; 
+}
+.audio-pic{
+  width: 35px;
+  height: 35px;
+  
+}
+.audio {
+  width: 60px;
+  height: 60px;
+  border-radius: 3px;
+  padding-right: 10px;
+}
+.audio-position{
+  position: relative;
+  top:250px;
+  left: 40%;
+}
+.tip{
+  font-size: 18px;
+  color:#888888;
+  margin-top: 20px; 
+  font-weight: bold;
+}
+.content{
+  font-size:32px;
+  color:orange;
+  font-weight: bold;
+  
+}
+
+

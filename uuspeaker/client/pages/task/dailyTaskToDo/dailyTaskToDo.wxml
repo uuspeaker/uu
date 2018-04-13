@@ -2,7 +2,7 @@
     <view class="weui-cells__title"></view>
 
 <view class="weui-cells weui-cells_after-title">
-  <view class="weui-cell" data-task_type='1' bindtap='toDoTask'>
+  <view class="weui-cell" data-task_type='1' bindtap='toDoDailyTask'>
     <view class="user-avatar">
       <image class="user-pic" src="../../../images/studyIndex/plan.png" />
     </view>

@@ -5,6 +5,13 @@ var dateFormat = require('../../../common/dateFormat.js')
 
 const innerAudioContext = wx.createInnerAudioContext()
 var showTimes = 0
+//查询标记(1-查自己;2-查所有;3-查最赞)
+var queryUserType = ''
+
+//查询标记(0-查询最新;1-查询前面10条;2-查询后面10条)
+var queryPageType = 0
+var firstDataTime = ''
+var lastDataTime = ''
 
 Page({
 
@@ -18,26 +25,78 @@ Page({
     currentLikeUser: []
   },
 
-  //查询最新房间信息
-  queryImpromptuAudios: function (e) {
+  //查询自由练习任务信息
+  queryMySpecialTask: function () {
+    if (queryUserType == 1)return
+    queryUserType = 1
+    queryPageType = 0
+    this.setData({
+      audios: []
+    })
+    this.doQuerySpecialTask(queryUserType)
+  },
+
+  queryNewSpecialTask: function () {
+    if (queryUserType == 2) return
+    queryUserType = 2
+    queryPageType = 0
+    this.setData({
+      audios: []
+    })
+    this.doQuerySpecialTask(queryUserType)
+  },
+
+  queryHotSpecialTask: function () {
+    if (queryUserType == 3) return
+    queryUserType = 3
+    queryPageType = 0
+    this.setData({
+      audios: []
+    })
+    this.doQuerySpecialTask(queryUserType)
+  },
+
+  //查询自由练习任务信息
+  doQuerySpecialTask: function (queryUserType) {
     //util.showBusy('请求中...')
+    var queryData = { 'queryPageType': queryPageType, 'firstDataTime': firstDataTime, 'lastDataTime': lastDataTime, queryUserType: queryUserType  }
+    console.log('queryData',queryData)
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/task.allSpecialTask`,
+      url: `${config.service.host}/weapp/task.specialTask`,
       login: true,
       method: 'get',
+      data: queryData,
       success(result) {
         console.log(result)
+        if (result.data.data == '') return;
+        var resultData = []
+        if (queryPageType == 0) {
+          resultData = result.data.data
+        } else if (queryPageType == 1) {
+          resultData = [].concat(result.data.data, that.data.audios)
+        } else if (queryPageType == 2) {
+          resultData = [].concat(that.data.audios, result.data.data)
+        }
         that.setData({
-          audios: result.data.data
+          audios: resultData
         })
         that.formatDateAndStatus()
+        //保存第一条和最后一条数据的id,上拉和下拉的时候查询用
+        that.refreshDataId()
       },
       fail(error) {
         util.showModel('请求失败', error);
         console.log('request fail', error);
       }
     })
+  },
+
+  //保存第一条和最后一条数据的id,上拉和下拉的时候查询用
+  refreshDataId: function () {
+    var length = this.data.audios.length
+    firstDataTime = this.data.audios[0].create_date
+    lastDataTime = this.data.audios[length - 1].create_date
   },
 
   //查询点赞用户信息
@@ -193,8 +252,20 @@ Page({
   },
 
   onShow: function () {
-    this.queryImpromptuAudios()
+    queryPageType = 0
+    this.queryMySpecialTask()
   },
+
+  onPullDownRefresh: function () {
+    queryPageType = 1
+    this.doQuerySpecialTask(queryUserType)
+  },
+
+  onReachBottom: function () {
+    queryPageType = 2
+    this.doQuerySpecialTask(queryUserType)
+  },
+
 
   toAudioDetail: function (e) {
     wx.navigateTo({
@@ -202,15 +273,15 @@ Page({
     })
   },
 
-  toMySpecialTask: function (e) {
+  toAllSpecialTask: function (e) {
     wx.navigateTo({
-      url: '../specialTask/specialTask'
+      url: '../allSpecialTask/allSpecialTask' 
     })
   },
 
-  addSpecialTask: function (e) {
+  toDoSpecialTask: function(e) {
     wx.navigateTo({
-      url: '../addSpecialTask/addSpecialTask?'
+      url: '../doSpecialTask/doSpecialTask?'
     })
   },
 

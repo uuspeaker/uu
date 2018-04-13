@@ -2,14 +2,15 @@
 {
   "pages": [
     "pages/task/taskIndex/taskIndex",
+    "pages/launchStudy/launchStudy",
+    "pages/task/specialTaskList/specialTaskList",
+    "pages/task/doSpecialTask/doSpecialTask",
     "pages/speech/mySpeechSubject/mySpeechSubject",
     "pages/speech/allSpeechSubject/allSpeechSubject",
     "pages/speech/addSpeechSubject/addSpeechSubject",
-    "pages/task/addSpecialTask/addSpecialTask",
-    "pages/task/specialTask/specialTask",
-    "pages/task/allSpecialTask/allSpecialTask",
     "pages/task/doTask/doTask",
-    "pages/task/dailyTask/dailyTask",
+    "pages/task/doDailyTask/doDailyTask",
+    "pages/task/dailyTaskToDo/dailyTaskToDo",
     "pages/task/userIntroduction/userIntroduction",
     "pages/impromptu/impromptuIndex/impromptuIndex",
     "pages/task/makeTodayPlan/makeTodayPlan",
@@ -22,7 +23,7 @@
     "pages/index/index",
     "pages/impromptu/myImpromptuIndex/myImpromptuIndex",
     "pages/chat/chat",
-    "pages/launchStudy/launchStudy",
+    
     "pages/impromptu/room/room",
     "pages/impromptu/impromptuDialog/impromptuDialog",
     "pages/target/allTargetDetail/allTargetDetail",

@@ -5,10 +5,16 @@ var audioService = require('../../../common/audioService.js')
 var dateFormat = require('../../../common/dateFormat.js')
 var uuid = require('../../../common/uuid.js')
 
+var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
+
 const innerAudioContext = wx.createInnerAudioContext()
+
+var showTimes = 0
 var timeDuration = 0
 var startDate
 var endDate
+
+var timetimeDuration = 0 //演讲时间
 
 Page({
 
@@ -16,8 +22,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isPlay: 0,
-    taskName: ''
+    taskType: 0
   },
 
   //用户按下录音按钮
@@ -37,11 +42,11 @@ Page({
       return
     }
     var taskId = uuid.v1()
-
+    if (this.data.isCompleteTask == 1) {
       var that = this
       wx.showModal({
         title: '提示',
-        content: '是否保存录音？',
+        content: '是否替换原有介绍？',
         success: function (sm) {
           if (sm.confirm) {
             setTimeout(audioService.saveAudio, 300, taskId)
@@ -51,7 +56,13 @@ Page({
           }
         }
       })
-
+    } else {
+      setTimeout(audioService.saveAudio, 300, taskId)
+      this.saveAudioRecord(taskId)
+      this.setData({
+        isCompleteTask: 1
+      })
+    }
 
   },
 
@@ -60,15 +71,17 @@ Page({
     console.log('saveAudioRecord')
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/task.specialTask`,
+      url: `${config.service.host}/weapp/task.userTask`,
       login: true,
-      data: { taskId: taskId, timeDuration: timeDuration, taskName: this.data.taskName },
+      data: { taskId: taskId, timeDuration: timeDuration,taskType: this.data.taskType },
       method: 'post',
       success(result) {
         util.showSuccess('录音保存成功')
         that.setData({
           isCompleteTask: 1
         })
+        //innerAudioContext.src = audioService.getSrc()
+        that.getMyTask()
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -77,28 +90,11 @@ Page({
     })
   },
 
-
-  stopAudio: function (e) {
-    var src = e.currentTarget.dataset.src
-    innerAudioContext.stop()
-    this.resetTimeAndPlayStatus()
-  },
-
-  onLoad: function (options) {
-
-    innerAudioContext.onError((res) => {
-      console.log(res.errMsg)
-      console.log(res.errCode)
-    })
-    innerAudioContext.onStop((res) => {
-      console.log('onStop')
-    })
-    innerAudioContext.onEnded((res) => {
-      console.log('onEnd')
+  onLoad: function(options){
+    this.setData({
+      taskType: options.taskType
     })
 
-  },
-
-
+  }
 
 })

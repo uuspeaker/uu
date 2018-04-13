@@ -1,0 +1,15 @@
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">任务名称</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input name="taskName" class="weui-input" placeholder='请输入任务名称' bindinput ="taskNameInput" />
+    </view>
+  </view>
+   </view>
+  <view class="weui-flex ">
+    <view class="weui-flex__item record-button" bindtouchstart="startRecord" bindtouchend="stopRecord">
+      <image class="audio-pic" src="../../../images/audioDetail/voice.png"></image>
+    </view>
+  </view>

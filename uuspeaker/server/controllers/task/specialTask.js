@@ -18,7 +18,16 @@ module.exports = {
 
   get: async ctx => {
     var userId = await userInfo.getOpenId(ctx)
-    var taskData = await userTaskService.getMySpecialTask(userId)
+    var queryUserType = ctx.query.queryUserType
+    var queryPageType = ctx.query.queryPageType
+    var firstDataTime = ctx.query.firstDataTime
+    var lastDataTime = ctx.query.lastDataTime
+    var taskData
+    if(queryUserType == 1){
+      taskData = await userTaskService.getMySpecialTask(userId, queryPageType, firstDataTime, lastDataTime)
+    }else{
+      taskData = await userTaskService.getAllSpecialTask(queryUserType, queryPageType, firstDataTime, lastDataTime)
+    }
     ctx.state.data = taskData
   },
 

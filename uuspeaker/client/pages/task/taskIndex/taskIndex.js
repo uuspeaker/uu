@@ -110,13 +110,13 @@ Page({
 
   toDailyTask: function (e) {
     wx.navigateTo({
-      url: '../dailyTask/dailyTask',
+      url: '../dailyTaskToDo/dailyTaskToDo',
     })
   },
 
-  toSpecialTask: function (e) {
+  toSpecialTaskList: function (e) {
     wx.navigateTo({
-      url: '../specialTask/specialTask',
+      url: '../specialTaskList/specialTaskList',
     })
   },
   
