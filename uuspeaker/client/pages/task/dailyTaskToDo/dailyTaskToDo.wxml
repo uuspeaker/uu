@@ -24,7 +24,7 @@
     </view>
   </view>
 
-  <view class="weui-cell" data-task_type='2' bindtap='toDoTask'>
+  <view class="weui-cell" data-task_type='2' bindtap='toDoDailyTask'>
     <view class="user-avatar">
       <image class="user-pic" src="../../../images/studyIndex/think.png" />
     </view>
@@ -46,7 +46,7 @@
     </view>
   </view>
 
-  <view class="weui-cell" data-task_type='3' bindtap='toDoTask'>
+  <view class="weui-cell" data-task_type='3' bindtap='toDoDailyTask'>
     <view class="user-avatar">
       <image class="user-pic" src="../../../images/studyIndex/like1.png" />
     </view>

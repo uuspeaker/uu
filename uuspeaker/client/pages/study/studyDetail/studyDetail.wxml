@@ -1,0 +1,77 @@
+<template name="scoreDetailTemplate">
+  <view class="weui-cell weui-cell_access">
+    <view class="weui-cell__bd" style='padding-left:50px'>{{meeting_date}}</view>
+    <view class="weui-cell__bd" style='padding-left:100px;'>
+      <text wx:if="{{score_type == 1}}">参会</text>
+      <text wx:if="{{score_type == 2}}">最佳演讲</text>
+      <text wx:if="{{score_type == 3}}">最佳点评</text>
+      <text wx:if="{{score_type == 4}}">主持</text>
+      <text wx:if="{{score_type == 5}}">复盘</text>
+    </view>
+  </view>
+</template>
+
+<template name="scoreDetailTemplate2">
+  <view class="weui-cell weui-cell_access">
+    <view class="weui-cell__bd" style='padding-left:50px'>{{study_date}}</view>
+    <view class="weui-cell__bd" style='padding-left:100px;'>{{study_duration}}分钟</view>
+  </view>
+</template>
+
+<template name="scoreDetailTemplate3">
+  <view class="weui-cell weui-cell_access title">   
+    <view style='padding-left:0px'>{{study_date}}</view>
+    <view style='padding-left:5px'>{{title}}</view>
+  </view>
+  <view class="weui-article__p article" >
+    <rich-text>{{study_report}}</rich-text>
+  </view>
+</template>
+
+<template name="scoreDetailTemplate31">
+  <view class="weui-article">
+    <view class="weui-article__section">
+      <view class="weui-article__h3">1.1 节标题</view>
+      <view class="weui-article__p">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+      </view>
+    </view>
+  </view>
+</template>
+
+
+<view class="page">
+  <view class="page__bd">
+    <view class="weui-tab">
+      <view class="weui-navbar">
+        <block wx:for="{{tabs}}" wx:key="*this">
+          <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+            <view class="weui-navbar__title">{{item}}</view>
+          </view>
+        </block>
+        <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+      </view>
+      <view class="weui-tab__panel">
+        <!--tab1-->
+
+        <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+          <view class="weui-cells weui-cells_after-title">
+            <block wx:for="{{studyScoreData}}">
+              <template is="scoreDetailTemplate" data="{{...item}}" />
+            </block>
+          </view>
+        </view>
+
+        <!--tab2-->
+        <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+          <view class="weui-cells weui-cells_after-title">
+            <block wx:for="{{studyDurationData}}">
+              <template is="scoreDetailTemplate2" data="{{...item}}" />
+            </block>
+          </view>
+        </view>
+
+      </view>
+    </view>
+  </view>
+</view>

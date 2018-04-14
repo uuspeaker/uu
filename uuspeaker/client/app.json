@@ -1,68 +1,58 @@
-
 {
   "pages": [
     "pages/task/taskIndex/taskIndex",
-    "pages/launchStudy/launchStudy",
     "pages/task/specialTaskList/specialTaskList",
     "pages/task/doSpecialTask/doSpecialTask",
+    "pages/task/doDailyTask/doDailyTask",
+    "pages/task/dailyTaskToDo/dailyTaskToDo",
+
     "pages/speech/mySpeechSubject/mySpeechSubject",
     "pages/speech/allSpeechSubject/allSpeechSubject",
     "pages/speech/addSpeechSubject/addSpeechSubject",
-    "pages/task/doTask/doTask",
-    "pages/task/doDailyTask/doDailyTask",
-    "pages/task/dailyTaskToDo/dailyTaskToDo",
-    "pages/task/userIntroduction/userIntroduction",
-    "pages/impromptu/impromptuIndex/impromptuIndex",
-    "pages/task/makeTodayPlan/makeTodayPlan",
-    "pages/studyIndex/studyIndex",
-    "pages/impromptu/audioDetail/audioDetail",
-    "pages/audioTest/audioTest",
-    "pages/impromptu/myAudioManage/myAudioManage",
-    "pages/impromptu/userAudio/userAudio",
-    "pages/impromptu/myAudio/myAudio",
-    "pages/index/index",
-    "pages/impromptu/myImpromptuIndex/myImpromptuIndex",
-    "pages/chat/chat",
-    
-    "pages/impromptu/room/room",
-    "pages/impromptu/impromptuDialog/impromptuDialog",
-    "pages/target/allTargetDetail/allTargetDetail",
-    "pages/target/myTargetDetail/myTargetDetail",
-    "pages/target/myTarget/myTarget",
-    "pages/studyManage/studyManage",
-    "pages/multiroom/roomlist/roomlist",
-    "pages/multiroom/room/room",
 
-    "pages/multiroom/roomname/roomname",
-    "pages/cameraview/cameraview",
-    "pages/prepared/preparedMeeting/preparedMeeting",
-    
+    "pages/userInfo/allTargetDetail/allTargetDetail",
+    "pages/userInfo/myTargetDetail/myTargetDetail",
+    "pages/userInfo/myTarget/myTarget",
+    "pages/userInfo/myIntroduction/myIntroduction",
+
+    "pages/impromptu/impromptuIndex/impromptuIndex",
+    "pages/impromptu/cameraview/cameraview",
     "pages/impromptu/impromptuSurveyDetail/impromptuSurveyDetail",
     "pages/impromptu/impromptuVote/impromptuVote",
-    
     "pages/impromptu/impromptuSurvey/impromptuSurvey",
     "pages/impromptu/impromptuMeeting/impromptuMeeting",
     "pages/impromptu/impromptuRoom/impromptuRoom",
-    "pages/allReport/allReport",
-    "pages/myReport/myReport",
-    "pages/leaderRank/leaderRank",
-    "pages/studyRank/studyRank",
-    "pages/studyScore/studyScore",
-    "pages/dataReport/dataReport",
-    "pages/studyDetail/studyDetail",
-    "pages/scoreManage/scoreManage",
-    "pages/checkin/checkin",
-    
-    "pages/studyShow/studyShow",
-    "pages/index2/index2",
-    "pages/meeting/meeting",
-    "pages/scoreDetail/scoreDetail",
-    "pages/scoreRank/scoreRank",
-    "pages/userStudyRank/userStudyRank",
-    "pages/userInfo/userInfo",
-    "pages/leaderPower/leaderPower",
-    "pages/leaderDetail/leaderDetail",
-    "pages/writeArticle/writeArticle"
+    "pages/impromptu/myAudioManage/myAudioManage",
+    "pages/impromptu/userAudio/userAudio",
+    "pages/impromptu/myAudio/myAudio",
+    "pages/impromptu/myImpromptuIndex/myImpromptuIndex",
+    "pages/impromptu/room/room",
+    "pages/impromptu/impromptuDialog/impromptuDialog",
+    "pages/impromptu/audioDetail/audioDetail",
+
+    "pages/article/allArticle/allArticle",
+    "pages/article/myArticle/myArticle",
+    "pages/article/writeArticle/writeArticle",
+
+    "pages/score/score/Manage/scoreManage",
+    "pages/score/scoreDetail/scoreDetail",
+    "pages/score/scoreRank/scoreRank",
+
+    "pages/study/launchStudy/launchStudy",
+    "pages/study/userStudyRank/userStudyRank",
+    "pages/study/studyRank/studyRank",
+    "pages/study/studyScore/studyScore",
+    "pages/study/studyDetail/studyDetail",
+    "pages/study/studyManage/studyManage",
+    "pages/study/studyIndex/studyIndex",
+    "pages/study/studyShow/studyShow",
+    "pages/leader/leaderRank/leaderRank",
+    "pages/leader/leaderPower/leaderPower",
+    "pages/leader/leaderDetail/leaderDetail",
+
+    "pages/tmp/checkin/checkin",
+    "pages/tmp/dataReport/dataReport",
+    "pages/tmp/audioTest/audioTest"
   ],
   "tabBar": {
     "color": "#a9b7b7",
@@ -75,17 +65,16 @@
         "pagePath": "pages/task/taskIndex/taskIndex",
         "text": "学习"
       },
-
       {
         "selectedIconPath": "images/tabbar/discover2.png",
         "iconPath": "images/tabbar/discover1.png",
-        "pagePath": "pages/allReport/allReport",
+        "pagePath": "pages/article/allArticle/allArticle",
         "text": "交流"
-      },   
+      },
       {
         "selectedIconPath": "images/tabbar/user2.png",
         "iconPath": "images/tabbar/user1.png",
-        "pagePath": "pages/studyManage/studyManage",
+        "pagePath": "pages/study/studyManage/studyManage",
         "text": "我的"
       }
     ]

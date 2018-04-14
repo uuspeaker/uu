@@ -1,0 +1,110 @@
+/*
+http://img3.imgtn.bdimg.com/it/u=4271650689,2402158768&fm=27&gp=0.jpg
+http://img4.imgtn.bdimg.com/it/u=4038329916,888012422&fm=27&gp=0.jpg
+http://img4.imgtn.bdimg.com/it/u=1519902398,155326886&fm=27&gp=0.jpg
+http://img4.imgtn.bdimg.com/it/u=4172928748,2410702786&fm=27&gp=0.jpg
+http://img0.imgtn.bdimg.com/it/u=3797752147,1004609241&fm=27&gp=0.jpg
+http://img5.imgtn.bdimg.com/it/u=2153488125,3604286718&fm=27&gp=0.jpg
+http://d.paper.i4.cn/max/2016/11/22/10/1479782597687_760966.jpg
+http://img3.imgtn.bdimg.com/it/u=3302332561,1415354&fm=27&gp=0.jpg
+http://d.paper.i4.cn/max/2017/02/21/14/1487658891371_658499.jpg
+*/
+.smile {
+  background-image: url('http://d.paper.i4.cn/max/2017/02/21/14/1487658891371_658499.jpg');
+  background-repeat: no-repeat;
+  padding: 15px;
+  width: 100%;
+  height: 573px;
+}
+.tip{
+  margin-top:05px;
+  font-size:13px;
+  border:1.5px solid black;
+  width: 130px;
+}
+.content {
+  width: 80%;
+  height: 140px;
+  font-weight: bold;
+  padding: 10px;
+  font-size: 15px;
+  margin-left: 13px;
+  background-color: white;
+  border-radius:10px;
+  opacity:0.8;
+  
+}
+.name{
+  
+  font-weight: bold;
+}
+.small-grey{
+  font-size: 13px;
+  color:#888888;
+  font-weight: normal;
+}
+.small-black{
+  font-size: 13px;
+  color:black;
+  font-weight: normal;
+}
+.small-grey-2{
+  font-size: 11px;
+  color:#888888;
+  font-weight: normal;
+  margin: 6px;
+  margin-top: 15px 
+
+}
+.column{
+    flex-direction:column;
+}
+.line{
+width:99%;
+height:1px;
+margin-top: 15px;
+margin-bottom: 15px;
+background:#F6F6F6;
+}
+.uu-code{
+  width:70px;
+  height:70px;
+  margin-left: 60px; 
+  margin-top: 5px;
+}
+.unlogin{
+  width:35px;
+  height:35px;
+  margin-right: 15px;
+  margin-top: 3px; 
+  border-radius: 25px;
+}
+.code-notice{
+  background-color: red;
+  border-radius: 20px;
+  font-size: 12px;
+  padding-left: 10px;
+  margin-top: 5px;
+  width: 110px;
+  color: white;
+}
+.arrow{
+  background-color: white;
+  border-radius: 13px;
+  width:13px;
+  height: 13px;
+  font-weight: bold;
+  margin-top: 3px;
+  color: red;
+}
+.arrow-right {  
+    font-size: 0;  
+    border-left-style: solid;  
+    border-top: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid transparent; 
+    border-left: 7px solid white; 
+    margin: 3px;
+
+}  
+

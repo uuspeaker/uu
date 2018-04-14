@@ -1,0 +1,132 @@
+<view class="page">
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell">
+      <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+        <image class="user-pic" src="{{userInfo.avatarUrl}}" />
+      </view>
+      <view class="weui-cell__bd">
+        <view>{{userInfo.nickName}}</view>
+        <view style="font-size: 13px;color: #888888;padding-top:5px">
+          <text wx:if="{{totalScore == 0}}">Lv1：乞丐演讲君</text>
+          <text wx:if="{{totalScore >= 1 && totalScore < 20}}">Lv2：贫民演讲君</text>
+          <text wx:if="{{totalScore >= 20 && totalScore < 50}}">Lv3：布衣演讲君</text>
+          <text wx:if="{{totalScore >= 50 && totalScore < 100}}">Lv4：青铜演讲君</text>
+          <text wx:if="{{totalScore >= 100 && totalScore < 200}}">Lv5：白银演讲君</text>
+          <text wx:if="{{totalScore >= 200 && totalScore < 300}}">Lv6：黄金演讲君</text>
+          <text wx:if="{{totalScore >= 300 && totalScore < 500}}">Lv7：铂金演讲君</text>
+          <text wx:if="{{totalScore >= 500 && totalScore < 700}}">Lv8：钻石演讲君</text>
+          <text wx:if="{{totalScore >= 700 && totalScore < 1000}}">Lv9：星耀演讲君</text>
+          <text wx:if="{{totalScore >= 1000}}">Lv10：王者演讲君】</text>
+        </view>
+      </view>
+    </view>
+
+    <view class='line'></view>
+
+    <view>
+      <view class="weui-flex" style='padding-left:15px;padding-bottom:5px'>
+        <view class="weui-flex__item">
+          <view class='small-grey'>参会</view>
+          <view class="weui-flex" style='font-size:15px'>{{scoreData.meetingScore}}</view>
+        </view>
+        <view class="weui-flex__item">
+          <view class='small-grey'>演讲</view>
+          <view class="weui-flex" style='font-size:15px'>{{scoreData.speakerScore}}</view>
+        </view>
+        <view class="weui-flex__item">
+          <view class='small-grey'>点评</view>
+          <view class="weui-flex" style='font-size:15px'>{{scoreData.evaluatorScore}}</view>
+        </view>
+        <view class="weui-flex__item">
+          <view class='small-grey'>主持</view>
+          <view class="weui-flex" style='font-size:15px'>{{scoreData.hostScore}}</view>
+        </view>
+        <view class="weui-flex__item">
+          <view class='small-grey'>复盘</view>
+          <view class="weui-flex" style='font-size:15px'>{{scoreData.reportScore}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="page__bd">
+    <view class="weui-cells__title"></view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell " bindtap='toStudyScore'>
+        <view>
+          <image src="../../../images/studyManage/checkIn.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
+        <view class="weui-cell__bd">每日打卡</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
+      </view>
+      <view class="weui-cell " bindtap='toRepireStudyScore'>
+        <view>
+          <image src="../../../images/studyManage/score.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
+        <view class="weui-cell__bd">积分补录</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
+      </view>
+    </view>
+
+    <view class="weui-cells__title"></view>
+    <view class="weui-cells weui-cells_after-title">
+
+      <view class="weui-cell weui-cell_access" bindtap='toMyIntroduction'>
+        <view>
+          <image src="../../../images/studyManage/introduction.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
+        <view class="weui-cell__bd">我的名片</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" bindtap='toMyTarget'>
+        <view>
+          <image src="../../../images/studyManage/target.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
+        <view class="weui-cell__bd">我的目标</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" bindtap='toStudyDetail'>
+        <view>
+          <image src="../../../images/studyManage/study.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
+        <view class="weui-cell__bd">我的学习</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" bindtap='toReportDetail'>
+        <view>
+          <image src="../../../images/studyManage/article.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
+        <view class="weui-cell__bd">我的复盘</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" bindtap='toLeaderDetail'>
+        <view>
+          <image src="../../../images/studyManage/leader.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
+        <view class="weui-cell__bd">我的影响</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" bindtap='toSpeechAudio'>
+        <view>
+          <image src="../../../images/studyManage/record.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
+        <view class="weui-cell__bd">我的录音</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" bindtap='toSpeechSubject'>
+        <view>
+          <image src="../../../images/studyManage/subject.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
+        <view class="weui-cell__bd">我的题目</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
+      </view>
+
+    </view>
+  </view>
+</view>

@@ -1,0 +1,65 @@
+<form bindsubmit="addUserTarget">
+  <view class=" ">
+
+    <view class="weui-cells__title">
+      <view>请制定一个符合SMART原则的目标</view>
+      <view style='font-size:11px'>1. 目标必须是具体的（Specific）</view>
+      <view style='font-size:11px'>2. 目标必须是可以衡量的（Measurable）</view>
+      <view style='font-size:11px'>3. 目标必须是可以达到的（Attainable）</view>
+      <view style='font-size:11px'>4. 目标是要与其他目标具有一定的相关性(Relevant)</view>
+      <view style='font-size:11px'>5.目标必须具有明确的截止期限（Time-bound）</view>
+    </view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_switch">
+        <view class="weui-cell__bd">
+          <textarea name="targetContent" placeholder='目标描述'></textarea>
+        </view>
+      </view>
+    </view>
+
+    <view class="weui-cells__title">你准备多久完成？</view>
+    <view class="weui-cells weui-cells_after-title">
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">计划学习</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input name="duration" class="weui-input" placeholder='单位（小时）' value='{{notice}}' />
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">计划完成</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker name="endDate" mode="date" value="{{endDate}}" start="{{endDate}}" end="" bindchange="bindDateChange">
+            <view class="weui-input">{{endDate}}</view>
+          </picker>
+        </view>
+      </view>
+
+    </view>
+
+    <view class="weui-cells__title">你是否愿意接受他人的督促？</view>
+
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_switch">
+        <view class="weui-cell__bd">是否接受督促</view>
+        <view class="weui-cell__ft">
+          <switch name="isSupervised" checked />
+        </view>
+      </view> 
+    </view>
+
+  </view>
+
+  <view class="weui-flex bottom">
+    
+    <view class="weui-flex__item">
+      <button class="weui-btn" type="primary" formType="submit">保存</button>
+    </view>
+
+  </view>
+</form>

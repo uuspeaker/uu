@@ -1,0 +1,16 @@
+/* pages/studyDetail/studyDetail.wxss */
+
+.title {
+  padding-left: 15px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.article {
+  padding-left: 15px;
+  padding-right: 5px;
+  font-size: 15px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
+}

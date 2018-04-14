@@ -1,0 +1,131 @@
+.welcome {
+  width: 50%;
+  height: 200px;
+  background-color: rgb(228, 140, 58);
+  margin: 4px ;
+  border-radius: 60px 0 0 0;
+  color: white;
+  
+}
+.welcome-name {
+  font-size: 30px;
+  padding-top: 60px;
+  font-weight: bold;
+  text-align: center;
+}
+.welcome-tip {
+  font-size: 18px;
+  padding-top: 10px;
+  text-align: center;
+}
+.guideline {
+  width: 95%;
+  height: 90px;
+  background-color: rgb(29, 178, 23858);
+  margin: 4px;
+  
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+}
+.uu-code{
+  width:30px;
+  height:30px;
+  margin-top: 15px;
+}
+.uu-code2{
+  width:40px;
+  height:40px;
+  margin-top: 15px;
+}
+.uu-code3{
+  width:45px;
+  height:45px;
+  margin-top: 10px;
+}
+.uu-code4{
+  width:60px;
+  height:60px;
+}
+.advance {
+  width: 95%;
+  height: 103px;
+  background-color: rgb(136, 186, 71);
+  margin: 4px;
+  margin-top: 7px;
+  color: white;
+  text-align: center;
+}
+.speech {
+  width: 90%;
+  height: 90px;
+  background-color: rgb(29, 178, 23858);
+  margin: 4px;
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 16px;
+}
+.workshop{
+  height: 103px;
+  margin: 4px;
+  color: white;
+  text-align: center;
+
+  margin-top:3px;
+  width: 96%;
+  background-color: rgb(217,89,54);
+}
+.startStudy {
+  margin: 5px;
+  width: 97%;
+  height: 100px;
+  font-weight: bold;
+  font-size: 42px;
+  text-align: center;
+  padding-top: 3px;
+  opacity:1;
+  color:grey;
+}
+
+.contact {
+  border-radius: 0 0 60px 0;
+  background-color: rgb(228, 188, 41);
+}
+.hero{
+  width: 50%;
+  height: 200px;
+  margin: 4px ;
+  color: white;
+  border-radius:0 0 60px 0;
+  background-color: rgb(228,188,41);
+  font-size: 30px;
+  
+  font-weight: bold;
+  text-align: center;
+}
+
+.slide {
+  width: 90%;
+  margin: 0 auto;
+  line-height: 50px;
+  font-size: 50px;
+  text-align: center;
+  -webkit-background-clip: text; /*按文字裁剪*/
+  -webkit-text-fill-color: transparent; /*文字的颜色使用背景色*/
+  background-color: black; /*设置一个背景色*/
+  background-image: -webkit-linear-gradient(-45deg, rgba(0, 0, 0, 0.6) 30%, #aff0ff 50%, rgba(0, 0, 0, 0.6) 70%); /*设置渐变的背景，按对角线渐变*/
+  background-blend-mode: hard-light; /*设置背景为混合模式下的强光模式*/
+  background-size: 200%;
+  -webkit-animation: shine 4s infinite; /*给背景添加动画改变位置*/
+}
+
+@-webkit-keyframes shine {
+  from {
+    background-position: 100%;
+  }
+
+  to {
+    background-position: 0;
+  }
+}

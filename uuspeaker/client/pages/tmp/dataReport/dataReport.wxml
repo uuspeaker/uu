@@ -1,0 +1,23 @@
+<view class="container">
+<!--查询用户学习排名信息-->
+  <!--报名参会-->
+  <form id='studyRankForm' bindsubmit="queryUserScore" bindreset="formReset">
+   <view class="section">
+    <view class="section__title">开始日期：</view>
+    <input id="startDate" name="startDate" value="20180108" bindBlur="bindBlur" />
+     <view class="section__title">截止日期：</view>
+    <input id="endDate" name="endDate" value="20180114" bindBlur="bindBlur" />
+    <button class='userinfo-button' formType="submit" >查询</button>    
+  </view>
+  </form>
+<block wx:if="{{totalScore == 0}}"><view class="section__title">没有查询到任何信息！</view></block>
+  <block wx:if="{{totalScore != 0}}">
+<!--汇总信息展示-->
+  <view class="section__title">总人数：{{dataReport.totalUserAmount[0].totalScore}}</view>
+  <view class="section__title">参会人数：{{dataReport.studyUserAmount[0].totalScore}}</view>
+  <view class="section__title">参会人次：{{dataReport.studyAmount[0].totalScore}}</view>
+  
+  <view class="section__title">新增会员数：{{dataReport.increasedUser[0].totalScore}}</view>
+  <view class="section__title">复盘数：{{dataReport.reportCount[0].totalScore}}</view>
+  </block>
+  </view>

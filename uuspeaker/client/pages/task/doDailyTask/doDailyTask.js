@@ -71,7 +71,7 @@ Page({
     console.log('saveAudioRecord')
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/task.userTask`,
+      url: `${config.service.host}/weapp/task.dailyTask`,
       login: true,
       data: { taskId: taskId, timeDuration: timeDuration,taskType: this.data.taskType },
       method: 'post',

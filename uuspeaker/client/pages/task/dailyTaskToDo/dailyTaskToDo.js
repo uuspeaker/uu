@@ -31,7 +31,7 @@ Page({
     //util.showBusy('请求中...')
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/task.thirtySeconds`,
+      url: `${config.service.host}/weapp/task.dailyTaskToDo`,
       login: true,
       method: 'get',
       data: { taskType: 0 },

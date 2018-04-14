@@ -1,0 +1,26 @@
+<view class='pageContent'> 
+<view class='tip'>用语音</view>
+<view class='content'>打造你的专属名片</view>
+<view class='tip'>三十秒</view>
+<view class='content'>让小伙伴们认识你</view>
+</view>
+
+
+<view class="weui-flex bottom">
+
+  <view class="weui-flex__item note-btn" style="background: grey" data-audio_id='{{audios[0].audio_id}}' >
+  <block wx:if="{{hasIntroduction == 1}}">
+    <block wx:if="{{isPlay == 0}}">
+    <image class="audio-pic" style="left: 5px;position: relative" bindtap='play' src="../../../images/userIntroduction/play.png"></image> 
+    </block>
+    <block wx:if="{{isPlay == 1}}">
+    <image class="audio-pic"  bindtap='stop' src="../../../images/userIntroduction/stop.png"></image> 
+    </block>
+    </block>
+  </view>
+ 
+  <view class="weui-flex__item note-btn" bindtouchstart="startRecord" bindtouchend="stopRecord">
+    <image class="audio-pic" src="../../../images/audioDetail/voice.png"></image>
+  </view>
+</view>
+

@@ -21,78 +21,60 @@ router.get('/login', authorizationMiddleware, controllers.login)
 // 用户信息接口（可以用来验证登录态）
 router.get('/user', validationMiddleware, controllers.user)
 
-// --- 图片上传 Demo --- //
-// 图片上传接口，小程序端可以直接将 url 填入 wx.uploadFile 中
-router.post('/upload', controllers.upload)
-
-// --- 信道服务接口 Demo --- //
-// GET  用来响应请求信道地址的
-router.get('/tunnel', controllers.tunnel.get)
-// POST 用来处理信道传递过来的消息
-router.post('/tunnel', controllers.tunnel.post)
-
-// --- 客服消息接口 Demo --- //
-// GET  用来响应小程序后台配置时发送的验证请求
-router.get('/message', controllers.message.get)
-// POST 用来处理微信转发过来的客服消息
-router.post('/message', controllers.message.post)
-// 新增demo cgi
-router.get('/demo',controllers.demo)
-
 //查询所有人的积分详情
-router.get('/scoreDetail', controllers.scoreDetail)
+router.get('/scoreDetail', controllers.score.scoreDetail)
 //查询所有人的积分排名
-router.get('/scoreRank', controllers.scoreRank)
+router.get('/scoreRank', controllers.score.scoreRank)
 //查询荣誉榜
 router.get('/honorRank', controllers.honorRank)
 //会议报名
-router.get('/meetingApply', controllers.meetingApply.get)
-router.post('/meetingApply', controllers.meetingApply.post)
-router.put('/meetingApply', controllers.meetingApply.put)
-router.delete('/meetingApply', controllers.meetingApply.del)
+router.get('/meetingApply', controllers.meeting.meetingApply.get)
+router.post('/meetingApply', controllers.meeting.meetingApply.post)
+router.put('/meetingApply', controllers.meeting.meetingApply.put)
+router.delete('/meetingApply', controllers.meeting.meetingApply.del)
 //会议报名情况
-router.get('/meetingApplyInfo', controllers.meetingApplyInfo)
+router.get('/meetingApplyInfo', controllers.meeting.meetingApplyInfo)
 //查询某个人的积分详情
-router.get('/userScore', controllers.userScore)
+router.get('/userScore', controllers.score.userScore)
 //查询学习力积分详情
-router.get('/userStudyRank', controllers.userStudyRank)
+router.get('/userStudyRank', controllers.study.userStudyRank)
 //查询汇总数据
 router.get('/dataReport', controllers.dataReport)
 //当天打卡展示
-router.get('/studyShow', controllers.studyShow)
+router.get('/studyShow', controllers.study.studyShow)
 //登记用户积分
-router.post('/scoreManage', controllers.scoreManage.post)
+router.post('/scoreManage', controllers.score.scoreManage.post)
 //登记用户积分
 router.post('/checkin', controllers.checkin.post)
 //登记学习时长
-router.post('/studyDuration', controllers.studyDuration.post)
-router.get('/studyDuration', controllers.studyDuration.get)
+router.post('/studyDuration', controllers.study.studyDuration.post)
+router.get('/studyDuration', controllers.study.studyDuration.get)
 //当天打卡展示
-router.get('/studyManage', controllers.studyManage)
+router.get('/studyManage', controllers.study.studyManage)
 //学习积分详情
-router.get('/studyScore', controllers.studyScore.get)
-router.post('/studyScore', controllers.studyScore.post)
+router.get('/studyScore', controllers.study.studyScore.get)
+router.post('/studyScore', controllers.study.studyScore.post)
 //积分补录
-router.post('/scoreManage', controllers.scoreManage.post)
+router.post('/scoreManage', controllers.score.scoreManage.post)
 //学习积分详情
 router.get('/leaderDetail', controllers.leaderDetail.get)
 //查询积分榜
-router.get('/studyRank', controllers.studyRank)
+router.get('/studyRank', controllers.study.studyRank)
 //查询影响榜
 router.get('/leaderRank', controllers.leaderRank)
 
-router.get('/allReport', controllers.allReport.get)
+router.get('/article.allArticle', controllers.article.allArticle.get)
 
 //给复盘点赞
-router.post('/likeReport', controllers.likeReport.post)
-router.get('/likeReport', controllers.likeReport.get)
-router.del('/likeReport', controllers.likeReport.del)
+router.post('/article.likeArticle', controllers.article.likeArticle.post)
+router.get('/article.likeArticle', controllers.article.likeArticle.get)
+router.del('/article.likeArticle', controllers.article.likeArticle.del)
 //给复盘评论
-router.post('/commentReport', controllers.commentReport.post)
+router.post('/article.commentArticle', controllers.article.commentArticle.post)
 //我的复盘
-router.get('/myReport', controllers.myReport.get)
-router.post('/myReport', controllers.myReport.post)
-router.delete('/myReport', controllers.myReport.del)
+router.get('/article.myArticle', controllers.article.myArticle.get)
+router.post('/article.myArticle', controllers.article.myArticle.post)
+router.delete('/article.myArticle', controllers.article.myArticle.del)
 //所有即兴房间
 router.get('/impromptu.impromptuRoom', controllers.impromptu.impromptuRoom.get)
 router.post('/impromptu.impromptuRoom', controllers.impromptu.impromptuRoom.post)
@@ -131,11 +113,11 @@ router.delete('/impromptu.myAudio', controllers.impromptu.myAudio.del)
 //任务首页查询
 router.get('/task.taskIndex', controllers.task.taskIndex.get)
 //30秒任务查询
-router.get('/task.thirtySeconds', controllers.task.thirtySeconds.get)
+router.get('/task.dailyTaskToDo', controllers.task.dailyTaskToDo.get)
 //日常任务管理
-router.get('/task.userTask', controllers.task.userTask.get)
-router.post('/task.userTask', controllers.task.userTask.post)
-router.put('/task.userTask', controllers.task.userTask.put)
+router.get('/task.dailyTask', controllers.task.dailyTask.get)
+router.post('/task.dailyTask', controllers.task.dailyTask.post)
+router.put('/task.dailyTask', controllers.task.dailyTask.put)
 //个人自定义任务管理
 router.get('/task.specialTask', controllers.task.specialTask.get)
 router.post('/task.specialTask', controllers.task.specialTask.post)

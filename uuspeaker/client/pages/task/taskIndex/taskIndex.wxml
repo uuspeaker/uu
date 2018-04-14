@@ -53,19 +53,19 @@
         <view>
           <image class="task-pic" src="../../../images/studyIndex/plan.png" />
         </view>
-        <view class='middle'>日常练习</view>
+        <view class='middle'>轻松练</view>
       </view>
       <view bindtap='toSpecialTaskList'>
         <view>
           <image class="task-pic" src="../../../images/studyIndex/plan.png" />
         </view>
-        <view class='middle'>任务练习</view>
+        <view class='middle'>自由练</view>
       </view>
       <view class='later'>
         <view >
           <image class="task-pic"  src="../../../images/studyIndex/plan.png" />
         </view>
-        <view class='middle'>即兴练习</view>
+        <view class='middle'>我要挑战</view>
       </view>
     </view>
   </view>

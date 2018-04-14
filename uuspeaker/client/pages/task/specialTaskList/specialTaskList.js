@@ -69,7 +69,10 @@ Page({
       data: queryData,
       success(result) {
         console.log(result)
-        if (result.data.data == '') return;
+        if (result.data.data == ''){
+          util.showSuccess('没有更多记录')
+          return
+        } 
         var resultData = []
         if (queryPageType == 0) {
           resultData = result.data.data
@@ -253,7 +256,8 @@ Page({
 
   onShow: function () {
     queryPageType = 0
-    this.queryMySpecialTask()
+    queryUserType = 1
+    this.doQuerySpecialTask(queryUserType)
   },
 
   onPullDownRefresh: function () {
@@ -262,6 +266,7 @@ Page({
   },
 
   onReachBottom: function () {
+    console.log('onReachBottom')
     queryPageType = 2
     this.doQuerySpecialTask(queryUserType)
   },
