@@ -59,7 +59,7 @@
           <image class="user-like-pic" src="{{item.user_info.avatarUrl}}"></image>
         </view>
         <view class="weui-cell__bd">
-          <view class="title">
+          <view class="title2">
             <view style='padding-left:10px'>
               <text>{{item.user_info.nickName}} </text>
               <text class='right'></text>
@@ -74,12 +74,12 @@
         </view>
         <block wx:if="{{item.isPlay == 0}}">
           <view class='right ' data-src='{{item.src}}' data-audio_id='{{item.audio_id}}' catchtap='playAudio'>
-            <image class="audio" src="../../../images/userAudio/start.png" />
+            <image class="audio2" src="../../../images/userAudio/start.png" />
           </view>
         </block>
         <block wx:if="{{item.isPlay == 1}}">
           <view class='right link' data-src='{{item.src}}' data-audio_id='{{item.audio_id}}' catchtap='stopAudio'>
-            <image class="audio" src="../../../images/userAudio/stop.png" />
+            <image class="audio2" src="../../../images/userAudio/stop.png" />
           </view>
         </block>
 
