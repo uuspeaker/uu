@@ -32,6 +32,9 @@ Page({
         that.setData({
           audios: result.data.data
         })
+        if(result.data.data == ''){
+          util.showSuccess('没有录音信息')
+        }
         that.formatDateAndStatus()
       },
       fail(error) {

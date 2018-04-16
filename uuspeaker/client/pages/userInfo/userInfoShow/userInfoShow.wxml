@@ -1,7 +1,7 @@
  <view class='userAvatar'>
-      <image class="user-pic" src="{{userAvatar}}" />
+      <image class="user-pic" src="{{userInfo.avatarUrl}}" />
       <view>
-      {{nickName}}
+      {{userInfo.nickName}}
     </view>
     </view>
      

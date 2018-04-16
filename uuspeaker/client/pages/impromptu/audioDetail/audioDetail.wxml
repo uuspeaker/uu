@@ -1,7 +1,7 @@
 <view class="weui-cells weui-cells_after-title">
   <view class="weui-cell">
     <view class="user-avatar">
-      <image class="user-pic" src="{{audioData[0].user_info.avatarUrl}}" />
+      <image class="user-pic" src="{{audioData[0].user_info.avatarUrl}}" data-user_id='{{audioData[0].user_id}}' bindtap='toUserInfo'/>
     </view>
     <view class="weui-cell__bd">
       <view class="title">
@@ -52,7 +52,7 @@
       <image  class="audio-pic" style="margin-right:10px" src="../../../images/userAudio/like.png" bindtap='cancelLike'></image>
       </block>
       <block wx:for="{{audioDataLike}}" wx:key="item">
-        <image class="user-like-pic" src="{{item.user_info.avatarUrl}}"></image>
+        <image class="user-like-pic" src="{{item.user_info.avatarUrl}}" data-user_id='{{item.user_id}}' catchtap='toUserInfo'></image>
       </block>
       </view>
     </view>
@@ -68,7 +68,7 @@
         <image class="audio-pic" style="margin-right:10px" src="../../../images/studyIndex/comment.png"></image>
 
         <view class="user-avatar">
-          <image class="user-like-pic" src="{{item.user_info.avatarUrl}}"></image>
+          <image class="user-like-pic" src="{{item.user_info.avatarUrl}}" data-user_id='{{item.user_id}}' catchtap='toUserInfo'></image>
         </view>
         <view class="weui-cell__bd">
           <view class="title2">

@@ -9,8 +9,9 @@ Page({
    */
   data: {
     isLikeUser: '',
-    nickName: '',
-    avatarurl:''
+    userInfo: {}
+    // nickName: '',
+    // avatarurl:''
   },
 
   likeUser: function () {
@@ -72,15 +73,35 @@ Page({
     })
   },
 
+  getUserInfo: function () {
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/userInfo.userBaseInfo`,
+      login: true,
+      data: { userId: likeUserId },
+      method: 'get',
+      success(result) {
+        that.setData({
+          userInfo: result.data.data
+        })
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
 
   onLoad: function (options) {
     console.log(options)
     likeUserId = options.userId
-    this.setData({
-      nickName: options.nickName,
-      userAvatar: options.avatarUrl
-    })
+    // this.setData({
+    //   nickName: options.nickName,
+    //   userAvatar: options.avatarUrl
+    // })
     this.isLikeUser()
+    this.getUserInfo(options.userId)
   },
 
   

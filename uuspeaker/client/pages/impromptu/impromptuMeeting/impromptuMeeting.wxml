@@ -1,7 +1,7 @@
 <template name="scoreDetailTemplate">
   <view class="weui-cell">
     <view class='weui-cell__hd'>
-      <image class="speaker-pic" src="{{user_info.avatarUrl}}" />
+      <image class="speaker-pic" src="{{user_info.avatarUrl}}" data-user_id='{{user_id}}' catchtap='toUserInfo'/>
     </view>
     <view class="weui-cell__bd" class='speaker'>
       <view>{{user_info.nickName}}
@@ -43,7 +43,7 @@
 
     <view class="weui-cell">
       <view class="weui-cell__hd">
-        <image class="host-pic" src="{{roomInfo.userInfo.avatarUrl}}" />
+        <image class="host-pic" src="{{roomInfo.userInfo.avatarUrl}}" data-user_id='{{roomInfo.user_id}}' catchtap='toUserInfo'/>
       </view>
       <view class="weui-cell__bd">
         <view>{{roomInfo.userInfo.nickName}}【发起人】</view>

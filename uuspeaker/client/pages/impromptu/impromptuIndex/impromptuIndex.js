@@ -108,6 +108,12 @@ Page({
     })
   },
 
+  toUserInfo: function (e) {
+    wx.navigateTo({
+      url: '../../userInfo/userInfoShow/userInfoShow?userId=' + e.currentTarget.dataset.user_id
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */

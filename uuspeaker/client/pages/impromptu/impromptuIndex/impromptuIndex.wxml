@@ -12,7 +12,7 @@
 <template name="scoreDetailTemplate">
   <view class="weui-cell" data-room_id="{{room_id}}" data-user_id='{{user_id}}' data-start_date='{{start_date}}' data-start_time='{{start_time}}' data-end_time='{{end_time}}' data-mode='{{mode}}' data-language='{{language}}' data-notice='{{notice}}' data-is_host='{{isHost}}' data-survey_status='{{survey_status}}' bindtap="toImpromptuMeeting">
     <view class="user-avatar" >
-      <image class="user-pic" src="{{user_info.avatarUrl}}" />
+      <image class="user-pic" src="{{user_info.avatarUrl}}" data-user_id='{{user_id}}' catchtap='toUserInfo'/>
     </view>
     <view class="weui-cell__bd" >
     <view class="title" >

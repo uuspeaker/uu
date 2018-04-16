@@ -2,7 +2,7 @@ var qcloud = require('../../../vendor/wafer2-client-sdk/index')
 var config = require('../../../config')
 var util = require('../../../utils/util.js')
 var dateFormat = require('../../../common/dateFormat.js')
-var audioDataervice = require('../../../common/audioService.js')
+var audioService = require('../../../common/audioService.js')
 const uuid = require('../../../common/uuid');
 
 const innerAudioContext = wx.createInnerAudioContext()
@@ -98,9 +98,12 @@ Page({
   formatDateAndStatus: function (src) {
     var audioData = this.doFormatDateAndStatus(this.data.audioData,src)
     var audioDataLike = this.doFormatDateAndStatus(this.data.audioDataLike, src)
+    var audioDataComment = this.doFormatDateAndStatus(this.data.audioDataComment, src)
     this.setData({
       audioData: audioData,
-      audioDataLike: audioDataLike
+      audioDataLike: audioDataLike,
+      audioDataComment: audioDataComment
+
     })
   },
 
@@ -222,12 +225,12 @@ Page({
   },
 
   startRecord: function () {
-    audioDataervice.start()
+    audioService.start()
     startDate = new Date()
   },
 
   stopRecord: function () {
-    audioDataervice.stop()
+    audioService.stop()
     endDate = new Date()
     timeDuration = Math.floor((endDate - startDate) / 1000)
     console.log('timeDuration', timeDuration)
@@ -243,7 +246,7 @@ Page({
         success: function (sm) {
           if (sm.confirm) {
             var evaluationAudioId = uuid.v1()
-            setTimeout(audioDataervice.saveAudio, 300, evaluationAudioId)
+            setTimeout(audioService.saveAudio, 500, evaluationAudioId)
             that.saveAudioRecord(evaluationAudioId)
           } else if (sm.cancel) {
             console.log('用户点击取消')
@@ -255,13 +258,13 @@ Page({
   saveAudioRecord: function (evaluationAudioId) {
     var that =  this
     qcloud.request({
-      url: `${config.service.host}/weapp/task.userTask`,
+      url: `${config.service.host}/weapp/audio.audioComment`,
       login: true,
-      data: { evaluationAudioId: evaluationAudioId, taskAudioId:this.data.audioId,timeDuration: timeDuration, audioType: 2 },
-      method: 'put',
+      data: { evaluationAudioId: evaluationAudioId, targetAudioId:this.data.audioId,timeDuration: timeDuration, audioType: 2 },
+      method: 'post',
       success(result) {
         console.log(result)
-        that.queryAudioDetail()
+        that.queryAudioComment()
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -311,6 +314,12 @@ Page({
   toAudioDetail: function (e) {
     wx.navigateTo({
       url: '../audioDetail/audioDetail?audioId=' + e.currentTarget.dataset.audio_id,
+    })
+  },
+
+  toUserInfo: function (e) {
+    wx.navigateTo({
+      url: '../../userInfo/userInfoShow/userInfoShow?userId=' + e.currentTarget.dataset.user_id
     })
   },
 

@@ -16,6 +16,7 @@ recorderManager.onStart(() => {
 })
 
 recorderManager.onStop((res) => {
+  console.log('res', res )
   tempFilePath = res.tempFilePath
 })
 

@@ -118,6 +118,7 @@ router.put('/impromptu.myAudio', controllers.impromptu.myAudio.put)
 router.delete('/impromptu.myAudio', controllers.impromptu.myAudio.del)
 //音频评论管理
 router.get('/audio.audioComment', controllers.audio.audioComment.get)
+router.post('/audio.audioComment', controllers.audio.audioComment.post)
 //任务首页查询
 router.get('/task.taskIndex', controllers.task.taskIndex.get)
 //30秒任务查询
@@ -138,6 +139,8 @@ router.post('/task.userIntroduction', controllers.task.userIntroduction.post)
 router.get('/userInfo.likeUser', controllers.userInfo.likeUser.get)
 router.post('/userInfo.likeUser', controllers.userInfo.likeUser.post)
 router.delete('/userInfo.likeUser', controllers.userInfo.likeUser.del)
+//用户基础信息管理
+router.get('/userInfo.userBaseInfo', controllers.userInfo.userBaseInfo.get)
 
 //即兴会议发起投票问卷
 router.get('/impromptu.impromptuSurvey', controllers.impromptu.impromptuSurvey.get)

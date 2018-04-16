@@ -215,6 +215,12 @@ Page({
     })
   },
 
+  toUserInfo: function (e) {
+    wx.navigateTo({
+      url: '../../userInfo/userInfoShow/userInfoShow?userId=' + e.currentTarget.dataset.user_id
+    })
+  },
+
   onReady: function () {
     var self = this;
     //this.getRoomList(function () { });
