@@ -49,12 +49,7 @@
       自己练
     </view>
     <view class="weui-cell" data-task_type='1'>
-      <view bindtap='toDailyTask'>
-        <view>
-          <image class="task-pic" src="../../../images/studyIndex/plan.png" />
-        </view>
-        <view class='middle'>轻松练</view>
-      </view>
+      
       <view bindtap='toSpecialTaskList'>
         <view>
           <image class="task-pic" src="../../../images/studyIndex/plan.png" />

@@ -1,0 +1,17 @@
+ <view class='userAvatar'>
+      <image class="user-pic" src="{{userAvatar}}" />
+      <view>
+      {{nickName}}
+    </view>
+    </view>
+     
+ <view class="weui-flex bottom">
+    <view class="weui-flex__item">
+    <block wx:if="{{isLikeUser == 0}}">
+      <button class="weui-btn" type="primary" bindtap='likeUser'>关注</button>
+      </block>
+      <block wx:if="{{isLikeUser == 1}}">
+      <button class="weui-btn"  bindtap='cancelLikeUser'>取消关注</button>
+      </block>
+    </view>
+  </view>

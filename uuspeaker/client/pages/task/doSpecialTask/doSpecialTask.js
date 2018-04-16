@@ -83,6 +83,13 @@ Page({
     })
   },
 
+  setName: function(e){
+    var taskName = e.currentTarget.dataset.task_name
+    this.setData({
+      taskName: taskName
+    })
+  },
+
   toMySpecialTask:function(){
     wx.navigateTo({
       url: '../mySpecialTask/mySpecialTask',

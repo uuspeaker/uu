@@ -4,12 +4,59 @@
       <view class="weui-label">任务名称</view>
     </view>
     <view class="weui-cell__bd">
-      <input name="taskName" class="weui-input" placeholder='请输入任务名称' bindinput ="taskNameInput" />
+      <input name="taskName" class="weui-input" placeholder='请选择任务或自定义任务名称' value="{{taskName}}" bindinput="taskNameInput" />
     </view>
   </view>
-   </view>
-  <view class="weui-flex ">
-    <view class="weui-flex__item record-button" bindtouchstart="startRecord" bindtouchend="stopRecord">
-      <image class="audio-pic" src="../../../images/audioDetail/voice.png"></image>
+</view>
+
+<view class="page__bd">
+  <view class="weui-cells__title"></view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell" data-task_type='1'>
+      轻松练：30秒
+    </view>
+    <view class="weui-cell" data-task_type='1'>
+
+      <view class='guideline' style="background-color: rgb(29, 178, 23858);" data-task_name='每日计划' bindtap='setName'> 
+        <view>
+          <image class="uu-code" src='../../../../images/launchStudy/guideline.png'></image>
+        </view>
+        <view>每日计划</view>
+      </view>
+
+       <view class='guideline' style="background-color: orange;" data-task_name='赞美他人' bindtap='setName'>
+        <view>
+          <image class="uu-code" src='../../../../images/launchStudy/guideline.png'></image>
+        </view>
+        <view>赞美他人</view>
+      </view>
+
     </view>
   </view>
+</view>
+
+<view class="page__bd">
+  <view class="weui-cells__title"></view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell" data-task_type='1'>
+      专项练：2分钟
+    </view>
+    <view class="weui-cell" data-task_type='1'>
+
+      <view class='guideline' style="background-color: rgb(228,188,41);" data-task_name='求职介绍' bindtap='setName'>
+        <view>
+          <image class="uu-code" src='../../../../images/launchStudy/guideline.png'></image>
+        </view>
+        <view>求职介绍</view>
+      </view>
+
+    </view>
+  </view>
+</view>
+
+
+<view class="weui-flex ">
+  <view class="weui-flex__item record-button" bindtouchstart="startRecord" bindtouchend="stopRecord">
+    <image class="audio-pic" src="../../../images/audioDetail/voice.png"></image>
+  </view>
+</view>

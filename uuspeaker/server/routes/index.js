@@ -94,6 +94,12 @@ router.post('/impromptu.impromptuAudio', controllers.impromptu.impromptuAudio.po
 //即兴会议音频点赞
 router.post('/impromptu.likeAudio', controllers.impromptu.likeAudio.post)
 router.get('/impromptu.likeAudio', controllers.impromptu.likeAudio.get)
+//音频点赞
+router.post('/audio.audioLike', controllers.audio.audioLike.post)
+router.delete('/audio.audioLike', controllers.audio.audioLike.del)
+router.get('/audio.audioLike', controllers.audio.audioLike.get)
+//音频察看
+router.post('/audio.audioView', controllers.audio.audioView.post)
 //即兴会议音频更新状态
 router.put('/impromptu.updateAudio', controllers.impromptu.updateAudio.put)
 //即兴会议音频详情
@@ -102,7 +108,7 @@ router.get('/impromptu.audioDetail', controllers.impromptu.audioDetail.get)
 //即兴会议音频管理
 router.get('/impromptu.userAudio', controllers.impromptu.userAudio.get)
 router.post('/impromptu.userAudio', controllers.impromptu.userAudio.post)
-router.put('/impromptu.userAudio', controllers.impromptu.userAudio.put)
+//router.put('/impromptu.userAudio', controllers.impromptu.userAudio.put)
 router.delete('/impromptu.userAudio', controllers.impromptu.userAudio.del)
 
 //即兴会议音频管理
@@ -110,6 +116,8 @@ router.get('/impromptu.myAudio', controllers.impromptu.myAudio.get)
 router.post('/impromptu.myAudio', controllers.impromptu.myAudio.post)
 router.put('/impromptu.myAudio', controllers.impromptu.myAudio.put)
 router.delete('/impromptu.myAudio', controllers.impromptu.myAudio.del)
+//音频评论管理
+router.get('/audio.audioComment', controllers.audio.audioComment.get)
 //任务首页查询
 router.get('/task.taskIndex', controllers.task.taskIndex.get)
 //30秒任务查询
@@ -126,6 +134,10 @@ router.get('/task.allSpecialTask', controllers.task.allSpecialTask.get)
 //个人介绍管理
 router.get('/task.userIntroduction', controllers.task.userIntroduction.get)
 router.post('/task.userIntroduction', controllers.task.userIntroduction.post)
+//用户关注管理
+router.get('/userInfo.likeUser', controllers.userInfo.likeUser.get)
+router.post('/userInfo.likeUser', controllers.userInfo.likeUser.post)
+router.delete('/userInfo.likeUser', controllers.userInfo.likeUser.del)
 
 //即兴会议发起投票问卷
 router.get('/impromptu.impromptuSurvey', controllers.impromptu.impromptuSurvey.get)

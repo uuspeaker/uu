@@ -29,6 +29,27 @@ var likeAudio = async (audioId,userId) => {
 }
 
 /**
+ * 给音频点赞(若此前已经点赞则不做任何处理) 
+ * audioId 音频ID
+ * userId 当前点赞用户
+ * 返回：0-之前已经点赞 1-点赞成功
+ */
+var dontLikeAudio = async (audioId, userId) => {
+  var audioLikeUser = await mysql('impromptu_audio_like').where({ audio_id: audioId, user_id: userId })
+  if (audioLikeUser.length == 1) {
+    var audioView = await mysql('impromptu_audio').select('like_amount').where({ audio_id: audioId })
+    await mysql('impromptu_audio').update({
+      like_amount: audioView[0].like_amount - 1
+    }).where({ audio_id: audioId })
+
+    await mysql('impromptu_audio_like').where({
+      audio_id: audioId,
+      user_id: userId
+    }).del()
+  }
+}
+
+/**
  * 更新音频察看次数
  * audioId 音频ID
  * 返回：0-之前已经点赞 1-点赞成功
@@ -185,6 +206,17 @@ var getSrc =  (audioId) => {
   return src
 }
 
+var queryAudioById = async (audioId) => {
+  //查询音频详情
+  var audioData = await mysql('impromptu_audio').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').select('impromptu_audio.*', 'cSessionInfo.user_info').orderBy('impromptu_audio.create_date', 'asc').where({ audio_id: audioId })
+
+  for (var i = 0; i < audioData.length; i++) {
+    audioData[i].user_info = userInfo.getUserInfo(audioData[i].user_info)
+    audioData[i].src = getSrc(audioData[i].audio_id)
+  }
+  return audioData
+}
+
 /**
  * 删除某个音频
  */
@@ -192,9 +224,7 @@ var deleteAudio = async (audioId) => {
  await mysql('impromptu_audio').where({ audio_id: audioId }).del()
 }
 
-/**
- * 查询当天演讲练习时间
- */
+// 查询当天演讲练习时间
 var queryAudioDuration = async (userId) => {
   var audioDate = new Date()
   audioDate.setHours(0)
@@ -204,4 +234,28 @@ var queryAudioDuration = async (userId) => {
   return todayTimeDuration
 }
 
-module.exports = { likeAudio, viewAudio, getAudioLikeUser, getSpeakingAudio, startSpeechAudio, completeSpeechAudio, evaluateLatestAudio, evaluateAudio, getSpeechAudioByRoom, saveAudio, getSrc, deleteAudio, queryAudioDuration }
+// 查询演讲评论信息
+var queryAudioComment = async (audioId, queryPageType, firstDataTime, lastDataTime) => {
+  //查询音频评论
+  var audioDataComment 
+  if (queryPageType == 0){
+    audioDataComment = await mysql('impromptu_audio').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').select('impromptu_audio.*', 'cSessionInfo.user_info').where({ relate_audio: audioId }).orderBy('impromptu_audio.create_date', 'asc')
+  }
+
+  if (queryPageType == 1) {
+    audioDataComment = await mysql('impromptu_audio').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').select('impromptu_audio.*', 'cSessionInfo.user_info').where({ relate_audio: audioId }).andWhere('impromptu_audio.create_date', '<', new Date(firstDataTime)).orderBy('impromptu_audio.create_date', 'asc')
+  }
+
+  if (queryPageType == 2) {
+    audioDataComment = await mysql('impromptu_audio').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').select('impromptu_audio.*', 'cSessionInfo.user_info').where({ relate_audio: audioId }).andWhere('impromptu_audio.create_date', '>', new Date(lastDataTime)).orderBy('impromptu_audio.create_date', 'asc')
+  }
+  
+
+  for (var i = 0; i < audioDataComment.length; i++) {
+    audioDataComment[i].user_info = userInfo.getUserInfo(audioDataComment[i].user_info)
+    audioDataComment[i].src = getSrc(audioDataComment[i].audio_id)
+  }
+  return audioDataComment
+}
+
+module.exports = { likeAudio, dontLikeAudio,viewAudio, getAudioLikeUser, getSpeakingAudio, startSpeechAudio, completeSpeechAudio, evaluateLatestAudio, evaluateAudio, getSpeechAudioByRoom, saveAudio, getSrc, queryAudioById,deleteAudio, queryAudioDuration, queryAudioComment }

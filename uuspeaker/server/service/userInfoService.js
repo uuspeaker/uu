@@ -33,6 +33,7 @@ var getTailoredUserInfo = (userInfoStr) => {
   var userInfo = {}
   userInfo.nickName = userInfoTmp.nickName
   userInfo.avatarUrl = userInfoTmp.avatarUrl
+  userInfo.userId = userInfoTmp.openId
   return userInfo
 }
 
@@ -100,6 +101,35 @@ var deleteIntroduction = async (userId) => {
   }).del()
 }
 
+//关注用户
+var likeUser = async (userId,likeUserId) => {
+  var data = await mysql('user_like').insert({
+    user_id: userId,
+    like_user_id: likeUserId
+  })
+}
+
+//取消关注用户
+var cancelLikeUser = async (userId, likeUserId) => {
+  var data = await mysql('user_like').where({
+    user_id: userId,
+    like_user_id: likeUserId
+  }).del()
+}
+
+//查询是否关注用户
+var isLikeUser = async (userId, likeUserId) => {
+  var data = await mysql('user_like').where({
+    user_id: userId,
+    like_user_id: likeUserId
+  })
+  if(data.length == 0){
+    return 0
+  }else{
+    return 1
+  }
+}
+
 module.exports = { 
   getOpenId, 
   getTailoredUserInfo, 
@@ -112,5 +142,8 @@ module.exports = {
   getUserInfo,
   saveIntroduction,
   getIntroduction,
-  deleteIntroduction
+  deleteIntroduction,
+  likeUser,
+  cancelLikeUser,
+  isLikeUser
   }

@@ -2,14 +2,18 @@ var qcloud = require('../../../vendor/wafer2-client-sdk/index')
 var config = require('../../../config')
 var util = require('../../../utils/util.js')
 var dateFormat = require('../../../common/dateFormat.js')
-var audioService = require('../../../common/audioService.js')
+var audioDataervice = require('../../../common/audioService.js')
 const uuid = require('../../../common/uuid');
 
 const innerAudioContext = wx.createInnerAudioContext()
-var showTimes = 0
 var startDate
 var endDate
 var timeDuration = 0
+
+//查询标记(0-查询最新;1-查询前面10条;2-查询后面10条)
+var queryPageType = 0
+var firstDataTime = ''
+var lastDataTime = ''
 
 Page({
 
@@ -18,9 +22,9 @@ Page({
    */
   data: {
     audioId: '',
-    audioDataLike: [],
-    audios:[],
+    audioData:[],
     audioDataLike:[],
+    likeIt: 0,
     audioDataComment:[]
   },
 
@@ -36,9 +40,9 @@ Page({
       success(result) {
         console.log(result)
         that.setData({
-          audios: result.data.data.audioData,
+          audioData: result.data.data.audioData,
           audioDataLike: result.data.data.audioDataLike,
-          audioDataComment: result.data.data.audioDataComment
+          likeIt: result.data.data.likeIt,
         })
         that.formatDateAndStatus()
       },
@@ -49,15 +53,62 @@ Page({
     })
   },
 
-  formatDateAndStatus: function (src) {
-    var audios = this.doFormatDateAndStatus(this.data.audios,src)
-    var audioDataLike = this.doFormatDateAndStatus(this.data.audioDataLike, src)
-    var audioDataComment = this.doFormatDateAndStatus(this.data.audioDataComment, src)
-    this.setData({
-      audios: audios,
-      audioDataLike: audioDataLike,
-      audioDataComment: audioDataComment
+  //查询最新房间信息
+  queryAudioComment: function () {
+    //util.showBusy('请求中...')
+    var queryData = { 'queryPageType': queryPageType, 'firstDataTime': firstDataTime, 'lastDataTime': lastDataTime, audioId: this.data.audioId }
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/audio.audioComment`,
+      login: true,
+      method: 'get',
+      data: queryData,
+      success(result) {
+        console.log(result)
+        if (result.data.data == '') {
+          if (queryPageType != 0){
+            util.showSuccess('没有更多记录')
+          }
+          
+          return
+        }
+        var resultData = []
+        if (queryPageType == 0) {
+          resultData = result.data.data
+        } else if (queryPageType == 1) {
+          resultData = [].concat(that.data.audioDataComment,result.data.data)
+        } else if (queryPageType == 2) {
+          resultData = [].concat(result.data.data, that.data.audioDataComment)
+        }
+        var audioDataComment = that.doFormatDateAndStatus(resultData)
+        that.setData({
+          audioDataComment: audioDataComment
+        })
+        that.formatDateAndStatus()
+        //保存第一条和最后一条数据的id,上拉和下拉的时候查询用
+        that.refreshDataId()
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
     })
+  },
+
+  formatDateAndStatus: function (src) {
+    var audioData = this.doFormatDateAndStatus(this.data.audioData,src)
+    var audioDataLike = this.doFormatDateAndStatus(this.data.audioDataLike, src)
+    this.setData({
+      audioData: audioData,
+      audioDataLike: audioDataLike
+    })
+  },
+
+  //保存第一条和最后一条数据的id,上拉和下拉的时候查询用
+  refreshDataId: function () {
+    var length = this.data.audioDataComment.length
+    firstDataTime = this.data.audioDataComment[0].create_date
+    lastDataTime = this.data.audioDataComment[length - 1].create_date
   },
 
   doFormatDateAndStatus: function(data,src){
@@ -74,8 +125,67 @@ Page({
     return data
   },
 
+  likeAudio: function () {
+    console.log('like it')
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/audio.audioLike`,
+      login: true,
+      method: 'post',
+      data: { audioId: this.data.audioId},
+      success(result) {
+        that.queryAudioDetail()
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
+  cancelLike: function (e) {
+    console.log('cancelLike it')
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/audio.audioLike`,
+      login: true,
+      method: 'delete',
+      data: { audioId: this.data.audioId },
+      success(result) {
+        that.queryAudioDetail()
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
+  updateViewTimes: function (e) {
+    var src = e.currentTarget.dataset.src
+    var audioId = e.currentTarget.dataset.audio_id
+    innerAudioContext.autoplay = true
+    innerAudioContext.src = src
+    this.formatDateAndStatus(src)
+
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/audio.audioView`,
+      login: true,
+      method: 'post',
+      data: { audioId: audioId },
+      success(result) {
+        that.updateViewAmount(audioId)
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
   switchPlayStatus: function (src) {
-    var data = this.data.audios
+    var data = this.data.audioData
     for (var i = 0; i < data.length; i++) {
       var now = new Date()
       data[i].timeDurationStr = dateFormat.getFormatDuration(data[i].time_duration)
@@ -87,68 +197,21 @@ Page({
     }
     console.log(data)
     this.setData({
-      audios: data
+      audioData: data
     })
   },
 
   playAudio: function (e) {
-    
-    this.updateViewAndLikeTimes(e)
+    this.updateViewTimes(e)
   },
 
   updateViewAmount: function (audioId, viewType) {
-    var data = this.data.audios
+    var data = this.data.audioData
     for (var i = 0; i < data.length; i++) {
-      if (data[i].audio_id == audioId && viewType == 'view') {
         data[i].view_amount = data[i].view_amount + 1
-      }
-      if (data[i].audio_id == audioId && viewType == 'like') {
-        data[i].like_amount = data[i].like_amount + 1
-      }
-
     }
     this.setData({
-      audios: data
-    })
-  },
-
-  updateViewAndLikeTimes: function (e) {
-    var src = e.currentTarget.dataset.src
-    var audioId = e.currentTarget.dataset.audio_id
-    innerAudioContext.autoplay = true
-    innerAudioContext.src = src
-    this.formatDateAndStatus(src)
-
-    var that = this
-    qcloud.request({
-      url: `${config.service.host}/weapp/impromptu.userAudio`,
-      login: true,
-      method: 'put',
-      data: { audioId: audioId, viewType: 'view' },
-      success(result) {
-        that.updateViewAmount(audioId, 'view')
-      },
-      fail(error) {
-        util.showModel('请求失败', error);
-        console.log('request fail', error);
-      }
-    })
-  },
-
-  likeIt: function (e) {
-    var that = this
-    qcloud.request({
-      url: `${config.service.host}/weapp/impromptu.userAudio`,
-      login: true,
-      method: 'put',
-      data: { audioId: e.currentTarget.dataset.audio_id, viewType: 'like' },
-      success(result) {
-        that.updateViewAmount(e.currentTarget.dataset.audio_id, 'like')
-      },
-      fail(error) {
-        util.showModel('请求失败', error);
-        console.log('request fail', error);
-      }
+      audioData: data
     })
   },
 
@@ -159,12 +222,12 @@ Page({
   },
 
   startRecord: function () {
-    audioService.start()
+    audioDataervice.start()
     startDate = new Date()
   },
 
   stopRecord: function () {
-    audioService.stop()
+    audioDataervice.stop()
     endDate = new Date()
     timeDuration = Math.floor((endDate - startDate) / 1000)
     console.log('timeDuration', timeDuration)
@@ -180,7 +243,7 @@ Page({
         success: function (sm) {
           if (sm.confirm) {
             var evaluationAudioId = uuid.v1()
-            setTimeout(audioService.saveAudio, 300, evaluationAudioId)
+            setTimeout(audioDataervice.saveAudio, 300, evaluationAudioId)
             that.saveAudioRecord(evaluationAudioId)
           } else if (sm.cancel) {
             console.log('用户点击取消')
@@ -234,8 +297,15 @@ Page({
   },
 
   onShow: function (options) {
-    
+    queryPageType = 0
     this.queryAudioDetail()
+    this.queryAudioComment()
+  },
+
+  onReachBottom: function () {
+    console.log('onReachBottom')
+    queryPageType = 2
+    this.queryAudioComment()
   },
 
   toAudioDetail: function (e) {

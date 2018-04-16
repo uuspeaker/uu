@@ -7,7 +7,7 @@
 <template name="scoreDetailTemplate">
   <view class="weui-cell" bindtap='toAudioDetail' data-audio_id='{{audio_id}}'>
     <view class="user-avatar">
-      <image class="user-pic" src="{{user_info.avatarUrl}}" />
+      <image class="user-pic" src="{{user_info.avatarUrl}}" data-user_id='{{user_info.userId}}' data-avatar_url='{{user_info.avatarUrl}}' data-nick_name='{{user_info.nickName}}' catchtap='toUserInfo'/>
     </view>
     <view class="weui-cell__bd">
       <view class="title">
@@ -18,7 +18,8 @@
       </view>
       <view class="small-grey" >
       <text>作者：{{user_info.nickName}} </text>
-       <image class="like" data-audio_id='{{audio_id}}' catchtap='likeIt' src="../../../images/studyIndex/like.png" /> {{like_amount}}   
+      <image class="like" data-audio_id='{{audio_id}}' src="../../../images/studyIndex/view.png" /> {{view_amount}}   
+       <image class="like" data-audio_id='{{audio_id}}' src="../../../images/studyIndex/like.png" /> {{like_amount}}   
       <image class="like" src="../../../images/studyIndex/comment.png" /> {{comment_amount}}
       </view>
       <view>

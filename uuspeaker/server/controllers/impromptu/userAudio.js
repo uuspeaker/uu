@@ -20,17 +20,17 @@ module.exports = {
     }
   },
 
-  put: async ctx => {
-    var userId = await userInfo.getOpenId(ctx)
-    var audioId = ctx.request.body.audioId
-    var viewType = ctx.request.body.viewType
-    if (viewType == 'view'){
-      audioService.viewAudio(audioId)
-    }
-    if (viewType == 'like') {
-      audioService.likeAudio(audioId, userId)
-    } 
-  },
+  // put: async ctx => {
+  //   var userId = await userInfo.getOpenId(ctx)
+  //   var audioId = ctx.request.body.audioId
+  //   var viewType = ctx.request.body.viewType
+  //   if (viewType == 'view'){
+  //     audioService.viewAudio(audioId)
+  //   }
+  //   if (viewType == 'like') {
+  //     audioService.likeAudio(audioId, userId)
+  //   } 
+  // },
 
   del: async ctx => {
     var audioId = ctx.request.body.audioId

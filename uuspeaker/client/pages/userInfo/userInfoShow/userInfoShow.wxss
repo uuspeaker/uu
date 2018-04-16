@@ -1,0 +1,10 @@
+.user-pic {
+  width: 100px;
+  height: 100px;
+  border-radius: 3px;
+}
+.userAvatar{
+padding-top: 20px;
+  text-align: center;
+  margin:10px; 
+}
