@@ -5,8 +5,6 @@
 
 .myReport {
   font-size: 15px;
-  font-weight: bold;
-  color: #576b95;
   padding-left: 10px;
 }
 .title{

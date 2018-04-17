@@ -64,7 +64,7 @@ height: 40px;
 .rightItem{
   margin-right: 20px; 
 }
-.middle{
+.content{
   font-size: 15px;
   color:#888888;
   font-weight: bold;

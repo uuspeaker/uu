@@ -54,13 +54,13 @@
         <view>
           <image class="task-pic" src="../../../images/studyIndex/plan.png" />
         </view>
-        <view class='middle'>自由练</view>
+        <view class='content'>自由练</view>
       </view>
       <view class='later'>
         <view >
           <image class="task-pic"  src="../../../images/studyIndex/plan.png" />
         </view>
-        <view class='middle'>我要挑战</view>
+        <view class='content'>我要挑战</view>
       </view>
     </view>
   </view>
@@ -77,13 +77,13 @@
         <view>
           <image class="task-pic" src="../../../images/studyIndex/plan.png" />
         </view>
-        <view class='middle'>预约练习</view>
+        <view class='content'>预约练习</view>
       </view>
       <view class='later'>
         <view>
           <image class="task-pic" src="../../../images/studyIndex/plan.png" />
         </view>
-        <view class='middle'>快速匹配</view>
+        <view class='content'>快速匹配</view>
       </view>
       
     </view>

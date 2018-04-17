@@ -4,17 +4,53 @@ var util = require('../../../utils/util.js')
 var dateFormat = require('../../../common/dateFormat.js')
 //var uuid = require('../../vendor/wafer2-client-sdk/lib/uuid');
 
+//1我的 2我关注的 3最新的
+var queryUserType = ''
 //查询标记(0-查询最新;1-查询前面10条;2-查询后面10条)
-var queryFlag = 0
+var queryPageType = 0
 var firstReportTime = ''
 var lastReportTime = ''
 var commentReportId = ''
 
 Page({
   data: {
+    viewStyle: [],
     studyReportData: [],
     showComment: false,
     commentValue: ''
+  },
+
+  initViewStyle: function () {
+    var initViewStyle = new Array(10)
+    for (var i = 0; i < initViewStyle.length; i++) {
+      initViewStyle[i] = ''
+    }
+    this.setData({
+      viewStyle: initViewStyle
+    })
+  },
+
+  pressView: function (index) {
+    this.initViewStyle()
+    var tmpViewStyle = this.data.viewStyle
+    tmpViewStyle[index] = 'font-weight: bold;color: #576b95;font-size: 16px;'
+    this.setData({
+      viewStyle: tmpViewStyle
+    })
+    var that = this
+  },
+
+  queryArticleInfo: function (e) {
+    var index = e.currentTarget.dataset.item
+    this.pressView(index)
+    var thisQueryUserType = e.currentTarget.dataset.type
+    if (queryUserType == thisQueryUserType) return
+    queryUserType = thisQueryUserType
+    queryPageType = 0
+    this.setData({
+      studyReportData: []
+    })
+    this.queryStudyReport(queryUserType)
   },
 
   writeArticle: function () {
@@ -30,10 +66,10 @@ Page({
   },
 
   //查询最新复盘列表,包含点赞及评论
-  queryStudyReport: function (e) {
+  queryStudyReport: function (queryUserType) {
     //util.showBusy('请求中...')
     var that = this
-    var queryData = { 'queryFlag': queryFlag, 'firstReportTime': firstReportTime, 'lastReportTime': lastReportTime }
+    var queryData = {'queryUserType':queryUserType,'queryPageType': queryPageType, 'firstReportTime': firstReportTime, 'lastReportTime': lastReportTime }
     console.log(queryData)
     qcloud.request({
       url: `${config.service.host}/weapp/article.allArticle`,
@@ -47,11 +83,11 @@ Page({
         }
         //util.showSuccess('请求成功完成')
         var resultData = []
-        if (queryFlag == 0) {
+        if (queryPageType == 0) {
           resultData = result.data.data
-        } else if (queryFlag == 1) {
+        } else if (queryPageType == 1) {
           resultData = [].concat(result.data.data, that.data.studyReportData)
-        } else if (queryFlag == 2) {
+        } else if (queryPageType == 2) {
           resultData = [].concat(that.data.studyReportData, result.data.data)
         }
         that.setData({
@@ -232,6 +268,56 @@ Page({
     })
   },
 
+  deleteArticle: function (e) {
+    var that = this
+    wx.showModal({
+      title: '提示',
+      content: '确定要删除吗？',
+      success: function (sm) {
+        if (sm.confirm) {
+          that.executeDeleteArticle(e)
+        } else if (sm.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+
+  executeDeleteArticle: function (e) {
+
+    var reportId = e.currentTarget.dataset.reportid
+    var requestDate = { 'reportId': reportId }
+    //util.showBusy('请求中...')
+    var that = this
+    //更新发言信息,刷新页面显示
+    qcloud.request({
+      url: `${config.service.host}/weapp/article.myArticle`,
+      login: true,
+      data: requestDate,
+      method: 'delete',
+      success(result) {
+        //用最新的点赞信息刷新页面显示(只刷新当前这条记录的数据)
+        that.updateReportList(reportId)
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
+  updateReportList: function (reportId) {
+    var data = this.data.studyReportData
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].report_id == reportId) {
+        data.splice(i, 1)
+      }
+    }
+    this.setData({
+      studyReportData: data
+    })
+  },
+
   toImpromptuMeeting: function (e) {
     console.log(e)
     wx.navigateTo({
@@ -239,22 +325,30 @@ Page({
     })
   },
 
+  toUserInfo: function (e) {
+    wx.navigateTo({
+      url: '../../userInfo/userInfoShow/userInfoShow?userId=' + e.currentTarget.dataset.user_id
+    })
+  },
+
   preventTouchMove: function () { },
 
   onShow: function (e) {
-    queryFlag = 0
-    this.queryStudyReport()
+    queryPageType = 0
+    queryUserType = 1
+    this.queryStudyReport(queryUserType)
+    this.pressView(0)
     //console.log(uuid.v1())
   },
 
   onPullDownRefresh: function () {
-    queryFlag = 1
-    this.queryStudyReport()
+    queryPageType = 1
+    this.queryStudyReport(queryUserType)
   },
 
   onReachBottom: function () {
-    queryFlag = 2
-    this.queryStudyReport()
+    queryPageType = 2
+    this.queryStudyReport(queryUserType)
   },
 
 

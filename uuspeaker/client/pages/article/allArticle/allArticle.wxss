@@ -4,6 +4,11 @@ background-color: white;
 height: 10px;
 padding-top: 15px;
 }
+.right {
+  float: right;
+  right: 15px;
+  padding-left:170px;
+}
 .user-pic{
 width: 40px; 
 height: 40px; 
@@ -15,10 +20,9 @@ border-radius: 3px;
   top: 22px;
   vertical-align: text-top;
 }
-.myReport{
+.myReport {
   font-size: 15px;
-  font-weight: bold;
-  color: #576b95;
+  padding-left: 10px;
 }
 .title {
   padding-left: 15px;
@@ -121,7 +125,10 @@ height:1px;
 background:lightgrey;
 opacity:0.8;
 }
-/*
-评论模块样式
-*/
+.delete{
+  color: #576b95;
+  padding-left: 10px;
+  font-weight: bold;
+  font-size: 13px;
+}
 

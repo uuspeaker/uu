@@ -1,10 +1,9 @@
 
-
-<view class="weui-cell write">
-  <view class="weui-cell__bd myReport" bindtap='toMyRoom'>我的</view>
-  <view class="weui-cell__ft" >
-    <image class="commentImg" bindtap='openImpromptuRoom' src='../../../images/impromptuIndex/add.png' />
-  </view>
+<view class="weui-cell top">
+  <view class=" myReport"  style="{{viewStyle[0]}}" data-item='0' data-type='1' bindtap='queryRoomInfo'>最近的</view>
+  <view class=" myReport"  style="{{viewStyle[1]}}" data-item='1' data-type='2' bindtap='queryRoomInfo'>我的</view>
+  <view class=" myReport"  style="{{viewStyle[2]}}" data-item='2' data-type='3' bindtap='queryRoomInfo'>参与的</view>
+  <view class=" myReport"  style="{{viewStyle[3]}}" data-item='3' data-type='4' bindtap='queryRoomInfo'>关注的</view>
 </view>
 <!--报名展示-->
 
@@ -15,7 +14,7 @@
       <image class="user-pic" src="{{user_info.avatarUrl}}" data-user_id='{{user_id}}' catchtap='toUserInfo'/>
     </view>
     <view class="weui-cell__bd" >
-    <view class="title" >
+    <view class="" >
         <view  class='article' style='padding-left:15px'>
         <text >{{title}}</text>
      
@@ -29,15 +28,20 @@
         </view>
       </view>
       <view >
-        <view class=" date">  {{startDateStr}}<text class='right'>{{people_amount}}人已报名</text></view>
+        <view class=" date">  {{startDateStr}}<text class='right'>{{amountNotice}}</text></view>
       </view>
     </view>
   </view>
 </template>
 
-<view class="weui-cells weui-cells_after-title">
+<view class="weui-cells weui-cells_after-title middle" >
   <block wx:for="{{rooms}}" wx:key="item">
     <template is="scoreDetailTemplate" data="{{...item}}" />
   </block>
 </view>
 
+<view class="weui-flex bottom">
+    <view class="weui-flex__item">
+      <button class="weui-btn" type="primary" bindtap='openImpromptuRoom'>预约房间</button>
+    </view>
+  </view>

@@ -18,7 +18,7 @@ module.exports = {
 
     var amount = await mysql('meeting_apply').count('user_id as amount').where({ room_id: roomId })
 
-    await mysql('room_impromptu').update({
+    await mysql('impromptu_room').update({
       people_amount: amount[0].amount
       }).where({ room_id: roomId })
   },
@@ -35,11 +35,11 @@ module.exports = {
 
     var amount = await mysql('meeting_apply').count('user_id as amount').where({ room_id: roomId })
 
-    await mysql('room_impromptu').update({
+    await mysql('impromptu_room').update({
       people_amount: amount[0].amount
     }).where({ room_id: roomId })
 
-    // await mysql('room_impromptu').update({
+    // await mysql('impromptu_room').update({
     //   people_amount: people_amount - 1
     // }).where({ room_id: roomId })
   },
@@ -48,7 +48,7 @@ module.exports = {
     var roomId = ctx.query.roomId
     var userId = await userInfoService.getOpenId(ctx)
     var meetingUser = await impromptuMeetingService.getMeetingUser(roomId)
-    var roomInfo = await mysql('room_impromptu').where({ room_id: roomId })
+    var roomInfo = await mysql('impromptu_room').where({ room_id: roomId })
     roomInfo[0].userInfo = await userInfoService.getUserInfo(roomInfo[0].user_id)
     var isJoin = false
     var isHost = false

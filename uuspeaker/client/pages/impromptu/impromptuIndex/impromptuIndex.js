@@ -3,6 +3,13 @@ var config = require('../../../config')
 var util = require('../../../utils/util.js')
 var dateFormat = require('../../../common/dateFormat.js')
 
+//1查询最近的 2查询自己的 3查询自己参与的 4查询自己关注的
+var queryUserType = ''
+//查询标记(0-查询最新;1-查询前面10条;2-查询后面10条)
+var queryPageType = 0
+var firstDataTime = ''
+var lastDataTime = ''
+
 Page({
 
   /**
@@ -10,50 +17,116 @@ Page({
    */
   data: {
     viewStyle: [],
-    textStyle: [],
     rooms: [],
-    userName: '12',
-    modeItems: ['即兴演讲', '备稿演讲', '工作坊'],
-    languageItems: ['中文', 'English'],
+    userName: '',
     tapTime: ''
   },
 
   initViewStyle: function () {
     var initViewStyle = new Array(10)
     for (var i = 0; i < initViewStyle.length; i++) {
-      initViewStyle[i] = 'box-shadow: 1px 1px 2px 2px #888888;'
+      initViewStyle[i] = ''
     }
     this.setData({
       viewStyle: initViewStyle
     })
   },
 
-  pressView: function (e) {
+  pressView: function (index) {
     this.initViewStyle()
-    var index = e.currentTarget.dataset.item
     var tmpViewStyle = this.data.viewStyle
-    tmpViewStyle[index] = 'box-shadow:0px 0px 0px 0px'
+    tmpViewStyle[index] = 'font-weight: bold;color: #576b95;font-size: 16px;'
     this.setData({
       viewStyle: tmpViewStyle
     })
     var that = this
-    //setTimeout(this.initViewStyle, 200);
+  },
+
+  queryRoomInfo: function (e) {
+    var index = e.currentTarget.dataset.item
+    this.pressView(index)
+    var thisQueryUserType = e.currentTarget.dataset.type
+    if (queryUserType == thisQueryUserType) return
+    queryUserType = thisQueryUserType
+    queryPageType = 0
+    this.setData({
+      rooms: []
+    })
+    this.queryImpromptuRooms(queryUserType)
+  },
+
+  queryLastestRooms: function(){
+    if (queryUserType == 1) return
+    queryUserType = 1
+    queryPageType = 0
+    this.setData({
+      rooms: []
+    })
+    this.queryImpromptuRooms(queryUserType)
+  },
+
+  queryMyRooms: function () {
+    if (queryUserType == 2) return
+    queryUserType = 2
+    queryPageType = 0
+    this.setData({
+      rooms: []
+    })
+    this.queryImpromptuRooms(queryUserType)
+  },
+
+  queryJoinRooms: function () {
+    if (queryUserType == 3) return
+    queryUserType = 3
+    queryPageType = 0
+    this.setData({
+      rooms: []
+    })
+    this.queryImpromptuRooms(queryUserType)
+  },
+
+  queryRoomsOfLikeUser: function () {
+    if (queryUserType == 4) return
+    queryUserType = 4
+    queryPageType = 0
+    this.setData({
+      rooms: []
+    })
+    this.queryImpromptuRooms(queryUserType)
   },
 
   //查询最新房间信息
-  queryImpromptuRooms: function (e) {
+  queryImpromptuRooms: function (queryUserType) {
+    
+    var queryData = { 'queryPageType': queryPageType, 'firstDataTime': firstDataTime, 'lastDataTime': lastDataTime, queryUserType: queryUserType }
+    console.log('queryData', queryData)
     //util.showBusy('请求中...')
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.impromptuRoom`,
       login: true,
       method: 'get',
+      data: queryData,
       success(result) {
+        console.log(result)
+        if (result.data.data == '') {
+          util.showSuccess('没有更多记录')
+          return
+        }
+        var resultData = []
+        if (queryPageType == 0) {
+          resultData = result.data.data
+        } else if (queryPageType == 1) {
+          resultData = [].concat(result.data.data, that.data.rooms)
+        } else if (queryPageType == 2) {
+          resultData = [].concat(that.data.rooms, result.data.data)
+        }
         that.setData({
-          rooms: result.data.data
+          rooms: resultData
         })
-        //将时间格式化显示
         that.formatDate()
+        //保存第一条和最后一条数据的id,上拉和下拉的时候查询用
+        that.refreshDataId()
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -62,11 +135,25 @@ Page({
     })
   },
 
+  //保存第一条和最后一条数据的id,上拉和下拉的时候查询用
+  refreshDataId: function () {
+    var length = this.data.rooms.length
+    firstDataTime = this.data.rooms[0].start_date
+    lastDataTime = this.data.rooms[length - 1].end_date
+  },
+
   formatDate: function () {
     var data = this.data.rooms
     for (var i = 0; i < data.length; i++) {
       data[i].startDateStr = dateFormat.getTimeNoticeFuture(data[i].start_date, data[i].start_time)
       data[i].timeStatus = dateFormat.getTimeStatus(data[i].start_date, data[i].start_time, data[i].end_time)
+      if (data[i].people_amount == 0){
+        data[i].amountNotice = '待报名      '
+      }else if(data[i].max_amount == data[i].people_amount){
+        data[i].amountNotice = '报名已满   '
+      }else{
+        data[i].amountNotice = data[i].people_amount + '人已报名'
+      }
     }
     console.log(data)
     this.setData({
@@ -114,23 +201,23 @@ Page({
     })
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    //this.initViewStyle()
-    //this.queryImpromptuRooms()
-  },
-
   onShow: function (options) {
-    this.initViewStyle()
-    this.queryImpromptuRooms()
+    queryPageType = 0
+    queryUserType = 1
+    this.queryImpromptuRooms(queryUserType)
+    this.pressView(0)
 
   },
 
   onPullDownRefresh: function () {
-    this.initViewStyle()
-    this.queryImpromptuRooms()
+    queryPageType = 1
+    this.queryImpromptuRooms(queryUserType)
+  },
+
+  onReachBottom: function () {
+    console.log('onReachBottom')
+    queryPageType = 2
+    this.queryImpromptuRooms(queryUserType)
   },
 
 

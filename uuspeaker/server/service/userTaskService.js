@@ -169,6 +169,47 @@ var getAllSpecialTask = async (queryUserType, queryPageType, firstDataTime, last
   return taskData
 }
 
+/**
+ * 查询所关注用户的自定义任务 
+ * 返回：
+ */
+var getTaskOfLikeUser = async (userId,queryUserType, queryPageType, firstDataTime, lastDataTime) => {
+  var limit = 10
+  var offset = 0
+  var orderBy = 'impromptu_audio.create_date'
+  if (queryUserType == 3) {
+    orderBy = 'impromptu_audio.like_amount'
+  }
+  var taskData = []
+
+  if (queryPageType == 0) {
+    taskData = await mysql('user_special_task').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('impromptu_audio', 'impromptu_audio.audio_id', 'user_special_task.task_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_special_task.user_id').innerJoin('user_like', 'user_like.like_user_id', 'impromptu_audio.user_id').where({ 'user_like.user_id': userId }).orderBy(orderBy, 'desc').limit(limit).offset(offset)
+  }
+
+  if (queryPageType == 1) {
+    taskData = await mysql('user_special_task').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('impromptu_audio', 'impromptu_audio.audio_id', 'user_special_task.task_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_special_task.user_id').innerJoin('user_like', 'user_like.like_user_id', 'impromptu_audio.user_id').where({ 'user_like.user_id': userId }).andWhere('impromptu_audio.create_date', '>', new Date(firstDataTime)).orderBy(orderBy, 'desc').limit(limit).offset(offset)
+  }
+
+  if (queryPageType == 2) {
+    taskData = await mysql('user_special_task').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('impromptu_audio', 'impromptu_audio.audio_id', 'user_special_task.task_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_special_task.user_id').innerJoin('user_like', 'user_like.like_user_id', 'impromptu_audio.user_id').where({ 'user_like.user_id': userId }).andWhere('impromptu_audio.create_date', '<', new Date(lastDataTime)).orderBy(orderBy, 'desc').limit(limit).offset(offset)
+  }
+
+  for (var i = 0; i < taskData.length; i++) {
+    taskData[i].src = audioService.getSrc(taskData[i].audio_id)
+    taskData[i].user_info = userInfoService.getTailoredUserInfo(taskData[i].user_info)
+  }
+  return taskData
+}
 
 
-module.exports = { saveDailyTask, getAllMyTodayTask, getMyTodayTaskByType, getUserTask, deleteTask, evaluateTask, saveSpecialTask, getMySpecialTask, getAllSpecialTask }
+
+module.exports = { 
+  saveDailyTask, 
+  getAllMyTodayTask, 
+  getMyTodayTaskByType, 
+  getUserTask, deleteTask, 
+  evaluateTask, 
+  saveSpecialTask, 
+  getMySpecialTask, 
+  getAllSpecialTask, 
+  getTaskOfLikeUser }

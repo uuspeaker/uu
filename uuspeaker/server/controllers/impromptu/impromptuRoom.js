@@ -13,15 +13,17 @@ module.exports = {
     var endTime = ctx.request.body.endTime
     var notice = ctx.request.body.notice
 
-    await mysql('room_impromptu').insert(
+    var startDateDB = new Date(startDate + ' ' + startTime + ':00')
+    var endDateDB = new Date(startDate + ' ' + endTime + ':00')
+
+    await mysql('impromptu_room').insert(
       {
         room_id: uuid.v1(),
         user_id: userId,
         title: title,
         max_amount: maxAmount,
-        start_date: startDate,
-        start_time: startTime,
-        end_time: endTime,
+        start_date: startDateDB,
+        end_date: endDateDB,
         notice: notice
       })
 
@@ -37,11 +39,13 @@ module.exports = {
     var endTime = ctx.request.body.endTime
     var notice = ctx.request.body.notice
 
-    await mysql('room_impromptu').update(
+    var startDateDB = new Date(startDate + ' ' + startTime + ':00')
+    var endDateDB = new Date(startDate + ' ' + endTime + ':00')
+
+    await mysql('impromptu_room').update(
       {
-        start_date: startDate,
-        start_time: startTime,
-        end_time: endTime,
+        start_date: startDateDB,
+        end_date: endDateDB,
         title: title,
         notice: notice,
         max_amount: maxAmount
@@ -57,7 +61,7 @@ module.exports = {
     var userId = await userInfo.getOpenId(ctx)
 
     //删除原有记录
-    await mysql('room_impromptu').where({
+    await mysql('impromptu_room').where({
       room_id: roomId,
       user_id: userId
     }).del()
@@ -65,16 +69,34 @@ module.exports = {
 
   get: async ctx => {
     var userId = await userInfo.getOpenId(ctx)
-    var rooms = await impromptuRoomService.getRooms()
-
-    for(var i=0; i<rooms.length; i++){
-      if(rooms[i].user_id == userId){
-        rooms[i].isHost = true
+    //1查询最近的 2查询自己的 3查询自己参与的 4查询自己关注的
+    var queryUserType = ctx.query.queryUserType
+    var queryPageType = ctx.query.queryPageType
+    var firstDataTime = ctx.query.firstDataTime
+    var lastDataTime = ctx.query.lastDataTime
+    var roomData = []
+  
+    if (queryUserType == 1){
+      roomData = await impromptuRoomService.getLastestRooms(queryPageType, firstDataTime, lastDataTime)
+    }
+    if (queryUserType == 2) {
+      roomData = await impromptuRoomService.getMyRooms(userId, queryPageType, firstDataTime, lastDataTime)
+    }
+    if (queryUserType == 3) {
+      roomData = await impromptuRoomService.getMyJoinRooms(userId, queryPageType, firstDataTime, lastDataTime)
+    }
+    if (queryUserType == 4) {
+      roomData = await impromptuRoomService.getRoomsOfLikeUser(userId, queryPageType, firstDataTime, lastDataTime)
+    }
+    
+    for (var i = 0; i < roomData.length; i++){
+      if (roomData[i].user_id == userId){
+        roomData[i].isHost = true
       }else{
-        rooms[i].isHost = false
+        roomData[i].isHost = false
       }
     }
-    ctx.state.data = rooms
+    ctx.state.data = roomData
   },
 
 }

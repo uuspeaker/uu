@@ -1,22 +1,23 @@
+
+<view class="weui-cell top">
+  <view class=" myReport"  style="{{viewStyle[0]}}" data-item='0' data-type='1' bindtap='queryArticleInfo'>最新的</view>
+  <view class=" myReport"  style="{{viewStyle[1]}}" data-item='1' data-type='2' bindtap='queryArticleInfo'>关注的</view>
+  <view class=" myReport"  style="{{viewStyle[2]}}" data-item='2' data-type='3' bindtap='queryArticleInfo'>我的</view>
+  <view class="right" bindtap='writeArticle' >
+    <image class="commentImg" src='../../../images/reportShow/write.png' />
+  </view>
+</view>
 <template name="commentTemplate">
   <view class="weui-flex" style='background-color: #F6F6F6;padding-left:5px;padding-bottom:1px' >
     <view ><text class="commentTitle ">{{user_info.nickName}}：</text><text class="commentText ">{{comment}}</text></view>
   </view>
 </template>
 
-
-<view class="weui-cell write">
-  <view class="weui-cell__bd myReport" bindtap='toMyReport'>我的</view>
-  <view class="weui-cell__ft" bindtap='writeArticle'>
-    <image class="commentImg" src='../../../images/reportShow/write.png' />
-  </view>
-</view>
-
 <template name="scoreDetailTemplate">
   <view class="weui-cell ">
     <view class="weui-cell__hd" style='vertical-align: text-top;'>
       <view class="user-avatar">
-        <image class="user-pic" src="{{user_info.avatarUrl}}" />
+        <image class="user-pic" src="{{user_info.avatarUrl}}" data-user_id='{{user_id}}' catchtap='toUserInfo'/>
       </view>
     </view>
     <view class="weui-cell__bd" style='padding-left:30px;'>
@@ -30,7 +31,9 @@
       <view class="weui-article__p article" style='height:100%'>
         <rich-text>{{study_report}}</rich-text>
         <view class="weui-flex">
-          <view class="weui-flex__item date">{{createDateStr}}</view>
+          <view class="weui-flex__item date">{{createDateStr}}<block wx:if="{{isMine == 1}}">
+<text class='delete' data-reportid='{{report_id}}' bindtap='deleteArticle'>删除</text></block>
+          </view>
           <view class="tooltip">
             <image class=" commentImg " src='../../../images/reportShow/commentTip.png'>
               <view class="weui-flex tooltiptext">
@@ -67,7 +70,7 @@
   </view>
 </template>
 
-<view class="weui-cells weui-cells_after-title" >
+<view class="weui-cells weui-cells_after-title middle" >
   <block wx:for="{{studyReportData}}">
     <template is="scoreDetailTemplate" data="{{...item}}" />
   </block>

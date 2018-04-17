@@ -22,11 +22,15 @@ module.exports = {
     var queryPageType = ctx.query.queryPageType
     var firstDataTime = ctx.query.firstDataTime
     var lastDataTime = ctx.query.lastDataTime
-    var taskData
+    var taskData = []
     if(queryUserType == 1){
       taskData = await userTaskService.getMySpecialTask(userId, queryPageType, firstDataTime, lastDataTime)
-    }else{
+    }
+    if (queryUserType == 2 || queryUserType == 3) {
       taskData = await userTaskService.getAllSpecialTask(queryUserType, queryPageType, firstDataTime, lastDataTime)
+    }
+    if (queryUserType == 4) {
+      taskData = await userTaskService.getTaskOfLikeUser(userId,queryUserType, queryPageType, firstDataTime, lastDataTime)
     }
     ctx.state.data = taskData
   },

@@ -15,7 +15,7 @@ module.exports = {
         room_id: roomId,
         meeting_user: meetingUserStr
       })
-    await mysql('room_impromptu').update(
+    await mysql('impromptu_room').update(
       {
         survey_status: 2
       }).where({ room_id: roomId, })
@@ -23,7 +23,7 @@ module.exports = {
 
   put: async ctx => {
     var roomId = ctx.request.body.roomId
-    //var meetingDate = await mysql("room_impromptu").select('start_date').where({ room_id: roomId})
+    //var meetingDate = await mysql("impromptu_room").select('start_date').where({ room_id: roomId})
     //var meetingDateStr = meetingDate[0].start_date.replace(/-/g,'')
     var meetingDateStr = dateUtil.getToday()
     var bestSpeaker = await mysql("impromptu_vote").select('best_speaker', mysql.raw("count(best_speaker) as total_score")).where({ room_id: roomId}).groupBy('best_speaker').orderBy('total_score', 'desc')
@@ -85,7 +85,7 @@ module.exports = {
       
     }
     //更新会议投票状态为已完成
-    await mysql('room_impromptu').update({survey_status: 3}).where({room_id: roomId})
+    await mysql('impromptu_room').update({survey_status: 3}).where({room_id: roomId})
     
   },
 

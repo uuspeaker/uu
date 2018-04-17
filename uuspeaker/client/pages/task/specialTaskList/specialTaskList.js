@@ -19,36 +19,39 @@ Page({
    * 页面的初始数据
    */
   data: {
+    viewStyle: [],
     audios: {},
     roomId: '',
     audioLikeUser: [],
     currentLikeUser: []
   },
 
-  //查询自由练习任务信息
-  queryMySpecialTask: function () {
-    if (queryUserType == 1)return
-    queryUserType = 1
-    queryPageType = 0
+  initViewStyle: function () {
+    var initViewStyle = new Array(10)
+    for (var i = 0; i < initViewStyle.length; i++) {
+      initViewStyle[i] = ''
+    }
     this.setData({
-      audios: []
+      viewStyle: initViewStyle
     })
-    this.doQuerySpecialTask(queryUserType)
   },
 
-  queryNewSpecialTask: function () {
-    if (queryUserType == 2) return
-    queryUserType = 2
-    queryPageType = 0
+  pressView: function (index) {
+    this.initViewStyle()
+    var tmpViewStyle = this.data.viewStyle
+    tmpViewStyle[index] = 'font-weight: bold;color: #576b95;font-size: 16px;'
     this.setData({
-      audios: []
+      viewStyle: tmpViewStyle
     })
-    this.doQuerySpecialTask(queryUserType)
+    var that = this
   },
 
-  queryHotSpecialTask: function () {
-    if (queryUserType == 3) return
-    queryUserType = 3
+  queryTaskInfo: function(e){
+    var index = e.currentTarget.dataset.item
+    this.pressView(index)
+    var thisQueryUserType = e.currentTarget.dataset.type
+    if (queryUserType == thisQueryUserType) return
+    queryUserType = thisQueryUserType
     queryPageType = 0
     this.setData({
       audios: []
@@ -237,6 +240,7 @@ Page({
     queryPageType = 0
     queryUserType = 1
     this.doQuerySpecialTask(queryUserType)
+    this.pressView(0)
   },
 
   onPullDownRefresh: function () {

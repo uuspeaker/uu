@@ -53,13 +53,14 @@ var getTimeNotice = function (noticeDate) {
   }
 }
 
-var getTimeNoticeFuture = function (noticeDate, time) {
+var getTimeNoticeFuture = function (noticeDate) {
   var now = new Date()
   now.setHours(0)
   now.setMinutes(0)
   now.setSeconds(0)
   now.setMilliseconds(0)
   var targetDate = new Date(noticeDate)
+  var time = this.format(targetDate,'hh:mm')
   targetDate.setHours(0)
   targetDate.setMinutes(0)
   targetDate.setSeconds(0)

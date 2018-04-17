@@ -6,15 +6,6 @@ var dateFormat = require('../../../common/dateFormat.js')
 var roomId = ''
 Page({
   data: {
-    modeItems: [
-      { name: '即兴演讲', value: '1', checked: true},
-      { name: '备稿演讲', value: '2' },
-      { name: '工作坊', value: '3' }
-    ],
-    languageItems: [
-      { name: '中文', value: '1', checked: true },
-      { name: 'English', value: '2' }
-    ],
     userInfo: {},
     startDate: dateFormat.format(new Date(), 'yyyy-MM-dd'),
     startTime: '21:00',
@@ -25,7 +16,7 @@ Page({
     operation: 'add',
 
     maxAmount: ["1", "2", "3", "4", "5", "6", "7", "8"],
-    maxAmountIndex:0
+    maxAmountIndex:4
   },
 
   bindMaxAmountyChange: function (e) {
@@ -148,10 +139,13 @@ Page({
       // this.data.languageItems[0].checked = false
       // this.data.modeItems[parseInt(options.mode) - 1].checked = true
       // this.data.languageItems[parseInt(options.language) - 1].checked = true
+      var startDateStr = dateFormat.format(new Date(options.startDate),'yyyy-MM-dd')
+      var startTimeStr = dateFormat.format(new Date(options.startDate), 'hh:mm')
+      var endTimeStr = dateFormat.format(new Date(options.endDate), 'hh:mm')
       this.setData({
-        startDate: options.startDate,
-        startTime: options.startTime,
-        endTime: options.endTime,
+        startDate: startDateStr,
+        startTime: options.startTimeStr,
+        endTime: options.endTimeStr,
         title: options.title,
         notice: options.notice,
         maxAmountIndex: options.maxAmount-1,
