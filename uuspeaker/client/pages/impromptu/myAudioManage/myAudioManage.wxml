@@ -15,7 +15,7 @@
   <view class="weui-cells weui-cells_after-title">
     <view class="weui-cell">
       <view class="weui-cell__bd">
-        <textarea name="audioText" placeholder-class="textarea" class="weui-textarea" value='{{audioText}}' placeholder="" style="height: 20em" maxlength='2000' auto-focus/>
+        <textarea name="audioText" placeholder-class="textarea" class="weui-textarea" value='{{audioText}}' placeholder="" style="height: 20em" maxlength='2000' />
         <view class="weui-textarea-counter">0/2000</view>
       </view>
     </view>

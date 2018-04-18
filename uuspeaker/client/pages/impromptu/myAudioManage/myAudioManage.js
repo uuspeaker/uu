@@ -26,9 +26,7 @@ Page({
       method: 'put',
       success(result) {
         util.showSuccess('保存成功')
-        wx.navigateTo({
-          url: '../myAudio/myAudio',
-        })
+        wx.navigateBack({})
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -61,9 +59,7 @@ Page({
       method: 'delete',
       success(result) {
         util.showSuccess('已成功删除')
-        wx.navigateTo({
-          url: '../myAudio/myAudio',
-        })
+        wx.navigateBack({})
       },
       fail(error) {
         util.showModel('请求失败', error);

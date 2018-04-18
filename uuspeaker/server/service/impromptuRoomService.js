@@ -10,6 +10,8 @@ const uuid = require('../common/uuid.js')
  */
 var getLastestRooms = async (queryPageType, firstDataTime, lastDataTime) => {
   var now = new Date()
+  now.setHours(0)
+  now.setMinutes(0)
   var limit = 10
   var offset = 0
   var rooms
@@ -37,6 +39,8 @@ var getLastestRooms = async (queryPageType, firstDataTime, lastDataTime) => {
  */
 var getMyRooms = async (userId, queryPageType, firstDataTime, lastDataTime) => {
   var now = new Date()
+  now.setHours(0)
+  now.setMinutes(0)
   var limit = 10
   var offset = 0
   var rooms
@@ -64,6 +68,8 @@ var getMyRooms = async (userId, queryPageType, firstDataTime, lastDataTime) => {
  */
 var getMyJoinRooms = async (userId, queryPageType, firstDataTime, lastDataTime) => {
   var now = new Date()
+  now.setHours(0)
+  now.setMinutes(0)
   var limit = 10
   var offset = 0
   var rooms

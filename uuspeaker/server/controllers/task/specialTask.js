@@ -32,6 +32,13 @@ module.exports = {
     if (queryUserType == 4) {
       taskData = await userTaskService.getTaskOfLikeUser(userId,queryUserType, queryPageType, firstDataTime, lastDataTime)
     }
+    for(var i=0; i<taskData.length; i++){
+      if(taskData[i].user_id == userId){
+        taskData[i].isMine = 1
+      }else{
+        taskData[i].isMine = 0
+      }
+    }
     ctx.state.data = taskData
   },
 

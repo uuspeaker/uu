@@ -10,7 +10,7 @@
         </view>
       </view>
       <view >
-        <view class=" date">  {{createDateStr}} {{timeDurationStr}} <text class="link" data-audio_id="{{audio_id}}" data-audio_name='{{audio_name}}' data-audio_text='{{audio_text}}' catchtap='editAudio'>编辑</text></view>
+        <view class=" date">  {{createDateStr}} {{timeDurationStr}} </view>
       </view>
       
     </view>
