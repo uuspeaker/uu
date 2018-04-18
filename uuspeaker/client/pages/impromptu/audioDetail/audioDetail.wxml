@@ -22,20 +22,16 @@
       </view>
     </view>
     <block wx:if="{{audioData[0].isPlay == 0}}">
-      <view class='right ' data-src='{{audioData[0].src}}' data-audio_id='{{audioData[0].audio_id}}' bindtap='playAudio'>
+      <view class='right ' data-src='{{audioData[0].src}}' data-audio_id='{{audioData[0].audio_id}}' catchtap='playAudio'>
         <image class="audio" src="../../../images/userAudio/start.png" />
       </view>
     </block>
     <block wx:if="{{audioData[0].isPlay == 1}}">
-      <view class='right link' data-src='{{audioData[0].src}}' data-audio_id='{{audioData[0].audio_id}}' bindtap='stopAudio'>
+      <view class='right link' data-src='{{audioData[0].src}}' data-audio_id='{{audioData[0].audio_id}}' catchtap='stopAudio'>
         <image class="audio" src="../../../images/userAudio/stop.png" />
       </view>
     </block>
   </view>
-  <!--点赞展示页面-->
-  
-  
-
 </view>
 
 
@@ -103,7 +99,7 @@
 
 
 <view class="weui-flex bottom">
-  <view class="weui-flex__item note-btn" bindtouchstart="startRecord" bindtouchend="stopRecord">
+  <view class="weui-flex__item note-btn" style="{{pressStyle}}" bindtouchstart="startRecord" bindtouchend="stopRecord">
     <image class="audio-pic" src="../../../images/audioDetail/voice.png"></image>
   </view>
 </view>

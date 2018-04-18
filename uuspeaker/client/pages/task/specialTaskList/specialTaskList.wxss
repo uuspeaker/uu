@@ -14,27 +14,9 @@
   
 }
 
-.normal {
-  height: 85px;
-  width: 20%;
-  margin-top: 5px;
-  margin-left: 10px;
-  color: white;
-  text-align: center;
-  font-size: 15px;
-  font-weight: bold;
-  border-radius: 10px 10px 10px 10px;
-}
-
-.uu-code {
-  width: 35px;
-  height: 35px;
-  margin-top: 10px;
-}
-
 .audio {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 3px;
   padding-right: 10px;
 }
@@ -43,15 +25,14 @@
 width: 18px; 
 height: 18px; 
 padding-left: 10px;
-
 position: relative;
-  top: 4px;
+top: 4px;
 }
 
 .user-pic {
-  width: 50px;
-  height: 50px;
-  border-radius: 3px;
+  width: 90px;
+  height: 90px;
+  border-radius: 5px;
 }
 
 .user-like-pic {
@@ -64,9 +45,14 @@ position: relative;
   color:#888888;
   font-weight: normal;
   padding-left:10px;
-  margin-top: 8px;
+
 }
 .right{
-  
   right: 10px;
+}
+.date {
+  padding-top: 3px;
+  font-size: 13px;
+  color: grey;
+  padding-left: 10px; 
 }

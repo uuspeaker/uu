@@ -2,7 +2,8 @@ var qcloud = require('../../../vendor/wafer2-client-sdk/index')
 var config = require('../../../config')
 var util = require('../../../utils/util.js')
 var dateFormat = require('../../../common/dateFormat')
-var getlogininfo = require('../../../getlogininfo.js');
+var getlogininfo = require('../../../getlogininfo.js')
+var userInfo = require('../../../common/userInfo.js')
 
 //包含房间信息，房主信息
 Page({
@@ -11,7 +12,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    modeItems: ['即兴演讲', '备稿演讲', '工作坊'],
     meetingUser: {},
     roomId: {},
     userInfo: {},
@@ -57,7 +57,7 @@ Page({
     }
     var mode = e.currentTarget.dataset.mode
     var roomID = e.currentTarget.dataset.room_id
-    var roomName = this.data.modeItems[mode - 1]
+    var roomName = this.data.roomInfo.title
 
     qcloud.request({
       
@@ -102,6 +102,7 @@ Page({
         that.setData({
           meetingUser: result.data.data.meetingUser,
           totalScore: result.data.data.hostTotalScore,
+          hostRank: userInfo.getRank(result.data.data.hostTotalScore),
           isJoin: result.data.data.isJoin,
           roomInfo: result.data.data.roomInfo,
           isHost: result.data.data.isHost,
@@ -119,6 +120,7 @@ Page({
     var data = this.data.meetingUser
     for (var i = 0; i < data.length; i++) {
       data[i].startDateStr = dateFormat.getTimeNotice(data[i].create_date)
+      data[i].userRank = userInfo.getRank(data[i].totalScore)
     }
     var roomInfo = this.data.roomInfo
     roomInfo.startDateStr = dateFormat.getTimeNoticeFuture(roomInfo.start_date, roomInfo.start_time) 

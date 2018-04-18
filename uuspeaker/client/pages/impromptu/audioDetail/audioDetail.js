@@ -21,6 +21,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    pressStyle:'box-shadow: 0 2px 10px rgba(0, 49, 114, .5);',
     audioId: '',
     audioData:[],
     audioDataLike:[],
@@ -227,9 +228,15 @@ Page({
   startRecord: function () {
     audioService.start()
     startDate = new Date()
+    this.setData({
+      pressStyle: 'box-shadow: 0px 0px 0px 0px;'
+    })
   },
 
   stopRecord: function () {
+    this.setData({
+      pressStyle: 'box-shadow: 0 2px 10px rgba(0, 49, 114, .5);'
+    })
     audioService.stop()
     endDate = new Date()
     timeDuration = Math.floor((endDate - startDate) / 1000)

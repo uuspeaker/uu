@@ -1,43 +1,3 @@
-<template name="scoreDetailTemplate">
-  <view class="weui-cell">
-    <view class='weui-cell__hd'>
-      <image class="speaker-pic" src="{{user_info.avatarUrl}}" data-user_id='{{user_id}}' catchtap='toUserInfo'/>
-    </view>
-    <view class="weui-cell__bd" class='speaker'>
-      <view>{{user_info.nickName}}
-        <text wx:if="{{role_type == 1}}">【演讲者】</text>
-        <text wx:if="{{role_type == 2}}">【主持人】</text>
-        <text wx:if="{{role_type == 3}}">【点评人】</text>
-      </view>
-      <view class='speaker-level'>
-        <text wx:if="{{totalScore == 0}}">Lv1：乞丐演讲君</text>
-        <text wx:if="{{totalScore >= 1 && totalScore < 20}}">Lv2：贫民演讲君</text>
-        <text wx:if="{{totalScore >= 20 && totalScore < 50}}">Lv3：布衣演讲君</text>
-        <text wx:if="{{totalScore >= 50 && totalScore < 100}}">Lv4：青铜演讲君</text>
-        <text wx:if="{{totalScore >= 100 && totalScore < 200}}">Lv5：白银演讲君</text>
-        <text wx:if="{{totalScore >= 200 && totalScore < 300}}">Lv6：黄金演讲君</text>
-        <text wx:if="{{totalScore >= 300 && totalScore < 500}}">Lv7：铂金演讲君</text>
-        <text wx:if="{{totalScore >= 500 && totalScore < 700}}">Lv8：钻石演讲君</text>
-        <text wx:if="{{totalScore >= 700 && totalScore < 1000}}">Lv9：星耀演讲君</text>
-        <text wx:if="{{totalScore >= 1000}}">Lv10：王者演讲君</text>
-      </view>
-    </view>
-
-    <view class="weui-cell__ft medal-view">
-      <view class="weui-flex ">
-        <view wx:if="{{isBestSpeaker == true}}">
-          <image class="medal" src='../../../images/impromptuMeeting/medal.png'></image>
-          <view>演讲</view>
-        </view>
-        <view wx:if="{{isBestEvaluator == true}}" style='padding-left:15px'>
-          <image class="medal" src='../../../images/impromptuMeeting/medal2.png'></image>
-          <view>点评</view>
-        </view>
-      </view>
-    </view>
-  </view>
-</template>
-
 <view class="page">
   <view class="weui-cells weui-cells_after-title">
 
@@ -47,18 +7,7 @@
       </view>
       <view class="weui-cell__bd">
         <view>{{roomInfo.userInfo.nickName}}【发起人】</view>
-        <view class='host-level'>
-          <text wx:if="{{totalScore == 0}}">Lv1：乞丐演讲君</text>
-          <text wx:if="{{totalScore >= 1 && totalScore < 20}}">Lv2：贫民演讲君</text>
-          <text wx:if="{{totalScore >= 20 && totalScore < 50}}">Lv3：布衣演讲君</text>
-          <text wx:if="{{totalScore >= 50 && totalScore < 100}}">Lv4：青铜演讲君</text>
-          <text wx:if="{{totalScore >= 100 && totalScore < 200}}">Lv5：白银演讲君</text>
-          <text wx:if="{{totalScore >= 200 && totalScore < 300}}">Lv6：黄金演讲君</text>
-          <text wx:if="{{totalScore >= 300 && totalScore < 500}}">Lv7：铂金演讲君</text>
-          <text wx:if="{{totalScore >= 500 && totalScore < 700}}">Lv8：钻石演讲君</text>
-          <text wx:if="{{totalScore >= 700 && totalScore < 1000}}">Lv9：星耀演讲君</text>
-          <text wx:if="{{totalScore >= 1000}}">Lv10：王者演讲君</text>
-        </view>
+        <view class='host-level'>{{hostRank}}</view>
       </view>
       <block wx:if="{{isHost == true}}">
         <block wx:if="{{roomInfo.survey_status == '1'}}">
@@ -127,3 +76,32 @@
     <view bindtap='toReport'>复盘</view>
   </view-->
 </view>
+
+<template name="scoreDetailTemplate">
+  <view class="weui-cell">
+    <view class='weui-cell__hd'>
+      <image class="speaker-pic" src="{{user_info.avatarUrl}}" data-user_id='{{user_id}}' catchtap='toUserInfo'/>
+    </view>
+    <view class="weui-cell__bd" class='speaker'>
+      <view>{{user_info.nickName}}
+        <text wx:if="{{role_type == 1}}">【演讲者】</text>
+        <text wx:if="{{role_type == 2}}">【主持人】</text>
+        <text wx:if="{{role_type == 3}}">【点评人】</text>
+      </view>
+      <view class='speaker-level'>{{userRank}}</view>
+    </view>
+
+    <view class="weui-cell__ft medal-view">
+      <view class="weui-flex ">
+        <view wx:if="{{isBestSpeaker == true}}">
+          <image class="medal" src='../../../images/impromptuMeeting/medal.png'></image>
+          <view>演讲</view>
+        </view>
+        <view wx:if="{{isBestEvaluator == true}}" style='padding-left:15px'>
+          <image class="medal" src='../../../images/impromptuMeeting/medal2.png'></image>
+          <view>点评</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

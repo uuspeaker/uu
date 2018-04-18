@@ -49,6 +49,8 @@ router.post('/checkin', controllers.checkin.post)
 //登记学习时长
 router.post('/studyDuration', controllers.study.studyDuration.post)
 router.get('/studyDuration', controllers.study.studyDuration.get)
+//查询学习时长
+router.get('/userInfo.studyDuration', controllers.userInfo.studyDuration.get)
 //当天打卡展示
 router.get('/studyManage', controllers.study.studyManage)
 //学习积分详情
@@ -139,6 +141,9 @@ router.post('/task.userIntroduction', controllers.task.userIntroduction.post)
 router.get('/userInfo.likeUser', controllers.userInfo.likeUser.get)
 router.post('/userInfo.likeUser', controllers.userInfo.likeUser.post)
 router.delete('/userInfo.likeUser', controllers.userInfo.likeUser.del)
+//用户关注管理
+router.get('/userInfo.likeUserTotal', controllers.userInfo.likeUserTotal.get)
+router.get('/userInfo.likeUserList', controllers.userInfo.likeUserList.get)
 //用户基础信息管理
 router.get('/userInfo.userBaseInfo', controllers.userInfo.userBaseInfo.get)
 

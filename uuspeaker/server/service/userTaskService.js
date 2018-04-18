@@ -1,7 +1,6 @@
 const { mysql } = require('../qcloud')
 const audioService = require('../service/audioService.js')
 const userInfoService = require('../service/userInfoService.js')
-const dateUtil = require('../common/dateUtil')
 /**
  * 完成演讲任务 
  * 返回：

@@ -17,8 +17,8 @@ page {
   border-color: gainsboro;
 }
 .middle{
-  padding-top:50px;
-  padding-bottom:40px;
+  margin-top:45px;
+  margin-bottom:40px;
 }
 .bottom{
   position: fixed;

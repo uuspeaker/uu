@@ -6,21 +6,11 @@
     </view>
     <view class="weui-cell__bd">
       <view class='link' bindtap='toUserIntroduction'>{{userInfo.nickName}}</view>
-      <view style="font-size: 13px;color: #888888;padding-top:5px">
-        <text wx:if="{{totalScore == 0}}">Lv1：乞丐演讲君</text>
-        <text wx:if="{{totalScore >= 1 && totalScore < 20}}">Lv2：贫民演讲君</text>
-        <text wx:if="{{totalScore >= 20 && totalScore < 50}}">Lv3：布衣演讲君</text>
-        <text wx:if="{{totalScore >= 50 && totalScore < 100}}">Lv4：青铜演讲君</text>
-        <text wx:if="{{totalScore >= 100 && totalScore < 200}}">Lv5：白银演讲君</text>
-        <text wx:if="{{totalScore >= 200 && totalScore < 300}}">Lv6：黄金演讲君</text>
-        <text wx:if="{{totalScore >= 300 && totalScore < 500}}">Lv7：铂金演讲君</text>
-        <text wx:if="{{totalScore >= 500 && totalScore < 700}}">Lv8：钻石演讲君</text>
-        <text wx:if="{{totalScore >= 700 && totalScore < 1000}}">Lv9：星耀演讲君</text>
-        <text wx:if="{{totalScore >= 1000}}">Lv10：王者演讲君</text>
+      <view style="font-size: 13px;color: #888888;padding-top:5px">{{rank}}
       </view>
     </view>
     <view class="weui-cell__ft totoalScore">
-      {{totalTaskScore}} 分钟
+      {{todayStudyDuration}} 分钟
 
     </view>
   </view>
@@ -30,14 +20,17 @@
   <view>
     <view class="weui-flex" style='padding-left:25px;padding-bottom:5px'>
       <view class="weui-flex__item">
-        <view class='small-grey'>练习表达</view>
-        <view class="weui-flex" style='font-size:15px'>{{speechScore}} 分钟</view>
+        <view class='small-grey'>今日学习</view>
+        <view class="weui-flex" style='font-size:15px'>{{todayStudyDuration}} 分钟</view>
+      </view>
+     <view class="weui-flex__item">
+        <view class='small-grey'>我关注的</view>
+        <view class="weui-flex" style='font-size:15px' data-type='1' bindtap='toLikeUserList'>{{likeUserTotal}} 人</view>
       </view>
       <view class="weui-flex__item">
-        <view class='small-grey'>练习反馈</view>
-        <view class="weui-flex" style='font-size:15px'>{{commentScore}} 分钟</view>
+        <view class='small-grey'>我的粉丝</view>
+        <view class="weui-flex" style='font-size:15px' data-type='2' bindtap='toLikeUserList'>{{myFansTotal}} 人</view>
       </view>
-     
     </view>
   </view>
 </view>

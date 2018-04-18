@@ -76,7 +76,7 @@ module.exports = {
       
     }
     ctx.state.data = {
-      'hostTotalScore': await userInfoService.getTotalScore(roomInfo[0].user_id),
+      'hostTotalScore': await userInfoService.getTotalStudyDuration(roomInfo[0].user_id),
       'meetingUser': meetingUser,
       'isJoin': isJoin,
       'roomInfo': roomInfo[0],

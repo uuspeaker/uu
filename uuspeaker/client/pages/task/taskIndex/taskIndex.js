@@ -1,6 +1,7 @@
 var qcloud = require('../../../vendor/wafer2-client-sdk/index')
 var config = require('../../../config')
 var util = require('../../../utils/util.js')
+var userInfo = require('../../../common/userInfo.js')
 
 Page({
 
@@ -9,12 +10,15 @@ Page({
    */
   data: {
     targetStatus: 0,
+    rank:'',
 
-    scoreData: {},
     userInfo: {},
-    totalScore: 0,
+    totalStudyDuration: 0,
+    todayStudyDuration: 0,
 
-    totalTaskScore: 0,
+    myFansTotal:'',
+    likeUserTotal: '',
+
     speechScore: 0,
     commentScore: 0,
 
@@ -25,15 +29,35 @@ Page({
     //util.showBusy('请求中...')
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/studyManage`,
+      url: `${config.service.host}/weapp/userInfo.studyDuration`,
       login: true,
       method: 'get',
       success(result) {
-        console.log(result.data.data)
-        //util.showSuccess('请求成功完成')
         that.setData({
-          scoreData: result.data.data,
-          totalScore: result.data.data.totalScore
+          totalStudyDuration: result.data.data.totalStudyDuration,
+          todayStudyDuration: result.data.data.todayStudyDuration,
+          rank: userInfo.getRank(result.data.data.totalStudyDuration)
+        })
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
+  //查询用户参会数据
+  queryLikeUserTotal: function (e) {
+    //util.showBusy('请求中...')
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/userInfo.likeUserTotal`,
+      login: true,
+      method: 'get',
+      success(result) {
+        that.setData({
+          likeUserTotal: result.data.data.likeUserTotal,
+          myFansTotal: result.data.data.myFansTotal,
         })
       },
       fail(error) {
@@ -132,6 +156,18 @@ Page({
     })
   },
 
+  toStudyShow: function () {
+  wx.navigateTo({
+    url: '../../study/studyShow/studyShow',
+  })
+  },
+
+  toLikeUserList: function (e) {
+  wx.navigateTo({
+    url: '../../userInfo/likeUserList/likeUserList?queryUserType=' + e.currentTarget.dataset.type,
+  })
+  },
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -140,6 +176,7 @@ Page({
     this.initUserInfo()
     this.queryUserScore()
     this.queryTaskInfo()
+    this.queryLikeUserTotal()
   },
 
 

@@ -15,6 +15,7 @@
     "pages/userInfo/myTarget/myTarget",
     "pages/userInfo/myIntroduction/myIntroduction",
     "pages/userInfo/userInfoShow/userInfoShow",
+    "pages/userInfo/likeUserList/likeUserList",
 
     "pages/impromptu/impromptuIndex/impromptuIndex",
     "pages/impromptu/cameraview/cameraview",
@@ -60,8 +61,8 @@
     "borderStyle": "white",
     "list": [
       {
-        "selectedIconPath": "images/tabbar/target2.png",
-        "iconPath": "images/tabbar/target1.png",
+        "selectedIconPath": "images/tabbar/study2.png",
+        "iconPath": "images/tabbar/study1.png",
         "pagePath": "pages/task/taskIndex/taskIndex",
         "text": "学习"
       },

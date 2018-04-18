@@ -1,5 +1,6 @@
 const { mysql } = require('../qcloud')
 const audioService = require('../service/audioService.js')
+const dateUtil = require('../common/dateUtil.js')
 
 /**
  * 获取用户ID 
@@ -130,6 +131,105 @@ var isLikeUser = async (userId, likeUserId) => {
   }
 }
 
+//查询我关注的用户数量
+var getLikeUserTotal = async (userId) => {
+  var data = await mysql('user_like').where({
+    user_id: userId
+  }).select(mysql.raw('count(1) as totalAmount'))
+  if (data[0].totalAmount == null){
+    return 0
+  }else{
+    return data[0].totalAmount
+  }
+}
+
+//查询关注我的用户数量
+var getMyFansTotal = async (userId) => {
+  var data = await mysql('user_like').where({
+    like_user_id: userId
+  }).select(mysql.raw('count(1) as totalAmount'))
+  if (data[0].totalAmount == null) {
+    return 0
+  } else {
+    return data[0].totalAmount
+  }
+}
+
+//查询我关注的用户
+var getLikeUserList = async (userId, queryPageType, firstDataTime, lastDataTime) => {
+  var limit = 10
+  var offset = 0
+  var data = []
+  if (queryPageType == 0){
+    data = await mysql('user_like').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_like.like_user_id')
+      .where({ 'user_like.user_id': userId }).select('cSessionInfo.user_info', 'user_like.create_date').orderBy('user_like.create_date', 'desc').limit(limit).offset(offset)
+  }
+  if (queryPageType == 1) {
+    data = await mysql('user_like').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_like.like_user_id')
+      .where({ 'user_like.user_id': userId }).andWhere('user_like.create_date', '>', new Date(firstDataTime)).select('cSessionInfo.user_info', 'user_like.create_date').orderBy('user_like.create_date', 'desc').limit(limit).offset(offset)
+  }
+  if (queryPageType == 2) {
+    data = await mysql('user_like').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_like.like_user_id')
+      .where({ 'user_like.user_id': userId }).andWhere('user_like.create_date', '<', new Date(lastDataTime)).select('cSessionInfo.user_info', 'user_like.create_date').orderBy('user_like.create_date', 'desc').limit(limit).offset(offset)
+  }
+
+  for (var i = 0; i < data.length; i++) {
+    data[i].user_info = getTailoredUserInfo(data[i].user_info)
+  }
+  return data
+}
+
+//查询我的粉丝
+var getMyFansList = async (userId, queryPageType, firstDataTime, lastDataTime) => {
+  var limit = 10
+  var offset = 0
+  var data = []
+  if (queryPageType == 0) {
+    data = await mysql('user_like').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_like.user_id')
+      .where({ 'user_like.like_user_id': userId }).select('cSessionInfo.user_info', 'user_like.create_date').orderBy('user_like.create_date', 'desc').limit(limit).offset(offset)
+  }
+  if (queryPageType == 1) {
+    data = await mysql('user_like').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_like.user_id')
+      .where({ 'user_like.like_user_id': userId }).andWhere('user_like.create_date', '>', new Date(firstDataTime)).select('cSessionInfo.user_info', 'user_like.create_date').orderBy('user_like.create_date', 'desc').limit(limit).offset(offset)
+  }
+  if (queryPageType == 2) {
+    data = await mysql('user_like').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_like.user_id')
+      .where({ 'user_like.like_user_id': userId }).andWhere('user_like.create_date', '<', new Date(lastDataTime)).select('cSessionInfo.user_info', 'user_like.create_date').orderBy('user_like.create_date', 'desc').limit(limit).offset(offset)
+  }
+
+  for (var i = 0; i < data.length; i++) {
+    data[i].user_info = getTailoredUserInfo(data[i].user_info)
+  }
+  return data
+}
+
+//查询用户学习总时间
+var getTotalStudyDuration = async (userId) => {
+  var data = await mysql('user_study_duration').where({
+    user_id: userId,
+  }).select(mysql.raw('sum(study_duration) as totalDuration'))
+  if (data[0].totalDuration == null){
+    return 0
+  }else{
+    return data[0].totalDuration
+  }
+}
+
+//查询用户学习总时间
+var getTodayStudyDuration = async (userId) => {
+  var now = new Date()
+  var today = dateUtil.getFormatDate(now,'yyyyMMdd')
+  var data = await mysql('user_study_duration').where({
+    user_id: userId,
+    study_date: today
+  }).select(mysql.raw('sum(study_duration) as totalDuration'))
+  if (data[0].totalDuration == null) {
+    return 0
+  } else {
+    return data[0].totalDuration
+  }
+}
+
 module.exports = { 
   getOpenId, 
   getTailoredUserInfo, 
@@ -145,5 +245,11 @@ module.exports = {
   deleteIntroduction,
   likeUser,
   cancelLikeUser,
-  isLikeUser
+  isLikeUser,
+  getLikeUserTotal,
+  getMyFansTotal,
+  getLikeUserList,
+  getMyFansList,
+  getTotalStudyDuration,
+  getTodayStudyDuration
   }

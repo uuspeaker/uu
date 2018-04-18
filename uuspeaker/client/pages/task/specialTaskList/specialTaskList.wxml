@@ -6,35 +6,39 @@
 </view>
 <template name="scoreDetailTemplate">
   <view class="weui-cell" bindtap='toAudioDetail' data-audio_id='{{audio_id}}'>
-    <view class="user-avatar">
-      <image class="user-pic" src="{{user_info.avatarUrl}}" data-user_id='{{user_info.userId}}' data-avatar_url='{{user_info.avatarUrl}}' data-nick_name='{{user_info.nickName}}' catchtap='toUserInfo'/>
+    
+
+  <view class="user-avatar">
+      <image class="user-pic" src="{{user_info.avatarUrl}}" data-user_id='{{user_id}}' bindtap='toUserInfo'/>
     </view>
     <view class="weui-cell__bd">
       <view class="title">
-        <view style='padding-left:10px;'>
+        <view style='padding-left:10px'>
           <text>{{audio_name}}</text>
-          <text class='right'></text>
         </view>
       </view>
-      <view class="small-grey" >
-      <text>作者：{{user_info.nickName}} </text>
-      <image class="like" data-audio_id='{{audio_id}}' src="../../../images/studyIndex/view.png" /> {{view_amount}}   
+      <view class="small-grey" style='margin-top:10px;'>
+        <text>作者：{{user_info.nickName}} </text>
+      </view>
+      <view class="weui-flex__item date">
+        <view>{{createDateStr}} {{timeDurationStr}} </view>
+      </view>
+      <view class="small-grey" style='padding-left:0px'>
+      <image class="like" src="../../../images/studyIndex/view.png" /> {{view_amount}}   
        <image class="like" data-audio_id='{{audio_id}}' src="../../../images/studyIndex/like.png" /> {{like_amount}}   
       <image class="like" src="../../../images/studyIndex/comment.png" /> {{comment_amount}}
       </view>
-      <view>
-        <view class="small-grey">
-
-          </view>
-      </view>
-
     </view>
     <block wx:if="{{isPlay == 0}}">
-        <view class='right ' data-src='{{src}}' data-audio_id='{{audio_id}}' catchtap='playAudio'><image class="audio" src="../../../images/userAudio/start.png" /></view>
-        </block>
-        <block wx:if="{{isPlay == 1}}">
-        <view class='right link' data-src='{{src}}' data-audio_id='{{audio_id}}' catchtap='stopAudio'><image class="audio" src="../../../images/userAudio/stop.png" /></view>
-        </block>
+      <view class='right ' data-src='{{src}}' data-audio_id='{{audio_id}}' catchtap='playAudio'>
+        <image class="audio" src="../../../images/userAudio/start.png" />
+      </view>
+    </block>
+    <block wx:if="{{isPlay == 1}}">
+      <view class='right link' data-src='{{src}}' data-audio_id='{{audio_id}}' catchtap='stopAudio'>
+        <image class="audio" src="../../../images/userAudio/stop.png" />
+      </view>
+    </block>
   </view>
 </template>
 
