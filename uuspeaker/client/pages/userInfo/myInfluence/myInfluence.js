@@ -28,6 +28,10 @@ Page({
       method: 'get',
       data: queryData,
       success(result) {
+        var data = result.data.data.userList
+        for (var i = 0; i < data.length; i++) {
+          data[i].totalDurationStr = dateFormat.getFormatDuration(data[i].totalDuration)
+        }
         that.setData({
           userList: result.data.data.userList,
           userTotal: Math.floor((result.data.data.userTotal+59)/60),

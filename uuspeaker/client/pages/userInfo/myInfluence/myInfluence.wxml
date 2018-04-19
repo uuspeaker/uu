@@ -22,7 +22,7 @@
         </view>
       </view>
       <view class="small-grey" >
-      <text>关注时间：{{createDateStr}} </text>
+      <text>学习时长：{{totalDurationStr}} </text>
       </view>
 
     </view>
