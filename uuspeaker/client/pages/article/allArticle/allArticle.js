@@ -335,9 +335,9 @@ Page({
 
   onShow: function (e) {
     queryPageType = 0
-    queryUserType = 1
+    queryUserType = 2
     this.queryStudyReport(queryUserType)
-    this.pressView(0)
+    this.pressView(1)
     //console.log(uuid.v1())
   },
 

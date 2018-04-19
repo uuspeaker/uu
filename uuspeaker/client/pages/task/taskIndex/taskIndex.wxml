@@ -23,13 +23,13 @@
         <view class='small-grey'>今日学习</view>
         <view class="weui-flex" style='font-size:15px'>{{todayStudyDuration}} 分钟</view>
       </view>
-     <view class="weui-flex__item">
+     <view class="weui-flex__item" data-type='1' bindtap='toLikeUserList'>
         <view class='small-grey'>我关注的</view>
-        <view class="weui-flex" style='font-size:15px' data-type='1' bindtap='toLikeUserList'>{{likeUserTotal}} 人</view>
+        <view class="weui-flex" style='font-size:15px' >{{likeUserTotal}} 人</view>
       </view>
-      <view class="weui-flex__item">
+      <view class="weui-flex__item" data-type='2' bindtap='toLikeUserList'>
         <view class='small-grey'>我的粉丝</view>
-        <view class="weui-flex" style='font-size:15px' data-type='2' bindtap='toLikeUserList'>{{myFansTotal}} 人</view>
+        <view class="weui-flex" style='font-size:15px' >{{myFansTotal}} 人</view>
       </view>
     </view>
   </view>
@@ -49,12 +49,7 @@
         </view>
         <view class='content'>自由练</view>
       </view>
-      <view class='later'>
-        <view >
-          <image class="task-pic"  src="../../../images/studyIndex/plan.png" />
-        </view>
-        <view class='content'>我要挑战</view>
-      </view>
+      
     </view>
   </view>
 </view>
@@ -72,12 +67,7 @@
         </view>
         <view class='content'>预约练习</view>
       </view>
-      <view class='later'>
-        <view>
-          <image class="task-pic" src="../../../images/studyIndex/plan.png" />
-        </view>
-        <view class='content'>快速匹配</view>
-      </view>
+     
       
     </view>
   </view>

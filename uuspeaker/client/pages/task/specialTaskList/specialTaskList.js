@@ -164,7 +164,7 @@ Page({
   },
 
   playAudio: function (e) {
-    this.queryAudioLikeUser(e)
+    //this.queryAudioLikeUser(e)
     this.updateViewTimes(e)
   },
 

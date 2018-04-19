@@ -11,6 +11,9 @@
       </view>
       <view class="small-grey" style='margin-top:10px;'>
         <text>作者：{{audioData[0].user_info.nickName}} </text>
+        <block wx:if="{{audioData[0].isMine == 1}}">
+        <text class="link" data-audio_id="{{audioData[0].audio_id}}" data-audio_name='{{audioData[0].audio_name}}' data-audio_text='{{audioData[0].audio_text}}' catchtap='editAudio'>编辑</text>
+        </block>
       </view>
       <view class="weui-flex__item date">
         <view>{{audioData[0].createDateStr}} {{audioData[0].timeDurationStr}} </view>

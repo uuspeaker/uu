@@ -5,25 +5,32 @@ const dateUtil = require('../../common/dateUtil.js')
 module.exports = {
   post: async ctx => {
     var userId = await userInfo.getOpenId(ctx)
-    var studyDate = ctx.request.body.studyDate
-    var studyDuration = ctx.request.body.studyDuration
+    var today = new Date()
+    var studyDate = dateUtil.format(today, 'yyyyMMdd')
+    var increaseStudyDuration = ctx.request.body.studyDuration
     
-
-    //删除原有记录
-    await mysql('user_study_duration').where({
+    var todayPastStudyDuration = await mysql('user_study_duration').where({
       user_id: userId,
       study_date: studyDate
-    }).del()
+    })
 
-    //更新参会记录
-    if (studyDuration != '') {
+    var todayTotalStudyDuration = 0
+    if (todayPastStudyDuration.length == 0){
       await mysql('user_study_duration').insert(
         {
           user_id: userId,
           study_date: studyDate,
-          study_duration: studyDuration
+          study_duration: todayPastStudyDuration[0].study_duration + increaseStudyDuration
+        })
+    }else{
+      await mysql('user_study_duration').update(
+        {study_duration: increaseStudyDuration})
+        .where({
+          user_id: userId,
+          study_date: studyDate
         })
     }
+
   },
 
   get: async ctx => {

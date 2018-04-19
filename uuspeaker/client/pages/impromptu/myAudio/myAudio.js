@@ -4,16 +4,18 @@ var util = require('../../../utils/util.js')
 var dateFormat = require('../../../common/dateFormat.js')
 
 const innerAudioContext = wx.createInnerAudioContext()
-var queryFlag = 0
-var firstAudioTime = ''
-var lastAudioTime = ''
+var queryPageType = 0
+var firstDataTime = ''
+var lastDataTime = ''
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    audios: {}
+    audios: {},
+    userId:'',
+    userId:''
   },
 
   //查询最新房间信息
@@ -24,17 +26,20 @@ Page({
       url: `${config.service.host}/weapp/impromptu.myAudio`,
       login: true,
       method: 'get',
-      data: { queryFlag: queryFlag },
+      data: { userId: this.data.userId, queryPageType: queryPageType, firstDataTime: firstDataTime, lastDataTime: lastDataTime},
       success(result) {
         console.log('queryImpromptuAudios' , result)
-        if (result.data.data == '') return;
-        //util.showSuccess('请求成功完成')
+        if (result.data.data == '') {
+          util.showSuccess('没有更多记录')
+          return;
+        }
+        
         var resultData = []
-        if (queryFlag == 0) {
+        if (queryPageType == 0) {
           resultData = result.data.data
-        } else if (queryFlag == 1) {
+        } else if (queryPageType == 1) {
           resultData = [].concat(result.data.data, that.data.audios)
-        } else if (queryFlag == 2) {
+        } else if (queryPageType == 2) {
           resultData = [].concat(that.data.audios, result.data.data)
         }
 
@@ -42,8 +47,8 @@ Page({
           audios: resultData
         })
         var length = that.data.audios.length
-        firstAudioTime = that.data.audios[0].create_date
-        lastAudioTime = that.data.audios[length - 1].create_date
+        firstDataTime = that.data.audios[0].create_date
+        lastDataTime = that.data.audios[length - 1].create_date
         that.formatDateAndStatus()
       },
       fail(error) {
@@ -95,7 +100,14 @@ Page({
   },
 
   onLoad: function (options) {
-    this.queryImpromptuAudios()
+    if (options.userId == undefined) {
+
+    } else {
+      this.setData({
+        userId: options.userId,
+        nickName: options.nickName
+      })
+    }
 
     innerAudioContext.onPlay(() => {
       console.log('开始播放')
@@ -112,14 +124,27 @@ Page({
     })
   },
 
+  toAudioDetail: function (e) {
+    wx.navigateTo({
+      url: '../../impromptu/audioDetail/audioDetail?audioId=' + e.currentTarget.dataset.audio_id,
+    })
+  },
+
+  onShow: function(){
+     queryPageType = 0
+     firstDataTime = ''
+     lastDataTime = ''
+    this.queryImpromptuAudios()
+  },
+
 
   onPullDownRefresh: function () {
-    queryFlag = 1
+    queryPageType = 1
     this.queryImpromptuAudios()
   },
 
   onReachBottom: function () {
-    queryFlag = 2
+    queryPageType = 2
     this.queryImpromptuAudios()
   },
 

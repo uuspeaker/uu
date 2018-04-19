@@ -424,18 +424,18 @@ Page({
 
     console.log(requestData)
     var that = this
-    qcloud.request({
-      url: `${config.service.host}/weapp/impromptu.impromptuDialog`,
-      data: requestData,
-      login: true,
-      method: 'post',
-      success(result) {
-      },
-      fail(error) {
-        util.showModel('请求失败', error);
-        console.log('request fail', error);
-      }
-    })
+    // qcloud.request({
+    //   url: `${config.service.host}/weapp/impromptu.impromptuDialog`,
+    //   data: requestData,
+    //   login: true,
+    //   method: 'post',
+    //   success(result) {
+    //   },
+    //   fail(error) {
+    //     util.showModel('请求失败', error);
+    //     console.log('request fail', error);
+    //   }
+    // })
   },
 
   updateDialog: function (comment) {
@@ -532,7 +532,7 @@ Page({
     queryFlag = 0
     firstCommentTime = ''
     lastCommentTime = ''
-    this.queryDialog()
+    //this.queryDialog()
     var self = this;
     console.log('room.js onShow');
     // 点圈圈退出
@@ -832,7 +832,7 @@ Page({
   onPullDownRefresh: function () {
     if (this.data.isTop == 1) return;
     queryFlag = 1
-    this.queryDialog()
+    //this.queryDialog()
   },
 
   /**

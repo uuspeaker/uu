@@ -129,7 +129,7 @@
         <image class='time-pic' src='../../../images/room/time.png' bindtap="showSpeechTime"></image>
       </view>
       <view class="weui-flex__item">
-        <textarea class='commentInput' name='comment' value='{{comment}}' fixed='true' cursor-spacing='50' adjust-position='false' bindfocus='toBottom' bindconfirm="saveComment"></textarea>
+        <textarea class='commentInput' name='comment' value='{{comment}}' fixed='true' cursor-spacing='50' adjust-position='false' bindfocus='toBottom' bindconfirm="saveComment" ></textarea>
       </view>
       <view class="weui-flex__item ">
         <image class='time-pic' style="padding-left:10px" src='../../../images/userAudio/like.png' bindtap='likeAudio'></image>

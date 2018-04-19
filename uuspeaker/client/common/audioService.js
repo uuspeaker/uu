@@ -1,4 +1,5 @@
 var config = require('../config')
+var qcloud = require('../vendor/wafer2-client-sdk/index')
 var uuid = require('uuid.js')
 const recorderManager = wx.getRecorderManager()
 var tempFilePath = '1'
@@ -47,6 +48,22 @@ const start = () => {
 
 const stop = () => {
   recorderManager.stop();
+}
+
+const recordDuration = (studyDuration) => {
+  qcloud.request({
+    url: `${config.service.host}/study/studyDuration`,
+    login: true,
+    data: { studyDuration: studyDuration},
+    method: 'post',
+    success(result) {
+      
+    },
+    fail(error) {
+      util.showModel('请求失败', error);
+      console.log('request fail', error);
+    }
+  })
 }
 
 module.exports = { start, stop, saveAudio }

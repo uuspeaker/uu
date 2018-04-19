@@ -7,8 +7,12 @@ module.exports = {
 
   get: async ctx => {
     var userId = ctx.query.userId
-    var data = await userInfoService.getUserInfo(userId)
-    ctx.state.data = data
+    var userInfo = await userInfoService.getUserInfo(userId)
+    var userIntroduction = await userInfoService.getIntroduction(userId)
+    ctx.state.data = {
+      userInfo: userInfo,
+      userIntroduction: userIntroduction
+    }
   },
 
 }

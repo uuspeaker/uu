@@ -1,21 +1,13 @@
 
 <view class="weui-cell write top">
-  <view class=" myReport" style="{{viewStyle[0]}}" data-item='0' data-type='1' bindtap='queryLikeUserInfo'>
+  <view class=" myReport" >
   <block wx:if="{{userId == ''}}">
-  我关注的
+  我的影响力总分：{{userTotal}}
   </block>
   <block wx:else>
-  {{nickName}}关注的
+  {{nickName}}的影响力总分：{{userTotal}}
   </block>
-
   </view>
-  <view class=" myReport" style="{{viewStyle[1]}}" data-item='1' data-type='2' bindtap='queryLikeUserInfo'>
-  <block wx:if="{{userId == ''}}">
-  我的粉丝
-  </block>
-  <block wx:else>
-  {{nickName}}的粉丝
-  </block></view>
 </view>
 <template name="scoreDetailTemplate">
   <view class="weui-cell" bindtap='toAudioDetail' data-audio_id='{{audio_id}}'>
@@ -39,12 +31,7 @@
 
 
 <view class="weui-cells weui-cells_after-title middle" >
-  <block wx:for="{{likeUsers}}" wx:key="item">
+  <block wx:for="{{userList}}" wx:key="item">
     <template is="scoreDetailTemplate" data="{{...item}}" />
   </block>
 </view>
-<view class="weui-flex bottom">
-    <view class="weui-flex__item">
-      <button class="weui-btn"  bindtap='toFirstPage'>返回首页</button>
-    </view>
-  </view>

@@ -19,6 +19,8 @@ Page({
   data: {
     viewStyle: [],
     likeUsers: {},
+    userId: '',
+    nickName: ''
   },
 
   initViewStyle: function () {
@@ -57,7 +59,7 @@ Page({
   //查询自由练习任务信息
   doQueryLikeUser: function (queryUserType) {
     //util.showBusy('请求中...')
-    var queryData = { 'queryPageType': queryPageType, 'firstDataTime': firstDataTime, 'lastDataTime': lastDataTime, queryUserType: queryUserType }
+    var queryData = {userId:this.data.userId, 'queryPageType': queryPageType, 'firstDataTime': firstDataTime, 'lastDataTime': lastDataTime, queryUserType: queryUserType }
     console.log('queryData', queryData)
     var that = this
     qcloud.request({
@@ -117,9 +119,31 @@ Page({
     })
   },
 
+  toFirstPage: function(){
+    wx.navigateBack({ delta:99999})
+  },
+
+  onLoad: function (options) {
+    queryUserType = options.queryUserType
+    if(options.userId == undefined){
+
+    }else{
+      this.setData({
+        userId : options.userId,
+        nickName: options.nickName
+      })
+    }
+  },
+
   onShow: function () {
     queryPageType = 0
-    queryUserType = 1
+    if (queryUserType == 2){
+      queryUserType = 2
+      this.pressView(1)
+    } else{
+      queryUserType = 1
+      this.pressView(0)
+    } 
     this.doQueryLikeUser(queryUserType)
     this.pressView(0)
   },

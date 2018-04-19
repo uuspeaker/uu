@@ -203,11 +203,36 @@ var getMyFansList = async (userId, queryPageType, firstDataTime, lastDataTime) =
   return data
 }
 
+//查询我的影响
+var getMyInfluenceList = async (userId) => {
+  var limit = 100
+  var offset = 0
+  var data = []
+    data = await mysql('impromptu_room').innerJoin('impromptu_audio', 'impromptu_room.room_id', 'impromptu_audio.room_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id')
+      .where({ 'impromptu_room.user_id': userId }).andWhere('impromptu_audio.user_id', '!=', userId).select('cSessionInfo.user_info', mysql.raw("sum(impromptu_audio.time_duration) as totalDuration")).groupBy('cSessionInfo.user_info').orderBy('totalDuration', 'desc').limit(limit).offset(offset)
+
+  for (var i = 0; i < data.length; i++) {
+    data[i].user_info = getTailoredUserInfo(data[i].user_info)
+  }
+  return data
+}
+
+//查询我的影响
+var getMyInfluenceTotal = async (userId) => {
+  var data = await mysql('impromptu_room').innerJoin('impromptu_audio', 'impromptu_room.room_id', 'impromptu_audio.room_id')
+    .where({ 'impromptu_room.user_id': userId }).andWhere('impromptu_audio.user_id', '!=', userId).select(mysql.raw("sum(impromptu_audio.time_duration) as totalAmount"))
+  if (data[0].totalAmount == null) {
+    return 0
+  } else {
+    return data[0].totalAmount
+  }
+}
+
 //查询用户学习总时间
 var getTotalStudyDuration = async (userId) => {
-  var data = await mysql('user_study_duration').where({
+  var data = await mysql('impromptu_audio').where({
     user_id: userId,
-  }).select(mysql.raw('sum(study_duration) as totalDuration'))
+  }).select(mysql.raw('sum(time_duration) as totalDuration'))
   if (data[0].totalDuration == null){
     return 0
   }else{
@@ -217,12 +242,13 @@ var getTotalStudyDuration = async (userId) => {
 
 //查询用户学习总时间
 var getTodayStudyDuration = async (userId) => {
-  var now = new Date()
-  var today = dateUtil.getFormatDate(now,'yyyyMMdd')
-  var data = await mysql('user_study_duration').where({
-    user_id: userId,
-    study_date: today
-  }).select(mysql.raw('sum(study_duration) as totalDuration'))
+  var today = new Date()
+  today.setHours(0)
+  today.setMinutes(0)
+  today.setSeconds(0)
+  var data = await mysql('impromptu_audio').where({
+    user_id: userId
+  }).andWhere('impromptu_audio.create_date', '>', today).select(mysql.raw('sum(time_duration) as totalDuration'))
   if (data[0].totalDuration == null) {
     return 0
   } else {
@@ -251,5 +277,7 @@ module.exports = {
   getLikeUserList,
   getMyFansList,
   getTotalStudyDuration,
-  getTodayStudyDuration
+  getTodayStudyDuration,
+  getMyInfluenceList,
+  getMyInfluenceTotal
   }

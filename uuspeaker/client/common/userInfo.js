@@ -1,6 +1,6 @@
 var that = this
 var getRank = (studyMinites) => {
-  var studyHours = Math.floor(studyMinites/60)
+  var studyHours = Math.floor(studyMinites/3600)
   var rank = ''
   if (studyHours == 0){
     rank = 'Lv1：乞丐演讲君'

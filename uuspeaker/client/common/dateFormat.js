@@ -81,33 +81,6 @@ var getTimeNoticeFuture = function (noticeDate) {
   }
 }
 
-var getTimeNoticeFuture2 = function (noticeDate, time) {
-  var now = new Date()
-  now.setHours(0)
-  now.setMinutes(0)
-  now.setSeconds(0)
-  now.setMilliseconds(0)
-  var targetDate = new Date(noticeDate)
-  targetDate.setHours(0)
-  targetDate.setMinutes(0)
-  targetDate.setSeconds(0)
-  targetDate.setMilliseconds(0)
-  var between = (targetDate - now) / (24 * 60 * 60 * 1000)
-  if (between == 0) {
-    return '今天' + ' ' + time
-  } else if (between == 1) {
-    return '明天' + ' ' + time
-  } else if (between == 2) {
-    return '后天' + ' ' + time
-  } else {
-    if (now.getFullYear() == targetDate.getFullYear()) {
-      return this.format(targetDate, 'M月d日 ') + time + '（' + this.getWeek(noticeDate) + ') '
-    } else {
-      return this.format(targetDate, 'yyyy年M月d日 ') + time + '（' + this.getWeek(noticeDate) + ') '
-    }
-  }
-}
-
 var getTimeStatus = function (noticeDate, begin, end) {
   var now = new Date()
   var nowStr = this.format(now,'yyyy-MM-ddhh:mi')
@@ -123,7 +96,8 @@ var getTimeStatus = function (noticeDate, begin, end) {
   }
 }
 
-var getWeek = function(dateString) {
+var getWeek = function(date) {
+  var dateString = this.format(new Date(date),'yyyy-MM-dd')
   var date;
   if (dateString == null || typeof dateString == "undefined") {
     date = new Date();
@@ -153,4 +127,4 @@ var getFormatDuration = function (timeDuration) {
   return '（' + durationStr + '）'
 }
 
-module.exports = { format, getTimeNotice, getTimeNoticeFuture, getTimeNoticeFuture2, getWeek, getTimeStatus, getSimpleFormatDate, getFormatDuration}
+module.exports = { format, getTimeNotice, getTimeNoticeFuture, getWeek, getTimeStatus, getSimpleFormatDate, getFormatDuration}

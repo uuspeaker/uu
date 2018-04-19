@@ -8,33 +8,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    scoreData: {},
-    userInfo: {},
-    totalScore: 0
+    userInfo:''
   },
 
-  //查询用户参会数据
-  queryUserScore: function (e) {
-    //util.showBusy('请求中...')
-    var that = this
-    qcloud.request({
-      url: `${config.service.host}/weapp/studyManage`,
-      login: true,
-      method: 'get',
-      success(result) {
-        console.log(result.data.data)
-        //util.showSuccess('请求成功完成')
-        that.setData({
-          scoreData: result.data.data,
-          totalScore: result.data.data.totalScore
-        })
-      },
-      fail(error) {
-        util.showModel('请求失败', error);
-        console.log('request fail', error);
-      }
-    })
-  },
 
   initUserInfo: function () {
     var that = this
@@ -80,9 +56,9 @@ Page({
     })
   },
 
-  toLeaderDetail: function () {
+  toMyInfluence: function () {
     wx.navigateTo({
-      url: '../../leader/leaderDetail/leaderDetail',
+      url: '../../userInfo/myInfluence/myInfluence',
     })
   },
 
@@ -94,7 +70,7 @@ Page({
 
   toMyTarget: function(){
     wx.navigateTo({
-      url: '../../target/myTargetDetail/myTargetDetail',
+      url: '../../userInfo/myTargetDetail/myTargetDetail',
     })
   },
 
@@ -114,8 +90,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.initUserInfo();
-    this.queryUserScore();
+    //this.initUserInfo();
   },
 
   

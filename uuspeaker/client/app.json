@@ -16,6 +16,7 @@
     "pages/userInfo/myIntroduction/myIntroduction",
     "pages/userInfo/userInfoShow/userInfoShow",
     "pages/userInfo/likeUserList/likeUserList",
+    "pages/userInfo/myInfluence/myInfluence",    
 
     "pages/impromptu/impromptuIndex/impromptuIndex",
     "pages/impromptu/cameraview/cameraview",

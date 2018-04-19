@@ -59,7 +59,7 @@ Page({
       method: 'delete',
       success(result) {
         util.showSuccess('已成功删除')
-        wx.navigateBack({})
+        wx.navigateBack({ delta: 2})
       },
       fail(error) {
         util.showModel('请求失败', error);

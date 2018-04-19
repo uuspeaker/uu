@@ -146,6 +146,8 @@ router.get('/userInfo.likeUserTotal', controllers.userInfo.likeUserTotal.get)
 router.get('/userInfo.likeUserList', controllers.userInfo.likeUserList.get)
 //用户基础信息管理
 router.get('/userInfo.userBaseInfo', controllers.userInfo.userBaseInfo.get)
+//查询用户影响力信息
+router.get('/userInfo.myInfluenceList', controllers.userInfo.myInfluenceList.get)
 
 //即兴会议发起投票问卷
 router.get('/impromptu.impromptuSurvey', controllers.impromptu.impromptuSurvey.get)

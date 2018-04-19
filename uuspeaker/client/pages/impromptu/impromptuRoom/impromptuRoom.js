@@ -12,6 +12,7 @@ Page({
     endTime: '22:00',
     notice: '',
     mode:'',
+    title:'',
     language:'',
     operation: 'add',
 
@@ -130,8 +131,35 @@ Page({
     })
   },
 
+  initUserInfo: function () {
+    var that = this
+    wx.getUserInfo({
+      withCredentials: false,
+      lang: '',
+      success(result) {
+        that.setData({
+          username: result.userInfo.nickName,
+          userInfo: result.userInfo
+        })
+        if(that.data.title == ''){
+          that.setData({
+            title: result.userInfo.nickName
+          })
+        }
+      },
+      fail(error) {
+        util.showModel('请求失败', error)
+        console.log('request fail', error)
+      },
+      complete: function (res) {
+
+      },
+    })
+  },
+
   onLoad: function (options) {
     console.log(options)
+    this.initUserInfo()
     if (options.operation == 'modify' || options.operation == 'view'){
       roomId = options.roomId
       //如果是修改，则默认值为之前保存的值
@@ -153,6 +181,8 @@ Page({
         // languageItems: this.data.languageItems,
         operation: options.operation
       })
+    }else{
+      
     }
   },
 

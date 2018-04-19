@@ -35,7 +35,7 @@ Page({
       success(result) {
         that.setData({
           totalStudyDuration: result.data.data.totalStudyDuration,
-          todayStudyDuration: result.data.data.todayStudyDuration,
+          todayStudyDuration: Math.floor((result.data.data.todayStudyDuration + 59) / 60),
           rank: userInfo.getRank(result.data.data.totalStudyDuration)
         })
       },

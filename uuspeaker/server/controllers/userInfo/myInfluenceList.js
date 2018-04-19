@@ -7,21 +7,21 @@ module.exports = {
 
   get: async ctx => {
     var userId = ctx.query.userId
-    if (userId == ''){
+    if (userId == '') {
       userId = await userInfo.getOpenId(ctx)
     }
     var queryUserType = ctx.query.queryUserType
     var queryPageType = ctx.query.queryPageType
     var firstDataTime = ctx.query.firstDataTime
     var lastDataTime = ctx.query.lastDataTime
-    var likeUserList = []
-    if (queryUserType == 1){
-      userList = await userInfoService.getLikeUserList(userId, queryPageType, firstDataTime, lastDataTime)
+
+    var userList = await userInfoService.getMyInfluenceList(userId)
+    var userTotal = await userInfoService.getMyInfluenceTotal(userId)
+
+    ctx.state.data = {
+      userList: userList,
+      userTotal: userTotal
     }
-    if (queryUserType == 2) {
-      userList = await userInfoService.getMyFansList(userId, queryPageType, firstDataTime, lastDataTime)
-    }
-    ctx.state.data = userList
   },
 
 }

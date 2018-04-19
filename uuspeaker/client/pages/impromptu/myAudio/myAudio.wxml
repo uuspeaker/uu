@@ -1,6 +1,6 @@
 
 <template name="scoreDetailTemplate">
-  <view class="weui-cell" >
+  <view class="weui-cell" bindtap='toAudioDetail' data-audio_id='{{audio_id}}'>
     <view class="weui-cell__bd" >
     <view class="title" >
         <view style='padding-left:0px'>

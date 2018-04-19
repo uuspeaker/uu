@@ -306,6 +306,15 @@ Page({
     })
   },
 
+  editAudio: function (e) {
+    var audioId = e.currentTarget.dataset.audio_id
+    var audioName = e.currentTarget.dataset.audio_name
+    var audioText = e.currentTarget.dataset.audio_text
+    wx.navigateTo({
+      url: '../../impromptu/myAudioManage/myAudioManage?audioId=' + audioId + '&audioName=' + audioName + '&audioText=' + audioText
+    })
+  },
+
   onShow: function (options) {
     queryPageType = 0
     this.queryAudioDetail()
