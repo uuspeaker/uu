@@ -42,6 +42,6 @@
 
 <view class="weui-flex bottom">
     <view class="weui-flex__item">
-      <button class="weui-btn" type="primary" bindtap='openImpromptuRoom'>预约房间</button>
+      <button class="weui-btn" type="primary" bindtap='openImpromptuRoom'>创建房间</button>
     </view>
   </view>

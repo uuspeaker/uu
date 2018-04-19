@@ -28,7 +28,7 @@
       </view>
       
       <view class="weui-article__p article" style='height:100%'>
-        <rich-text>{{study_report}}</rich-text>
+        <text selectable='true'>{{study_report}}</text>
         <view class="weui-flex">
           <view class="weui-flex__item date">{{createDateStr}}<block wx:if="{{isMine == 1}}">
 <text class='delete' data-reportid='{{report_id}}' bindtap='deleteArticle'>删除</text></block>

@@ -145,7 +145,6 @@ Page({
       this.pressView(0)
     } 
     this.doQueryLikeUser(queryUserType)
-    this.pressView(0)
   },
 
   onPullDownRefresh: function () {

@@ -28,7 +28,7 @@
       </view>
       
       <view class="weui-article__p article" style='height:100%'>
-        <rich-text>{{speech_names}}</rich-text>
+        <text selectable='true'>{{speech_names}}</text>
         <view class="weui-flex">
           <view class="weui-flex__item date">{{createDateStr}}</view>
           <view class="tooltip">
