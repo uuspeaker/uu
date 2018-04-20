@@ -101,8 +101,19 @@
   </block>
 
 
-<view class="weui-flex bottom">
-  <view class="weui-flex__item note-btn" style="{{pressStyle}}" bindtouchstart="startRecord" bindtouchend="stopRecord">
+<view class="weui-flex ">
+ <block wx:if="{{isPlay == 0}}">
+  <view class="weui-flex__item record-button" style="{{pressStyle}}" bindtap="startRecord" >
     <image class="audio-pic" src="../../../images/audioDetail/voice.png"></image>
+    <text class="weui-flex recordText">点击录音</text>
   </view>
+  </block>
+  <block wx:if="{{isPlay == 1}}">
+  <view class="weui-flex__item record-button" style="{{pressStyle}}" bindtap="stopRecord">
+
+    <image class="audio-pic" style='opacity:{{playNotice}}' src="../../../images/audioDetail/voice.png"></image>
+
+    <text class="weui-flex recordText">完成录音</text>
+  </view>
+  </block>
 </view>

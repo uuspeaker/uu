@@ -13,7 +13,7 @@
   <view class="weui-cells__title"></view>
   <view class="weui-cells weui-cells_after-title">
     <view class="weui-cell" data-task_type='1'>
-      轻松练：30秒
+      轻松练
     </view>
     <view class="weui-cell" data-task_type='1'>
 
@@ -24,11 +24,11 @@
         <view>每日计划</view>
       </view>
 
-       <view class='guideline' style="background-color: orange;" data-task_name='赞美他人' bindtap='setName'>
+       <view class='guideline' style="background-color: orange;" data-task_name='每日复盘' bindtap='setName'>
         <view>
           <image class="uu-code" src='../../../../images/launchStudy/guideline.png'></image>
         </view>
-        <view>赞美他人</view>
+        <view>每日复盘</view>
       </view>
 
     </view>
@@ -39,15 +39,15 @@
   <view class="weui-cells__title"></view>
   <view class="weui-cells weui-cells_after-title">
     <view class="weui-cell" data-task_type='1'>
-      专项练：2分钟
+      专项练：
     </view>
     <view class="weui-cell" data-task_type='1'>
 
-      <view class='guideline' style="background-color: rgb(228,188,41);" data-task_name='求职介绍' bindtap='setName'>
+      <view class='guideline' style="background-color: rgb(228,188,41);" data-task_name='赞美他人' bindtap='setName'>
         <view>
           <image class="uu-code" src='../../../../images/launchStudy/guideline.png'></image>
         </view>
-        <view>求职介绍</view>
+        <view>赞美他人</view>
       </view>
 
     </view>
@@ -56,7 +56,18 @@
 
 
 <view class="weui-flex ">
-  <view class="weui-flex__item record-button" style="{{pressStyle}}" bindtouchstart="startRecord" bindtouchend="stopRecord">
+<block wx:if="{{isPlay == 0}}">
+  <view class="weui-flex__item record-button" style="{{pressStyle}}" bindtap="startRecord" >
     <image class="audio-pic" src="../../../images/audioDetail/voice.png"></image>
+    <text class="weui-flex recordText">点击录音</text>
   </view>
+  </block>
+  <block wx:if="{{isPlay == 1}}">
+  <view class="weui-flex__item record-button" style="{{pressStyle}}" bindtap="stopRecord">
+
+    <image class="audio-pic" style='opacity:{{playNotice}}' src="../../../images/audioDetail/voice.png"></image>
+
+    <text class="weui-flex recordText">完成录音</text>
+  </view>
+  </block>
 </view>

@@ -74,7 +74,7 @@
       </block>
     </template>
 
-    <view style='padding-top:90px'>
+    <view style='padding-top:60px'>
       <block wx:for="{{dialog}}">
         <template is="scoreDetailTemplate" data="{{...item}}" />
       </block>
@@ -94,26 +94,28 @@
     </block>
     <view class="weui-flex timeArea">
 
-      <view class="weui-flex__item">
-        <image class='time-pic' src='../../../images/room/change.png' bindtap="changeAudioType"></image>
-      <text class='audioType'>
-      <block wx:if="{{audioType == 1}}">演讲</block>
-          <block wx:if="{{audioType == 2}}">点评</block>
-      </text>
-          
-     
-      </view>
+ <view class=''>
+        <image class='change-pic' src='../../../images/room/change.png' bindtap="changeAudioType"></image>
+   
       
+    </view>
+        <view class='weui-flex__item timeButton'>
+          
+          <block wx:if="{{isPlay == 0}}">
+            <view class='weui-flex speechButton' bindtap='startTime'>
 
-      <view class="weui-flex__item speechButton">
-        <view class='timeButton'>
-          <block wx:if="{{isStop == 0}}">
-            <view bindtap='stopTime'>结 束</view>
+            <image class="audio-pic" src="../../../images/studyIndex/study.png"></image>
+
+
+            <block wx:if="{{audioType == 1}}">演 讲</block>
+            <block wx:if="{{audioType == 2}}">点 评</block>
+
+            </view>
           </block>
-          <block wx:if="{{isStop == 1}}">
-            <view bindtap='startTime'>开 始</view>
+          <block wx:if="{{isPlay == 1}}">
+          
+            <view class='weui-flex speechButton' bindtap='stopTime'><image class="audio-pic" style='opacity:{{playNotice}}' src="../../../images/studyIndex/study.png"></image>完 成</view>
           </block>
-        </view>
       </view>
 
       <view class="weui-flex__item timeCard" style='{{timeNoticeBackground}}'>

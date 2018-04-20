@@ -145,8 +145,8 @@ Page({
   formatDate: function () {
     var data = this.data.rooms
     for (var i = 0; i < data.length; i++) {
-      data[i].startDateStr = dateFormat.getTimeNoticeFuture(data[i].start_date, data[i].start_time)
-      data[i].timeStatus = dateFormat.getTimeStatus(data[i].start_date, data[i].start_time, data[i].end_time)
+      data[i].startDateStr = dateFormat.getTimeNoticeFuture(data[i].start_date)
+      data[i].timeStatus = dateFormat.getTimeStatus(data[i].start_date, data[i].end_date)
       if (data[i].people_amount == 0){
         data[i].amountNotice = '待报名     '
       }else if(data[i].max_amount == data[i].people_amount){
@@ -181,8 +181,7 @@ Page({
       url: '../impromptuRoom/impromptuRoom?operation=modify'
       + '&roomId=' + e.currentTarget.dataset.room_id
       + '&startDate=' + e.currentTarget.dataset.start_date
-      + '&startTime=' + e.currentTarget.dataset.start_time
-      + '&endTime=' + e.currentTarget.dataset.end_time
+      + '&endDate=' + e.currentTarget.dataset.end_date
       + '&mode=' + e.currentTarget.dataset.mode
       + '&language=' + e.currentTarget.dataset.language
       + '&notice=' + e.currentTarget.dataset.notice

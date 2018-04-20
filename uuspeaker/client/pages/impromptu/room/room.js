@@ -26,6 +26,7 @@ var timeDuration = 0 //演讲时间
 var timeLimit = 120  //演讲总时间
 
 var audioId = ''
+var audioTypeArr = ['','演讲','点评']
 
 Page({
   /**
@@ -40,6 +41,8 @@ Page({
     isRecord: 0,
     hostUserPicMode: 1,    // 静音样式
 
+    playNotice:1,
+
     showSpeechTitle: false, //标题输入框
     showStartSpeech: true,
     speechTitle: '',
@@ -48,7 +51,7 @@ Page({
     showSpeechTime: 0,
     minute: '00',
     second: '00',
-    isStop: 1,
+    isPlay: 0,
     timeNoticeBackground: '',
 
     audioType: 1, //演讲类型.1,演讲 2,点评
@@ -100,6 +103,7 @@ Page({
           var isMine = 0
           if (e.detail.content.headPic == self.data.userInfo.avatarUrl) {
             isMine = 1
+            return
           }
           self.data.dialog.push({
             comment: e.detail.content.textMsg,
@@ -417,10 +421,11 @@ Page({
       comment: e.detail.value,
       roomId: this.data.roomid
     }
-    rtcroom.sendRoomTextMsg({ 'data': { 'msg': requestData.comment } })
     this.setData({
       comment: ''
     })
+    this.sendTextMsg(requestData.comment )
+    
 
     console.log(requestData)
     var that = this
@@ -438,6 +443,25 @@ Page({
     // })
   },
 
+  sendDialog: function (isMine,comment) {
+    var newComment = {}
+    if (isMine == 1){
+      newComment.user_info = this.data.userInfo
+    }
+    newComment.comment = comment
+    newComment.isMine = isMine
+    this.data.dialog.push(newComment)
+    this.setData({
+      dialog: this.data.dialog
+    })
+    //that.formatDate()
+  },
+
+  sendTextMsg: function(comment){
+    this.sendDialog(1,comment)
+    rtcroom.sendRoomTextMsg({ 'data': { 'msg': comment } })
+  },
+
   updateDialog: function (comment) {
     var newComment = {}
     newComment.user_info = this.data.userInfo
@@ -447,13 +471,14 @@ Page({
     this.setData({
       dialog: this.data.dialog
     })
-    that.formatDate()
+    //that.formatDate()
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    
     console.log('room.js onLoad');
     console.log(options)
     var time = new Date();
@@ -509,6 +534,7 @@ Page({
     var self = this;
     // 设置房间标题
     wx.setNavigationBarTitle({ title: self.data.roomname });
+    this.sendDialog(0,'温馨提示：点击头像可以静音，点击左下角图标可以计时，计时结束录音自动保存')
   },
 
   // onRecvRoomTextMsg: function (ret) {
@@ -529,6 +555,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    
     queryFlag = 0
     firstCommentTime = ''
     lastCommentTime = ''
@@ -587,13 +614,17 @@ Page({
   },
 
   startRecord: function () {
+    var msg = '我开始' + audioTypeArr[this.data.audioType] + '啦，请大家保持安静'
+    this.sendTextMsg(msg)
     recorderManager.start(options)
     this.setData({
       isRecord: 1
     })
+    
   },
 
   stopRecord: function () {
+    this.sendTextMsg('我的' + audioTypeArr[this.data.audioType]+'结束，用时' + dateFormat.getFormatDuration(timeDuration-1))
     recorderManager.stop();
     this.setData({
       isRecord: 0
@@ -739,23 +770,46 @@ Page({
   stopTime: function () {
     this.stopRecord()
     this.setData({
-      isStop: 1
+      isPlay: 0
     })
   },
 
   startTime: function () {
     this.startRecord()
     this.setData({
-      isStop: 0
+      isPlay: 1
     })
     timeDuration = 0
     audioId = uuid.v1()
     this.saveAudioData()
     this.recordTime()
+    this.noticePlay()
+  },
+
+  noticePlay: function () {
+    if (this.data.isPlay == 0) {
+      this.setData({
+        playNotice: 1
+      })
+      return
+    }
+    if (this.data.playNotice == 1) {
+      this.setData({
+        playNotice: 0.2
+      })
+    } else {
+      this.setData({
+        playNotice: 1
+      })
+    }
+    setTimeout(this.noticePlay, 600)
   },
 
   recordTime: function () {
-    if (this.data.isStop == 1) return
+    if (this.data.isPlay == 0){
+      timeDuration = timeDuration -1
+      return
+    } 
     var timeNoticeBackground = ''
     if (timeDuration >= timeLimit) {
       timeNoticeBackground = 'background-color:red'
@@ -786,6 +840,7 @@ Page({
   },
 
   likeAudio: function(){
+    this.sendTextMsg('太棒了，为你点赞！')
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.likeAudio`,
       login: true,
@@ -806,10 +861,12 @@ Page({
       this.setData({
         audioType: 2
       })
+      timeLimit = 60
     }else{
       this.setData({
         audioType: 1
       })
+      timeLimit = 120
     }
   },
 

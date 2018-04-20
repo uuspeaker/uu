@@ -40,12 +40,11 @@ page {
 .record-button {
     position: fixed;
     bottom: 40rpx;
-    left: 50%;
-    margin-left: -70rpx;
-    width: 140rpx;
-    height: 140rpx;
+    left: 30%;
+    width: 300rpx;
+    height: 100rpx;
     background: rgb(136, 186, 71);
-    border-radius: 50%;
+    border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;

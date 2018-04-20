@@ -26,7 +26,9 @@ Page({
     audioData:[],
     audioDataLike:[],
     likeIt: 0,
-    audioDataComment:[]
+    audioDataComment:[],
+    isPlay:0,
+    playNotice:1
   },
 
   //查询最新房间信息
@@ -129,6 +131,16 @@ Page({
     return data
   },
 
+  increaseCommentTime: function () {
+    var data = this.data.audioData
+    for (var i = 0; i < data.length; i++) {
+      data[i].comment_amount = data[i].comment_amount + 1
+    }
+    this.setData({
+      audioData: data
+    })
+  },
+
   likeAudio: function () {
     console.log('like it')
     var that = this
@@ -168,8 +180,8 @@ Page({
   updateViewTimes: function (e) {
     var src = e.currentTarget.dataset.src
     var audioId = e.currentTarget.dataset.audio_id
-    innerAudioContext.autoplay = true
     innerAudioContext.src = src
+    innerAudioContext.play()
     this.formatDateAndStatus(src)
 
     var that = this
@@ -209,10 +221,12 @@ Page({
     this.updateViewTimes(e)
   },
 
-  updateViewAmount: function (audioId, viewType) {
+  updateViewAmount: function (audioId) {
     var data = this.data.audioData
     for (var i = 0; i < data.length; i++) {
+      if(data[i].audio_id == audioId){
         data[i].view_amount = data[i].view_amount + 1
+      }   
     }
     this.setData({
       audioData: data
@@ -226,16 +240,40 @@ Page({
   },
 
   startRecord: function () {
+    console.log(this.data.playNotice)
     audioService.start()
     startDate = new Date()
     this.setData({
-      pressStyle: 'box-shadow: 0px 0px 0px 0px;'
+      pressStyle: 'box-shadow: 0px 0px 0px 0px;',
+      isPlay: 1
     })
+    this.noticePlay()
+  },
+
+  noticePlay: function () {
+    if (this.data.isPlay == 0) {
+      this.setData({
+        playNotice: 1
+      })
+      return
+    }
+    console.log(this.data.playNotice)
+    if (this.data.playNotice == 1) {
+      this.setData({
+        playNotice: 0.2
+      })
+    } else {
+      this.setData({
+        playNotice: 1
+      })
+    }
+    setTimeout(this.noticePlay, 600)
   },
 
   stopRecord: function () {
     this.setData({
-      pressStyle: 'box-shadow: 0 2px 10px rgba(0, 49, 114, .5);'
+      pressStyle: 'box-shadow: 0 2px 10px rgba(0, 49, 114, .5);',
+      isPlay: 0
     })
     audioService.stop()
     endDate = new Date()
@@ -253,7 +291,7 @@ Page({
         success: function (sm) {
           if (sm.confirm) {
             var evaluationAudioId = uuid.v1()
-            setTimeout(audioService.saveAudio, 500, evaluationAudioId)
+            setTimeout(audioService.saveAudio, 0, evaluationAudioId)
             that.saveAudioRecord(evaluationAudioId)
           } else if (sm.cancel) {
             console.log('用户点击取消')
@@ -272,6 +310,7 @@ Page({
       success(result) {
         console.log(result)
         that.queryAudioComment()
+        that.increaseCommentTime()
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -306,6 +345,14 @@ Page({
     })
   },
 
+  onHide: function () {
+    innerAudioContext.stop();
+  },
+
+  onUnload: function () {
+    innerAudioContext.stop();
+  },
+
   editAudio: function (e) {
     var audioId = e.currentTarget.dataset.audio_id
     var audioName = e.currentTarget.dataset.audio_name
@@ -315,7 +362,7 @@ Page({
     })
   },
 
-  onShow: function (options) {
+  onShow: function () {
     queryPageType = 0
     this.queryAudioDetail()
     this.queryAudioComment()

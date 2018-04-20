@@ -18,6 +18,7 @@ Page({
   data: {
     pressStyle: 'box-shadow: 0 2px 10px rgba(0, 49, 114, .5);',
     isPlay: 0,
+    playNotice: 1,
     taskName: ''
   },
 
@@ -26,8 +27,30 @@ Page({
     audioService.start()
     startDate = new Date()
     this.setData({
-      pressStyle: 'box-shadow: 0px 0px 0px 0px;'
+      pressStyle: 'box-shadow: 0px 0px 0px 0px;',
+      isPlay:1
+
     })
+    this.noticePlay()
+  },
+
+  noticePlay: function () {
+    if (this.data.isPlay == 0){
+      this.setData({
+        playNotice: 1
+      })
+      return
+    }
+    if (this.data.playNotice == 1){
+      this.setData({
+        playNotice: 0.2
+      })
+    }else{
+      this.setData({
+        playNotice: 1
+      })
+    }
+    setTimeout(this.noticePlay, 600)
   },
 
   taskNameInput: function(e){
@@ -39,7 +62,8 @@ Page({
   //用户放开录音按钮
   stopRecord: function () {
     this.setData({
-      pressStyle: 'box-shadow: 0 2px 10px rgba(0, 49, 114, .5);'
+      pressStyle: 'box-shadow: 0 2px 10px rgba(0, 49, 114, .5);',
+      isPlay: 0
     })
     audioService.stop()
     endDate = new Date()

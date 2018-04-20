@@ -1,68 +1,64 @@
-
-.right{
+.right {
   float: right;
   right: 10px;
 }
-.myReport{
+
+.myReport {
   font-size: 15px;
+  padding-left: 10px;
+}
+.title{
+  font-size: 18px;
   font-weight: bold;
   color: #576b95;
+  
 }
-.commentImg{
-  width: 16px;
-  height: 16px;
-  position: fixed;
-  right: 15px;
-  top:10px;
+
+.audio {
+  width: 50px;
+  height: 50px;
+  border-radius: 3px;
+  padding-right: 10px;
 }
-.normal {
-  height: 85px;
-  width: 20%;
-  margin-top: 5px;
-  margin-left: 10px;
-  color: white;
-  text-align: center;
-  font-size: 15px;
-  font-weight: bold;
-  border-radius: 10px 10px 10px 10px;
+
+.like{
+width: 18px; 
+height: 18px; 
+padding-left: 10px;
+position: relative;
+top: 4px;
 }
-.uu-code{
-  width:35px;
-  height:35px;
-  margin-top: 10px;
+
+.user-pic {
+  width: 90px;
+  height: 90px;
+  border-radius: 5px;
 }
-.audio{
-width: 40px; 
-height: 40px; 
-border-radius: 3px;
+
+.user-like-pic {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
 }
-.user-pic{
-width: 50px; 
-height: 50px; 
-border-radius: 3px;
+.small-grey{
+  font-size: 13px;
+  color:#888888;
+  font-weight: normal;
+  padding-left:10px;
+
+}
+.right{
+  right: 10px;
 }
 .date {
-  padding: 5px 5px 5px 0px;
+  padding-top: 3px;
   font-size: 13px;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  word-break: break-all;
   color: grey;
+  padding-left: 10px; 
 }
 .link {
-  font-size: 17px;
+  font-size: 15px;
   font-weight: bold;
   color: #576b95;
+  padding-left: 5px;
 }
-
-
-
-
-
-
-
-
-
-
-
-

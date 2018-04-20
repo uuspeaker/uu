@@ -183,8 +183,8 @@ Page({
   updateViewTimes: function (e) {
     var src = e.currentTarget.dataset.src
     var audioId = e.currentTarget.dataset.audio_id
-    innerAudioContext.autoplay = true
     innerAudioContext.src = src
+    innerAudioContext.play()
     this.formatDateAndStatus(src)
 
     var that = this
@@ -263,6 +263,13 @@ Page({
     this.doQuerySpecialTask(queryUserType)
   },
 
+  onHide:function(){
+    innerAudioContext.stop();
+  },
+
+  onUnload: function () {
+    innerAudioContext.stop();
+  },
 
   toAudioDetail: function (e) {
     wx.navigateTo({

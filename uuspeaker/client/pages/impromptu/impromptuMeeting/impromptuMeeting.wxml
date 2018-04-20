@@ -11,7 +11,7 @@
       </view>
       <block wx:if="{{isHost == true}}">
         <block wx:if="{{roomInfo.survey_status == '1'}}">
-          <view class="weui-cell__ft link " bindtap='toImprmptuSurvey'><text style='padding-right:15px'></text><text  data-room_id="{{roomInfo.room_id}}" data-user_id='{{roomInfo.user_id}}' data-start_date='{{roomInfo.start_date}}' data-start_time='{{roomInfo.start_time}}' data-end_time='{{roomInfo.end_time}}' data-title='{{roomInfo.title}}' data-max_amount='{{roomInfo.max_amount}}' data-notice='{{roomInfo.notice}}' data-is_host='{{isHost}}'  catchtap='updateImpromptuRoom'>编辑</text></view>
+          <view class="weui-cell__ft link " bindtap='toImprmptuSurvey'><text style='padding-right:15px'></text><text  data-room_id="{{roomInfo.room_id}}" data-user_id='{{roomInfo.user_id}}' data-start_date='{{roomInfo.start_date}}' data-end_date='{{roomInfo.end_date}}' data-title='{{roomInfo.title}}' data-max_amount='{{roomInfo.max_amount}}' data-notice='{{roomInfo.notice}}' data-is_host='{{isHost}}'  catchtap='updateImpromptuRoom'>编辑</text></view>
         </block>
         
         <block wx:if="{{roomInfo.survey_status > '1'}}">
@@ -30,7 +30,7 @@
   </view>
 
   <view class="page__bd">
-    <view class="weui-cells__title article" bindtap='viewImpromptuRoom' data-room_id="{{roomInfo.room_id}}" data-user_id='{{roomInfo.user_id}}' data-start_date='{{roomInfo.start_date}}' data-start_time='{{roomInfo.start_time}}' data-end_time='{{roomInfo.end_time}}' data-title='{{roomInfo.title}}' data-max_amount='{{roomInfo.max_amount}}' data-notice='{{roomInfo.notice}}' data-is_host='{{isHost}}'><text class='notice' >活动：{{roomInfo.title}}</text></view>
+    <view class="weui-cells__title article" bindtap='viewImpromptuRoom' data-room_id="{{roomInfo.room_id}}" data-user_id='{{roomInfo.user_id}}' data-start_date='{{roomInfo.start_date}}' data-end_date='{{roomInfo.end_date}}'  data-title='{{roomInfo.title}}' data-max_amount='{{roomInfo.max_amount}}' data-notice='{{roomInfo.notice}}' data-is_host='{{isHost}}'><text class='notice' >活动：{{roomInfo.title}}</text></view>
     <view class="page">
       <view class="weui-cells weui-cells_after-title">
         <block wx:for="{{meetingUser}}" wx:key="item">

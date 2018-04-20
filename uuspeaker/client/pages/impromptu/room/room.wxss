@@ -164,6 +164,11 @@ live-player {
   height: 38px;
   padding-right: 15px;
 }
+.change-pic {
+  width: 35px;
+  height: 35px;
+  padding-right: 15px;
+}
 .bottom{
   position: fixed;
   bottom: 0px;
@@ -225,6 +230,20 @@ startSpeech{
   font-size: 25px;
   text-align: center;
   align-content: center;
+  margin-left: 0px;
+  font-weight: bold;
+  color: gray;
+}
+.audio-pic {
+  width: 40px;
+  height: 40px;
+  margin-right: 5px;
+  margin-left:8px;
+}
+.speechButton{
+  align-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 

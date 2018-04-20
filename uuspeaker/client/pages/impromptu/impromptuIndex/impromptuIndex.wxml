@@ -21,9 +21,7 @@
         <text class='surveyStatus'>
         <text style='color:rgb(228, 140, 58);' wx:if="{{timeStatus == 1}}">报名中</text>
         <text style='color:rgb(136, 186, 71);' wx:elif="{{timeStatus == 2}}">进行中</text>
-        <text style='color:rgb(29, 178, 23858);' wx:elif="{{timeStatus == 3 && survey_status ==1}}">待投票</text>
-        <text style='color:rgb(29, 178, 23858);' wx:elif="{{timeStatus == 3 && survey_status ==2}}">投票中</text>
-        <text style='color:grey;' wx:elif="{{timeStatus == 3 && survey_status ==3}}">已完成</text>
+        <text style='color:grey;' wx:elif="{{timeStatus == 3}}">已完成</text>
         </text>
         </view>
       </view>

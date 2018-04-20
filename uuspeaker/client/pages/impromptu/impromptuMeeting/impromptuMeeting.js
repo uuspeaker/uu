@@ -26,8 +26,7 @@ Page({
       url: '../impromptuRoom/impromptuRoom?operation=modify'
       + '&roomId=' + e.currentTarget.dataset.room_id
       + '&startDate=' + e.currentTarget.dataset.start_date
-      + '&startTime=' + e.currentTarget.dataset.start_time
-      + '&endTime=' + e.currentTarget.dataset.end_time
+      + '&endDate=' + e.currentTarget.dataset.end_date
       + '&title=' + e.currentTarget.dataset.title
       + '&maxAmount=' + e.currentTarget.dataset.max_amount
       + '&notice=' + e.currentTarget.dataset.notice
@@ -39,8 +38,7 @@ Page({
       url: '../impromptuRoom/impromptuRoom?operation=view'
       + '&roomId=' + e.currentTarget.dataset.room_id
       + '&startDate=' + e.currentTarget.dataset.start_date
-      + '&startTime=' + e.currentTarget.dataset.start_time
-      + '&endTime=' + e.currentTarget.dataset.end_time
+      + '&endDate=' + e.currentTarget.dataset.end_date
       + '&title=' + e.currentTarget.dataset.title
       + '&maxAmount=' + e.currentTarget.dataset.max_amount
       + '&notice=' + e.currentTarget.dataset.notice

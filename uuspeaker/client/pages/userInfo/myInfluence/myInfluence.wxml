@@ -1,11 +1,12 @@
 
-<view class="weui-cell write top">
+<view class="weui-cell top">
+
   <view class=" myReport" >
   <block wx:if="{{userId == ''}}">
-  我的影响力总分：{{userTotal}}
+  我的影响力总分：<text style='font-weight:bold;font-size:18px;'>{{userTotal}} 分</text>
   </block>
   <block wx:else>
-  {{nickName}}的影响力总分：{{userTotal}}
+  {{nickName}}的影响力总分：<text style='font-weight:bold;font-size:18px;'>{{userTotal}} 分</text>
   </block>
   </view>
 </view>
@@ -28,10 +29,12 @@
     </view>
   </view>
 </template>
+<view class='middle'>
+<view class="weui-cells__title " style='padding-top:10px;'>说明：邀请别人在自己的房间学习并录音可增加影响力</view>
+<view class="weui-cells weui-cells_after-title " >
 
-
-<view class="weui-cells weui-cells_after-title middle" >
   <block wx:for="{{userList}}" wx:key="item">
     <template is="scoreDetailTemplate" data="{{...item}}" />
   </block>
+</view>
 </view>

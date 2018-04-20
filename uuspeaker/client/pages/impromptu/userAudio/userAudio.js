@@ -44,29 +44,6 @@ Page({
     })
   },
 
-  //查询点赞用户信息
-  queryAudioLikeUser: function (e) {
-    //util.showBusy('请求中...')
-    var that = this
-    qcloud.request({
-      url: `${config.service.host}/weapp/impromptu.likeAudio`,
-      login: true,
-      method: 'get',
-      data: { audioId: e.currentTarget.dataset.audio_id },
-      success(result) {
-        console.log(result)
-        that.setData({
-          audioLikeUser: result.data.data
-        })
-      },
-      fail(error) {
-        util.showModel('请求失败', error);
-        console.log('request fail', error);
-      }
-    })
-  },
-
-
   formatDateAndStatus: function (src) {
     var data = this.data.audios
     for (var i = 0; i < data.length; i++) {
@@ -103,58 +80,36 @@ Page({
   },
 
   playAudio: function(e){
-    this.queryAudioLikeUser(e)
-    this.updateViewAndLikeTimes(e)   
+    this.updateViewTimes(e)   
   },
 
-  updateViewAmount: function (audioId, viewType){
+  updateViewAmount: function (audioId) {
     var data = this.data.audios
     for (var i = 0; i < data.length; i++) {
-      if (data[i].audio_id == audioId && viewType == 'view') {
+      if (data[i].audio_id == audioId) {
         data[i].view_amount = data[i].view_amount + 1
       }
-      if (data[i].audio_id == audioId && viewType == 'like') {
-        data[i].like_amount = data[i].like_amount + 1
-      }
-
     }
     this.setData({
       audios: data
     })
   },
 
-  updateViewAndLikeTimes:function(e){
+  updateViewTimes: function (e) {
     var src = e.currentTarget.dataset.src
     var audioId = e.currentTarget.dataset.audio_id
-    innerAudioContext.autoplay = true
     innerAudioContext.src = src
+    innerAudioContext.play()
     this.formatDateAndStatus(src)
 
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/impromptu.userAudio`,
+      url: `${config.service.host}/weapp/audio.audioView`,
       login: true,
-      method: 'put',
-      data: { audioId: audioId, viewType: 'view' },
+      method: 'post',
+      data: { audioId: audioId },
       success(result) {
-        that.updateViewAmount(audioId, 'view')
-      },
-      fail(error) {
-        util.showModel('请求失败', error);
-        console.log('request fail', error);
-      }
-    })
-  },
-
-  likeIt: function(e){
-    var that = this
-    qcloud.request({
-      url: `${config.service.host}/weapp/impromptu.userAudio`,
-      login: true,
-      method: 'put',
-      data: { audioId: e.currentTarget.dataset.audio_id, viewType: 'like' },
-      success(result) {
-        that.updateViewAmount(e.currentTarget.dataset.audio_id,'like')
+        that.updateViewAmount(audioId)
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -213,6 +168,14 @@ Page({
     wx.navigateTo({
       url: '../audioDetail/audioDetail?audioId=' + e.currentTarget.dataset.audio_id,
     })
+  },
+
+  onHide: function () {
+    innerAudioContext.stop();
+  },
+
+  onUnload: function () {
+    innerAudioContext.stop();
   },
 
 })

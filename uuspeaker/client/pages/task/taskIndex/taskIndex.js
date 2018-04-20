@@ -2,6 +2,7 @@ var qcloud = require('../../../vendor/wafer2-client-sdk/index')
 var config = require('../../../config')
 var util = require('../../../utils/util.js')
 var userInfo = require('../../../common/userInfo.js')
+var dateFormat = require('../../../common/dateFormat.js')
 
 Page({
 
@@ -15,6 +16,7 @@ Page({
     userInfo: {},
     totalStudyDuration: 0,
     todayStudyDuration: 0,
+    totalStudyDurationstr:0,
 
     myFansTotal:'',
     likeUserTotal: '',
@@ -36,7 +38,8 @@ Page({
         that.setData({
           totalStudyDuration: result.data.data.totalStudyDuration,
           todayStudyDuration: Math.floor((result.data.data.todayStudyDuration + 59) / 60),
-          rank: userInfo.getRank(result.data.data.totalStudyDuration)
+          rank: userInfo.getRank(result.data.data.totalStudyDuration),
+          totalStudyDurationstr: dateFormat.getFormatDuration2(result.data.data.totalStudyDuration)
         })
       },
       fail(error) {

@@ -81,15 +81,14 @@ var getTimeNoticeFuture = function (noticeDate) {
   }
 }
 
-var getTimeStatus = function (noticeDate, begin, end) {
+var getTimeStatus = function (startDateStr, endDateStr) {
   var now = new Date()
-  var nowStr = this.format(now,'yyyy-MM-ddhh:mi')
-  var beginTime = noticeDate + begin
-  var endTime = noticeDate + end
+  var startDate = new Date(startDateStr)
+  var endDate = new Date(endDateStr)
 
-  if (nowStr < beginTime) {
+  if (now < startDate) {
     return 1
-  } else if (nowStr > endTime) {
+  } else if (now > endDate) {
     return 3
   } else {
     return 2
@@ -124,7 +123,23 @@ var getFormatDuration = function (timeDuration) {
   if (second != 0) {
     durationStr = durationStr + second + '秒'
   }
-  return '（' + durationStr + '）'
+  return durationStr
 }
 
-module.exports = { format, getTimeNotice, getTimeNoticeFuture, getWeek, getTimeStatus, getSimpleFormatDate, getFormatDuration}
+var getFormatDuration2 = function (timeDuration) {
+  var hour = Math.floor(timeDuration / (60 * 60))
+  var minute = Math.floor(timeDuration / 60)
+  var second = Math.floor(timeDuration % 60)
+  var durationStr = ''
+  if (hour != 0) {
+    return durationStr + hour + ' 小时'
+  }
+  if (minute != 0) {
+    return durationStr + minute + ' 分钟'
+  }
+  if (second != 0) {
+    return durationStr + second + ' 秒'
+  }
+}
+
+module.exports = { format, getTimeNotice, getTimeNoticeFuture, getWeek, getTimeStatus, getSimpleFormatDate, getFormatDuration, getFormatDuration2}

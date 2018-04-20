@@ -172,8 +172,8 @@ Page({
       var endTimeStr = dateFormat.format(new Date(options.endDate), 'hh:mm')
       this.setData({
         startDate: startDateStr,
-        startTime: options.startTimeStr,
-        endTime: options.endTimeStr,
+        startTime: startTimeStr,
+        endTime: endTimeStr,
         title: options.title,
         notice: options.notice,
         maxAmountIndex: options.maxAmount-1,

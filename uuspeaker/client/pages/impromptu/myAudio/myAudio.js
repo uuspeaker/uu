@@ -77,20 +77,44 @@ Page({
     })
   },
 
-  editAudio: function(e){
-    var audioId = e.currentTarget.dataset.audio_id
-    var audioName = e.currentTarget.dataset.audio_name
-    var audioText = e.currentTarget.dataset.audio_text
-    wx.navigateTo({
-      url: '../myAudioManage/myAudioManage?audioId=' + audioId + '&audioName=' + audioName + '&audioText=' + audioText
+  playAudio: function (e) {
+    //this.queryAudioLikeUser(e)
+    this.updateViewTimes(e)
+  },
+
+  updateViewAmount: function (audioId) {
+    var data = this.data.audios
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].audio_id == audioId) {
+        data[i].view_amount = data[i].view_amount + 1
+      }
+    }
+    this.setData({
+      audios: data
     })
   },
 
-  playAudio: function (e) {
+  updateViewTimes: function (e) {
     var src = e.currentTarget.dataset.src
-    innerAudioContext.autoplay = true
+    var audioId = e.currentTarget.dataset.audio_id
     innerAudioContext.src = src
+    innerAudioContext.play()
     this.formatDateAndStatus(src)
+
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/audio.audioView`,
+      login: true,
+      method: 'post',
+      data: { audioId: audioId },
+      success(result) {
+        that.updateViewAmount(audioId)
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
   },
 
   stopAudio: function (e) {
@@ -146,6 +170,14 @@ Page({
   onReachBottom: function () {
     queryPageType = 2
     this.queryImpromptuAudios()
+  },
+
+  onHide: function () {
+    innerAudioContext.stop();
+  },
+
+  onUnload: function () {
+    innerAudioContext.stop();
   },
 
 })

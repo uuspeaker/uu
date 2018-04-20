@@ -5,8 +5,8 @@
 }
 
 .audio-pic {
-  width: 35px;
-  height: 35px;
+  width: 25px;
+  height: 25px;
 }
 
 .audio {
@@ -46,7 +46,6 @@
   width: 50rpx;
   height: 130rpx;
   background: rgb(136, 186, 71);
-  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,4 +76,9 @@ border-radius: 6px;
   vertical-align: middle;
   box-shadow: 1px 1px 3px 1px #888888;
   text-shadow: 1px 1px 1px silver;
+}
+.recordText{
+  font-size: 20px;
+  color: white;
+  padding-left: 8px;
 }

@@ -136,3 +136,8 @@ position: relative;
   color: #576b95;
   padding-left: 5px;
 }
+.recordText{
+  font-size: 20px;
+  color: white;
+  padding-left: 8px;
+}
