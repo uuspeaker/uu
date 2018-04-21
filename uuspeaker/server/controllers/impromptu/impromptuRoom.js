@@ -2,6 +2,7 @@ const { mysql } = require('../../qcloud')
 const userInfo = require('../../common/userInfo')
 const uuid = require('../../common/uuid');
 var impromptuRoomService = require('../../service/impromptuRoomService');
+var impromptuMeetingService = require('../../service/impromptuMeetingService');
 
 module.exports = {
   post: async ctx => {
@@ -15,10 +16,10 @@ module.exports = {
 
     var startDateDB = new Date(startDate + ' ' + startTime + ':00')
     var endDateDB = new Date(startDate + ' ' + endTime + ':00')
-
+    var roomId = uuid.v1()
     await mysql('impromptu_room').insert(
       {
-        room_id: uuid.v1(),
+        room_id: roomId,
         user_id: userId,
         title: title,
         max_amount: maxAmount,
@@ -27,6 +28,7 @@ module.exports = {
         notice: notice
       })
 
+    await impromptuMeetingService.joinMeeting(roomId, userId, 2)
   },
 
   put: async ctx => {

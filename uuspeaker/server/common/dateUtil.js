@@ -1,4 +1,4 @@
-const getFormatDate = (date, fmt) => {
+const format = (date, fmt) => {
   Date.prototype.format = function (fmt) { //author: meizz 
     var o = {
       "M+": this.getMonth() + 1, //月份 
@@ -21,4 +21,4 @@ const getToday = () => {
   return getFormatDate(new Date(),'yyyyMMdd')
 }
 
-module.exports = { getFormatDate,getToday }
+module.exports = { format,getToday }

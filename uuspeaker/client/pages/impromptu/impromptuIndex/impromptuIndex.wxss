@@ -11,7 +11,7 @@
 
 .right {
   float: right;
-  right: 50px;
+  right:10px;
 }
 
 .write {

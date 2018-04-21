@@ -99,8 +99,8 @@ Page({
         //util.showSuccess('请求成功完成')
         that.setData({
           meetingUser: result.data.data.meetingUser,
-          totalScore: result.data.data.hostTotalScore,
-          hostRank: userInfo.getRank(result.data.data.hostTotalScore),
+          //totalScore: result.data.data.hostTotalScore,
+          //hostRank: userInfo.getRank(result.data.data.hostTotalScore),
           isJoin: result.data.data.isJoin,
           roomInfo: result.data.data.roomInfo,
           isHost: result.data.data.isHost,
@@ -121,7 +121,8 @@ Page({
       data[i].userRank = userInfo.getRank(data[i].totalScore)
     }
     var roomInfo = this.data.roomInfo
-    roomInfo.startDateStr = dateFormat.getTimeNoticeFuture(roomInfo.start_date, roomInfo.start_time) 
+    roomInfo.startDateStr = dateFormat.getTimeNoticeFuture(roomInfo.start_date, roomInfo.end_date) 
+    roomInfo.amountNotice = '   【' + roomInfo.people_amount + '/' + roomInfo.max_amount + '】'
     this.setData({
       meetingUser: data,
       roomInfo: roomInfo

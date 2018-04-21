@@ -1,6 +1,6 @@
 
 <view class="weui-cell top">
-  <view class=" myReport"  style="{{viewStyle[0]}}" data-item='0' data-type='1' bindtap='queryRoomInfo'>最近的</view>
+  <view class=" myReport"  style="{{viewStyle[0]}}" data-item='0' data-type='1' bindtap='queryRoomInfo'>全部</view>
   <view class=" myReport"  style="{{viewStyle[1]}}" data-item='1' data-type='2' bindtap='queryRoomInfo'>我的</view>
   <view class=" myReport"  style="{{viewStyle[2]}}" data-item='2' data-type='3' bindtap='queryRoomInfo'>参与的</view>
   <view class=" myReport"  style="{{viewStyle[3]}}" data-item='3' data-type='4' bindtap='queryRoomInfo'>关注的</view>
@@ -16,8 +16,7 @@
     <view class="weui-cell__bd" >
     <view class="" >
         <view  class='article' style='padding-left:15px'>
-        <text >{{title}}</text>
-     
+        <text >活动：{{title}}</text>
         <text class='surveyStatus'>
         <text style='color:rgb(228, 140, 58);' wx:if="{{timeStatus == 1}}">报名中</text>
         <text style='color:rgb(136, 186, 71);' wx:elif="{{timeStatus == 2}}">进行中</text>
@@ -37,9 +36,3 @@
     <template is="scoreDetailTemplate" data="{{...item}}" />
   </block>
 </view>
-
-<view class="weui-flex bottom">
-    <view class="weui-flex__item">
-      <button class="weui-btn" type="primary" bindtap='openImpromptuRoom'>创建房间</button>
-    </view>
-  </view>

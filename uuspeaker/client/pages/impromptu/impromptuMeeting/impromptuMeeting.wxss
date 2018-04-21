@@ -1,4 +1,7 @@
-
+.middle2{
+  margin-top:115px;
+  padding-bottom: 110px;
+}
 .host-pic {
   width: 50px;
   height: 50px;

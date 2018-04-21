@@ -14,7 +14,7 @@ module.exports = async function (ctx, next) {
         input = ctx.request.body
       }
 
-      global.log.time = dateUtil.getFormatDate(new Date(), 'yyyyMMdd h:m:s.S')
+      global.log.time = dateUtil.format(new Date(), 'yyyyMMdd h:m:s.S')
       global.log.url = ctx.originalUrl 
       global.log.user = ctx.header['x-wx-skey']
         // 调用下一个 middleware

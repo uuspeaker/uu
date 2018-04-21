@@ -123,6 +123,8 @@ router.get('/audio.audioComment', controllers.audio.audioComment.get)
 router.post('/audio.audioComment', controllers.audio.audioComment.post)
 //任务首页查询
 router.get('/task.taskIndex', controllers.task.taskIndex.get)
+//热门任务查询
+router.get('/task.hotTask', controllers.task.hotTask.get)
 //30秒任务查询
 router.get('/task.dailyTaskToDo', controllers.task.dailyTaskToDo.get)
 //日常任务管理

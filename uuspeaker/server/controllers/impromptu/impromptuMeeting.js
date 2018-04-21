@@ -9,18 +9,8 @@ module.exports = {
     var roomId = ctx.request.body.roomId
     var roleType = ctx.request.body.roleType
 
-    await mysql('meeting_apply').insert(
-      {
-        room_id: roomId,
-        user_id: userId,
-        role_type: roleType
-      })
+    await impromptuMeetingService.joinMeeting(roomId, userId, roleType)
 
-    var amount = await mysql('meeting_apply').count('user_id as amount').where({ room_id: roomId })
-
-    await mysql('impromptu_room').update({
-      people_amount: amount[0].amount
-      }).where({ room_id: roomId })
   },
 
   del: async ctx => {
@@ -76,7 +66,7 @@ module.exports = {
       
     }
     ctx.state.data = {
-      'hostTotalScore': await userInfoService.getTotalStudyDuration(roomInfo[0].user_id),
+      //'hostTotalScore': await userInfoService.getTotalStudyDuration(roomInfo[0].user_id),
       'meetingUser': meetingUser,
       'isJoin': isJoin,
       'roomInfo': roomInfo[0],

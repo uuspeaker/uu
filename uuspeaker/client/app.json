@@ -68,12 +68,6 @@
         "text": "学习"
       },
       {
-        "selectedIconPath": "images/tabbar/discover2.png",
-        "iconPath": "images/tabbar/discover1.png",
-        "pagePath": "pages/article/allArticle/allArticle",
-        "text": "交流"
-      },
-      {
         "selectedIconPath": "images/tabbar/user2.png",
         "iconPath": "images/tabbar/user1.png",
         "pagePath": "pages/study/studyManage/studyManage",

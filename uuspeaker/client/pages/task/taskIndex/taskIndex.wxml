@@ -43,11 +43,18 @@
     </view>
     <view class="weui-cell" data-task_type='1'>
       
+      <view bindtap='toDoSpecialTask'>
+        <view>
+          <image class="task-pic" src="../../../images/studyIndex/plan.png" />
+        </view>
+        <view class='content'>自由练习</view>
+      </view>
+
       <view bindtap='toSpecialTaskList'>
         <view>
           <image class="task-pic" src="../../../images/studyIndex/plan.png" />
         </view>
-        <view class='content'>自由练</view>
+        <view class='content'>听录音</view>
       </view>
       
     </view>
@@ -61,14 +68,21 @@
       一起练
     </view>
     <view class="weui-cell" data-task_type='1' >
+      
+      <view bindtap='openImpromptuRoom'>
+        <view>
+          <image class="task-pic" src="../../../images/studyIndex/plan.png" />
+        </view>
+        <view class='content'>创建房间</view>
+      </view>
+
       <view bindtap='toImpromptuIndex'>
         <view>
           <image class="task-pic" src="../../../images/studyIndex/plan.png" />
         </view>
         <view class='content'>预约练习</view>
       </view>
-     
-      
+       
     </view>
   </view>
 </view>

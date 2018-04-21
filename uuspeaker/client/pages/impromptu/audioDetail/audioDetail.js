@@ -5,7 +5,19 @@ var dateFormat = require('../../../common/dateFormat.js')
 var audioService = require('../../../common/audioService.js')
 const uuid = require('../../../common/uuid');
 
-const innerAudioContext = wx.createInnerAudioContext()
+var tempFilePath = ''
+
+const recorderManager = wx.getRecorderManager()
+const innerAudioContext = wx.createInnerAudioContext();
+
+const options = {
+  duration: 600000,
+  sampleRate: 44100,
+  numberOfChannels: 1,
+  encodeBitRate: 192000,
+  format: 'mp3'
+}
+
 var startDate
 var endDate
 var timeDuration = 0
@@ -241,7 +253,7 @@ Page({
 
   startRecord: function () {
     console.log(this.data.playNotice)
-    audioService.start()
+    recorderManager.start(options)
     startDate = new Date()
     this.setData({
       pressStyle: 'box-shadow: 0px 0px 0px 0px;',
@@ -271,11 +283,11 @@ Page({
   },
 
   stopRecord: function () {
+    recorderManager.stop();
     this.setData({
       pressStyle: 'box-shadow: 0 2px 10px rgba(0, 49, 114, .5);',
       isPlay: 0
     })
-    audioService.stop()
     endDate = new Date()
     timeDuration = Math.floor((endDate - startDate) / 1000)
     console.log('timeDuration', timeDuration)
@@ -291,13 +303,31 @@ Page({
         success: function (sm) {
           if (sm.confirm) {
             var evaluationAudioId = uuid.v1()
-            setTimeout(audioService.saveAudio, 0, evaluationAudioId)
-            that.saveAudioRecord(evaluationAudioId)
+            setTimeout(that.saveAudio, 100, evaluationAudioId)
+            
           } else if (sm.cancel) {
             console.log('用户点击取消')
           }
         }
       })
+  },
+
+  saveAudio: function (audioId) {
+    var that = this
+    console.log('tempFilePath', tempFilePath)
+    const uploadTask = wx.uploadFile({
+      url: `${config.service.host}/weapp/impromptu.impromptuAudio`,
+      filePath: tempFilePath,
+      name: 'file',
+      formData: { audioId: audioId },
+      success: function (res) {
+        that.saveAudioRecord(audioId)
+      },
+
+      fail: function (e) {
+        console.error(e)
+      }
+    })
   },
 
   saveAudioRecord: function (evaluationAudioId) {
@@ -308,6 +338,7 @@ Page({
       data: { evaluationAudioId: evaluationAudioId, targetAudioId:this.data.audioId,timeDuration: timeDuration, audioType: 2 },
       method: 'post',
       success(result) {
+        util.showSuccess('录音保存成功')
         console.log(result)
         that.queryAudioComment()
         that.increaseCommentTime()
@@ -320,6 +351,7 @@ Page({
   },
 
   onLoad: function (options) {
+    this.initAudio()
     console.log(options)
     this.setData({
       audioId: options.audioId
@@ -342,6 +374,17 @@ Page({
       this.setData({
         currentLikeUser: []
       })
+    })
+  },
+
+  initAudio: function () {
+    recorderManager.onStop((res) => {
+      tempFilePath = res.tempFilePath
+    })
+
+    recorderManager.onFrameRecorded((res) => {
+      const { frameBuffer } = res
+      console.log('frameBuffer.byteLength', frameBuffer.byteLength)
     })
   },
 

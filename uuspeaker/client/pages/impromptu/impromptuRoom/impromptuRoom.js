@@ -8,6 +8,7 @@ Page({
   data: {
     userInfo: {},
     startDate: dateFormat.format(new Date(), 'yyyy-MM-dd'),
+    today: dateFormat.format(new Date(), 'yyyy-MM-dd'),
     startTime: '21:00',
     endTime: '22:00',
     notice: '',
@@ -16,8 +17,8 @@ Page({
     language:'',
     operation: 'add',
 
-    maxAmount: ["1", "2", "3", "4", "5", "6", "7", "8"],
-    maxAmountIndex:4
+    maxAmount: ["1", "2", "3", "4", "5", "6", "7", "8","9"],
+    maxAmountIndex:8
   },
 
   bindMaxAmountyChange: function (e) {
@@ -90,9 +91,7 @@ Page({
       method: 'delete',
       success(result) {
         util.showSuccess('已成功取消会议')
-        wx.reLaunch({
-          url: '../impromptuIndex/impromptuIndex',
-        })
+        that.toImpromptuIndex()
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -122,12 +121,18 @@ Page({
         that.setData({
           applyResult: result.data.data
         })
-        wx.navigateBack()
+        that.toImpromptuIndex()
       },
       fail(error) {
         util.showModel('请求失败', error);
         console.log('request fail', error);
       }
+    })
+  },
+
+  toImpromptuIndex: function () {
+    wx.navigateTo({
+      url: '../../impromptu/impromptuIndex/impromptuIndex',
     })
   },
 
@@ -143,7 +148,7 @@ Page({
         })
         if(that.data.title == ''){
           that.setData({
-            title: result.userInfo.nickName
+            title: '即兴演讲'
           })
         }
       },
@@ -184,6 +189,10 @@ Page({
     }else{
       
     }
+  },
+
+  onReady: function () {
+    wx.setNavigationBarTitle({ title: '创建房间' });
   },
 
 });

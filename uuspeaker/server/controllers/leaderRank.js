@@ -8,7 +8,7 @@ module.exports = async ctx => {
   var userId = await userInfo.getOpenId(ctx)
   var limit = 100
   var offset = 0
-  var firstDayOfMonth = dateUtil.getFormatDate(new Date(), 'yyyyMM01')
+  var firstDayOfMonth = dateUtil.format(new Date(), 'yyyyMM01')
   ctx.state.data = {
     
     leaderScore: await mysql("user_base_info").innerJoin('user_score_detail', 'user_base_info.user_id', 'user_score_detail.user_id').select('user_base_info.recommend_user as user_id', mysql.raw("count(user_base_info.recommend_user) as total_score")).groupBy('user_base_info.recommend_user').orderBy('total_score', 'desc').limit(limit).offset(offset),

@@ -245,6 +245,11 @@ startSpeech{
   align-items: center;
   text-align: center;
 }
+.link {
+  font-size: 17px;
+  font-weight: bold;
+  color: #576b95;
+}
 
 
 

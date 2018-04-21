@@ -75,7 +75,7 @@ Page({
   formatDate: function () {
     var myRoomData = this.data.myRooms
     for (var i = 0; i < myRoomData.length; i++) {
-      myRoomData[i].startDateStr = dateFormat.getTimeNoticeFuture(myRoomData[i].start_date, myRoomData[i].start_time)
+      myRoomData[i].startDateStr = dateFormat.getTimeNoticeFuture(myRoomData[i].start_date,myRoomData[i].end_date)
       myRoomData[i].timeStatus = dateFormat.getTimeStatus(myRoomData[i].start_date, myRoomData[i].start_time, myRoomData[i].end_time)
     }
     
@@ -87,7 +87,7 @@ Page({
     for (var i = 0; i < myJoinRoomData.length; i++) {
       var myJoinRoomData = this.data.myJoinRooms
       var myJoinRoomData = this.data.myJoinRooms
-      myJoinRoomData[i].startDateStr = dateFormat.getTimeNoticeFuture(data[i].start_date, data[i].start_time)
+      myJoinRoomData[i].startDateStr = dateFormat.getTimeNoticeFuture(data[i].start_date, data[i].end_date)
       myJoinRoomData[i].timeStatus = dateFormat.getTimeStatus(myJoinRoomData[i].start_date, myJoinRoomData[i].start_time, myJoinRoomData[i].end_time)
     }
     this.setData({

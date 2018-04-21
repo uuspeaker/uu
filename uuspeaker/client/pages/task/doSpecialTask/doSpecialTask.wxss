@@ -82,3 +82,9 @@ border-radius: 6px;
   color: white;
   padding-left: 8px;
 }
+.myRecord{
+  color: #576b95;
+  font-size: 17px;
+  font-weight: bold;
+  margin-left: 20px;
+}

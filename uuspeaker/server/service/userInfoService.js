@@ -230,9 +230,9 @@ var getMyInfluenceTotal = async (userId) => {
 
 //查询用户学习总时间
 var getTotalStudyDuration = async (userId) => {
-  var data = await mysql('impromptu_audio').where({
+  var data = await mysql('user_study_duration').where({
     user_id: userId,
-  }).select(mysql.raw('sum(time_duration) as totalDuration'))
+  }).select(mysql.raw('sum(study_duration) as totalDuration'))
   if (data[0].totalDuration == null){
     return 0
   }else{
@@ -242,13 +242,10 @@ var getTotalStudyDuration = async (userId) => {
 
 //查询用户学习总时间
 var getTodayStudyDuration = async (userId) => {
-  var today = new Date()
-  today.setHours(0)
-  today.setMinutes(0)
-  today.setSeconds(0)
-  var data = await mysql('impromptu_audio').where({
+  var today = dateUtil.format(new Date(),'yyyyMMdd')
+  var data = await mysql('user_study_duration').where({
     user_id: userId
-  }).andWhere('impromptu_audio.create_date', '>', today).select(mysql.raw('sum(time_duration) as totalDuration'))
+  }).andWhere('user_study_duration.study_date', '=', today).select(mysql.raw('sum(study_duration) as totalDuration'))
   if (data[0].totalDuration == null) {
     return 0
   } else {

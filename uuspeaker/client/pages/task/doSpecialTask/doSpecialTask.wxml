@@ -10,52 +10,27 @@
 </view>
 
 <view class="page__bd">
-  <view class="weui-cells__title"></view>
+  <view class="weui-cells__title">热门练习<text class="myRecord" bindtap='toSpecialTaskList'>我的录音</text></view>
   <view class="weui-cells weui-cells_after-title">
-    <view class="weui-cell" data-task_type='1'>
-      轻松练
-    </view>
-    <view class="weui-cell" data-task_type='1'>
-
-      <view class='guideline' style="background-color: rgb(29, 178, 23858);" data-task_name='每日计划' bindtap='setName'> 
-        <view>
-          <image class="uu-code" src='../../../../images/launchStudy/guideline.png'></image>
-        </view>
-        <view>每日计划</view>
-      </view>
-
-       <view class='guideline' style="background-color: orange;" data-task_name='每日复盘' bindtap='setName'>
-        <view>
-          <image class="uu-code" src='../../../../images/launchStudy/guideline.png'></image>
-        </view>
-        <view>每日复盘</view>
-      </view>
-
-    </view>
+    <block wx:for="{{hotTask}}">
+              <template is="scoreDetailTemplate" data="{{...item}}" />
+            </block>
   </view>
 </view>
 
-<view class="page__bd">
-  <view class="weui-cells__title"></view>
-  <view class="weui-cells weui-cells_after-title">
-    <view class="weui-cell" data-task_type='1'>
-      专项练：
+<template name="scoreDetailTemplate">
+<view class="weui-cell" bindtap='setName' data-task_name='{{audio_name}}'>
+  <view class="weui-cell__hd" data-task_type='1' style='width:220px'>
+      任务：{{audio_name}} 
     </view>
-    <view class="weui-cell" data-task_type='1'>
-
-      <view class='guideline' style="background-color: rgb(228,188,41);" data-task_name='赞美他人' bindtap='setName'>
-        <view>
-          <image class="uu-code" src='../../../../images/launchStudy/guideline.png'></image>
-        </view>
-        <view>赞美他人</view>
-      </view>
-
+    <view class="weui-cell__bd" data-task_type='1'>
+      热度：{{totalAmount}}
     </view>
-  </view>
-</view>
-
+    </view>
+</template>
 
 <view class="weui-flex ">
+
 <block wx:if="{{isPlay == 0}}">
   <view class="weui-flex__item record-button" style="{{pressStyle}}" bindtap="startRecord" >
     <image class="audio-pic" src="../../../images/audioDetail/voice.png"></image>

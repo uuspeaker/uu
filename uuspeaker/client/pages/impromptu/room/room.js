@@ -501,15 +501,7 @@ Page({
   },
 
   initAudio: function(){
-    recorderManager.onStart(() => {
-      console.log('recorder start')
-    })
-    recorderManager.onResume(() => {
-      console.log('recorder resume')
-    })
-    recorderManager.onPause(() => {
-      console.log('recorder pause')
-    })
+    
     recorderManager.onStop((res) => {
       tempFilePath = res.tempFilePath
     })
@@ -534,7 +526,7 @@ Page({
     var self = this;
     // 设置房间标题
     wx.setNavigationBarTitle({ title: self.data.roomname });
-    this.sendDialog(0,'温馨提示：点击头像可以静音，点击左下角图标可以计时，计时结束录音自动保存')
+    this.sendDialog(0,'温馨提示：点击头像可以静音，点击左下角图标可以计时，计时结束后会自动保存录音')
   },
 
   // onRecvRoomTextMsg: function (ret) {
@@ -662,7 +654,7 @@ Page({
     var now = new Date()
     
     //this.saveAudio(audioId)
-    setTimeout(this.saveAudio,500)
+    setTimeout(this.saveAudio,100)
     //this.saveAudioData(audioId) 
   },
 

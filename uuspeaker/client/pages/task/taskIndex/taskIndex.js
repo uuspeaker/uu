@@ -70,32 +70,6 @@ Page({
     })
   },
 
-  //查询用户任务完成情况
-  queryTaskInfo: function () {
-    //util.showBusy('请求中...')
-    var that = this
-    qcloud.request({
-      url: `${config.service.host}/weapp/task.taskIndex`,
-      login: true,
-      method: 'get',
-      data:{taskType: 0},
-      success(result) {
-        console.log('timeDurationAll',result.data.data)
-        that.setData({
-          timeDurationAll: result.data.data,
-        })
-        that.setData({
-          speechScore: that.getTotalTimeDuration(1),
-          commentScore: that.getTotalTimeDuration(2)
-        })
-      },
-      fail(error) {
-        util.showModel('请求失败', error);
-        console.log('request fail', error);
-      }
-    })
-  },
-
   getTargetTaskData: function(data,taskType){
     for(var i=0; i<data.length; i++){
       if (data[i].task_type == taskType){
@@ -171,6 +145,18 @@ Page({
   })
   },
 
+  toDoSpecialTask: function (e) {
+    wx.navigateTo({
+      url: '../doSpecialTask/doSpecialTask?'
+    })
+  },
+
+  openImpromptuRoom: function () {
+    wx.navigateTo({
+      url: '../../impromptu/impromptuRoom/impromptuRoom?operation=add'
+    })
+  },
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -178,7 +164,6 @@ Page({
   onShow: function (options) {
     this.initUserInfo()
     this.queryUserScore()
-    this.queryTaskInfo()
     this.queryLikeUserTotal()
   },
 

@@ -12,7 +12,7 @@ var post = async (ctx) => {
     // const { fields, files } = await resolveUploadFileFromRequest(ctx.req)
     try {
       //保存音频文件
-       uploadAudio.upload(ctx)
+       await uploadAudio.upload(ctx)
       //将音频转化成文字
       // var audioArr = await audioToText(files)
       // ctx.state.data = audioArr

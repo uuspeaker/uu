@@ -53,30 +53,33 @@ var getTimeNotice = function (noticeDate) {
   }
 }
 
-var getTimeNoticeFuture = function (noticeDate) {
+var getTimeNoticeFuture = function (noticeDate,endDate) {
   var now = new Date()
   now.setHours(0)
   now.setMinutes(0)
   now.setSeconds(0)
   now.setMilliseconds(0)
   var targetDate = new Date(noticeDate)
-  var time = this.format(targetDate,'hh:mm')
+  var startTime = this.format(targetDate,'hh:mm')
   targetDate.setHours(0)
   targetDate.setMinutes(0)
   targetDate.setSeconds(0)
   targetDate.setMilliseconds(0)
   var between = (targetDate - now) / (24 * 60 * 60 * 1000)
+
+  var targetEndDate = new Date(endDate)
+  var endTime = this.format(targetEndDate, 'hh:mm')
   if (between == 0) {
-    return '今天' + ' ' + time + '（' + this.getWeek(noticeDate) + ')'
+    return '今天' + ' ' + startTime + '-' + endTime+ '（' + this.getWeek(noticeDate) + ')'
   } else if (between == 1) {
-    return '明天' + ' ' + time + '（' + this.getWeek(noticeDate) + ')'
+    return '明天' + ' ' + startTime + '-' + endTime + '（' + this.getWeek(noticeDate) + ')'
   } else if (between == 2) {
-    return '后天' + ' ' + time + '（' + this.getWeek(noticeDate) + ')'
+    return '后天' + ' ' + startTime + '-' + endTime + '（' + this.getWeek(noticeDate) + ')'
   } else {
     if (now.getFullYear() == targetDate.getFullYear()){
-      return this.format(targetDate, 'M月d日 ') + time + '（' + this.getWeek(noticeDate) + ') ' 
+      return this.format(targetDate, 'M月d日 ') + startTime + '-' + endTime + '（' + this.getWeek(noticeDate) + ') ' 
     }else{
-      return this.format(targetDate, 'yyyy年M月d日 ') + time + '（' + this.getWeek(noticeDate) + ') ' 
+      return this.format(targetDate, 'yyyy年M月d日 ') + startTime + '-' + endTime + '（' + this.getWeek(noticeDate) + ') ' 
     }
   }
 }

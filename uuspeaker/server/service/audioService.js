@@ -92,6 +92,9 @@ var getSpeakingAudio = async (roomId) => {
  * 返回：
  */
 var startSpeechAudio = async (roomId, audioId, audioName, userId, timeDuration) => {
+  if (audioName == null || audioName == undefined || audioName == '') {
+    audioName = dateUtil.format(new Date(), 'yyyy-MM-dd hh:mm:ss')
+  }
   await mysql('impromptu_audio').insert({
     audio_id: audioId,
     audio_name: audioName,
@@ -101,6 +104,7 @@ var startSpeechAudio = async (roomId, audioId, audioName, userId, timeDuration) 
     audio_type: 1,
     audio_status: 1
   })
+  await increaseDuration(userId, timeDuration)
 }
 
 /**
@@ -118,6 +122,7 @@ var completeSpeechAudio = async ( audioId, timeDuration) => {
     }).where({
       audio_id: audioId
     })
+  await increaseDuration(userId, timeDuration)
 }
 
 /**
@@ -151,6 +156,9 @@ var evaluateAudio = async (roomId, evaluationAudioId, audioName, userId, timeDur
       comment_amount: audioData[0].comment_amount + 1
     }).where({ audio_id: speechAudioId })
 
+    if (audioName == null || audioName == undefined || audioName == '') {
+      audioName = dateUtil.format(new Date(), 'yyyy-MM-dd hh:mm:ss')
+    }
     await mysql('impromptu_audio').insert({
       audio_id: evaluationAudioId,
       audio_name: audioName,
@@ -162,6 +170,7 @@ var evaluateAudio = async (roomId, evaluationAudioId, audioName, userId, timeDur
       relate_audio: speechAudioId
     })
   }
+  await increaseDuration(userId, timeDuration)
 }
 
 /**
@@ -190,6 +199,9 @@ var getSpeechAudioByRoom = async (roomId,  userId) => {
  * 返回：
  */
 var saveAudio = async (audioId, audioName, userId, timeDuration) => {
+  if (audioName == null || audioName == undefined || audioName == ''){
+    audioName = dateUtil.format(new Date(),'yyyy-MM-dd hh:mm:ss')
+  }
   await mysql('impromptu_audio').insert({
     audio_id: audioId,
     audio_name: audioName,
@@ -198,11 +210,12 @@ var saveAudio = async (audioId, audioName, userId, timeDuration) => {
     audio_type: 1,
     audio_status: 2
   })
+  await increaseDuration(userId, timeDuration)
 }
 
 var getSrc =  (audioId) => {
   var uploadFolder = config.cos.uploadFolder ? config.cos.uploadFolder + '/' : ''
-  var src = `https://${config.cos.fileBucket}-${config.qcloudAppId}.cos.${config.cos.region}.myqcloud.com/${uploadFolder}${audioId}.mp3`
+  var src = `http://${config.cos.fileBucket}-${config.qcloudAppId}.cos.${config.cos.region}.myqcloud.com/${uploadFolder}${audioId}.mp3`
   return src
 }
 
@@ -258,4 +271,52 @@ var queryAudioComment = async (audioId, queryPageType, firstDataTime, lastDataTi
   return audioDataComment
 }
 
-module.exports = { likeAudio, dontLikeAudio,viewAudio, getAudioLikeUser, getSpeakingAudio, startSpeechAudio, completeSpeechAudio, evaluateLatestAudio, evaluateAudio, getSpeechAudioByRoom, saveAudio, getSrc, queryAudioById,deleteAudio, queryAudioDuration, queryAudioComment }
+// 累计演讲练习时间
+var increaseDuration = async (userId, increaseStudyDuration) => {
+  if (increaseStudyDuration == 0 || increaseStudyDuration == undefined || increaseStudyDuration == null)return
+  var today = new Date()
+  var studyDate = dateUtil.format(today, 'yyyyMMdd')
+
+  var todayPastStudyDuration = await mysql('user_study_duration').where({
+    user_id: userId,
+    study_date: studyDate
+  })
+
+  var todayTotalStudyDuration = 0
+  if (todayPastStudyDuration.length == 0) {
+    await mysql('user_study_duration').insert(
+      {
+        user_id: userId,
+        study_date: studyDate,
+        study_duration: increaseStudyDuration
+      })
+  } else {
+    await mysql('user_study_duration').update(
+      { study_duration: todayPastStudyDuration[0].study_duration + increaseStudyDuration })
+      .where({
+        user_id: userId,
+        study_date: studyDate
+      })
+  }
+
+}
+
+  module.exports = { 
+    likeAudio, 
+    dontLikeAudio, 
+    viewAudio, 
+    getAudioLikeUser, 
+    getSpeakingAudio, 
+    startSpeechAudio, 
+    completeSpeechAudio, 
+    evaluateLatestAudio, 
+    evaluateAudio, 
+    getSpeechAudioByRoom, 
+    saveAudio, 
+    getSrc, 
+    queryAudioById, 
+    deleteAudio, 
+    queryAudioDuration, 
+    queryAudioComment
+     
+    }

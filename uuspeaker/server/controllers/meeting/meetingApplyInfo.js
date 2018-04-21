@@ -4,7 +4,7 @@ const { mysql } = require('../../qcloud')
 module.exports = async ctx => {
   var meetingDate = ctx.query.meetingDate
   // var now = new Date()
-  // var meetingDate = dateFormat.getFormatDate(now, 'yyyyMMdd')
+  // var meetingDate = dateFormat.format(now, 'yyyyMMdd')
   var userIds = await mysql('meeting_apply').where({ 'meeting_date': meetingDate }).orderByRaw('meeting_type desc, role_type desc')
   var userScoreDatas = []
   

@@ -20,11 +20,11 @@ module.exports = {
         {
           user_id: userId,
           study_date: studyDate,
-          study_duration: todayPastStudyDuration[0].study_duration + increaseStudyDuration
+          study_duration: increaseStudyDuration
         })
     }else{
       await mysql('user_study_duration').update(
-        {study_duration: increaseStudyDuration})
+        { study_duration: todayPastStudyDuration[0].study_duration + increaseStudyDuration})
         .where({
           user_id: userId,
           study_date: studyDate

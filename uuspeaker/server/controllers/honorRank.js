@@ -6,7 +6,7 @@ module.exports = async ctx => {
   var countLimit = 0
   var limit = 100
   var offset = 0
-  var firstDayOfMonth = dateUtil.getFormatDate(new Date(),'yyyyMM01')
+  var firstDayOfMonth = dateUtil.format(new Date(),'yyyyMM01')
   ctx.state.data = {
     studyScore: await mysql("user_score_detail").select('user_id', mysql.raw("count(user_id) as total_score")).groupBy('user_id').having('total_score', '>=', 5)
       .orderBy('total_score', 'desc').limit(limit).offset(offset),

@@ -145,15 +145,10 @@ Page({
   formatDate: function () {
     var data = this.data.rooms
     for (var i = 0; i < data.length; i++) {
-      data[i].startDateStr = dateFormat.getTimeNoticeFuture(data[i].start_date)
+      data[i].startDateStr = dateFormat.getTimeNoticeFuture(data[i].start_date, data[i].end_date)
       data[i].timeStatus = dateFormat.getTimeStatus(data[i].start_date, data[i].end_date)
-      if (data[i].people_amount == 0){
-        data[i].amountNotice = '待报名     '
-      }else if(data[i].max_amount == data[i].people_amount){
-        data[i].amountNotice = '报名已满  '
-      }else{
-        data[i].amountNotice = data[i].people_amount + '人已报名'
-      }
+      data[i].amountNotice = '报名【' + data[i].people_amount + '/' + data[i].max_amount + '】'
+
     }
     console.log(data)
     this.setData({
@@ -218,6 +213,9 @@ Page({
     queryPageType = 2
     this.queryImpromptuRooms(queryUserType)
   },
-
+  
+  onReady: function () {
+    wx.setNavigationBarTitle({ title: '房间列表' });
+  },
 
 })
