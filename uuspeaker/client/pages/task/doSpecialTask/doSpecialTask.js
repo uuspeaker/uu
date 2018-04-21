@@ -7,7 +7,6 @@ var uuid = require('../../../common/uuid.js')
 var tempFilePath = ''
 
 const recorderManager = wx.getRecorderManager()
-const innerAudioContext = wx.createInnerAudioContext();
 
 const options = {
   duration: 600000,
@@ -200,11 +199,6 @@ Page({
   initAudio: function () {
     recorderManager.onStop((res) => {
       tempFilePath = res.tempFilePath
-    })
-
-    recorderManager.onFrameRecorded((res) => {
-      const { frameBuffer } = res
-      console.log('frameBuffer.byteLength', frameBuffer.byteLength)
     })
   },
 

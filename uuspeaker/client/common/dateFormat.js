@@ -120,7 +120,10 @@ var getFormatDuration = function (timeDuration) {
   if (hour != 0){
     durationStr = durationStr + hour + '小时'
   }
-  if (minute != 0) {
+  if (minute != 0 && second == 0) {
+    durationStr = durationStr + minute + '分钟'
+  }
+  if (minute != 0 && second != 0) {
     durationStr = durationStr + minute + '分'
   }
   if (second != 0) {

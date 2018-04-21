@@ -12,7 +12,6 @@ var lastCommentTime = ''
 var tempFilePath = ''
 
 const recorderManager = wx.getRecorderManager()
-const innerAudioContext = wx.createInnerAudioContext();
 
 const options = {
   duration: 600000,
@@ -26,7 +25,7 @@ var timeDuration = 0 //演讲时间
 var timeLimit = 120  //演讲总时间
 
 var audioId = ''
-var audioTypeArr = ['','演讲','点评']
+var audioTypeArr = ['', '演讲', '点评']
 
 Page({
   /**
@@ -41,7 +40,7 @@ Page({
     isRecord: 0,
     hostUserPicMode: 1,    // 静音样式
 
-    playNotice:1,
+    playNotice: 1,
 
     showSpeechTitle: false, //标题输入框
     showStartSpeech: true,
@@ -329,14 +328,38 @@ Page({
     })
   },
 
+  setAllSilent: function () {
+    this.data.members.forEach(function (val) {
+      //若原来是静音,则点击后打开声音且将用户图片设置为全展示
+      if (val.muted == 0) {
+        val.muted = 1
+      }
+    })
+    this.setData({
+      members: this.data.members
+    })
+  },
+
+  setAllSpeak: function () {
+    this.data.members.forEach(function (val) {
+      //若原来是静音,则点击后打开声音且将用户图片设置为全展示
+      if (val.muted == 1) {
+        val.muted = 0
+      }
+    })
+    this.setData({
+      members: this.data.members
+    })
+  },
+
   changeMute: function () {
     this.data.config.muted = !this.data.config.muted;
-    if (this.data.config.muted){
+    if (this.data.config.muted) {
       this.setData({
         config: this.data.config,
         hostUserPicMode: 'user-pic-silent'
       });
-    }else{
+    } else {
       this.setData({
         config: this.data.config,
         hostUserPicMode: 'user-pic-speak'
@@ -424,8 +447,8 @@ Page({
     this.setData({
       comment: ''
     })
-    this.sendTextMsg(requestData.comment )
-    
+    this.sendTextMsg(requestData.comment)
+
 
     console.log(requestData)
     var that = this
@@ -443,9 +466,9 @@ Page({
     // })
   },
 
-  sendDialog: function (isMine,comment) {
+  sendDialog: function (isMine, comment) {
     var newComment = {}
-    if (isMine == 1){
+    if (isMine == 1) {
       newComment.user_info = this.data.userInfo
     }
     newComment.comment = comment
@@ -457,8 +480,8 @@ Page({
     //that.formatDate()
   },
 
-  sendTextMsg: function(comment){
-    this.sendDialog(1,comment)
+  sendTextMsg: function (comment) {
+    this.sendDialog(1, comment)
     rtcroom.sendRoomTextMsg({ 'data': { 'msg': comment } })
   },
 
@@ -478,7 +501,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+
     console.log('room.js onLoad');
     console.log(options)
     var time = new Date();
@@ -500,19 +523,15 @@ Page({
     // this.queryDialog()
   },
 
-  initAudio: function(){
-    
+  initAudio: function () {
+
     recorderManager.onStop((res) => {
       tempFilePath = res.tempFilePath
     })
-    
-    recorderManager.onFrameRecorded((res) => {
-      const { frameBuffer } = res
-      console.log('frameBuffer.byteLength', frameBuffer.byteLength)
-    })
+
   },
 
-  showSuccess: function (text){
+  showSuccess: function (text) {
     wx.showToast({
       title: text,
       icon: 'success'
@@ -526,7 +545,7 @@ Page({
     var self = this;
     // 设置房间标题
     wx.setNavigationBarTitle({ title: self.data.roomname });
-    this.sendDialog(0,'温馨提示：点击头像可以静音，点击左下角图标可以计时，计时结束后会自动保存录音')
+    this.sendDialog(0, '温馨提示：点击头像可以静音，点击左下角图标可以计时，计时结束后会自动保存录音')
   },
 
   // onRecvRoomTextMsg: function (ret) {
@@ -547,7 +566,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+
     queryFlag = 0
     firstCommentTime = ''
     lastCommentTime = ''
@@ -606,17 +625,19 @@ Page({
   },
 
   startRecord: function () {
+    this.setAllSilent()
     var msg = '我开始' + audioTypeArr[this.data.audioType] + '啦，请大家保持安静'
     this.sendTextMsg(msg)
     recorderManager.start(options)
     this.setData({
       isRecord: 1
     })
-    
+
   },
 
   stopRecord: function () {
-    this.sendTextMsg('我的' + audioTypeArr[this.data.audioType]+'结束，用时' + dateFormat.getFormatDuration(timeDuration-1))
+    this.setAllSpeak()
+    this.sendTextMsg('我的' + audioTypeArr[this.data.audioType] + '结束，用时' + dateFormat.getFormatDuration(timeDuration - 1))
     recorderManager.stop();
     this.setData({
       isRecord: 0
@@ -652,27 +673,28 @@ Page({
     console.log('save recorder')
     this.cancelRecord()
     var now = new Date()
-    
+
     //this.saveAudio(audioId)
-    setTimeout(this.saveAudio,100)
+    setTimeout(this.saveAudio, 300)
     //this.saveAudioData(audioId) 
   },
 
   //保存录音文件
-  saveAudio: function (){
+  saveAudio: function () {
     var that = this
     var audioName = this.data.speechTitle
-    if (audioName == '') {
-      var now = new Date()
-      audioName = dateFormat.format(now, 'yyyy-MM-dd hh:mm')
-    }
+    // if (audioName == '') {
+    //   var now = new Date()
+    //   audioName = dateFormat.format(now, 'yyyy-MM-dd hh:mm')
+    // }
+    console.log('saveAudio.tempFilePath', tempFilePath)
     const uploadTask = wx.uploadFile({
       url: `${config.service.host}/weapp/impromptu.impromptuAudio`,
       filePath: tempFilePath,
       name: 'file',
       formData: { roomId: this.data.roomid, audioName: audioName, userId: this.data.userId, audioId: audioId, timeDuration: timeDuration },
       success: function (res) {
-        var audioText =''
+        var audioText = ''
         that.updateAudioData()
       },
 
@@ -685,7 +707,7 @@ Page({
       this.setData({
         percent: res.progress
       })
-      if (res.progress == 100){
+      if (res.progress == 100) {
         this.setData({
           showSpeechTitle: false,
           percent: 0
@@ -700,14 +722,14 @@ Page({
 
   saveAudioData: function () {
     var audioName = this.data.speechTitle
-    if (audioName == ''){
+    if (audioName == '') {
       var now = new Date()
       audioName = dateFormat.format(now, 'yyyy-MM-dd hh:mm')
     }
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.userAudio`,
       login: true,
-      data: { roomId: this.data.roomid, audioName: audioName, userId: this.data.userId, audioId: audioId, timeDuration: timeDuration, audioType: this.data.audioType},
+      data: { roomId: this.data.roomid, audioName: audioName, userId: this.data.userId, audioId: audioId, timeDuration: timeDuration, audioType: this.data.audioType },
       method: 'post',
       success(result) {
         console.log(result)
@@ -721,9 +743,9 @@ Page({
 
   updateAudioData: function () {
     qcloud.request({
-      url: `${config.service.host}/weapp/impromptu.updateAudio`,
+      url: `${config.service.host}/weapp/impromptu.userAudio`,
       login: true,
-      data: { audioId: audioId, timeDuration: timeDuration},
+      data: { audioId: audioId, timeDuration: timeDuration },
       method: 'put',
       success(result) {
         console.log(result)
@@ -735,24 +757,12 @@ Page({
     })
   },
 
-  play: function () {
-    innerAudioContext.autoplay = true
-    innerAudioContext.src = tempFilePath,
-      innerAudioContext.onPlay(() => {
-        console.log('开始播放')
-      })
-    innerAudioContext.onError((res) => {
-      console.log(res.errMsg)
-      console.log(res.errCode)
-    })
-  },
-
-  showSpeechTime: function(){
-    if(this.data.showSpeechTime == 1){
+  showSpeechTime: function () {
+    if (this.data.showSpeechTime == 1) {
       this.setData({
         showSpeechTime: 0
       })
-    }else{
+    } else {
       this.setData({
         showSpeechTime: 1
       })
@@ -798,10 +808,10 @@ Page({
   },
 
   recordTime: function () {
-    if (this.data.isPlay == 0){
-      timeDuration = timeDuration -1
+    if (this.data.isPlay == 0) {
+      timeDuration = timeDuration - 1
       return
-    } 
+    }
     var timeNoticeBackground = ''
     if (timeDuration >= timeLimit) {
       timeNoticeBackground = 'background-color:red'
@@ -819,6 +829,9 @@ Page({
       second: second,
       timeNoticeBackground: timeNoticeBackground
     })
+    if (Math.floor(timeDuration % 30) == 0 && timeDuration != 0){
+      this.sendTextMsg('用时：' + dateFormat.getFormatDuration(timeDuration))
+    }
     timeDuration++
     setTimeout(this.recordTime, 1000)
   },
@@ -831,12 +844,12 @@ Page({
     return formatedTime
   },
 
-  likeAudio: function(){
+  likeAudio: function () {
     this.sendTextMsg('太棒了，为你点赞！')
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.likeAudio`,
       login: true,
-      data: { roomId: this.data.roomid},
+      data: { roomId: this.data.roomid },
       method: 'post',
       success(result) {
         console.log(result)
@@ -848,13 +861,13 @@ Page({
     })
   },
 
-  changeAudioType: function(){
-    if(this.data.audioType ==1){
+  changeAudioType: function () {
+    if (this.data.audioType == 1) {
       this.setData({
         audioType: 2
       })
       timeLimit = 60
-    }else{
+    } else {
       this.setData({
         audioType: 1
       })

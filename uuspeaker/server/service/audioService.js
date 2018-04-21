@@ -186,7 +186,7 @@ var getSpeechAudioByRoom = async (roomId,  userId) => {
   for (var i = 0; i < audioData.length; i++) {
     audioData[i].user_info = userInfo.getUserInfo(audioData[i].user_info)
     audioData[i].isMine = 0
-    audioData[i].src = `https://${config.cos.fileBucket}-${config.qcloudAppId}.cos.${config.cos.region}.myqcloud.com/${uploadFolder}${audioData[i].audio_id}.mp3`
+    audioData[i].src = getSrc(audioData[i].audio_id)
     if (userId == audioData[i].user_id) {
       audioData[i].isMine = 1
     }
@@ -215,7 +215,7 @@ var saveAudio = async (audioId, audioName, userId, timeDuration) => {
 
 var getSrc =  (audioId) => {
   var uploadFolder = config.cos.uploadFolder ? config.cos.uploadFolder + '/' : ''
-  var src = `http://${config.cos.fileBucket}-${config.qcloudAppId}.cos.${config.cos.region}.myqcloud.com/${uploadFolder}${audioId}.mp3`
+  var src = `https://${config.cos.fileBucket}-${config.qcloudAppId}.cos.${config.cos.region}.myqcloud.com/${uploadFolder}${audioId}.mp3`
   return src
 }
 

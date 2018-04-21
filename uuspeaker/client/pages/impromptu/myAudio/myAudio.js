@@ -134,7 +134,13 @@ Page({
     }
 
     innerAudioContext.onPlay(() => {
+      wx.hideLoading()
       console.log('开始播放')
+    })
+    innerAudioContext.onWaiting(() => {
+      wx.showLoading({
+        title: '音频加载中',
+      })
     })
     innerAudioContext.onError((res) => {
       console.log(res.errMsg)
