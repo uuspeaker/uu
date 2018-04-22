@@ -32,6 +32,9 @@ Page({
   //查询最新复盘列表,包含点赞及评论
   queryAllSpeechSubject: function (e) {
     //util.showBusy('请求中...')
+    wx.showLoading({
+      title: '加载中',
+    })
     var that = this
     var queryData = { 'queryFlag': queryFlag, 'firstReportTime': firstReportTime, 'lastReportTime': lastReportTime }
     console.log(queryData)
@@ -41,6 +44,7 @@ Page({
       data: queryData,
       method: 'get',
       success(result) {
+        wx.hideLoading()
         if (result.data.data == '') return;
         //util.showSuccess('请求成功完成')
         var resultData = []

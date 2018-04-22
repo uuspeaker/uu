@@ -21,6 +21,9 @@ Page({
   //查询最新房间信息
   queryImpromptuAudios: function (e) {
     //util.showBusy('请求中...')
+    wx.showLoading({
+      title: '加载中',
+    })
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.userAudio`,
@@ -28,6 +31,7 @@ Page({
       method: 'get',
       data: { roomId: this.data.roomId},
       success(result) {
+        wx.hideLoading()
         console.log(result)
         that.setData({
           audios: result.data.data

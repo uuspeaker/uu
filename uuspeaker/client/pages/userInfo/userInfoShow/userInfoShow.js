@@ -77,12 +77,16 @@ Page({
 
   getUserInfo: function () {
     var that = this
+    wx.showLoading({
+      title: '加载中',
+    })
     qcloud.request({
       url: `${config.service.host}/weapp/userInfo.userBaseInfo`,
       login: true,
       data: { userId: likeUserId },
       method: 'get',
       success(result) {
+        wx.hideLoading()
         that.setData({
           userInfo: result.data.data.userInfo,
           userIntroduction: result.data.data.userIntroduction

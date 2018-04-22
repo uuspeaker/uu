@@ -86,12 +86,11 @@ var getSpeakingAudio = async (roomId) => {
 }
 
 /**
- * 开始演讲(开始演讲时,提前保存音频信息,便于记录其他人的点赞) 
- * 注:演讲结束时须调用completeSpeechAudio将状态由1(未完成)更新成2(已完成)
+ * 保存演讲
  * audioId 音频ID
  * 返回：
  */
-var startSpeechAudio = async (roomId, audioId, audioName, userId, timeDuration) => {
+var saveSpeechAudio = async (roomId, audioId, audioName, userId, timeDuration) => {
   if (audioName == null || audioName == undefined || audioName == '') {
     audioName = dateUtil.format(new Date(), 'yyyy-MM-dd hh:mm:ss')
   }
@@ -102,7 +101,7 @@ var startSpeechAudio = async (roomId, audioId, audioName, userId, timeDuration) 
     room_id: roomId,
     time_duration: timeDuration,
     audio_type: 1,
-    audio_status: 1
+    audio_status: 2
   })
   await increaseDuration(userId, timeDuration)
 }
@@ -307,7 +306,7 @@ var increaseDuration = async (userId, increaseStudyDuration) => {
     viewAudio, 
     getAudioLikeUser, 
     getSpeakingAudio, 
-    startSpeechAudio, 
+    saveSpeechAudio, 
     completeSpeechAudio, 
     evaluateLatestAudio, 
     evaluateAudio, 

@@ -10,6 +10,7 @@ var queryFlag = 0
 var firstCommentTime = ''
 var lastCommentTime = ''
 var tempFilePath = ''
+var timeDurationMin = 1
 
 const recorderManager = wx.getRecorderManager()
 
@@ -58,8 +59,8 @@ Page({
     config: {           //cameraview对应的配置项
       //aspect: '3:4',     //设置画面比例，取值为'3:4'或者'9:16'
       minBitrate: 200,   //设置码率范围为[minBitrate,maxBitrate]，四人建议设置为200~400
-      maxBitrate: 1000,
-      beauty: 1,        //美颜程度，取值为0~9
+      maxBitrate: 600,
+      beauty: 0,        //美颜程度，取值为0~9
       muted: false,     //设置推流是否静音
       debug: false,     //是否显示log
       camera: true,     //设置前后置摄像头，true表示前置
@@ -625,7 +626,7 @@ Page({
   },
 
   startRecord: function () {
-    this.setAllSilent()
+    //this.setAllSilent()
     var msg = '我开始' + audioTypeArr[this.data.audioType] + '啦，请大家保持安静'
     this.sendTextMsg(msg)
     recorderManager.start(options)
@@ -636,20 +637,27 @@ Page({
   },
 
   stopRecord: function () {
-    this.setAllSpeak()
+    //this.setAllSpeak()
     this.sendTextMsg('我的' + audioTypeArr[this.data.audioType] + '结束，用时' + dateFormat.getFormatDuration(timeDuration - 1))
     recorderManager.stop();
     this.setData({
       isRecord: 0
     })
-    //this.showSpeechTitleView()
-    this.saveRecord()
+    if(timeDuration < timeDurationMin)return
+    if(this.data.audioType == 1){
+      this.showSpeechTitleView()
+    }else{
+      this.saveRecord()
+    }
+    
+    
   },
 
   //显示标题输入框
   showSpeechTitleView: function () {
     this.setData({
-      showSpeechTitle: true
+      showSpeechTitle: true,
+      speechTitle: ''
     })
   },
 
@@ -657,7 +665,7 @@ Page({
   cancelRecord: function () {
     this.setData({
       showSpeechTitle: false,
-      speechTitle: ''
+      
     })
   },
 
@@ -665,8 +673,7 @@ Page({
     this.setData({
       speechTitle: e.detail.value
     })
-    this.saveRecord()
-
+    console.log('speechTitle', e.detail.value)
   },
 
   saveRecord: function () {
@@ -674,32 +681,28 @@ Page({
     this.cancelRecord()
     var now = new Date()
 
-    //this.saveAudio(audioId)
-    setTimeout(this.saveAudio, 300)
+    //this.saveAudio()
+    setTimeout(this.saveAudio, 30)
     //this.saveAudioData(audioId) 
   },
 
   //保存录音文件
   saveAudio: function () {
     var that = this
-    var audioName = this.data.speechTitle
-    // if (audioName == '') {
-    //   var now = new Date()
-    //   audioName = dateFormat.format(now, 'yyyy-MM-dd hh:mm')
-    // }
     console.log('saveAudio.tempFilePath', tempFilePath)
     const uploadTask = wx.uploadFile({
       url: `${config.service.host}/weapp/impromptu.impromptuAudio`,
       filePath: tempFilePath,
       name: 'file',
-      formData: { roomId: this.data.roomid, audioName: audioName, userId: this.data.userId, audioId: audioId, timeDuration: timeDuration },
+      formData: { audioId: audioId},
       success: function (res) {
         var audioText = ''
-        that.updateAudioData()
+        //that.updateAudioData()
+        that.saveAudioData()
       },
 
-      fail: function (e) {
-        console.error(e)
+      fail: function (error) {
+        util.showModel('录音保存失败', error);
       }
     })
 
@@ -722,10 +725,6 @@ Page({
 
   saveAudioData: function () {
     var audioName = this.data.speechTitle
-    if (audioName == '') {
-      var now = new Date()
-      audioName = dateFormat.format(now, 'yyyy-MM-dd hh:mm')
-    }
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.userAudio`,
       login: true,
@@ -783,7 +782,7 @@ Page({
     })
     timeDuration = 0
     audioId = uuid.v1()
-    this.saveAudioData()
+    //this.saveAudioData()
     this.recordTime()
     this.noticePlay()
   },

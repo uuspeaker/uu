@@ -120,6 +120,9 @@ Page({
   },
 
    queryHotTask: function () {
+     wx.showLoading({
+       title: '加载中',
+     })
      console.log('saveAudioRecord')
      var that = this
      qcloud.request({
@@ -128,6 +131,7 @@ Page({
        data: {},
        method: 'get',
        success(result) {
+         wx.hideLoading()
          that.setData({
            hotTask: result.data.data
          })

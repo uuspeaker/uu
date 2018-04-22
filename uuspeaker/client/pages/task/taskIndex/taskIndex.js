@@ -29,12 +29,16 @@ Page({
   //查询用户参会数据
   queryUserScore: function (e) {
     //util.showBusy('请求中...')
+    wx.showLoading({
+      title: '加载中',
+    })
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/userInfo.studyDuration`,
       login: true,
       method: 'get',
       success(result) {
+        wx.hideLoading()
         that.setData({
           totalStudyDuration: result.data.data.totalStudyDuration,
           todayStudyDuration: Math.floor((result.data.data.todayStudyDuration + 59) / 60),
@@ -165,6 +169,12 @@ Page({
     this.initUserInfo()
     this.queryUserScore()
     this.queryLikeUserTotal()
+  },
+
+  onReady: function(){
+    wx.showShareMenu({
+      withShareTicket: true
+    })
   },
 
 

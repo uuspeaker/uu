@@ -19,6 +19,9 @@ Page({
   //查询自由练习任务信息
   queryInfluenceInfo: function () {
     //util.showBusy('请求中...')
+    wx.showLoading({
+      title: '加载中',
+    })
     var queryData = { userId: this.data.userId }
     console.log('queryData', queryData)
     var that = this
@@ -28,6 +31,7 @@ Page({
       method: 'get',
       data: queryData,
       success(result) {
+        wx.hideLoading()
         var data = result.data.data.userList
         for (var i = 0; i < data.length; i++) {
           data[i].totalDurationStr = dateFormat.getFormatDuration(data[i].totalDuration)

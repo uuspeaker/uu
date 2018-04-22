@@ -19,8 +19,8 @@
       bindstatechange="onPush"
       enable-camera="{{config.enableCamera}}"
       binderror="onError">
-      <cover-image  class='character' src="/pages/Resources/mask.png"></cover-image>
-      <cover-view class='character' style='padding: 0 5px;'>我（{{username}}）</cover-view>
+      <!--cover-image  class='character' src="/pages/Resources/mask.png"></cover-image>
+      <cover-view class='character' style='padding: 0 5px;'>我（{{username}}）</cover-view-->
     </live-pusher>  
   </view> 
 </view>

@@ -97,7 +97,9 @@ Page({
 
   //查询最新房间信息
   queryImpromptuRooms: function (queryUserType) {
-    
+    wx.showLoading({
+      title: '加载中',
+    })
     var queryData = { 'queryPageType': queryPageType, 'firstDataTime': firstDataTime, 'lastDataTime': lastDataTime, queryUserType: queryUserType }
     console.log('queryData', queryData)
     //util.showBusy('请求中...')
@@ -108,6 +110,7 @@ Page({
       method: 'get',
       data: queryData,
       success(result) {
+        wx.hideLoading()
         console.log(result)
         if (result.data.data == '') {
           util.showSuccess('没有更多记录')

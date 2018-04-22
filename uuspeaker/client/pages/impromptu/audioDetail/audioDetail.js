@@ -46,6 +46,9 @@ Page({
   //查询最新房间信息
   queryAudioDetail: function (e) {
     //util.showBusy('请求中...')
+    wx.showLoading({
+      title: '加载中',
+    })
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.audioDetail`,
@@ -53,6 +56,7 @@ Page({
       method: 'get',
       data: { audioId: this.data.audioId },
       success(result) {
+        wx.hideLoading()
         console.log(result)
         that.setData({
           audioData: result.data.data.audioData,
@@ -415,6 +419,12 @@ Page({
     queryPageType = 0
     this.queryAudioDetail()
     this.queryAudioComment()
+  },
+
+  onReady: function () {
+    wx.showShareMenu({
+      withShareTicket: true
+    })
   },
 
   onReachBottom: function () {

@@ -89,6 +89,9 @@ Page({
   //查询用户参会数据
   queryMeetingUser: function () {
     //util.showBusy('请求中...')
+    wx.showLoading({
+      title: '加载中',
+    })
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.impromptuMeeting`,
@@ -96,6 +99,7 @@ Page({
       data: {roomId:this.data.roomId},
       method: 'get',
       success(result) {
+        wx.hideLoading()
         //util.showSuccess('请求成功完成')
         that.setData({
           meetingUser: result.data.data.meetingUser,
@@ -223,6 +227,9 @@ Page({
   },
 
   onReady: function () {
+    wx.showShareMenu({
+      withShareTicket:true
+    })
     var self = this;
     //this.getRoomList(function () { });
     getlogininfo.getLoginInfo({
@@ -243,6 +250,19 @@ Page({
       }
     });
   },
+
+  // onShareAppMessage: function(options){
+  //   return {
+  //     title: '跟我一起玩' + this.data.roomInfo.title + '吧' ,
+  //     path: '/pages/impromptu/impromptuMeeting/impromptuMeeting=' + this.data.roomId,
+  //     success: function (res) {
+  //       // 转发成功
+  //     },
+  //     fail: function (res) {
+  //       // 转发失败
+  //     }
+  //   }
+  // },
 
   /**
    * 生命周期函数--监听页面加载

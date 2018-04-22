@@ -61,6 +61,9 @@ Page({
 
   //查询自由练习任务信息
   doQuerySpecialTask: function (queryUserType) {
+    wx.showLoading({
+      title: '加载中',
+    })
     //util.showBusy('请求中...')
     var queryData = { 'queryPageType': queryPageType, 'firstDataTime': firstDataTime, 'lastDataTime': lastDataTime, queryUserType: queryUserType  }
     console.log('queryData',queryData)
@@ -71,6 +74,7 @@ Page({
       method: 'get',
       data: queryData,
       success(result) {
+        wx.hideLoading()
         console.log(result)
         if (result.data.data == ''){
           util.showSuccess('没有更多记录')
