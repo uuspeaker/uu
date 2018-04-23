@@ -11,7 +11,7 @@ module.exports = {
     var userId = await ctx.request.body.userId
     var meetingDate = await ctx.request.body.meetingDate
     var meetingTime = await ctx.request.body.meetingTime
-    var roleType = await ctx.request.body.roleType
+    var role = await ctx.request.body.role
     var meetingType = await ctx.request.body.meetingType
     await mysql('meeting_apply').where({ 
       user_id: userId,
@@ -23,7 +23,7 @@ module.exports = {
         user_id: userId,
         meeting_date: meetingDate,
         meeting_time: meetingTime,
-        role_type: roleType,
+        role: role,
         meeting_type: meetingType
       })
   },
@@ -32,13 +32,13 @@ module.exports = {
     var userId = ctx.request.body.userId
     var meetingDate = await ctx.request.body.meetingDate
     var meetingTime = ctx.request.body.meetingTime
-    var roleType = ctx.request.body.roleType
+    var role = ctx.request.body.role
     await mysql('meeting_apply').where({ 
         user_id: userId, 
         meeting_date: meetingDate
       }).update({
         meeting_time: meetingTime,
-        role_type: roleType,
+        role: role,
         meeting_type: meetingType
       })
   },

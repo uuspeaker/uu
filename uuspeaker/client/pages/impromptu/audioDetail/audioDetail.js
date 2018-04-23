@@ -317,6 +317,7 @@ Page({
   },
 
   saveAudio: function (audioId) {
+    util.showBusy('请求中...')
     var that = this
     console.log('tempFilePath', tempFilePath)
     const uploadTask = wx.uploadFile({
@@ -360,6 +361,7 @@ Page({
     this.setData({
       audioId: options.audioId
     })
+    innerAudioContext.obeyMuteSwitch = false
     innerAudioContext.onPlay(() => {
       wx.hideLoading()
       console.log('开始播放', innerAudioContext.currentTime)
@@ -407,11 +409,12 @@ Page({
   },
 
   editAudio: function (e) {
-    var audioId = e.currentTarget.dataset.audio_id
-    var audioName = e.currentTarget.dataset.audio_name
-    var audioText = e.currentTarget.dataset.audio_text
+    var audioId = this.data.audioData[0].audio_id
+    var audioName = this.data.audioData[0].audio_name
+    var audioText = this.data.audioData[0].audio_text
+    var isMine = this.data.audioData[0].isMine
     wx.navigateTo({
-      url: '../../impromptu/myAudioManage/myAudioManage?audioId=' + audioId + '&audioName=' + audioName + '&audioText=' + audioText
+      url: '../../impromptu/myAudioManage/myAudioManage?audioId=' + audioId + '&audioName=' + audioName + '&audioText=' + audioText + '&isMine=' + isMine
     })
   },
 

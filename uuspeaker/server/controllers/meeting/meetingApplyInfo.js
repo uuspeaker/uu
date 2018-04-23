@@ -5,7 +5,7 @@ module.exports = async ctx => {
   var meetingDate = ctx.query.meetingDate
   // var now = new Date()
   // var meetingDate = dateFormat.format(now, 'yyyyMMdd')
-  var userIds = await mysql('meeting_apply').where({ 'meeting_date': meetingDate }).orderByRaw('meeting_type desc, role_type desc')
+  var userIds = await mysql('meeting_apply').where({ 'meeting_date': meetingDate }).orderByRaw('meeting_type desc')
   var userScoreDatas = []
   
   for(var idx in userIds){

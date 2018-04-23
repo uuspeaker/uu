@@ -11,8 +11,11 @@
       </view>
       <view class="small-grey" style='margin-top:10px;'>
         <text>作者：{{audioData[0].user_info.nickName}} </text>
-        <block wx:if="{{audioData[0].isMine == 1}}">
-        <text class="link" data-audio_id="{{audioData[0].audio_id}}" data-audio_name='{{audioData[0].audio_name}}' data-audio_text='{{audioData[0].audio_text}}' catchtap='editAudio'>编辑</text>
+<block wx:if='{{audioData[0].isMine == 1}}'>
+        <text class="link"  catchtap='editAudio'>备注</text>
+        </block>
+        <block wx:if='{{audioData[0].isMine == 0 && audioData[0].audio_text != null}}'>
+        <text class="link"  catchtap='editAudio'>备注</text>
         </block>
       </view>
       <view class="weui-flex__item date">
@@ -44,11 +47,11 @@
   <view class="weui-cells weui-cells_after-title">
   <view class="weui-cell" >
   <block wx:if="{{likeIt == 0}}">
-      <image  class="audio-pic" style="margin-right:10px" src="../../../images/studyIndex/like.png" bindtap='likeAudio'></image>
+      <image  class="audio-pic" style="margin-right:10px" src="../../../images/studyIndex/like.png" catchtap='likeAudio'></image>
       </block>
       
       <block wx:if="{{likeIt == 1}}">
-      <image  class="audio-pic" style="margin-right:10px" src="../../../images/userAudio/like.png" bindtap='cancelLike'></image>
+      <image  class="audio-pic" style="margin-right:10px" src="../../../images/userAudio/like.png" catchtap='cancelLike'></image>
       </block>
       <block wx:for="{{audioDataLike}}" wx:key="item">
         <image class="user-like-pic" src="{{item.user_info.avatarUrl}}" data-user_id='{{item.user_id}}' catchtap='toUserInfo'></image>

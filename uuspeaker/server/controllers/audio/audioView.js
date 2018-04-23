@@ -7,7 +7,7 @@ module.exports = {
   post: async ctx => {
     var userId = await userInfo.getOpenId(ctx)
     var audioId = ctx.request.body.audioId
-    audioService.viewAudio(audioId)
+    audioService.viewAudio(userId,audioId)
   },
 
 }

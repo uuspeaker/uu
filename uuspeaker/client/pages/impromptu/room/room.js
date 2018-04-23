@@ -688,6 +688,7 @@ Page({
 
   //保存录音文件
   saveAudio: function () {
+    util.showBusy('请求中...')
     var that = this
     console.log('saveAudio.tempFilePath', tempFilePath)
     const uploadTask = wx.uploadFile({
@@ -707,16 +708,16 @@ Page({
     })
 
     uploadTask.onProgressUpdate((res) => {
-      this.setData({
-        percent: res.progress
-      })
-      if (res.progress == 100) {
-        this.setData({
-          showSpeechTitle: false,
-          percent: 0
-        })
-        that.showSuccess('录音已保存')
-      }
+      // this.setData({
+      //   percent: res.progress
+      // })
+      // if (res.progress == 100) {
+      //   this.setData({
+      //     showSpeechTitle: false,
+      //     percent: 0
+      //   })
+      //   that.showSuccess('录音已保存')
+      // }
       console.log('上传进度', res.progress)
       console.log('已经上传的数据长度', res.totalBytesSent)
       console.log('预期需要上传的数据总长度', res.totalBytesExpectedToSend)
@@ -731,6 +732,7 @@ Page({
       data: { roomId: this.data.roomid, audioName: audioName, userId: this.data.userId, audioId: audioId, timeDuration: timeDuration, audioType: this.data.audioType },
       method: 'post',
       success(result) {
+        util.showSuccess('录音保存成功')
         console.log(result)
       },
       fail(error) {

@@ -28,7 +28,7 @@ module.exports = {
         notice: notice
       })
 
-    await impromptuMeetingService.joinMeeting(roomId, userId, 2)
+    await impromptuMeetingService.joinMeeting(roomId, userId, '主持人')
   },
 
   put: async ctx => {

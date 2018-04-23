@@ -1,8 +1,7 @@
 
 <view class="weui-cell top">
   <view class=" myReport"  style="{{viewStyle[0]}}" data-item='0' data-type='1' bindtap='queryRoomInfo'>全部</view>
-  <view class=" myReport"  style="{{viewStyle[1]}}" data-item='1' data-type='2' bindtap='queryRoomInfo'>我的</view>
-  <view class=" myReport"  style="{{viewStyle[2]}}" data-item='2' data-type='3' bindtap='queryRoomInfo'>参与的</view>
+  <view class=" myReport"  style="{{viewStyle[2]}}" data-item='2' data-type='3' bindtap='queryRoomInfo'>我的</view>
   <view class=" myReport"  style="{{viewStyle[3]}}" data-item='3' data-type='4' bindtap='queryRoomInfo'>关注的</view>
 </view>
 <!--报名展示-->

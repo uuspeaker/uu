@@ -102,6 +102,7 @@ Page({
   },
 
    saveAudio: function(audioId){
+     util.showBusy('请求中...')
      var that = this
     console.log('tempFilePath', tempFilePath)
     const uploadTask = wx.uploadFile({

@@ -49,6 +49,8 @@ Page({
     if (queryUserType == thisQueryUserType) return
     queryUserType = thisQueryUserType
     queryPageType = 0
+    firstDataTime = ''
+    lastDataTime = ''
     this.setData({
       rooms: []
     })
@@ -199,6 +201,7 @@ Page({
   },
 
   onShow: function (options) {
+    if (queryUserType == 4) return
     queryPageType = 0
     queryUserType = 1
     this.queryImpromptuRooms(queryUserType)

@@ -7,9 +7,9 @@ module.exports = {
   post: async ctx => {
     var userId = await userInfoService.getOpenId(ctx)
     var roomId = ctx.request.body.roomId
-    var roleType = ctx.request.body.roleType
+    var role = ctx.request.body.role
 
-    await impromptuMeetingService.joinMeeting(roomId, userId, roleType)
+    await impromptuMeetingService.joinMeeting(roomId, userId, role)
 
   },
 

@@ -42,11 +42,12 @@
   </view>
 </view>
 
-
+<form>
 <view class="weui-flex bottom ">
   <view class="weui-flex__item ">
     <block wx:if="{{isJoin == false && roomInfo.people_amount < roomInfo.max_amount}}">
-      <button class='weui-btn' type='primary' data-roletype='1' bindtap='applyMeeting'>报名</button>
+    <input name='role' placeholder='请输入角色,默认为演讲者' bindconfirm='applyMeetingWithName'></input>
+      <button class='weui-btn' type='primary' data-roletype='1' value="演讲者" bindtap='applyMeetingDefault'>报名</button>
     </block>
     <block wx:if="{{isJoin == true}}">
       <button class='weui-btn' type='primary' data-mode='{{roomInfo.mode}}' data-room_id="{{roomInfo.room_id}}" bindtap='createAndGoRoom'>加入语音会议</button>
@@ -54,7 +55,7 @@
     </block>
   </view>
 </view>
-
+</form>
 
 <template name="scoreDetailTemplate">
   <view class="weui-cell">
@@ -63,9 +64,7 @@
     </view>
     <view class="weui-cell__bd" class='speaker'>
       <view>{{user_info.nickName}}
-        <text wx:if="{{role_type == 1}}">【演讲者】</text>
-        <text wx:if="{{role_type == 2}}">【主持人】</text>
-        <text wx:if="{{role_type == 3}}">【点评人】</text>
+        <text>【{{role}}】</text>
       </view>
       <view class='speaker-level'>{{userRank}}</view>
     </view>

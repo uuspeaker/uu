@@ -250,6 +250,17 @@ startSpeech{
   font-weight: bold;
   color: #576b95;
 }
+.modal{
+margin-top: 20px;
+}
+.modalInput{
+
+text-align: center;
+font-size: 24px;
+font-weight: bold;
+color: black;
+height: 40px;
+}
 
 
 

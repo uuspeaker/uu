@@ -139,7 +139,9 @@
     </view>
   </form>
 </view>
-<modal class="modal" hidden="{{!showSpeechTitle}}" title="保存演讲录音" confirm-text="保存" cancel-text="取消" bindcancel="cancelRecord" bindconfirm="saveRecord">
-
-  <input placeholder="请输入演讲标题" bindinput="setSpeechTitle" bindconfirm="saveRecord" value='{{speechTitle}}'> </input>
+<modal  hidden="{{!showSpeechTitle}}" title="请输入录音标题" confirm-text="保存" cancel-text="取消" bindcancel="cancelRecord" bindconfirm="saveRecord">
+<view class="modal">
+<input class='modalInput' placeholder="请输入标题" bindinput="setSpeechTitle" bindconfirm="saveRecord" value='{{speechTitle}}'> </input>
+</view>
+  
 </modal>

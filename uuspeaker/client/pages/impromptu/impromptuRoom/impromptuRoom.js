@@ -101,6 +101,15 @@ Page({
   },
 
   openImpromptuRoom: function (e) {
+    var endDate = new Date(e.detail.value.startDate +' '+ e.detail.value.endTime + ':00')
+    if(endDate <= new Date()){
+      util.showNotice('结束时间必须大于当前时间')
+      return
+    }
+    if (e.detail.value.startTime >= e.detail.value.endTime) {
+      util.showNotice('结束时间必须大于开始时间')
+      return
+    }
     var requestData = e.detail.value
     requestData.maxAmount = this.data.maxAmount[requestData.maxAmount]
     console.log('requestData',requestData)

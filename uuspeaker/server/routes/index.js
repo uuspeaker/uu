@@ -121,6 +121,9 @@ router.delete('/impromptu.myAudio', controllers.impromptu.myAudio.del)
 //音频评论管理
 router.get('/audio.audioComment', controllers.audio.audioComment.get)
 router.post('/audio.audioComment', controllers.audio.audioComment.post)
+//音频评论统计信息
+router.get('/audio.newCommentAmount', controllers.audio.newCommentAmount.get)
+router.get('/audio.newCommentList', controllers.audio.newCommentList.get)
 //任务首页查询
 router.get('/task.taskIndex', controllers.task.taskIndex.get)
 //热门任务查询

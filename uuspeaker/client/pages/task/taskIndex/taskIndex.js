@@ -12,6 +12,7 @@ Page({
   data: {
     targetStatus: 0,
     rank:'',
+    newCommentAmount:0,
 
     userInfo: {},
     totalStudyDuration: 0,
@@ -54,7 +55,7 @@ Page({
   },
 
   //查询用户参会数据
-  queryLikeUserTotal: function (e) {
+  queryLikeUserTotal: function () {
     //util.showBusy('请求中...')
     var that = this
     qcloud.request({
@@ -65,6 +66,26 @@ Page({
         that.setData({
           likeUserTotal: result.data.data.likeUserTotal,
           myFansTotal: result.data.data.myFansTotal,
+        })
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
+  //查询最近的评论
+  queryNewCommentAmount: function () {
+    //util.showBusy('请求中...')
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/audio.newCommentAmount`,
+      login: true,
+      method: 'get',
+      success(result) {
+        that.setData({
+          newCommentAmount: result.data.data
         })
       },
       fail(error) {
@@ -161,6 +182,12 @@ Page({
     })
   },
 
+  toNewCommentList: function () {
+    wx.navigateTo({
+      url: '../../userInfo/newCommentList/newCommentList'
+    })
+  },
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -169,6 +196,7 @@ Page({
     this.initUserInfo()
     this.queryUserScore()
     this.queryLikeUserTotal()
+    this.queryNewCommentAmount()
   },
 
   onReady: function(){

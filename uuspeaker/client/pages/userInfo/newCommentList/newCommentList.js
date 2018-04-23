@@ -5,7 +5,7 @@ var dateFormat = require('../../../common/dateFormat.js')
 
 const innerAudioContext = wx.createInnerAudioContext()
 var showTimes = 0
-//查询标记(1-查自己;2-查所有;3-查关注的)
+//查询标记(1-查自己;2-查所有;3-查最赞)
 var queryUserType = ''
 
 //查询标记(0-查询最新;1-查询前面10条;2-查询后面10条)
@@ -46,7 +46,7 @@ Page({
     var that = this
   },
 
-  queryTaskInfo: function(e){
+  queryTaskInfo: function (e) {
     var index = e.currentTarget.dataset.item
     this.pressView(index)
     var thisQueryUserType = e.currentTarget.dataset.type
@@ -65,21 +65,21 @@ Page({
       title: '加载中',
     })
     //util.showBusy('请求中...')
-    var queryData = { 'queryPageType': queryPageType, 'firstDataTime': firstDataTime, 'lastDataTime': lastDataTime, queryUserType: queryUserType  }
-    console.log('queryData',queryData)
+    var queryData = { 'queryPageType': queryPageType, 'firstDataTime': firstDataTime, 'lastDataTime': lastDataTime, queryUserType: queryUserType }
+    console.log('queryData', queryData)
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/task.specialTask`,
+      url: `${config.service.host}/weapp/audio.newCommentList`,
       login: true,
       method: 'get',
       data: queryData,
       success(result) {
         wx.hideLoading()
         console.log(result)
-        if (result.data.data == ''){
+        if (result.data.data == '') {
           util.showSuccess('没有更多记录')
           return
-        } 
+        }
         var resultData = []
         if (queryPageType == 0) {
           resultData = result.data.data
@@ -196,7 +196,7 @@ Page({
       url: `${config.service.host}/weapp/audio.audioView`,
       login: true,
       method: 'post',
-      data: { audioId: audioId},
+      data: { audioId: audioId },
       success(result) {
         that.updateViewAmount(audioId)
       },
@@ -256,7 +256,6 @@ Page({
   },
 
   onShow: function () {
-    if (queryUserType == 4)return
     queryPageType = 0
     queryUserType = 1
     this.doQuerySpecialTask(queryUserType)
@@ -274,7 +273,7 @@ Page({
     this.doQuerySpecialTask(queryUserType)
   },
 
-  onHide:function(){
+  onHide: function () {
     innerAudioContext.stop();
   },
 
@@ -288,7 +287,7 @@ Page({
     })
   },
 
-  toUserInfo: function(e) {
+  toUserInfo: function (e) {
     wx.navigateTo({
       url: '../../userInfo/userInfoShow/userInfoShow?userId=' + e.currentTarget.dataset.user_id + '&nickName=' + e.currentTarget.dataset.nick_name + '&avatarUrl=' + e.currentTarget.dataset.avatar_url,
     })
@@ -296,11 +295,11 @@ Page({
 
   toAllSpecialTask: function (e) {
     wx.navigateTo({
-      url: '../allSpecialTask/allSpecialTask' 
+      url: '../allSpecialTask/allSpecialTask'
     })
   },
 
-  toDoSpecialTask: function(e) {
+  toDoSpecialTask: function (e) {
     wx.navigateTo({
       url: '../doSpecialTask/doSpecialTask?'
     })

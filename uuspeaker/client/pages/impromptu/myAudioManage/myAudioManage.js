@@ -9,7 +9,8 @@ Page({
   data: {
     audioId: '',
     audioName: '',
-    audioText: ''
+    audioText: '',
+    isMine:''
   },
 
 
@@ -70,10 +71,14 @@ Page({
 
   onLoad: function (options) {
     console.log(options)
+    if (options.audioText == null || options.audioText == 'null'){
+      options.audioText = ''
+    }
     this.setData({
       audioId: options.audioId,
       audioName: options.audioName,
-      audioText: options.audioText
+      audioText: options.audioText,
+      isMine: options.isMine
     })
   },
 

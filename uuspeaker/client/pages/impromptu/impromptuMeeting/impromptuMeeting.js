@@ -153,13 +153,21 @@ Page({
     })
   },
 
-  applyMeeting: function(e){
-    var roleType = e.currentTarget.dataset.roletype
+  applyMeetingDefault: function(e){
+    this.applyMeeting('演讲者')
+  },
+
+  applyMeetingWithName: function (e) {
+    var role = e.detail.value
+    this.applyMeeting(role)
+  },
+
+  applyMeeting: function (role) {
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.impromptuMeeting`,
       login: true,
-      data: { roomId: this.data.roomId,roleType:roleType},
+      data: { roomId: this.data.roomId, role: role },
       method: 'post',
       success(result) {
         util.showSuccess('会议申请成功')

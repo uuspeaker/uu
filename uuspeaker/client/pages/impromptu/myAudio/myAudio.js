@@ -136,7 +136,7 @@ Page({
         nickName: options.nickName
       })
     }
-
+    innerAudioContext.obeyMuteSwitch = false
     innerAudioContext.onPlay(() => {
       wx.hideLoading()
       console.log('开始播放')

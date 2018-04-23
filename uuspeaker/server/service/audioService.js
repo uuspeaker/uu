@@ -54,11 +54,21 @@ var dontLikeAudio = async (audioId, userId) => {
  * audioId 音频ID
  * 返回：0-之前已经点赞 1-点赞成功
  */
-var viewAudio = async (audioId) => {
-  var audioView = await mysql('impromptu_audio').select('view_amount').where({ audio_id: audioId })
+var viewAudio = async (userId,audioId) => {
+  var audioView = await mysql('impromptu_audio').select('impromptu_audio.*').where({ audio_id: audioId })
   await mysql('impromptu_audio').update({
     view_amount: audioView[0].view_amount + 1
   }).where({ audio_id: audioId })
+
+  //如果察看别人评论自己的信息，这把评论提醒消息删除
+  if (audioView[0].audio_type == 2){
+    var speechAudio = await mysql('impromptu_audio').select('impromptu_audio.*').where({ audio_id: audioView[0].relate_audio })
+    if (speechAudio[0].user_id == userId){
+      await mysql('new_comment').where({
+        audio_id: audioId
+      }).del()
+    }
+  }
 }
 
 /**
@@ -136,7 +146,7 @@ var evaluateLatestAudio = async (roomId, evaluationAudioId, audioName, userId, t
   if (audioData.length > 0) {
     var speechAudioId = audioData[0].audio_id
     //更新演讲的点评次数
-    evaluateAudio(roomId, evaluationAudioId, audioName, userId, timeDuration, speechAudioId)
+    evaluateAudio(roomId, evaluationAudioId, userId, timeDuration, speechAudioId)
   }
 }
 
@@ -145,7 +155,7 @@ var evaluateLatestAudio = async (roomId, evaluationAudioId, audioName, userId, t
  * audioId 点评音频ID
  * 返回：
  */
-var evaluateAudio = async (roomId, evaluationAudioId, audioName, userId, timeDuration, speechAudioId) => {
+var evaluateAudio = async (roomId, evaluationAudioId, userId, timeDuration, speechAudioId) => {
   //获取最近完成的演讲
   var audioData = await mysql('impromptu_audio').where({ audio_id: speechAudioId})
 
@@ -155,12 +165,9 @@ var evaluateAudio = async (roomId, evaluationAudioId, audioName, userId, timeDur
       comment_amount: audioData[0].comment_amount + 1
     }).where({ audio_id: speechAudioId })
 
-    if (audioName == null || audioName == undefined || audioName == '') {
-      audioName = dateUtil.format(new Date(), 'yyyy-MM-dd hh:mm:ss')
-    }
     await mysql('impromptu_audio').insert({
       audio_id: evaluationAudioId,
-      audio_name: audioName,
+      audio_name: '点评' + audioData[0].audio_name,
       user_id: userId,
       room_id: roomId,
       time_duration: timeDuration,
@@ -170,6 +177,15 @@ var evaluateAudio = async (roomId, evaluationAudioId, audioName, userId, timeDur
     })
   }
   await increaseDuration(userId, timeDuration)
+
+  //如果不是在直播房间发起的点评且不是点评自己，则新增一条点评通知消息
+  if (roomId == '' && audioData[0].userId != userId){
+    await mysql('new_comment').insert({
+      audio_id: evaluationAudioId,
+      user_id: audioData[0].user_id,
+      audio_name: '点评' + audioData[0].audio_name
+    })
+  }
 }
 
 /**
@@ -297,7 +313,39 @@ var increaseDuration = async (userId, increaseStudyDuration) => {
         study_date: studyDate
       })
   }
+}
 
+// 查询最近新增的评论条数
+var queryNewCommentAmount = async (userId) => {
+  var commentAmount = await mysql('new_comment').select(mysql.raw("count(1) as total")).where({ user_id: userId })
+  if (commentAmount.length == 0){
+    return 0
+  }else{
+    return commentAmount[0].total
+  }
+}
+
+// 查询最近新增的评论
+var queryNewCommentList = async (userId, queryPageType, firstDataTime, lastDataTime) => {
+  //查询音频评论
+  var audioDataComment
+  if (queryPageType == 0) {
+    audioDataComment = await mysql('impromptu_audio').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').innerJoin('new_comment', 'new_comment.audio_id', 'impromptu_audio.audio_id').select('new_comment.audio_name','impromptu_audio.*', 'cSessionInfo.user_info').where({ 'new_comment.user_id': userId }).orderBy('impromptu_audio.create_date', 'asc')
+  }
+
+  if (queryPageType == 1) {
+    audioDataComment = await mysql('impromptu_audio').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').innerJoin('new_comment', 'new_comment.audio_id', 'impromptu_audio.audio_id').select('new_comment.audio_name','impromptu_audio.*', 'cSessionInfo.user_info').where({ 'new_comment.user_id': userId }).andWhere('impromptu_audio.create_date', '<', new Date(firstDataTime)).orderBy('impromptu_audio.create_date', 'asc')
+  }
+
+  if (queryPageType == 2) {
+    audioDataComment = await mysql('impromptu_audio').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').innerJoin('new_comment', 'new_comment.audio_id', 'impromptu_audio.audio_id').select('new_comment.audio_name','impromptu_audio.*', 'cSessionInfo.user_info').where({ 'new_comment.user_id': userId }).andWhere('impromptu_audio.create_date', '>', new Date(lastDataTime)).orderBy('impromptu_audio.create_date', 'asc')
+  }
+
+  for (var i = 0; i < audioDataComment.length; i++) {
+    audioDataComment[i].user_info = userInfo.getUserInfo(audioDataComment[i].user_info)
+    audioDataComment[i].src = getSrc(audioDataComment[i].audio_id)
+  }
+  return audioDataComment
 }
 
   module.exports = { 
@@ -316,6 +364,7 @@ var increaseDuration = async (userId, increaseStudyDuration) => {
     queryAudioById, 
     deleteAudio, 
     queryAudioDuration, 
-    queryAudioComment
-     
+    queryAudioComment,
+    queryNewCommentAmount,
+    queryNewCommentList
     }
