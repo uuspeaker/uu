@@ -137,18 +137,20 @@ Page({
         nickName: options.nickName
       })
     }
+
+    queryPageType = 0
+    if (queryUserType == 2) {
+      queryUserType = 2
+      this.pressView(1)
+    } else {
+      queryUserType = 1
+      this.pressView(0)
+    }
+    this.doQueryLikeUser(queryUserType)
   },
 
   onShow: function () {
-    queryPageType = 0
-    if (queryUserType == 2){
-      queryUserType = 2
-      this.pressView(1)
-    } else{
-      queryUserType = 1
-      this.pressView(0)
-    } 
-    this.doQueryLikeUser(queryUserType)
+    
   },
 
   onPullDownRefresh: function () {

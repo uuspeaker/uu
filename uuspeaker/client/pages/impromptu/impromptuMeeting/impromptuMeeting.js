@@ -284,10 +284,9 @@ Page({
   },
 
   onShow: function () {
-    this.queryMeetingUser()
   },
 
   onPullDownRefresh: function () {
-    this.queryMeetingUser()
+    // this.queryMeetingUser()
   },
 })

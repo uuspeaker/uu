@@ -188,15 +188,15 @@ Page({
     })
   },
 
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onShow: function (options) {
+  onLoad:function(){
     this.initUserInfo()
-    this.queryUserScore()
     this.queryLikeUserTotal()
+    this.queryUserScore()
     this.queryNewCommentAmount()
+  },
+ 
+  onShow: function (options) {
+    
   },
 
   onReady: function(){

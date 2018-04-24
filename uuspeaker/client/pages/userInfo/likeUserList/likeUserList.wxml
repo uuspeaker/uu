@@ -38,7 +38,7 @@
 </template>
 
 
-<view class="weui-cells weui-cells_after-title middle" >
+<view class="weui-cells weui-cells_after-title middle2" >
   <block wx:for="{{likeUsers}}" wx:key="item">
     <template is="scoreDetailTemplate" data="{{...item}}" />
   </block>

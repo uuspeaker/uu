@@ -213,13 +213,14 @@ var getSpeechAudioByRoom = async (roomId,  userId) => {
  * 保存演讲记录 
  * 返回：
  */
-var saveAudio = async (audioId, audioName, userId, timeDuration) => {
+var saveAudio = async (audioId, audioName, audioText, userId, timeDuration) => {
   if (audioName == null || audioName == undefined || audioName == ''){
     audioName = dateUtil.format(new Date(),'yyyy-MM-dd hh:mm:ss')
   }
   await mysql('impromptu_audio').insert({
     audio_id: audioId,
     audio_name: audioName,
+    audio_text: audioText,
     user_id: userId,
     time_duration: timeDuration,
     audio_type: 1,

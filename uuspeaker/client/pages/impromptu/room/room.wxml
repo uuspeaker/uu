@@ -18,72 +18,34 @@
       </live-player>
     </view>
   </view>
+</view>
+  <!--参会人员头像展示-->
+  <view class="top">
 
-  <view style='padding-bottom:100px'>
-    <!--参会人员头像展示-->
-    <view class="top">
+    <view class="weui-flex speechArea">
+      <view class="weui-flex__item itemClass" bindtap="changeMute">
+        <image class="my-pic {{hostUserPicMode}}" src="{{userInfo.avatarUrl}}" />
 
-      <view class="weui-flex speechArea">
-        <view class="weui-flex__item itemClass" bindtap="changeMute">
-          <image class="my-pic {{hostUserPicMode}}" src="{{userInfo.avatarUrl}}" />
-
-        </view>
-        <block wx:for="{{members}}" wx:key="userID">
-          <view class="weui-flex__item itemClass">
-            <view>
-              <image class="user-pic {{item.speakNotice}} {{item.userPicMode}}" data-user_avatar="{{item.userAvatar}}" src="{{item.userAvatar}}" bindtap='setSilent'></image>
-            </view>
-            <view class='userName '>{{item.userName}}</view>
-          </view>
-        </block>
       </view>
-
+      <block wx:for="{{members}}" wx:key="userID">
+        <view class="weui-flex__item itemClass">
+          <view>
+            <image class="user-pic {{item.speakNotice}} {{item.userPicMode}}" data-user_avatar="{{item.userAvatar}}" src="{{item.userAvatar}}" bindtap='setSilent'></image>
+          </view>
+          <view class='userName '>{{item.userName}}</view>
+        </view>
+      </block>
     </view>
 
-    <!--聊天记录展示-->
-    <template name="scoreDetailTemplate">
-      <block wx:if="{{isMine==0}}">
-        <view class="weui-flex dialogArea">
-          <view>
-            <view class="placeholder dialog-pic">
-              <image class="dialog-pic" src="{{user_info.avatarUrl}}"></image>
-            </view>
-          </view>
-          <view class="weui-flex__item ">
-            <view class=" userDialog tip left">
-              <rich-text>{{comment}}</rich-text>
-            </view>
-          </view>
-          <view class="placeholder dialog-pic"></view>
-        </view>
-      </block>
-      <block wx:if="{{isMine==1}}">
-        <view class="weui-flex dialogArea">
-          <view class="placeholder dialog-pic"></view>
-          <view class="weui-flex__item ">
-            <view class=" myDialog tip right">
-              <rich-text>{{comment}}</rich-text>
-            </view>
-          </view>
-          <view>
-            <view class="placeholder dialog-pic">
-              <image class="dialog-pic" src="{{user_info.avatarUrl}}"></image>
-            </view>
-          </view>
-        </view>
-      </block>
-    </template>
+  </view>
 
-    <view style='padding-top:60px'>
+  <view class='middle2'>
+    <view>
       <block wx:for="{{dialog}}">
         <template is="scoreDetailTemplate" data="{{...item}}" />
       </block>
     </view>
   </view>
-
-</view>
-
-
 
 
 <view class="bottom">
@@ -94,15 +56,10 @@
     </block>
     <view class="weui-flex timeArea">
 
- <view class=''>
-        <image class='change-pic' src='../../../images/room/change.png' bindtap="changeAudioType"></image>
-   
-      
-    </view>
-        <view class='weui-flex__item timeButton'>
-          
-          <block wx:if="{{isPlay == 0}}">
-            <view class='weui-flex speechButton' bindtap='startTime'>
+      <view class='weui-flex__item timeButton'>
+
+        <block wx:if="{{isPlay == 0}}">
+          <view class='weui-flex speechButton' bindtap='startTime'>
 
             <image class="audio-pic" src="../../../images/studyIndex/study.png"></image>
 
@@ -110,12 +67,13 @@
             <block wx:if="{{audioType == 1}}">演 讲</block>
             <block wx:if="{{audioType == 2}}">点 评</block>
 
-            </view>
-          </block>
-          <block wx:if="{{isPlay == 1}}">
-          
-            <view class='weui-flex speechButton' bindtap='stopTime'><image class="audio-pic" style='opacity:{{playNotice}}' src="../../../images/studyIndex/study.png"></image>完 成</view>
-          </block>
+          </view>
+        </block>
+        <block wx:if="{{isPlay == 1}}">
+
+          <view class='weui-flex speechButton' bindtap='stopTime'>
+            <image class="audio-pic" style='opacity:{{playNotice}}' src="../../../images/studyIndex/study.png"></image>完 成</view>
+        </block>
       </view>
 
       <view class="weui-flex__item timeCard" style='{{timeNoticeBackground}}'>
@@ -128,10 +86,10 @@
     <view class="weui-flex commentArea">
 
       <view class="weui-flex__item">
-        <image class='time-pic' src='../../../images/room/time.png' bindtap="showSpeechTime"></image>
+        <image class='time-pic' src='../../../images/room/change.png' bindtap="changeAudioType"></image>
       </view>
       <view class="weui-flex__item">
-        <textarea class='commentInput' name='comment' value='{{comment}}' fixed='true' cursor-spacing='50' adjust-position='false' bindfocus='toBottom' bindconfirm="saveComment" ></textarea>
+        <input class='commentInput' name='comment' value='{{comment}}' adjust-position='true' bindfocus='toBottom' bindconfirm="saveComment" confirm-type="发送"></input>
       </view>
       <view class="weui-flex__item ">
         <image class='time-pic' style="padding-left:10px" src='../../../images/userAudio/like.png' bindtap='likeAudio'></image>
@@ -139,9 +97,43 @@
     </view>
   </form>
 </view>
-<modal  hidden="{{!showSpeechTitle}}" title="请输入录音标题" confirm-text="保存" cancel-text="取消" bindcancel="cancelRecord" bindconfirm="saveRecord">
-<view class="modal">
-<input class='modalInput' placeholder="请输入标题" bindinput="setSpeechTitle" bindconfirm="saveRecord" value='{{speechTitle}}'> </input>
-</view>
-  
+<modal hidden="{{!showSpeechTitle}}" title="请输入录音标题" confirm-text="保存" cancel-text="取消" bindcancel="cancelRecord" bindconfirm="saveRecord">
+  <view class="modal">
+    <input class='modalInput' placeholder="请输入标题" bindinput="setSpeechTitle" bindconfirm="saveRecord" value='{{speechTitle}}'> </input>
+  </view>
+
 </modal>
+
+<!--聊天记录展示-->
+<template name="scoreDetailTemplate">
+  <block wx:if="{{isMine==0}}">
+    <view class="weui-flex dialogArea">
+      <view>
+        <view class="placeholder dialog-pic">
+          <image class="dialog-pic" src="{{user_info.avatarUrl}}"></image>
+        </view>
+      </view>
+      <view class="weui-flex__item ">
+        <view class=" userDialog tip left">
+          <rich-text>{{comment}}</rich-text>
+        </view>
+      </view>
+      <view class="placeholder dialog-pic"></view>
+    </view>
+  </block>
+  <block wx:if="{{isMine==1}}">
+    <view class="weui-flex dialogArea">
+      <view class="placeholder dialog-pic"></view>
+      <view class="weui-flex__item ">
+        <view class=" myDialog tip right">
+          <rich-text>{{comment}}</rich-text>
+        </view>
+      </view>
+      <view>
+        <view class="placeholder dialog-pic">
+          <image class="dialog-pic" src="{{user_info.avatarUrl}}"></image>
+        </view>
+      </view>
+    </view>
+  </block>
+</template>

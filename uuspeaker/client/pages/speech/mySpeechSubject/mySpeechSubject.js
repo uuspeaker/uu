@@ -45,7 +45,10 @@ Page({
       method: 'get',
       success(result) {
         wx.hideLoading()
-        if (result.data.data == '') return;
+        if (result.data.data == '') {
+          util.showSuccess('没有更多记录')
+          return;
+        }
         //util.showSuccess('请求成功完成')
         var resultData = []
         if (queryFlag == 0) {

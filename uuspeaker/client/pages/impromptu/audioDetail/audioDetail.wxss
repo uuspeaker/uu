@@ -141,3 +141,9 @@ position: relative;
   color: white;
   padding-left: 8px;
 }
+.commentButton{
+  color: #576b95;
+  font-size:15px;
+  font-weight: bold;
+  background-color: transparent;
+}

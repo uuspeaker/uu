@@ -48,7 +48,7 @@ Page({
     speechTitle: '',
     percent: 0,
 
-    showSpeechTime: 0,
+    showSpeechTime: 1,
     minute: '00',
     second: '00',
     isPlay: 0,
@@ -450,8 +450,6 @@ Page({
     })
     this.sendTextMsg(requestData.comment)
 
-
-    console.log(requestData)
     var that = this
     // qcloud.request({
     //   url: `${config.service.host}/weapp/impromptu.impromptuDialog`,
@@ -484,6 +482,7 @@ Page({
   sendTextMsg: function (comment) {
     this.sendDialog(1, comment)
     rtcroom.sendRoomTextMsg({ 'data': { 'msg': comment } })
+    this.toBottom()
   },
 
   updateDialog: function (comment) {
@@ -546,7 +545,7 @@ Page({
     var self = this;
     // 设置房间标题
     wx.setNavigationBarTitle({ title: self.data.roomname });
-    this.sendDialog(0, '温馨提示：点击头像可以静音，点击左下角图标可以计时，计时结束后会自动保存录音')
+    this.sendDialog(0, '温馨提示：点击头像可以静音，点击左下角图标可以切换【演讲】和【点评】模式，计时结束后可以保存录音')
   },
 
   // onRecvRoomTextMsg: function (ret) {

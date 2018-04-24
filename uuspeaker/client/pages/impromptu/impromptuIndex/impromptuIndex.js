@@ -200,13 +200,11 @@ Page({
     })
   },
 
-  onShow: function (options) {
-    if (queryUserType == 4) return
+  onLoad: function (options) {
     queryPageType = 0
     queryUserType = 1
     this.queryImpromptuRooms(queryUserType)
     this.pressView(0)
-
   },
 
   onPullDownRefresh: function () {

@@ -10,9 +10,10 @@ module.exports = {
   post: async ctx => {
     var userId = await userInfo.getOpenId(ctx)
     var taskId = ctx.request.body.taskId
-    var taskName = ctx.request.body.taskName
+    var audioName = ctx.request.body.audioName
+    var audioText = ctx.request.body.audioText
     var timeDuration = ctx.request.body.timeDuration
-    await userTaskService.saveSpecialTask(taskId, taskName, userId, timeDuration)
+    await userTaskService.saveSpecialTask(taskId, audioName, audioText,userId, timeDuration)
 
   },
 

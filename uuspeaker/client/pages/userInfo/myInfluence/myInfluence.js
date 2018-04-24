@@ -65,10 +65,11 @@ Page({
         nickName: options.nickName
       })
     }
+    this.queryInfluenceInfo()
   },
 
   onShow: function () {
-    this.queryInfluenceInfo()
+    
   },
 
 })

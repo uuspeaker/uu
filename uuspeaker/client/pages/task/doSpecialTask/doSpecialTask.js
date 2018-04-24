@@ -29,7 +29,8 @@ Page({
     pressStyle: 'box-shadow: 0 2px 10px rgba(0, 49, 114, .5);',
     isPlay: 0,
     playNotice: 1,
-    taskName: '',
+    audioName: '',
+    audioText: '',
     hotTask:[]
   },
 
@@ -64,9 +65,16 @@ Page({
     setTimeout(this.noticePlay, 600)
   },
 
-  taskNameInput: function(e){
+  audioNameInput: function(e){
+    console.log('audioNameInput',e)
     this.setData({
-      taskName: e.detail.value
+      audioName: e.detail.value
+    })
+  },
+
+  audioTextInput: function (e) {
+    this.setData({
+      audioText: e.detail.value
     })
   },
 
@@ -136,11 +144,11 @@ Page({
          that.setData({
            hotTask: result.data.data
          })
-         if (result.data.data != ''){
-           that.setData({
-             taskName: result.data.data[0].audio_name
-           })
-         }
+        //  if (result.data.data != ''){
+        //    that.setData({
+        //      audioName: result.data.data[0].audio_name
+        //    })
+        //  }
          
        },
        fail(error) {
@@ -153,12 +161,13 @@ Page({
 
   //完成任务
    saveAudioRecord: function (audioId) {
-    console.log('saveAudioRecord')
+     var requestData = { taskId: audioId, timeDuration: timeDuration, audioName: this.data.audioName, audioText: this.data.audioText }
+     console.log(requestData)
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/task.specialTask`,
       login: true,
-      data: { taskId: audioId, timeDuration: timeDuration, taskName: this.data.taskName },
+      data: { taskId: audioId, timeDuration: timeDuration, audioName: this.data.audioName, audioText: this.data.audioText },
       method: 'post',
       success(result) {
         util.showSuccess('录音保存成功')
@@ -170,13 +179,6 @@ Page({
         util.showModel('请求失败', error);
         console.log('request fail', error);
       }
-    })
-  },
-
-  setName: function(e){
-    var taskName = e.currentTarget.dataset.task_name
-    this.setData({
-      taskName: taskName
     })
   },
 
@@ -194,7 +196,7 @@ Page({
 
    onLoad:function(){
      this.initAudio()
-     this.queryHotTask()
+     //this.queryHotTask()
    },
 
    onReady: function(){

@@ -361,6 +361,10 @@ Page({
     this.setData({
       audioId: options.audioId
     })
+    queryPageType = 0
+    this.queryAudioDetail()
+    this.queryAudioComment()
+
     innerAudioContext.obeyMuteSwitch = false
     innerAudioContext.onPlay(() => {
       wx.hideLoading()
@@ -419,15 +423,22 @@ Page({
   },
 
   onShow: function () {
-    queryPageType = 0
-    this.queryAudioDetail()
-    this.queryAudioComment()
+    
   },
 
   onReady: function () {
     wx.showShareMenu({
       withShareTicket: true
     })
+  },
+
+  onShareAppMessage: function (res) {
+    wx.showShareMenu({
+      withShareTicket: true
+    })
+    return {
+      title: '请帮忙点评我的练习',
+    }
   },
 
   onReachBottom: function () {

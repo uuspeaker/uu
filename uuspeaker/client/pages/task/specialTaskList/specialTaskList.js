@@ -224,6 +224,10 @@ Page({
 
   onLoad: function (options) {
     console.log(options)
+    queryPageType = 0
+    queryUserType = 1
+    this.doQuerySpecialTask(queryUserType)
+    this.pressView(0)
     this.setData({
       roomId: options.roomId
     })
@@ -253,14 +257,6 @@ Page({
         currentLikeUser: []
       })
     })
-  },
-
-  onShow: function () {
-    if (queryUserType == 4)return
-    queryPageType = 0
-    queryUserType = 1
-    this.doQuerySpecialTask(queryUserType)
-    this.pressView(0)
   },
 
   onPullDownRefresh: function () {

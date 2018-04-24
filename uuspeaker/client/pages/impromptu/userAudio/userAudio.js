@@ -139,9 +139,11 @@ Page({
 
   onLoad: function (options) {
     console.log(options)
+   
     this.setData({
       roomId: options.roomId
     })
+    this.queryImpromptuAudios()
     innerAudioContext.obeyMuteSwitch = false
     innerAudioContext.onPlay(() => {
       wx.hideLoading();
@@ -172,7 +174,7 @@ Page({
   },
 
   onShow: function(){
-    this.queryImpromptuAudios()
+    
   },
 
   toAudioDetail: function(e){

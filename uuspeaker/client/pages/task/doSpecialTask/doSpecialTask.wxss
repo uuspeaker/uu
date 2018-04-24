@@ -86,5 +86,47 @@ border-radius: 6px;
   color: #576b95;
   font-size: 17px;
   font-weight: bold;
-  margin-left: 20px;
+  margin-left: 5px;
+  vertical-align: middle;
+  
+}
+.commentArea {
+  background-color: gainsboro;
+  padding: 8px;
+  border-radius: 10px 10px 0px 0px; 
+  width: 96%;
+  height: 70px;
+  align-items: center;
+}
+.commentInput {
+  background-color: white;
+  height: 50px;
+  width: 80%;
+  font-weight: bold;
+  text-align: center;
+  margin-left: 10%;
+  font-size: 24px;
+
+}
+.commentArea2 {
+  background-color: gainsboro;
+  padding: 8px;
+  border-radius: 0px 0px 0px 0px; 
+  width: 96%;
+  height: 420px;
+  align-items: center;
+  margin-top: 1px;
+}
+
+.commentInput2 {
+  background-color: white;
+  height: 380px;
+  width: 98%;
+  align-items: center;
+  margin-left: 1%;
+}
+.commentLimit{
+  position: fixed;
+  right:15px;
+  color: white;
 }

@@ -128,6 +128,11 @@ Page({
   },
 
   onLoad: function (options) {
+    queryPageType = 0
+    firstDataTime = ''
+    lastDataTime = ''
+    this.queryImpromptuAudios()
+    
     if (options.userId == undefined) {
 
     } else {
@@ -165,10 +170,7 @@ Page({
   },
 
   onShow: function(){
-     queryPageType = 0
-     firstDataTime = ''
-     lastDataTime = ''
-    this.queryImpromptuAudios()
+     
   },
 
 

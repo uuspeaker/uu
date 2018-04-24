@@ -86,6 +86,24 @@ Page({
     })
   },
 
+  toMyFavoriteAudio: function() {
+    wx.navigateTo({
+      url: '../../userInfo/myFavoriteAudio/myFavoriteAudio',
+    })
+  },
+
+  toMyCommentedAudio: function () {
+    wx.navigateTo({
+      url: '../../userInfo/myCommentedAudio/myCommentedAudio',
+    })
+  },
+
+  toMyStudyPatner: function () {
+    wx.navigateTo({
+      url: '../../userInfo/myStudyPatner/myStudyPatner',
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */

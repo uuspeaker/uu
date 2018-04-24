@@ -27,6 +27,7 @@
       <image class="like" src="../../../images/studyIndex/comment.png" /> {{audioData[0].comment_amount}}
       </view>
     </view>
+    <view>
     <block wx:if="{{audioData[0].isPlay == 0}}">
       <view class='right ' data-src='{{audioData[0].src}}' data-audio_id='{{audioData[0].audio_id}}' catchtap='playAudio'>
         <image class="audio" src="../../../images/userAudio/start.png" />
@@ -37,6 +38,14 @@
         <image class="audio" src="../../../images/userAudio/stop.png" />
       </view>
     </block>
+    <block wx:if='{{audioData[0].isMine == 1}}'>
+    <view class='link' style='margin-top:70px;' >
+    <button  class='commentButton' open-type='share'>请人点评</button>
+    </view>
+    </block>
+    </view>
+    
+    
   </view>
 </view>
 

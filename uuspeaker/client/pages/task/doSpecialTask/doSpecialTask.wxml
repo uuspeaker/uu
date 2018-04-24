@@ -1,33 +1,19 @@
-<view class="weui-cells weui-cells_after-title">
-  <view class="weui-cell weui-cell_input">
-    <view class="weui-cell__hd">
-      <view class="weui-label">任务名称</view>
+<form bindsubmit=''>
+    <view class="weui-flex commentArea">
+      <view class="weui-flex__item">
+        <input class='commentInput' name="audioName"  placeholder='请输入标题'  bindinput="audioNameInput" ></input>
+      </view>
     </view>
-    <view class="weui-cell__bd">
-      <input name="taskName" class="weui-input" placeholder='请选择任务或自定义任务名称' value="{{taskName}}" bindinput="taskNameInput" />
-    </view>
-  </view>
-</view>
+  </form>
 
-<view class="page__bd">
-  <view class="weui-cells__title">热门练习<text class="myRecord" bindtap='toSpecialTaskList'>我的录音</text></view>
-  <view class="weui-cells weui-cells_after-title">
-    <block wx:for="{{hotTask}}">
-              <template is="scoreDetailTemplate" data="{{...item}}" />
-            </block>
-  </view>
-</view>
 
-<template name="scoreDetailTemplate">
-<view class="weui-cell" bindtap='setName' data-task_name='{{audio_name}}'>
-  <view class="weui-cell__hd" data-task_type='1' style='width:220px'>
-      任务：{{audio_name}} 
+ <view class="weui-flex commentArea2">
+      <view class="weui-flex__item">
+        <textarea class=' commentInput2' name="audioText"  placeholder='请输入备注信息'  bindinput="audioTextInput" maxlength='2000'></textarea> 
+        
+        <view><text class="myRecord" bindtap='toSpecialTaskList'>察看录音</text><text  class="commentLimit">0/2000</text> </view>
+      </view>
     </view>
-    <view class="weui-cell__bd" data-task_type='1'>
-      热度：{{totalAmount}}
-    </view>
-    </view>
-</template>
 
 <view class="weui-flex ">
 
