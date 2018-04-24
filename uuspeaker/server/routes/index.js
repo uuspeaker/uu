@@ -138,7 +138,7 @@ router.put('/task.dailyTask', controllers.task.dailyTask.put)
 router.get('/task.specialTask', controllers.task.specialTask.get)
 router.post('/task.specialTask', controllers.task.specialTask.post)
 //所有自定义任务管理
-router.get('/task.allSpecialTask', controllers.task.allSpecialTask.get)
+//router.get('/task.allSpecialTask', controllers.task.allSpecialTask.get)
 //个人介绍管理
 router.get('/task.userIntroduction', controllers.task.userIntroduction.get)
 router.post('/task.userIntroduction', controllers.task.userIntroduction.post)
