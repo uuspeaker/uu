@@ -9,9 +9,9 @@
 
  <view class="weui-flex commentArea2">
       <view class="weui-flex__item">
-        <textarea class=' commentInput2' name="audioText"  placeholder='请输入备注信息'  bindinput="audioTextInput" maxlength='2000'></textarea> 
+        <textarea class=' commentInput2' name="audioText"  placeholder='温馨提示：保存录音后可以邀请其他小伙伴对自己的录音进行点评'  bindinput="audioTextInput" maxlength='2000'></textarea> 
         
-        <view><text class="myRecord" bindtap='toSpecialTaskList'>察看录音</text><text  class="commentLimit">0/2000</text> </view>
+        <view style='margin-top:5px;'><text class="myRecord" bindtap='toSpecialTaskList'>查看录音</text><text  class="commentLimit">0/2000</text> </view>
       </view>
     </view>
 
