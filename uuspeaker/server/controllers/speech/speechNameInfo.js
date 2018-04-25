@@ -34,7 +34,7 @@ module.exports = {
       speechNames = await speechService.getMySpeechNameList(userId, queryPageType, firstDatatTime, lastDataTime)
     }
     if (queryUserType == 2) {
-      speechNames = await speechService.getAllSpeechNameList(userId, queryPageType, firstDatatTime, lastDataTime)
+      speechNames = await speechService.getAllSpeechNameList(queryPageType, firstDatatTime, lastDataTime)
     }
     ctx.state.data = speechNames
   },

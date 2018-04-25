@@ -19,7 +19,8 @@ Page({
     viewStyle: [],
     speechNameList: [],
     userName: '',
-    tapTime: ''
+    tapTime: '',
+    isMine: 1
   },
 
   initViewStyle: function () {
@@ -107,6 +108,7 @@ Page({
         } else if (queryPageType == 2) {
           resultData = [].concat(that.data.speechNameList, result.data.data)
         }
+        
         that.setData({
           speechNameList: resultData
         })
@@ -121,7 +123,22 @@ Page({
     })
   },
 
-  deleteSpeechName: function(e){
+  deleteSpeechName: function (e) {
+    var that = this
+    wx.showModal({
+      title: '提示',
+      content: '确定要删除吗？',
+      success: function (sm) {
+        if (sm.confirm) {
+          that.doDeleteSpeechName(e)
+        } else if (sm.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+
+  doDeleteSpeechName: function(e){
     var speechName = e.currentTarget.dataset.speech_name
     var that = this
     qcloud.request({
@@ -151,14 +168,19 @@ Page({
   //保存第一条和最后一条数据的id,上拉和下拉的时候查询用
   refreshDataId: function () {
     var length = this.data.speechNameList.length
-    firstDataTime = this.data.speechNameList[0].start_date
-    lastDataTime = this.data.speechNameList[length - 1].end_date
+    firstDataTime = this.data.speechNameList[0].create_date
+    lastDataTime = this.data.speechNameList[length - 1].create_date
   },
 
   formatDate: function () {
     var data = this.data.speechNameList
     for (var i = 0; i < data.length; i++) {
       data[i].startDateStr = dateFormat.getTimeNotice(data[i].create_date)
+      if (queryUserType == 1) {
+        data[i].isMine =1
+      }else{
+        data[i].isMine = 0
+      }
     }
     console.log(data)
     this.setData({
@@ -172,6 +194,20 @@ Page({
       url: '../../userInfo/userInfoShow/userInfoShow?userId=' + e.currentTarget.dataset.user_id
     })
   },
+
+  toAddSpeechName: function () {
+    wx.navigateTo({
+      url: '../../speech/addSpeechName/addSpeechName'
+    })
+  },
+  
+  toEvaluateSpeechName: function () {
+    wx.navigateTo({
+      url: '../../speech/evaluateSpeechName/evaluateSpeechName'
+    })
+  },
+
+  
 
   onLoad: function (options) {
     queryPageType = 0

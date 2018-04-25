@@ -11,6 +11,8 @@ var firstCommentTime = ''
 var lastCommentTime = ''
 var tempFilePath = ''
 var timeDurationMin = 1
+var createDate = ''
+var tryTimes = 1
 
 const recorderManager = wx.getRecorderManager()
 
@@ -55,6 +57,7 @@ Page({
     timeNoticeBackground: '',
 
     audioType: 1, //演讲类型.1,演讲 2,点评
+    speechName:'',
 
     config: {           //cameraview对应的配置项
       //aspect: '3:4',     //设置画面比例，取值为'3:4'或者'9:16'
@@ -434,7 +437,7 @@ Page({
   toBottom: function () {
     wx.pageScrollTo({
       scrollTop: Number.MAX_SAFE_INTEGER,
-      duration: 300
+      duration: 0
     })
   },
 
@@ -656,7 +659,7 @@ Page({
   showSpeechTitleView: function () {
     this.setData({
       showSpeechTitle: true,
-      speechTitle: ''
+      //speechTitle: ''
     })
   },
 
@@ -853,6 +856,39 @@ Page({
       method: 'post',
       success(result) {
         console.log(result)
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
+  getSpeechName: function () {
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/speech.speechNameRandom`,
+      login: true,
+      data: {createDate:createDate},
+      method: 'get',
+      success(result) {
+        console.log('speechName', result.data.data)
+        if(result.data.data == ''){
+          if (tryTimes > 3){
+            util.showSuccess('没有找到题目')
+            return
+          }
+          createDate = ''
+          tryTimes++
+          that.getSpeechName()
+          
+        }else{
+          that.setData({
+            speechTitle: result.data.data.speech_name
+          })
+          createDate = result.data.data.create_date
+          that.sendTextMsg('演讲题目：' + result.data.data.speech_name)
+        }
       },
       fail(error) {
         util.showModel('请求失败', error);

@@ -200,6 +200,12 @@ Page({
     })
   },
 
+  openImpromptuRoom: function () {
+    wx.navigateTo({
+      url: '../../impromptu/impromptuRoom/impromptuRoom?operation=add'
+    })
+  },
+
   onLoad: function (options) {
     queryPageType = 0
     queryUserType = 1

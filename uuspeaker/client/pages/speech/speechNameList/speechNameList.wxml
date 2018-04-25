@@ -1,34 +1,54 @@
-
 <view class="weui-cell top">
-  <view class=" myReport"  style="{{viewStyle[0]}}" data-item='0' data-type='1' bindtap='queryRoomInfo'>我的</view>
-  <view class=" myReport"  style="{{viewStyle[1]}}" data-item='1' data-type='2' bindtap='queryRoomInfo'>全部</view>
+  <view class=" myReport" style="{{viewStyle[0]}}" data-item='0' data-type='1' bindtap='queryRoomInfo'>我的</view>
+  <view class=" myReport" style="{{viewStyle[1]}}" data-item='1' data-type='2' bindtap='queryRoomInfo'>全部</view>
 </view>
-<!--报名展示-->
 
-<template name="scoreDetailTemplate">
-  <view class="weui-cell" >
-    <view class="user-avatar" >
-      <image class="user-pic" src="{{user_info.avatarUrl}}" data-user_id='{{user_id}}' catchtap='toUserInfo'/>
-    </view>
-    <view class="weui-cell__bd" >
-    <view class="" >
-        <view  class='article' style='padding-left:15px'>
-        <text >题目：{{speech_name}}</text>
-        <text class='surveyStatus'>
-        <text style='color:grey;' wx:if="{{level == 0}}">无评分</text>
-        <text style='color:rgb(228, 140, 58);' wx:if="{{level != 0}}">{{level}}</text>
-        </text>
-        </view>
-      </view>
-      <view >
-        <view class=" date">  {{startDateStr}}<text class='delete' data-speech_name='{{speech_name}}' bindtap='deleteSpeechName'>删除</text><text class='right'>挑战指数   </text></view>
-      </view>
-    </view>
-  </view>
-</template>
-
-<view class="weui-cells weui-cells_after-title middle" >
+<view class="weui-cells weui-cells_after-title middle">
   <block wx:for="{{speechNameList}}" wx:key="item">
     <template is="scoreDetailTemplate" data="{{...item}}" />
   </block>
 </view>
+
+
+<view class="weui-flex bottom ">
+  <view class="weui-flex__item ">
+    <button class='' type='primary' bindtap='toAddSpeechName'>我要出题</button>
+    <button class='' bindtap='toEvaluateSpeechName'>我要打分</button>
+
+  </view>
+</view>
+
+
+
+<template name="scoreDetailTemplate">
+  <view class="weui-cell">
+    <view class="user-avatar">
+      <image class="user-pic" src="{{user_info.avatarUrl}}" data-user_id='{{user_id}}' catchtap='toUserInfo' />
+    </view>
+    <view class="weui-cell__bd">
+
+      <view class="">
+        <view class='article' style='padding-left:15px'>
+          <text>{{speech_name}}</text>
+
+          <text class='' style='color:grey;' wx:if="{{level == 0}}">无评分</text>
+          <div class='right'>
+            <image class="star-pic" src='../../../images/speechName/star{{level>=5?2:1}}.png' data-star='5' catchtap='evaluate' />
+            <image class="star-pic" src='../../../images/speechName/star{{level>=4?2:1}}.png' data-star='4' catchtap='evaluate' />
+            <image class="star-pic" src='../../../images/speechName/star{{level>=3?2:1}}.png' data-star='3' catchtap='evaluate' />
+            <image class="star-pic" src='../../../images/speechName/star{{level>=2?2:1}}.png' data-star='2' catchtap='evaluate' />
+            <image class="star-pic" src='../../../images/speechName/star{{level>=1?2:1}}.png' data-star='1' catchtap='evaluate' />
+          </div>
+        </view>
+      </view>
+      <view>
+        <view class=" date">  {{startDateStr}} <block wx:if='{{isMine == 1}}'><text class='delete' data-speech_name='{{speech_name}}' bindtap='deleteSpeechName'>删除</text></block>
+          <text class='right'>挑战指数   </text>
+          <block style='color:rgb(228, 140, 58);' wx:if="{{level != 0}}">
+
+          </block>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

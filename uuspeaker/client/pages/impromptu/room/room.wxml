@@ -19,33 +19,33 @@
     </view>
   </view>
 </view>
-  <!--参会人员头像展示-->
-  <view class="top">
+<!--参会人员头像展示-->
+<view class="top">
 
-    <view class="weui-flex speechArea">
-      <view class="weui-flex__item itemClass" bindtap="changeMute">
-        <image class="my-pic {{hostUserPicMode}}" src="{{userInfo.avatarUrl}}" />
+  <view class="weui-flex speechArea">
+    <view class="weui-flex__item itemClass" bindtap="changeMute">
+      <image class="my-pic {{hostUserPicMode}}" src="{{userInfo.avatarUrl}}" />
 
-      </view>
-      <block wx:for="{{members}}" wx:key="userID">
-        <view class="weui-flex__item itemClass">
-          <view>
-            <image class="user-pic {{item.speakNotice}} {{item.userPicMode}}" data-user_avatar="{{item.userAvatar}}" src="{{item.userAvatar}}" bindtap='setSilent'></image>
-          </view>
-          <view class='userName '>{{item.userName}}</view>
+    </view>
+    <block wx:for="{{members}}" wx:key="userID">
+      <view class="weui-flex__item itemClass">
+        <view>
+          <image class="user-pic {{item.speakNotice}} {{item.userPicMode}}" data-user_avatar="{{item.userAvatar}}" src="{{item.userAvatar}}" bindtap='setSilent'></image>
         </view>
-      </block>
-    </view>
-
+        <view class='userName '>{{item.userName}}</view>
+      </view>
+    </block>
   </view>
 
-  <view class='middle2'>
-    <view>
-      <block wx:for="{{dialog}}">
-        <template is="scoreDetailTemplate" data="{{...item}}" />
-      </block>
-    </view>
+</view>
+
+<view class='middle2'>
+  <view>
+    <block wx:for="{{dialog}}">
+      <template is="scoreDetailTemplate" data="{{...item}}" />
+    </block>
   </view>
+</view>
 
 
 <view class="bottom">
@@ -55,7 +55,11 @@
       <progress percent="{{percent}}" />
     </block>
     <view class="weui-flex timeArea">
-
+      <view class="middle-pic" bindtap="changeAudioType">
+        <view>
+          <image class='change-pic' src='../../../images/room/change.png'></image>
+        </view>
+      </view>
       <view class='weui-flex__item timeButton'>
 
         <block wx:if="{{isPlay == 0}}">
@@ -86,7 +90,7 @@
     <view class="weui-flex commentArea">
 
       <view class="weui-flex__item">
-        <image class='time-pic' src='../../../images/room/change.png' bindtap="changeAudioType"></image>
+        <text class='link' catchtap='getSpeechName'>出题</text>
       </view>
       <view class="weui-flex__item">
         <input class='commentInput' name='comment' value='{{comment}}' adjust-position='true' bindfocus='toBottom' bindconfirm="saveComment" confirm-type="发送"></input>

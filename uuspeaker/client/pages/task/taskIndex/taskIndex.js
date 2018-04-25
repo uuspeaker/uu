@@ -188,24 +188,12 @@ Page({
     })
   },
 
-  toAddSpeechName: function () {
-    wx.navigateTo({
-      url: '../../speech/addSpeechName/addSpeechName'
-    })
-  },
-
-  toEvaluateSpeechName: function () {
-    wx.navigateTo({
-      url: '../../speech/evaluateSpeechName/evaluateSpeechName'
-    })
-  },
-
   toSpeechNameList: function () {
     wx.navigateTo({
       url: '../../speech/speechNameList/speechNameList'
     })
   },
-
+  
   onLoad:function(){
     this.initUserInfo()
     this.queryLikeUserTotal()

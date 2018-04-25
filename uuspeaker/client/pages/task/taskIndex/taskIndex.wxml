@@ -56,6 +56,13 @@
         </view>
         <view class='content'>听录音</view>
       </view>
+
+       <view bindtap='toSpeechNameList'>
+        <view>
+          <image class="task-pic" src="../../../images/studyIndex/plan.png" />
+        </view>
+        <view class='content'>我要出题</view>
+      </view>
       
     </view>
   </view>
@@ -81,39 +88,6 @@
           <image class="task-pic" src="../../../images/studyIndex/plan.png" />
         </view>
         <view class='content'>预约练习</view>
-      </view>
-       
-    </view>
-  </view>
-</view>
-
-<view class="page__bd">
-  <view class="weui-cells__title"></view>
-  <view class="weui-cells weui-cells_after-title">
-    <view class="weui-cell" data-task_type='1'>
-      演讲题目
-    </view>
-    <view class="weui-cell" data-task_type='1' >
-      
-      <view bindtap='toAddSpeechName'>
-        <view>
-          <image class="task-pic" src="../../../images/studyIndex/plan.png" />
-        </view>
-        <view class='content'>我要出题</view>
-      </view>
-
-      <view bindtap='toEvaluateSpeechName'>
-        <view>
-          <image class="task-pic" src="../../../images/studyIndex/plan.png" />
-        </view>
-        <view class='content'>我要打分</view>
-      </view>
-
-      <view bindtap='toSpeechNameList'>
-        <view>
-          <image class="task-pic" src="../../../images/studyIndex/plan.png" />
-        </view>
-        <view class='content'>查询题目</view>
       </view>
        
     </view>

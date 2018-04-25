@@ -235,6 +235,26 @@ var calculateAverageLevel = async (speechName) => {
   })
 }
 
+var getRandomSpeechName = async (createDate) => {
+  var limit = 10
+  var offset = 0
+  if (createDate == ''){
+    createDate = new Date()
+  }else{
+    createDate = new Date(createDate)
+  }
+  var speechNames = await mysql("speech_name_info").where('create_date', '<', createDate).orderBy('create_date','desc').limit(limit).offset(offset)
+  if (speechNames.length == 0){
+    speechNames = await mysql("speech_name_info").where('create_date', '<', new Date()).orderBy('create_date', 'desc').limit(limit).offset(offset)
+  } 
+  if (speechNames.length == 0)return[]
+  var index = Math.floor(Math.random() * 10)
+  if (speechNames.length <= index){
+    index = speechNames.length - 1
+  }
+  return speechNames[index]
+}
+
 module.exports = { 
   saveSpeechSubject, 
   deleteSpeechSubject, 
@@ -247,4 +267,5 @@ module.exports = {
   getAllSpeechNameList,
   getUnevaluatedSpeechNames,
   evaluateSpeechName,
+  getRandomSpeechName,
    }

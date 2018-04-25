@@ -160,14 +160,21 @@ live-player {
   word-break: break-all;
 }
 .time-pic {
-  width: 38px;
+  width: 35px;
   height: 38px;
   padding-right: 15px;
 }
 .change-pic {
   width: 35px;
   height: 35px;
-  padding-right: 15px;
+  padding-right: 10px;
+  
+}
+.middle-pic{
+align-content: center;
+  align-items: center;
+  align-self: center;
+  vertical-align: middle;
 }
 .bottom{
   position: fixed;
@@ -183,13 +190,13 @@ live-player {
 .commentArea {
   background-color: gainsboro;
   padding: 8px;
-  border-radius: 10px 10px 0px 0px; 
+  border-radius: 0px 0px 0px 0px; 
   width: 96%
 }
 .commentInput {
   border-radius: 5px;
   background-color: white;
-  height: 40px;
+  height: 35px;
   width: 250px;
 }
 
@@ -247,9 +254,10 @@ startSpeech{
   text-align: center;
 }
 .link {
-  font-size: 17px;
+  font-size:18px;
   font-weight: bold;
   color: #576b95;
+  
 }
 .modal{
 margin-top: 20px;
