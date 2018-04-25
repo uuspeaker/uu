@@ -134,4 +134,117 @@ var getMySpeechSubject = async (userId, queryFlag, firstReportTime, lastReportTi
   }
   return speechSubject
 }
-module.exports = { saveSpeechSubject, deleteSpeechSubject, getMySpeechSubject, getAllSpeechSubject }
+
+//保存演讲题目
+var saveSpeechName = async (userId, speechName) => {
+  await mysql('speech_name_info').insert({
+    user_id: userId,
+    speech_name: speechName
+  })
+}
+
+//修改演讲题目
+var deleteSpeechName = async (speechName) => {
+  await mysql('speech_name_info').where({
+    speech_name: speechName
+  }).del()
+}
+
+//保存演讲题目
+var querySpeechByName = async (speechName) => {
+  var data = await mysql('speech_name_info').where({ speech_name: speechName})
+  return data
+}
+
+//查询我的演讲题目
+var getMySpeechNameList = async (userId, queryPageType, firstDataTime, lastDataTime) => {
+  var limit = 10
+  var offset = 0
+  //获取用户复盘明细
+  var speechNameList = []
+  //查询最近10条信息
+  if (queryPageType == 0) {
+    speechNameList = await mysql("speech_name_info").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'speech_name_info.user_id').select('speech_name_info.*', 'cSessionInfo.user_info').orderBy('speech_name_info.create_date', 'desc').where({ 'speech_name_info.user_id': userId }).limit(limit).offset(offset)
+  }
+  //查询前10条信息,此种方式会导致10(limit)条之外的数据无法查询到,因影响不大,使用此种简单但不完备的方式
+  if (queryPageType == 1) {
+    speechNameList = await mysql("speech_name_info").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'speech_name_info.user_id').select('speech_name_info.*', 'cSessionInfo.user_info').orderBy('speech_name_info.create_date', 'desc').where({ 'speech_name_info.user_id': userId }).andWhere('speech_name_info.create_date', '>', new Date(firstDataTime)).limit(limit).offset(offset)
+  }
+  //查询后10条信息
+  if (queryPageType == 2) {
+    speechNameList = await mysql("speech_name_info").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'speech_name_info.user_id').select('speech_name_info.*', 'cSessionInfo.user_info').orderBy('speech_name_info.create_date', 'desc').where({ 'speech_name_info.user_id': userId }).andWhere('speech_name_info.create_date', '<', new Date(lastDataTime)).limit(limit).offset(offset)
+  }
+  for (var j = 0; j < speechNameList.length; j++) {
+    speechNameList[j].user_info = userInfoService.getTailoredUserInfo(speechNameList[j].user_info)
+  }
+  return speechNameList
+}
+//查询全部演讲题目
+var getAllSpeechNameList = async ( queryPageType, firstDataTime, lastDataTime) => {
+  var limit = 10
+  var offset = 0
+  var speechNameList = []
+  //查询最近10条信息
+  if (queryPageType == 0) {
+    speechNameList = await mysql("speech_name_info").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'speech_name_info.user_id').select('speech_name_info.*', 'cSessionInfo.user_info').orderBy('speech_name_info.create_date', 'desc').limit(limit).offset(offset)
+  }
+  //查询前10条信息,
+  if (queryPageType == 1) {
+    speechNameList = await mysql("speech_name_info").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'speech_name_info.user_id').select('speech_name_info.*', 'cSessionInfo.user_info').orderBy('speech_name_info.create_date', 'desc').where('speech_name_info.create_date', '>', new Date(firstDataTime)).limit(limit).offset(offset)
+  }
+  //查询后10条信息
+  if (queryPageType == 2) {
+    speechNameList = await mysql("speech_name_info").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'speech_name_info.user_id').select('speech_name_info.*', 'cSessionInfo.user_info').orderBy('speech_name_info.create_date', 'desc').where('speech_name_info.create_date', '<', new Date(lastDataTime)).limit(limit).offset(offset)
+  }
+  for (var j = 0; j < speechNameList.length; j++) {
+    speechNameList[j].user_info = userInfoService.getTailoredUserInfo(speechNameList[j].user_info)
+  }
+  return speechNameList
+}
+//查询我的未点评的演讲题目
+var getUnevaluatedSpeechNames = async (userId) => {
+  var limit = 10
+  var offset = 0
+  var speechNameList = speechNameList = await mysql("speech_name_info").whereNotExists(mysql("speech_name_evaluate").whereRaw('speech_name_info.speech_name = speech_name_evaluate.speech_name').andWhere({'speech_name_evaluate.user_id':userId})).limit(limit).offset(offset)
+  return speechNameList
+}
+
+var evaluateSpeechName = async (userId,speechName,level) => {
+  await mysql("speech_name_evaluate").where({
+    speech_name: speechName,
+    user_id: userId
+  }).del()
+  await mysql("speech_name_evaluate").insert({
+    speech_name: speechName,
+    user_id: userId,
+    level: level
+  })
+
+  calculateAverageLevel(speechName)
+}
+
+var calculateAverageLevel = async (speechName) => {
+  var averageLevel = await mysql("speech_name_evaluate").avg('level as level').where({
+    speech_name: speechName
+  })
+  var level = Math.floor(averageLevel[0].level + 0.5)
+  await mysql("speech_name_info").update({
+    level: level
+  }).where({
+    speech_name: speechName
+  })
+}
+
+module.exports = { 
+  saveSpeechSubject, 
+  deleteSpeechSubject, 
+  getMySpeechSubject, 
+  getAllSpeechSubject,
+  saveSpeechName,
+  deleteSpeechName,
+  querySpeechByName,
+  getMySpeechNameList, 
+  getAllSpeechNameList,
+  getUnevaluatedSpeechNames,
+  evaluateSpeechName,
+   }

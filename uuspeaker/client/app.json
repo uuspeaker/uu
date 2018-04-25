@@ -9,6 +9,9 @@
     "pages/speech/mySpeechSubject/mySpeechSubject",
     "pages/speech/allSpeechSubject/allSpeechSubject",
     "pages/speech/addSpeechSubject/addSpeechSubject",
+    "pages/speech/addSpeechName/addSpeechName",
+    "pages/speech/speechNameList/speechNameList",
+    "pages/speech/evaluateSpeechName/evaluateSpeechName",
 
     "pages/userInfo/allTargetDetail/allTargetDetail",
     "pages/userInfo/myTargetDetail/myTargetDetail",
@@ -16,8 +19,8 @@
     "pages/userInfo/myIntroduction/myIntroduction",
     "pages/userInfo/userInfoShow/userInfoShow",
     "pages/userInfo/likeUserList/likeUserList",
-    "pages/userInfo/myInfluence/myInfluence",   
-    "pages/userInfo/newCommentList/newCommentList", 
+    "pages/userInfo/myInfluence/myInfluence",
+    "pages/userInfo/newCommentList/newCommentList",
 
     "pages/impromptu/impromptuIndex/impromptuIndex",
     "pages/impromptu/cameraview/cameraview",
@@ -36,7 +39,6 @@
 
     "pages/article/allArticle/allArticle",
     "pages/article/writeArticle/writeArticle",
-
     "pages/score/score/Manage/scoreManage",
     "pages/score/scoreDetail/scoreDetail",
     "pages/score/scoreRank/scoreRank",
@@ -49,6 +51,7 @@
     "pages/study/studyManage/studyManage",
     "pages/study/studyIndex/studyIndex",
     "pages/study/studyShow/studyShow",
+
     "pages/leader/leaderRank/leaderRank",
     "pages/leader/leaderPower/leaderPower",
     "pages/leader/leaderDetail/leaderDetail",

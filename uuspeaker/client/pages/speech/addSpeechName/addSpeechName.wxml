@@ -1,0 +1,18 @@
+<form bindsubmit=''>
+
+  <view class="weui-flex commentArea">
+    <view class="weui-flex__item">
+      <input class='commentInput' value="{{speechName}}" placeholder='请输入演讲题目' bindconfirm="saveSpeechName"></input>
+    </view>
+  </view>
+</form>
+<block wx:if="{{pastSpeechName != ''}}">
+<view class='pastSpeechName'>上个题目：{{pastSpeechName}}</view>
+</block>
+<view class='bottom'>
+<button class='weui-btn' type='primary'  bindtap='toSpeechNameList'>查看题目</button>
+</view>
+
+
+
+

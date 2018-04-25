@@ -175,6 +175,14 @@ router.get('/speech.allSpeechSubject', controllers.speech.allSpeechSubject.get)
 router.get('/speech.mySpeechSubject', controllers.speech.mySpeechSubject.get)
 router.post('/speech.mySpeechSubject', controllers.speech.mySpeechSubject.post)
 router.delete('/speech.mySpeechSubject', controllers.speech.mySpeechSubject.del)
+//演讲题目管理
+router.get('/speech.speechNameInfo', controllers.speech.speechNameInfo.get)
+router.post('/speech.speechNameInfo', controllers.speech.speechNameInfo.post)
+router.delete('/speech.speechNameInfo', controllers.speech.speechNameInfo.del)
+//演讲题目管理
+router.get('/speech.speechNameEvaluate', controllers.speech.speechNameEvaluate.get)
+router.post('/speech.speechNameEvaluate', controllers.speech.speechNameEvaluate.post)
+router.delete('/speech.speechNameEvaluate', controllers.speech.speechNameEvaluate.del)
 
 
 

@@ -1,0 +1,35 @@
+<form bindsubmit=''>
+
+  <view class="weui-flex commentArea">
+    <view class="weui-flex__item">
+      <input class='commentInput' value="{{speechNames[index].speech_name}}" placeholder='' bindconfirm="saveSpeechName" disabled='true'></input>
+    </view>
+  </view>
+</form>
+
+
+<view class='tipTitle'>如果给我这个题目，让我立刻做一个2分钟的即兴演讲，我觉得这个题目</view>
+<view class='tip'>1. 很简单，肯定可以讲得很棒</view>
+<view class='tip'>2. 可以讲，在我的掌握之内</view>
+<view class='tip'>3. 有挑战，但讲完两分钟还是没问题的</view>
+<view class='tip'>4. 比较难，觉得只能尝试着讲</view>
+<view class='tip'>5. 太难了，完全不知道怎么讲</view>
+
+<view class='pastSpeechName'>我觉得这个题目的挑战指数是：</view>
+<view class='center'>
+<image class="star-pic" src='../../../images/speechName/star{{evaluateLevel>=1?2:1}}.png'  data-star='1' catchtap='evaluate'/>
+<image class="star-pic" src='../../../images/speechName/star{{evaluateLevel>=2?2:1}}.png'  data-star='2' catchtap='evaluate'/>
+<image class="star-pic" src='../../../images/speechName/star{{evaluateLevel>=3?2:1}}.png'  data-star='3' catchtap='evaluate'/>
+<image class="star-pic" src='../../../images/speechName/star{{evaluateLevel>=4?2:1}}.png'  data-star='4' catchtap='evaluate'/>
+<image class="star-pic" src='../../../images/speechName/star{{evaluateLevel>=5?2:1}}.png'  data-star='5' catchtap='evaluate'/>
+<view class='tip' wx:if='{{evaluateLevel==1}}'>很简单，肯定可以讲得很好</view>
+<view class='tip' wx:if='{{evaluateLevel==2}}'>可以讲，在我的掌握之内</view>
+<view class='tip' wx:if='{{evaluateLevel==3}}'>有挑战，但讲完两分钟还是没问题的</view>
+<view class='tip' wx:if='{{evaluateLevel==4}}'>比较难，觉得只能尝试着讲</view>
+<view class='tip' wx:if='{{evaluateLevel==5}}'>太难了，完全不知道怎么讲</view>
+</view>
+<block wx:if='{{speechNames.length != 0}}'>
+<view class='bottom'>
+  <button class='weui-btn' type='primary' bindtap='evaluateSpeechName'>提交</button>
+</view>
+</block>

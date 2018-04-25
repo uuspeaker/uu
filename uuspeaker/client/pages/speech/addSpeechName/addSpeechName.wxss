@@ -1,0 +1,30 @@
+
+.commentArea {
+  margin-top:100px;
+  background-color: gainsboro;
+  padding: 8px;
+  border-radius: 10px 10px 10px 10px; 
+  width: 96%;
+  height: 70px;
+  align-items: center;
+  
+}
+.commentInput {
+  background-color: white;
+  height: 50px;
+  width: 90%;
+  font-weight: bold;
+  text-align: center;
+  margin-left: 5%;
+  font-size: 24px;
+
+}
+.pastSpeechName{
+  
+  text-align: center;
+  color: grey;
+  margin-top:20px ;
+  font-weight: bold;
+  font-size: 24px;
+}
+
