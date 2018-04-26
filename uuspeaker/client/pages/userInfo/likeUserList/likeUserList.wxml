@@ -38,11 +38,12 @@
 </template>
 
 
-<view class="weui-cells weui-cells_after-title middle2" >
+<view class="weui-cells weui-cells_after-title middle" >
   <block wx:for="{{likeUsers}}" wx:key="item">
     <template is="scoreDetailTemplate" data="{{...item}}" />
   </block>
 </view>
+<view style='height:5px'></view>
 <view class="weui-flex bottom">
     <view class="weui-flex__item">
       <button class="weui-btn"  bindtap='toFirstPage'>返回首页</button>

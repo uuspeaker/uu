@@ -119,6 +119,7 @@ Page({
             dialog: self.data.dialog,
           });
           self.formatDate()
+          self.toBottom()
         }
         break
       }

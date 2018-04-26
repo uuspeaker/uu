@@ -24,7 +24,8 @@ var getLastestRooms = async (queryPageType, firstDataTime, lastDataTime) => {
       now.setFullYear(9999)
       firstDataTime = now.toString()
     }
-    rooms = await mysql("impromptu_room").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_room.user_id').select('impromptu_room.*', 'cSessionInfo.user_info').where('impromptu_room.start_date', '<', new Date(firstDataTime)).orderBy('impromptu_room.start_date', 'asc').limit(limit).offset(offset)
+    rooms = await mysql("impromptu_room").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_room.user_id').select('impromptu_room.*', 'cSessionInfo.user_info').where('impromptu_room.start_date', '<', new Date(firstDataTime)).orderBy('impromptu_room.start_date', 'desc').limit(limit).offset(offset)
+    rooms.reverse()
   }
   if (queryPageType == 2) {
     rooms = await mysql("impromptu_room").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_room.user_id').select('impromptu_room.*', 'cSessionInfo.user_info').where('impromptu_room.start_date', '>', new Date(lastDataTime)).orderBy('impromptu_room.start_date', 'asc').limit(limit).offset(offset)
@@ -58,7 +59,8 @@ var getMyRooms = async (userId, queryPageType, firstDataTime, lastDataTime) => {
       now.setFullYear(9999)
       firstDataTime = now.toString()
     }
-    rooms = await mysql("impromptu_room").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_room.user_id').select('impromptu_room.*', 'cSessionInfo.user_info').where('impromptu_room.start_date', '<', new Date(firstDataTime)).andWhere({ 'impromptu_room.user_id': userId }).orderBy('impromptu_room.start_date', 'asc').limit(limit).offset(offset)
+    rooms = await mysql("impromptu_room").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_room.user_id').select('impromptu_room.*', 'cSessionInfo.user_info').where('impromptu_room.start_date', '<', new Date(firstDataTime)).andWhere({ 'impromptu_room.user_id': userId }).orderBy('impromptu_room.start_date', 'desc').limit(limit).offset(offset)
+    rooms.reverse()
   }
   if (queryPageType == 2) {
     rooms = await mysql("impromptu_room").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_room.user_id').select('impromptu_room.*', 'cSessionInfo.user_info').where('impromptu_room.start_date', '>', new Date(lastDataTime)).andWhere({ 'impromptu_room.user_id': userId }).orderBy('impromptu_room.start_date', 'asc').limit(limit).offset(offset)
@@ -92,7 +94,8 @@ var getMyJoinRooms = async (userId, queryPageType, firstDataTime, lastDataTime) 
       now.setFullYear(9999)
       firstDataTime = now.toString()
     }
-    rooms = await mysql("impromptu_room").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_room.user_id').innerJoin('meeting_apply', 'meeting_apply.room_id', 'impromptu_room.room_id').select('impromptu_room.*', 'cSessionInfo.user_info').where('meeting_apply.user_id', '=', userId).where('impromptu_room.start_date', '<', new Date(firstDataTime)).orderBy('impromptu_room.start_date', 'asc').limit(limit).offset(offset)
+    rooms = await mysql("impromptu_room").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_room.user_id').innerJoin('meeting_apply', 'meeting_apply.room_id', 'impromptu_room.room_id').select('impromptu_room.*', 'cSessionInfo.user_info').where('meeting_apply.user_id', '=', userId).where('impromptu_room.start_date', '<', new Date(firstDataTime)).orderBy('impromptu_room.start_date', 'desc').limit(limit).offset(offset)
+    rooms.reverse()
   }
   if (queryPageType == 2) {
     rooms = await mysql("impromptu_room").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_room.user_id').innerJoin('meeting_apply', 'meeting_apply.room_id', 'impromptu_room.room_id').select('impromptu_room.*', 'cSessionInfo.user_info').where('meeting_apply.user_id', '=', userId).where('impromptu_room.start_date', '>', new Date(lastDataTime)).orderBy('impromptu_room.start_date', 'asc').limit(limit).offset(offset)
@@ -119,8 +122,10 @@ var getRoomsOfLikeUser = async (userId, queryPageType, firstDataTime, lastDataTi
       now.setFullYear(9999)
       firstDataTime = now.toString()
     }
-    rooms = await mysql("impromptu_room").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_room.user_id').innerJoin('user_like', 'user_like.like_user_id', 'impromptu_room.user_id').select('impromptu_room.*', 'cSessionInfo.user_info').where('user_like.user_id', '=', userId).andWhere('impromptu_room.start_date', '<', new Date(firstDataTime)).orderBy('impromptu_room.start_date', 'asc').limit(limit).offset(offset)
+    rooms = await mysql("impromptu_room").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_room.user_id').innerJoin('user_like', 'user_like.like_user_id', 'impromptu_room.user_id').select('impromptu_room.*', 'cSessionInfo.user_info').where('user_like.user_id', '=', userId).andWhere('impromptu_room.start_date', '<', new Date(firstDataTime)).orderBy('impromptu_room.start_date', 'desc').limit(limit).offset(offset)
+    rooms.reverse()
   }
+  
   if (queryPageType == 2) {
     rooms = await mysql("impromptu_room").innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_room.user_id').innerJoin('user_like', 'user_like.like_user_id', 'impromptu_room.user_id').select('impromptu_room.*', 'cSessionInfo.user_info').where('user_like.user_id', '=', userId).andWhere('impromptu_room.start_date', '>', new Date(lastDataTime)).orderBy('impromptu_room.start_date', 'asc').limit(limit).offset(offset)
   }

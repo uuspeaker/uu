@@ -9,7 +9,7 @@
   </block>
 </view>
 
-
+<view style='height:45px'></view>
 <view class="weui-flex bottom ">
   <view class="weui-flex__item ">
     <button class='' type='primary' bindtap='toAddSpeechName'>我要出题</button>
@@ -31,7 +31,7 @@
         <view class='article' style='padding-left:15px'>
           <text>{{speech_name}}</text>
 
-          <text class='' style='color:grey;' wx:if="{{level == 0}}">无评分</text>
+          
           <div class='right'>
             <image class="star-pic" src='../../../images/speechName/star{{level>=5?2:1}}.png' data-star='5' catchtap='evaluate' />
             <image class="star-pic" src='../../../images/speechName/star{{level>=4?2:1}}.png' data-star='4' catchtap='evaluate' />

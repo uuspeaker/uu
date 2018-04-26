@@ -6,6 +6,10 @@ var standByList = []
 var matchedList = []
 
 var startMatch = async (userId) => {
+  var standByListLegnth = standByList.length
+  for (var i = 0; i < standByListLegnth; i++) {
+    if (standByList[i].user_id == userId)return
+  }
   standByList.unshift({ 'userId': userId,'startDate': new Date()})
 }
 

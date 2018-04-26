@@ -1,4 +1,8 @@
 <view class='wait'>{{waitSeconds}}</view>
+<block wx:if='{{waitSeconds != ""}}'>
+
+</block>
 <block wx:if='{{waitSeconds == ""}}'>
+
 <button class='bottom' type='primary' catchtap='startMatch'>开始匹配</button>
 </block>

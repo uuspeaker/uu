@@ -147,15 +147,15 @@ var getAllSpecialTask = async (queryUserType, queryPageType, firstDataTime, last
   var taskData = []
 
   if (queryPageType == 0) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where({ audio_type: 1 }).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where({ audio_type: 1 }).andWhere('time_duration','>=',60).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
   }
 
   if (queryPageType == 1) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where('impromptu_audio.create_date', '>', new Date(firstDataTime)).andWhere({ audio_type: 1 }).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where('impromptu_audio.create_date', '>', new Date(firstDataTime)).andWhere({ audio_type: 1 }).andWhere('time_duration', '>=', 60).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
   }
 
   if (queryPageType == 2) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where('impromptu_audio.create_date', '<', new Date(lastDataTime)).andWhere({ audio_type: 1 }).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where('impromptu_audio.create_date', '<', new Date(lastDataTime)).andWhere({ audio_type: 1 }).andWhere('time_duration', '>=', 60).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
   }
 
   for (var i = 0; i < taskData.length; i++) {
@@ -179,11 +179,11 @@ var getTaskOfLikeUser = async (userId,queryUserType, queryPageType, firstDataTim
   var taskData = []
 
   if (queryPageType == 0) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').innerJoin('user_like', 'user_like.like_user_id', 'impromptu_audio.user_id').where({ 'user_like.user_id': userId, audio_type: 1 }).orderBy(orderBy, 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').innerJoin('user_like', 'user_like.like_user_id', 'impromptu_audio.user_id').where({ 'user_like.user_id': userId, audio_type: 1 }).andWhere('time_duration', '>=', 60).orderBy(orderBy, 'desc').limit(limit).offset(offset)
   }
 
   if (queryPageType == 1) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').innerJoin('user_like', 'user_like.like_user_id', 'impromptu_audio.user_id').where({ 'user_like.user_id': userId, audio_type: 1}).andWhere('impromptu_audio.create_date', '>', new Date(firstDataTime)).orderBy(orderBy, 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').innerJoin('user_like', 'user_like.like_user_id', 'impromptu_audio.user_id').where({ 'user_like.user_id': userId, audio_type: 1 }).andWhere('impromptu_audio.create_date', '>', new Date(firstDataTime)).andWhere('time_duration', '>=', 60).orderBy(orderBy, 'desc').limit(limit).offset(offset)
   }
 
   if (queryPageType == 2) {

@@ -12,6 +12,7 @@
   </block>
 </view>
 
+<view style='height:35px'></view>
 <view class="weui-flex bottom ">
   <view class="weui-flex__item ">
     <button class='weui-button' type='primary' bindtap='openImpromptuRoom'>创建房间</button>
