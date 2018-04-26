@@ -6,6 +6,13 @@ margin-top: 0px;
 margin-bottom: 10px;
 background:#F6F6F6;
 }
+.card-pic{
+  margin-right: 5px;
+  vertical-align: 
+  middle;width:25px; 
+  height: 25px;
+  margin-left: 5px;
+}
 .link {
   font-size: 17px;
   font-weight: bold;

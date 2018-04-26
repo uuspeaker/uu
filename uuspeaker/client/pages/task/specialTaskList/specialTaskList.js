@@ -302,4 +302,8 @@ Page({
     })
   },
 
+  onReady: function () {
+    wx.setNavigationBarTitle({ title: '听录音' });
+  },
+
 })

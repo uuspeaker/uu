@@ -1,16 +1,16 @@
 <!--积分汇总-->
 <view class="weui-cells weui-cells_after-title">
-  <view class="weui-cell">
-    <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+  <view class="weui-cell" >
+    <view class="weui-cell__hd" style="position: relative;margin-right: 10px;" catchtap='toMyIntroduction'>
       <image class="user-pic" src="{{userInfo.avatarUrl}}" />
     </view>
-    <view class="weui-cell__bd">
-      <view class='link' bindtap='toUserIntroduction'>{{userInfo.nickName}}</view>
+    <view class="weui-cell__bd" catchtap='toMyIntroduction'>
+      <view class='link' >{{userInfo.nickName}}<image class='card-pic' src="../../../images/studyManage/introduction.png" ></image></view>
       <view style="font-size: 13px;color: #888888;padding-top:5px">{{rank}}
       </view>
     </view>
     <view class="weui-cell__ft totoalScore">
-      {{todayStudyDuration}} 分钟
+      {{todayStudyScore}} 分
 
     </view>
   </view>
@@ -18,17 +18,21 @@
   <view class='line'></view>
 
   <view>
-    <view class="weui-flex" style='padding-left:25px;padding-bottom:5px'>
-      <view class="weui-flex__item">
-        <view class='small-grey'>总共学习</view>
-        <view class="weui-flex" style='font-size:15px'>{{totalStudyDurationstr}}</view>
+    <view class="weui-flex" catchtap='toStudyRank' style='padding-left:25px;padding-bottom:5px' >
+      <view class="weui-flex__item" data-type='1' catchtap='toScoreRank'>
+        <view class='small-grey'>学习力</view>
+        <view class="weui-flex" style='font-size:15px'>{{totalStudyScore}} 分</view>
       </view>
-     <view class="weui-flex__item" data-type='1' bindtap='toLikeUserList'>
-        <view class='small-grey'>我关注的</view>
+       <view class="weui-flex__item" data-type='2' catchtap='toScoreRank'>
+        <view class='small-grey'>影响力</view>
+        <view class="weui-flex" style='font-size:15px'>{{totalInfluenceScore}} 分</view>
+      </view>
+     <view class="weui-flex__item" data-type='1' catchtap='toLikeUserList'>
+        <view class='small-grey'>关注</view>
         <view class="weui-flex" style='font-size:15px' >{{likeUserTotal}} 人</view>
       </view>
-      <view class="weui-flex__item" data-type='2' bindtap='toLikeUserList'>
-        <view class='small-grey'>我的粉丝</view>
+      <view class="weui-flex__item" data-type='2' catchtap='toLikeUserList'>
+        <view class='small-grey'>粉丝</view>
         <view class="weui-flex" style='font-size:15px' >{{myFansTotal}} 人</view>
       </view>
     </view>

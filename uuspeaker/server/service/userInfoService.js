@@ -253,6 +253,32 @@ var getTodayStudyDuration = async (userId) => {
   }
 }
 
+//查询用户学习排名
+var getStudyRank = async (userId) => {
+  var limit = 50
+  var offset =0
+  var data = await mysql('user_like').innerJoin('user_study_duration', 'user_like.like_user_id', 'user_study_duration.user_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_like.like_user_id').where({
+    'user_like.user_id': userId
+  }).select('cSessionInfo.user_info', mysql.raw('sum(study_duration) as totalDuration')).groupBy('cSessionInfo.user_info').orderBy('totalDuration', 'desc').limit(limit).offset(offset)
+  for (var i = 0; i < data.length; i++) {
+    data[i].user_info = getTailoredUserInfo(data[i].user_info)
+  }
+  return data
+}
+
+//查询用户影响力排名
+var getInfluenceRank = async (userId) => {
+  var limit = 50
+  var offset =0
+  var data = await mysql('user_like').innerJoin('impromptu_room', 'user_like.like_user_id', 'impromptu_room.user_id').innerJoin('impromptu_audio', 'impromptu_room.room_id', 'impromptu_audio.room_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_like.like_user_id').where({
+    'user_like.user_id': userId
+  }).select('cSessionInfo.user_info', mysql.raw('sum(impromptu_audio.time_duration) as totalDuration')).groupBy('cSessionInfo.user_info').orderBy('totalDuration', 'desc').limit(limit).offset(offset)
+  for (var i = 0; i < data.length; i++) {
+    data[i].user_info = getTailoredUserInfo(data[i].user_info)
+  }
+  return data
+}
+
 module.exports = { 
   getOpenId, 
   getTailoredUserInfo, 
@@ -276,5 +302,7 @@ module.exports = {
   getTotalStudyDuration,
   getTodayStudyDuration,
   getMyInfluenceList,
-  getMyInfluenceTotal
+  getMyInfluenceTotal,
+  getStudyRank,
+  getInfluenceRank
   }

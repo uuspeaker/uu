@@ -50,7 +50,9 @@ router.post('/checkin', controllers.checkin.post)
 router.post('/studyDuration', controllers.study.studyDuration.post)
 router.get('/studyDuration', controllers.study.studyDuration.get)
 //查询学习时长
-router.get('/userInfo.studyDuration', controllers.userInfo.studyDuration.get)
+router.get('/userInfo.userScore', controllers.userInfo.userScore.get)
+//查询学习时长
+router.get('/userInfo.userRank', controllers.userInfo.userRank.get)
 //当天打卡展示
 router.get('/studyManage', controllers.study.studyManage)
 //学习积分详情

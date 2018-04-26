@@ -15,9 +15,10 @@ Page({
     newCommentAmount:0,
 
     userInfo: {},
-    totalStudyDuration: 0,
+    totalStudyScore: 0,
     todayStudyDuration: 0,
-    totalStudyDurationstr:0,
+    todayStudyScore:0,
+    totalInfluenceScore:0,
 
     myFansTotal:'',
     likeUserTotal: '',
@@ -27,7 +28,7 @@ Page({
 
   },
 
-  //查询用户参会数据
+  //查询学习力积分
   queryUserScore: function (e) {
     //util.showBusy('请求中...')
     wx.showLoading({
@@ -35,16 +36,17 @@ Page({
     })
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/userInfo.studyDuration`,
+      url: `${config.service.host}/weapp/userInfo.userScore`,
       login: true,
       method: 'get',
       success(result) {
         wx.hideLoading()
         that.setData({
           totalStudyDuration: result.data.data.totalStudyDuration,
-          todayStudyDuration: Math.floor((result.data.data.todayStudyDuration + 59) / 60),
+          todayStudyScore: Math.floor((result.data.data.todayStudyDuration + 59) / 60),
           rank: userInfo.getRank(result.data.data.totalStudyDuration),
-          totalStudyDurationstr: dateFormat.getFormatDuration2(result.data.data.totalStudyDuration)
+          totalStudyScore: Math.floor((result.data.data.totalStudyDuration + 59) / 60),
+          totalInfluenceScore: Math.floor((result.data.data.totalInfluenceDuration + 59) / 60),
         })
       },
       fail(error) {
@@ -152,9 +154,15 @@ Page({
     })
   },
 
-  toUserIntroduction: function () {
+  toMyIntroduction: function () {
     wx.navigateTo({
-      url: '../userIntroduction/userIntroduction',
+      url: '../../userInfo/myIntroduction/myIntroduction',
+    })
+  },
+
+  toScoreRank: function (e) {
+    wx.navigateTo({
+      url: '../../userInfo/scoreRank/scoreRank?scoreType=' + e.currentTarget.dataset.type,
     })
   },
 
@@ -191,6 +199,12 @@ Page({
   toSpeechNameList: function () {
     wx.navigateTo({
       url: '../../speech/speechNameList/speechNameList'
+    })
+  },
+
+  toStudyRank: function () {
+    wx.navigateTo({
+      url: '../../rank/studyRank/studyRank'
     })
   },
   

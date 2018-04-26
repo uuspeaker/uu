@@ -7,7 +7,6 @@
   float: right;
   right: 10px;
   font-weight: bold;
-  color: gray;
 }
 
 .right {
@@ -81,13 +80,8 @@
   font-weight: bold;
   font-size: 13px;
 }
-.middle{
-  margin-top:45px;
-  margin-bottom:85px;
-}
 .star-pic{
-  width:15px;
-  height: 15px;
+  width:18px;
+  height: 18px;
  margin: 1px;
 }
-

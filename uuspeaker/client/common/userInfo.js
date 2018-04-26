@@ -1,6 +1,6 @@
 var that = this
-var getRank = (studyMinites) => {
-  var studyHours = studyMinites/3600
+var getRank = (studySeconds) => {
+  var studyHours = studySeconds/3600
   var rank = ''
   if (studyHours == 0){
     rank = 'Lv1：乞丐演讲君'

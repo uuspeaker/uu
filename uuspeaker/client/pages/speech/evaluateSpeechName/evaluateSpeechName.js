@@ -80,6 +80,10 @@ Page({
 
   onLoad:function(){
     this.getSpeechNames()
-  }
+  },
+
+  onReady: function () {
+    wx.setNavigationBarTitle({ title: '我要打分' });
+  },
 
 })

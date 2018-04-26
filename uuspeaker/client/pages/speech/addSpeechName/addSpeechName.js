@@ -48,9 +48,8 @@ Page({
     })
   },
 
-
- 
-
-
+  onReady: function () {
+    wx.setNavigationBarTitle({ title: '我要出题' });
+  },
 
 })
