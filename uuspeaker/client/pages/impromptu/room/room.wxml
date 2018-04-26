@@ -93,7 +93,7 @@
         <text class='link' catchtap='getSpeechName'>出题</text>
       </view>
       <view class="weui-flex__item">
-        <input class='commentInput' name='comment' value='{{comment}}' adjust-position='true' bindfocus='toBottom' bindconfirm="saveComment" confirm-type="发送"></input>
+        <input class='commentInput' name='comment' value='{{comment}}' adjust-position='true' bindfocus='toBottom' bindconfirm="saveComment" confirm-type="send"></input>
       </view>
       <view class="weui-flex__item ">
         <image class='time-pic' style="padding-left:10px" src='../../../images/userAudio/like.png' bindtap='likeAudio'></image>

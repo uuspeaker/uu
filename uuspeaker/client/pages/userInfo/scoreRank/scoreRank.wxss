@@ -68,10 +68,10 @@ position: relative;
 }
 .index{
   color: #576b95;
-  left: 10px;
+  left: 15px;
   font-size: 24px;
   font-weight: bold;
-  width:50px;
+  width:40px;
 }
 .right{
   color: grey;

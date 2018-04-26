@@ -93,6 +93,13 @@
         </view>
         <view class='content'>预约练习</view>
       </view>
+
+      <view bindtap='toStudyNow'>
+        <view>
+          <image class="task-pic" src="../../../images/studyIndex/plan.png" />
+        </view>
+        <view class='content'>立即开始</view>
+      </view>
        
     </view>
   </view>

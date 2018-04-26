@@ -196,7 +196,7 @@ align-content: center;
 .commentInput {
   border-radius: 5px;
   background-color: white;
-  height: 35px;
+  height: 40px;
   width: 250px;
 }
 
@@ -254,7 +254,7 @@ startSpeech{
   text-align: center;
 }
 .link {
-  font-size:18px;
+  font-size:20px;
   font-weight: bold;
   color: #576b95;
   

@@ -865,6 +865,9 @@ Page({
   },
 
   getSpeechName: function () {
+    wx.showLoading({
+      title: '出题中',
+    })
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/speech.speechNameRandom`,
@@ -872,6 +875,7 @@ Page({
       data: {createDate:createDate},
       method: 'get',
       success(result) {
+        wx.hideLoading()
         console.log('speechName', result.data.data)
         if(result.data.data == ''){
           if (tryTimes > 3){

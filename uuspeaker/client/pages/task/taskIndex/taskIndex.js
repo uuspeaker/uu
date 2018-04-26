@@ -207,6 +207,12 @@ Page({
       url: '../../rank/studyRank/studyRank'
     })
   },
+
+  toStudyNow: function () {
+    wx.navigateTo({
+      url: '../../impromptu/studyNow/studyNow'
+    })
+  },
   
   onLoad:function(){
     this.initUserInfo()

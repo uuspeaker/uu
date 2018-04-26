@@ -65,6 +65,7 @@ Page({
   },
 
   saveAudioRecord: function (audioId) {
+    util.showBusy('请求中...')
     console.log('saveAudioRecord')
     var that = this
     qcloud.request({
@@ -94,10 +95,9 @@ Page({
       data: {},
       method: 'get',
       success(result) {
-        //console.log(result.data.data)
+        console.log(result.data.data)
         if (result.data.data.length == 0) {
           that.setData({
-            userIntroduction: result.data.data[0],
             hasIntroduction: 0
           })
           
@@ -107,8 +107,6 @@ Page({
             hasIntroduction: 1,
             oldAudioId: result.data.data[0].introduce_audio_id
           })
-          innerAudioContext.src = result.data.data[0].src
-          console.log('src', innerAudioContext.src)
         }
       },
       fail(error) {
@@ -131,8 +129,8 @@ Page({
   },
 
   play: function(){
+    innerAudioContext.src = this.data.userIntroduction.src
     innerAudioContext.play()
-    console.log('play', innerAudioContext.autoplay)
     this.setData({
       isPlay: 1
     })
@@ -148,6 +146,17 @@ Page({
   onLoad: function(){
     var that = this
     this.getUserIntroduction()
+
+    innerAudioContext.obeyMuteSwitch = false
+    innerAudioContext.onPlay(() => {
+      wx.hideLoading()
+      console.log('开始播放', innerAudioContext.currentTime)
+    })
+    innerAudioContext.onWaiting(() => {
+      wx.showLoading({
+        title: '音频加载中',
+      })
+    })
     innerAudioContext.onError((res) => {
       console.log(res.errMsg)
       console.log(res.errCode)

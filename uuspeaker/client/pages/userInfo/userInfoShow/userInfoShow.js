@@ -87,11 +87,17 @@ Page({
       method: 'get',
       success(result) {
         wx.hideLoading()
+        console.log(result.data.data)
         that.setData({
+          
           userInfo: result.data.data.userInfo,
           userIntroduction: result.data.data.userIntroduction
         })
         that.formatDateAndStatus()
+        // if (result.data.data.userIntroduction.length > 0){
+        //   that.playAudio()
+        // }
+        
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -100,32 +106,11 @@ Page({
     })
   },
 
-  playAudio: function (e) {
-    //this.queryAudioLikeUser(e)
-    this.updateViewTimes(e)
-  },
-
-  updateViewTimes: function (e) {
-    var src = e.currentTarget.dataset.src
-    var audioId = e.currentTarget.dataset.audio_id
-    innerAudioContext.autoplay = true
-    innerAudioContext.src = src
-    this.formatDateAndStatus(src)
-
-    var that = this
-    qcloud.request({
-      url: `${config.service.host}/weapp/audio.audioView`,
-      login: true,
-      method: 'post',
-      data: { audioId: audioId },
-      success(result) {
-        //that.updateViewAmount(audioId)
-      },
-      fail(error) {
-        util.showModel('请求失败', error);
-        console.log('request fail', error);
-      }
-    })
+  playAudio: function () {
+    console.log('playAudio',this.data.userIntroduction[0].src)
+    innerAudioContext.src = this.data.userIntroduction[0].src
+    innerAudioContext.play()
+    this.formatDateAndStatus(this.data.userIntroduction[0].src)
   },
 
   formatDateAndStatus: function (src) {
@@ -172,8 +157,15 @@ Page({
       roomId: options.roomId
     })
 
+    innerAudioContext.obeyMuteSwitch = false
     innerAudioContext.onPlay(() => {
+      wx.hideLoading()
       console.log('开始播放', innerAudioContext.currentTime)
+    })
+    innerAudioContext.onWaiting(() => {
+      wx.showLoading({
+        title: '音频加载中',
+      })
     })
     innerAudioContext.onError((res) => {
       console.log(res.errMsg)
