@@ -7,9 +7,12 @@ var getlogininfo = require('../../../getlogininfo.js')
 var roomId = ''
 var getMatchInfoId = ''
 var waitId = ''
+var enterIntervalId = ''
 var userId = ''
 var searchSeconds = 30
 var isMatching = 0
+var hasEnter = 0
+var tryTimes = 0
 Page({
 
   /**
@@ -34,7 +37,7 @@ Page({
       success(result) {
         console.log('userId',result.data.data)
         userId = result.data.data
-        getMatchInfoId = setInterval(that.getMatchInfo,3000)
+        getMatchInfoId = setInterval(that.getMatchInfo,2000)
         //that.getMatchInfo()
         waitId = setInterval(that.wait, 1000)
       },
@@ -91,17 +94,17 @@ Page({
       data: { 'userId': userId},
       success(result) {
         console.log('getMatchInfo', result.data.data)
-        roomId = result.data.data
-        if (roomId == 0){
+        var userInfo = result.data.data
+        if (userInfo == 0){
           //util.showBusy('搜索中...')
         }else{
           clearInterval(getMatchInfoId)
           clearInterval(waitId)
           util.showSuccess('匹配成功')
           console.log('roomId', roomId)
-          //setTimeout(that.createAndGoRoom, Math.random() * 5, roomId)
+          //setTimeout(that.createAndGoRoom, Math.random() * 5, userInfo)
           //Math.floor(Math.random() * 3)
-          that.createAndGoRoom(roomId)
+          that.createAndGoRoom(userInfo)
         }
         
       },
@@ -113,7 +116,37 @@ Page({
   },
 
   // 进入rtcroom页面
-  createAndGoRoom: function (roomId) {
+  createAndGoRoom: function (userInfo) {
+    roomId = userInfo.roomId
+    if (userInfo.enterType == 'create'){
+      var url = '../room/room?type=create&roomName=快速匹配&roomID=' + roomId + '&userId=' + userId
+      console.log(url)
+      wx.navigateTo({
+        url: url
+      });
+    }
+    if (userInfo.enterType == 'enter') {
+      //setTimeout(this.enterRoom,3000,roomId)
+      enterIntervalId = setInterval(this.checkRoomToEnter, 1 * 1000);
+    }
+  },
+
+  enterRoom: function (){
+    var url = '../room/room?type=enter&roomName=快速匹配&roomID=' + roomId + '&userId=' + userId
+    console.log(url)
+    wx.navigateTo({
+      url: url
+    });
+  },
+
+  checkRoomToEnter: function(){
+    tryTimes++
+    if (hasEnter == 1 || tryTimes > 5){
+      clearInterval(enterIntervalId)
+      tryTimes = 0
+      return
+    }
+    console.log('roomId', roomId)
     var self = this;
     qcloud.request({
       url: `${config.service.host}/weapp/multi_room.isRoomExist`,
@@ -124,24 +157,17 @@ Page({
         console.log('multi_room.isRoomExist')
         console.log(result)
         var isRoomExist = result.data.isRoomExist
-        var enterType = 'create'
-        if (isRoomExist) {
-          enterType = 'enter'
+        if (isRoomExist && tryTimes <=5){
+          hasEnter = 1
+          self.enterRoom()
+          return
         }
-        var url = '../room/room?type=' + enterType + '&roomName=快速匹配&roomID=' + roomId + '&userId=' + userId
-        console.log(url)
-        //var url = '../room/room?type=' + enterType + '&roomName=' + '快速匹配' + '&roomID=' + roomID + '&userId=' + self.data.roomInfo.user_id
-        console.log(url)
-        wx.navigateTo({
-          url: url
-        });
       },
       fail(error) {
         util.showModel('请求失败', error);
         console.log('request fail', error);
       }
     })
-
   },
 
 

@@ -257,7 +257,6 @@ startSpeech{
   font-size:20px;
   font-weight: bold;
   color: #576b95;
-  box-shadow: 0px 0px 5px 1px gray;
 }
 .modal{
 margin-top: 20px;

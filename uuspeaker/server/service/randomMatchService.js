@@ -8,9 +8,9 @@ var matchedList = []
 
 var startMatch = (userId) => {
   var standByListLegnth = standByList.length
-  for (var i = 0; i < standByListLegnth; i++) {
-    if (standByList[i].userId == userId)return
-  }
+  // for (var i = 0; i < standByListLegnth; i++) {
+  //   if (standByList[i].userId == userId)return
+  // }
   var newUser = { 'userId': userId, 'startDate': new Date() }
   standByList.unshift(newUser)
   log.info('用户开始匹配' + JSON.stringify(newUser))
@@ -56,7 +56,7 @@ var removeMatchUser = () => {
     var lastSeconds = Math.floor(now - matchedList[i].startDate)
     if (lastSeconds >= waitTime) {
       var removedUser = matchedList.splice(i - removeAmount, 1)
-      log.info('匹配成功后30秒用户未响应，将用户从匹配成功列表删除' + removedUser)
+      log.info('匹配成功后30秒用户未响应，将用户从匹配成功列表删除' + JSON.stringify(removedUser))
       log.info('当前所有匹配成功的用户' + JSON.stringify(standByList))
       removeAmount++
     }
@@ -74,9 +74,9 @@ var autoMatchUser = () => {
     var roomId = uuid.v1()
     var matchUserA = standByList.pop()
     var matchUserB = standByList.pop()
-    matchedList.push({ userInfo: matchUserA, 'roomId': roomId ,'startDate': new Date()})
-    matchedList.push({ userInfo: matchUserB, 'roomId': roomId, 'startDate': new Date() })
-    log.Info('匹配成功，将匹配成功的两个用户从等待列表删除，转移到匹配成功列表' + matchUserA, matchUserB)
+    matchedList.push({ userInfo: matchUserA, roomId: roomId, enterType: 'create',startDate: new Date()})
+    matchedList.push({ userInfo: matchUserB, roomId: roomId, enterType: 'enter',startDate: new Date() })
+    log.info('匹配成功，将匹配成功的两个用户从等待列表删除，转移到匹配成功列表' + JSON.stringify(matchUserA) + JSON.stringify(matchUserB))
   }
 }
 
@@ -84,9 +84,10 @@ var getMatchInfo = (userId) => {
   var length = matchedList.length
   for (var i = 0; i < length; i++) {
     if (matchedList[i].userInfo.userId == userId) {
+      var roomId = matchedList[i].roomId
       var removedUser = matchedList.splice(i, 1)
-      log.info('匹配成功，将用户从匹配成功列表删除' + removedUser)
-      return matchInfo.roomId
+      log.info('匹配成功，将用户从匹配成功列表删除' + JSON.stringify(removedUser))
+      return removedUser[0]
     }
   }
   return 0

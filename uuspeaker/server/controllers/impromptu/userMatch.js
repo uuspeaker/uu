@@ -19,8 +19,8 @@ module.exports = {
 
   get: async ctx => {
     var userId = ctx.query.userId
-    var roomId = randomMatchService.getMatchInfo(userId)
-    ctx.state.data = roomId
+    var userInfo = randomMatchService.getMatchInfo(userId)
+    ctx.state.data = userInfo
   },
 
 }

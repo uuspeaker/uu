@@ -173,6 +173,11 @@ Page({
         isPlay: 0
       })
     })
-  }
+  },
+
+  onUnload: function () {
+    innerAudioContext.stop();
+  },
+
 
 })

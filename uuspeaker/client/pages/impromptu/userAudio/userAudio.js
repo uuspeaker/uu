@@ -183,10 +183,6 @@ Page({
     })
   },
 
-  onHide: function () {
-    innerAudioContext.stop();
-  },
-
   onUnload: function () {
     innerAudioContext.stop();
   },

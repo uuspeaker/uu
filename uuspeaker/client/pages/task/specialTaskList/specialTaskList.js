@@ -271,7 +271,7 @@ Page({
   },
 
   onHide:function(){
-    innerAudioContext.stop();
+    //innerAudioContext.stop();
   },
 
   onUnload: function () {

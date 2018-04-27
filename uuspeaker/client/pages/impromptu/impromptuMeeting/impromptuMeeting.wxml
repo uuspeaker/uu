@@ -27,7 +27,7 @@
         <view class="date">{{roomInfo.startDateStr}}{{roomInfo.amountNotice}}</view>
       </view>
 
-      <text bindtap='toUserAudio' class='link'>听录音</text>
+      <!--text bindtap='toUserAudio' class='link'>听录音</text-->
     </view>
   </view>
 

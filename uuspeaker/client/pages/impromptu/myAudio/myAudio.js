@@ -184,10 +184,6 @@ Page({
     this.queryImpromptuAudios()
   },
 
-  onHide: function () {
-    innerAudioContext.stop();
-  },
-
   onUnload: function () {
     innerAudioContext.stop();
   },

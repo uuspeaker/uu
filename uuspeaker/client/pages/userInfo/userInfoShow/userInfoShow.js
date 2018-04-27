@@ -197,7 +197,10 @@ Page({
     this.getUserInfo(options.userId)
   },
 
-  
+  onUnload: function () {
+    innerAudioContext.stop();
+  },
+
 
   
 })
