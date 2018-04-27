@@ -8,13 +8,18 @@ const randomMatchService = require('../../service/randomMatchService')
 module.exports = {
   post: async ctx => {
     var userId = await userInfo.getOpenId(ctx)
-    await randomMatchService.startMatch(userId)
+    randomMatchService.startMatch(userId)
     ctx.state.data = userId
+  },
+
+  put: async ctx => {
+    var userId = await userInfo.getOpenId(ctx)
+    randomMatchService.stopMatch(userId)
   },
 
   get: async ctx => {
     var userId = ctx.query.userId
-    var roomId = await randomMatchService.getMatchInfo(userId)
+    var roomId = randomMatchService.getMatchInfo(userId)
     ctx.state.data = roomId
   },
 

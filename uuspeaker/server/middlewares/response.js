@@ -1,12 +1,13 @@
 const debug = require('debug')('koa-weapp-demo')
 const dateUtil = require('../common/dateUtil');
+const log = require('../log');
 /**
  * 响应处理模块
  */
 module.exports = async function (ctx, next) {
+  var start = new Date()
     try {
       global.log = {}
-      var start = new Date()
       var input = ''
       if (ctx.method == 'GET') {
         input = ctx.query
@@ -14,8 +15,9 @@ module.exports = async function (ctx, next) {
         input = ctx.request.body
       }
 
-      global.log.time = dateUtil.format(new Date(), 'yyyyMMdd h:m:s.S')
+      //global.log.time = dateUtil.format(new Date(), 'yyyyMMdd h:m:s.S')
       global.log.url = ctx.originalUrl 
+      global.log.method = ctx.method
       global.log.user = ctx.header['x-wx-skey']
         // 调用下一个 middleware
       await next()
@@ -45,10 +47,10 @@ module.exports = async function (ctx, next) {
         }
         global.log.input = input 
         global.log.output = ctx.state.data
-        console.log(global.log)
+        log.info(JSON.stringify(global.log))
     } catch (e) {
       global.log.error = e
-      console.log(global.log)
+      log.logErrMsg(ctx, JSON.stringify(global.log), start)
         // catch 住全局的错误信息
         debug('Catch Error: %o', e)
 

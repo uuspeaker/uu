@@ -9,32 +9,56 @@ var getMatchInfoId = ''
 var waitId = ''
 var userId = ''
 var searchSeconds = 30
-var isMatch = 0
+var isMatching = 0
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    waitSeconds:99
+    waitSeconds:'',
+    isMatching:0,
   },
 
   startMatch: function(){
     util.showSuccess('开始匹配')
     this.setData({
-      waitSeconds: 1
+      waitSeconds: 1,
+      isMatching:1
     })
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/impromptu.studyNow`,
+      url: `${config.service.host}/weapp/impromptu.userMatch`,
       login: true,
       method: 'post',
       success(result) {
         console.log('userId',result.data.data)
         userId = result.data.data
-        getMatchInfoId = setInterval(that.getMatchInfo,2000)
+        getMatchInfoId = setInterval(that.getMatchInfo,3000)
         //that.getMatchInfo()
         waitId = setInterval(that.wait, 1000)
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
+  stopMatch: function(){
+    clearInterval(getMatchInfoId)
+    clearInterval(waitId)
+    this.setData({
+      waitSeconds: 0,
+      isMatching:0
+    })
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/impromptu.userMatch`,
+      login: true,
+      method: 'put',
+      success(result) {
+        
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -52,16 +76,16 @@ Page({
       clearInterval(waitId)
       util.showSuccess('未找到匹配用户')
       this.setData({
-        waitSeconds: 0
+        waitSeconds: 0,
+        isMatching:0
       })
     }
   },
 
   getMatchInfo: function () {
-    //if (isMatch ==1)return
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/impromptu.studyNow`,
+      url: `${config.service.host}/weapp/impromptu.userMatch`,
       login: true,
       method: 'get',
       data: { 'userId': userId},
@@ -71,14 +95,13 @@ Page({
         if (roomId == 0){
           //util.showBusy('搜索中...')
         }else{
-          isMatch = 1
           clearInterval(getMatchInfoId)
           clearInterval(waitId)
           util.showSuccess('匹配成功')
           console.log('roomId', roomId)
-          setTimeout(that.createAndGoRoom, Math.random() * 5, roomId)
+          //setTimeout(that.createAndGoRoom, Math.random() * 5, roomId)
           //Math.floor(Math.random() * 3)
-          //that.createAndGoRoom(roomId)
+          that.createAndGoRoom(roomId)
         }
         
       },
@@ -123,7 +146,7 @@ Page({
 
 
   onLoad: function(){
-    this.startMatch()
+
   },
 
   onReady: function () {
@@ -145,5 +168,13 @@ Page({
         });
       }
     });
+  },
+
+  onHide: function () {
+    this.stopMatch()
+  },
+
+  onUnload: function () {
+    this.stopMatch()
   },
 })

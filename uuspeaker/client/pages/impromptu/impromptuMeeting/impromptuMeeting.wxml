@@ -46,8 +46,8 @@
 <view class="weui-flex bottom ">
   <view class="weui-flex__item ">
     <block wx:if="{{isJoin == false && roomInfo.people_amount < roomInfo.max_amount}}">
-    <input name='role' placeholder='请输入角色,默认为演讲者' bindconfirm='applyMeetingWithName'></input>
-      <button class='weui-btn' type='primary' data-roletype='1' value="演讲者" bindtap='applyMeetingDefault'>报名</button>
+    <input class='input' name='role' placeholder='请输入角色,默认为演讲者' bindconfirm='applyMeetingWithName'></input>
+      <button class='' type='primary' data-roletype='1' value="演讲者" bindtap='applyMeetingDefault'>报名</button>
     </block>
     <block wx:if="{{isJoin == true}}">
       <button class='weui-btn' type='primary' data-mode='{{roomInfo.mode}}' data-room_id="{{roomInfo.room_id}}" bindtap='createAndGoRoom'>加入语音会议</button>

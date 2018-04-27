@@ -37,7 +37,7 @@
     "pages/impromptu/room/room",
     "pages/impromptu/impromptuDialog/impromptuDialog",
     "pages/impromptu/audioDetail/audioDetail",
-    "pages/impromptu/studyNow/studyNow",
+    "pages/impromptu/userMatch/userMatch",
 
     "pages/article/allArticle/allArticle",
     "pages/article/writeArticle/writeArticle",

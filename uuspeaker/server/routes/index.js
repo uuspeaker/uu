@@ -166,8 +166,8 @@ router.post('/impromptu.impromptuVote', controllers.impromptu.impromptuVote.post
 router.post('/impromptu.impromptuDialog', controllers.impromptu.impromptuDialog.post)
 router.get('/impromptu.impromptuDialog', controllers.impromptu.impromptuDialog.get)
 //立即匹配
-router.post('/impromptu.studyNow', controllers.impromptu.studyNow.post)
-router.get('/impromptu.studyNow', controllers.impromptu.studyNow.get)
+router.post('/impromptu.userMatch', controllers.impromptu.userMatch.post)
+router.get('/impromptu.userMatch', controllers.impromptu.userMatch.get)
 //用户目标管理
 router.get('/target.myTarget', controllers.target.myTarget.get)
 router.put('/target.myTarget', controllers.target.myTarget.put)

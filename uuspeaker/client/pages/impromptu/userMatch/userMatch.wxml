@@ -1,0 +1,10 @@
+<view class='wait'>{{waitSeconds}}</view>
+<view class='match-tip' wx:if='{{isMatching == 1}}'>
+小懂演讲君卯足劲为您寻找伙伴中
+</view>
+<block wx:if='{{isMatching == 0}}'>
+<button class='bottom' type='primary' catchtap='startMatch'>开始匹配</button>
+</block>
+<block wx:if='{{isMatching == 1}}'>
+<button class='bottom' type='' catchtap='startMatch'>停止匹配</button>
+</block>

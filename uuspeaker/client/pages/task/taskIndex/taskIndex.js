@@ -210,7 +210,7 @@ Page({
 
   toStudyNow: function () {
     wx.navigateTo({
-      url: '../../impromptu/studyNow/studyNow'
+      url: '../../impromptu/userMatch/userMatch'
     })
   },
   

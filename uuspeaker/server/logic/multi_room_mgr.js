@@ -150,7 +150,7 @@ function onTimer() {
 			i++;
 		}
 	}
-	log.info("onTimer current room count " + rooms.length.toString());
+	//log.info("onTimer current room count " + rooms.length.toString());
 }
 
 setInterval(onTimer, 5 * 1000);
