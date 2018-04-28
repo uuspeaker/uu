@@ -10,7 +10,6 @@ var waitId = ''
 var enterIntervalId = ''
 var userId = ''
 var searchSeconds = 30
-var isMatching = 0
 var hasEnter = 0
 var tryTimes = 0
 Page({
@@ -21,6 +20,41 @@ Page({
   data: {
     waitSeconds:'',
     isMatching:0,
+    onlineUser:[]
+  },
+
+  enterMatchRoom: function(){
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/impromptu.onlineUser`,
+      login: true,
+      method: 'post',
+      success(result) {
+        that.setData({
+          onlineUser : result.data.data
+        })
+        
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+  leaveMatchRoom: function(){
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/impromptu.onlineUser`,
+      login: true,
+      method: 'put',
+      success(result) {
+        
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
   },
 
   startMatch: function(){
@@ -126,12 +160,12 @@ Page({
       });
     }
     if (userInfo.enterType == 'enter') {
-      //setTimeout(this.enterRoom,3000,roomId)
+      //setTimeout(this.enterImpromptuRoom,3000,roomId)
       enterIntervalId = setInterval(this.checkRoomToEnter, 1 * 1000);
     }
   },
 
-  enterRoom: function (){
+  enterImpromptuRoom: function (){
     var url = '../room/room?type=enter&roomName=快速匹配&roomID=' + roomId + '&userId=' + userId
     console.log(url)
     wx.navigateTo({
@@ -159,7 +193,7 @@ Page({
         var isRoomExist = result.data.isRoomExist
         if (isRoomExist && tryTimes <=5){
           hasEnter = 1
-          self.enterRoom()
+          self.enterImpromptuRoom()
           return
         }
       },
@@ -196,11 +230,27 @@ Page({
     });
   },
 
+  onShow: function(){
+    this.enterMatchRoom()
+  },
+
   onHide: function () {
-    this.stopMatch()
+    this.leaveMatchRoom()
+    if (this.data.isMatching == 1) {
+      this.stopMatch()
+    } else {
+      this.leaveMatchRoom()
+    }
+    
   },
 
   onUnload: function () {
-    this.stopMatch()
+    this.leaveMatchRoom()
+    if (this.data.isMatching == 1) {
+      this.stopMatch()
+    }else{
+      this.leaveMatchRoom()
+    }
   },
+  
 })

@@ -24,6 +24,17 @@ var getUserInfo = async (userId) => {
 }
 
 /**
+ * 获取用户ID 
+ * ctx 前端的请求，用于获取登陆用户信息
+ * 返回：用户ID
+ */
+var getUserInfoByKey = async (ctx) => {
+  var skey = ctx.header['x-wx-skey']
+  var userInfo = await mysql('cSessionInfo').select('user_info').where({ 'skey': skey  })
+  return getTailoredUserInfo(userInfo[0].user_info)
+}
+
+/**
  * 剪裁用户信息
  * userInfoStr 系统保存的原始用户信息
  * 返回：{nickName:用户昵称, avatarUrl:头像url}
@@ -281,6 +292,7 @@ var getInfluenceRank = async (userId) => {
 
 module.exports = { 
   getOpenId, 
+  getUserInfoByKey,
   getTailoredUserInfo, 
   getTotalScore, 
   getMeetingScore, 

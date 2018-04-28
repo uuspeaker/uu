@@ -167,7 +167,12 @@ router.post('/impromptu.impromptuDialog', controllers.impromptu.impromptuDialog.
 router.get('/impromptu.impromptuDialog', controllers.impromptu.impromptuDialog.get)
 //立即匹配
 router.post('/impromptu.userMatch', controllers.impromptu.userMatch.post)
+router.put('/impromptu.userMatch', controllers.impromptu.userMatch.put)
 router.get('/impromptu.userMatch', controllers.impromptu.userMatch.get)
+//再线用户
+router.post('/impromptu.onlineUser', controllers.impromptu.onlineUser.post)
+router.put('/impromptu.onlineUser', controllers.impromptu.onlineUser.put)
+router.get('/impromptu.onlineUser', controllers.impromptu.onlineUser.get)
 //用户目标管理
 router.get('/target.myTarget', controllers.target.myTarget.get)
 router.put('/target.myTarget', controllers.target.myTarget.put)

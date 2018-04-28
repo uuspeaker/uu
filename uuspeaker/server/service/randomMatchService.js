@@ -5,12 +5,68 @@ const log = require('../log');
 var waitTime = 30000
 var standByList = []
 var matchedList = []
+var onlineList = []
+
+var enterRoom = (userInfo) => {
+  var onlineListLegnth = onlineList.length
+  for (var i = 0; i < onlineListLegnth; i++) {
+    if (onlineList[i].userInfo == userInfo) {
+      onlineList[i].startDate = new Date()
+      return onlineList
+    } 
+  }
+  var newUser = { 'userInfo': userInfo, 'startDate': new Date() }
+  onlineList.unshift(newUser)
+  log.info('用户进入房间' + JSON.stringify(newUser))
+  log.info('当前在房间的所有用户' + JSON.stringify(userInfo))
+  return onlineList
+}
+
+//用户停止匹配
+var leaveRoom = (userId) => {
+  var onlineListLegnth = onlineList.length
+  for (var i = 0; i < onlineListLegnth; i++) {
+    if (onlineList[i].userInfo.userId == userId) {
+      var removedUser = onlineList.splice(i, 1)
+      log.info('用户离开房间' + JSON.stringify(removedUser))
+      log.info('当前在房间的所有用户' + JSON.stringify(onlineList))
+      return
+    }
+  }
+}
+
+//定期删除超过30秒还未匹配到的用户
+var removeOfflineUser = () => {
+  var now = new Date()
+  var onlineListLegnth = onlineList.length
+  var removeAmount = 0
+  for (var i = 0; i < onlineListLegnth; i++) {
+    var lastSeconds = Math.floor(now - onlineList[i].startDate)
+    if (lastSeconds >= waitTime) {
+      var removedUser = onlineList.splice(i - removeAmount, 1)
+      log.info('30秒后将用户从在线列表删除' + JSON.stringify(removedUser))
+      log.info('当前在线的所有用户' + JSON.stringify(onlineList))
+      removeAmount++
+    }
+  }
+}
+
+//用户停止匹配
+var getOnlineUser = () => {
+  return onlineList
+}
 
 var startMatch = (userId) => {
   var standByListLegnth = standByList.length
-  // for (var i = 0; i < standByListLegnth; i++) {
-  //   if (standByList[i].userId == userId)return
-  // }
+  for (var i = 0; i < standByListLegnth; i++) {
+    if (standByList[i].userId == userId){
+      standByList[i].startDate = new Date()
+    }return
+  }
+  var matchedListLegnth = matchedList.length
+  for (var i = 0; i < matchedListLegnth; i++) {
+    if (matchedList[i].userId == userId) return
+  }
   var newUser = { 'userId': userId, 'startDate': new Date() }
   standByList.unshift(newUser)
   log.info('用户开始匹配' + JSON.stringify(newUser))
@@ -94,5 +150,6 @@ var getMatchInfo = (userId) => {
 }
 
 setInterval(autoMatchUser, 1 * 1000);
+setInterval(removeOfflineUser, 5 * 1000);
 
-module.exports = { startMatch, stopMatch,autoMatchUser, getMatchInfo }
+module.exports = { enterRoom, leaveRoom, startMatch, stopMatch,autoMatchUser, getMatchInfo }
