@@ -86,7 +86,7 @@
         <view>
           <image class="task-pic" src="../../../images/taskIndex/voice.png" />
         </view>
-        <view class='content'>听录音</view>
+        <view class='content'>听演讲</view>
       </view>
 
        <view class="weui-flex__item studyArea" bindtap='toSpeechNameList'>

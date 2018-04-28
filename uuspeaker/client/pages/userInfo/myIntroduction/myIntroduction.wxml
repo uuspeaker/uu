@@ -1,4 +1,9 @@
-<view class='pageContent'> 
+<view class="weui-flex commentArea top">
+    <view class="weui-flex__item">
+      <input class='commentInput' value="{{speechNames[index].speech_name}}" placeholder='' bindconfirm="saveSpeechName" value='语音名片' disabled='true'></input>
+    </view>
+  </view>
+<view class='pageContent' style='padding-top:50px'> 
 <view class='tip'>用语音</view>
 <view class='content'>打造你的专属名片</view>
 <view class='tip'>三十秒</view>
