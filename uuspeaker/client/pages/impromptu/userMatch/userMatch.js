@@ -161,7 +161,7 @@ Page({
     }
     if (userInfo.enterType == 'enter') {
       //setTimeout(this.enterImpromptuRoom,3000,roomId)
-      enterIntervalId = setInterval(this.checkRoomToEnter, 1 * 1000);
+      enterIntervalId = setInterval(this.checkRoomToEnter, 2 * 1000);
     }
   },
 
@@ -191,7 +191,7 @@ Page({
         console.log('multi_room.isRoomExist')
         console.log(result)
         var isRoomExist = result.data.isRoomExist
-        if (isRoomExist && tryTimes <=5){
+        if (isRoomExist){
           hasEnter = 1
           self.enterImpromptuRoom()
           return

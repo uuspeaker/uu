@@ -42,31 +42,33 @@
 <view class="page__bd">
   <view class="weui-cells__title"></view>
   <view class="weui-cells weui-cells_after-title">
-    <view class="weui-cell" data-task_type='1'>
-      自己练 <block wx:if='{{newCommentAmount > 0}}'><text class="commentNotice" catchtap='toNewCommentList'>您有{{newCommentAmount}}条新的回复</text></block>
+    <view class="weui-cell content" data-task_type='1'>
+      学习区 <block wx:if='{{newCommentAmount > 0}}'><text class="commentNotice" catchtap='toNewCommentList'>{{newCommentAmount}}条消息</text></block>
     </view>
-    <view class="weui-cell" data-task_type='1'>
+    <view class="weui-cell " data-task_type='1'>
+       
+      <view class="weui-flex__item studyArea" bindtap='toDoSpecialTask'>
+        <view>
+          <image class="task-pic" src="../../../images/taskIndex/single.png" />
+        </view>
+        <view class='content'>单人练习</view>
+      </view>
+
+       <view class="weui-flex__item studyArea" bindtap='toStudyNow'>
+        <view>
+          <image class="task-pic" src="../../../images/taskIndex/multiple.png" />
+        </view>
+        <view class='content'>双人练习</view>
+      </view>
+
+      <view class="weui-flex__item studyArea" style='margin-top:5px' bindtap='toImpromptuIndex'>
+        <view>
+          <image class="task-pic2" src="../../../images/taskIndex/group.png" />
+        </view>
+        <view class='content' style='margin-top:15px'>多人练习</view>
+      </view>
+
       
-      <view bindtap='toDoSpecialTask'>
-        <view>
-          <image class="task-pic" src="../../../images/studyIndex/plan.png" />
-        </view>
-        <view class='content'>自由练习</view>
-      </view>
-
-      <view bindtap='toSpecialTaskList'>
-        <view>
-          <image class="task-pic" src="../../../images/studyIndex/plan.png" />
-        </view>
-        <view class='content'>听录音</view>
-      </view>
-
-       <view bindtap='toSpeechNameList'>
-        <view>
-          <image class="task-pic" src="../../../images/studyIndex/plan.png" />
-        </view>
-        <view class='content'>我要出题</view>
-      </view>
       
     </view>
   </view>
@@ -75,32 +77,36 @@
 <view class="page__bd">
   <view class="weui-cells__title"></view>
   <view class="weui-cells weui-cells_after-title">
-    <view class="weui-cell" data-task_type='1'>
-      一起练
+    <view class="weui-cell content" data-task_type='1'>
+      休闲区 <block wx:if='{{newCommentAmount > 0}}'><text class="commentNotice" catchtap='toNewCommentList'>您有{{newCommentAmount}}条新的回复</text></block>
     </view>
-    <view class="weui-cell" data-task_type='1' >
-      
-      <view bindtap='openImpromptuRoom'>
-        <view>
-          <image class="task-pic" src="../../../images/studyIndex/plan.png" />
-        </view>
-        <view class='content'>创建房间</view>
-      </view>
-
-      <view bindtap='toImpromptuIndex'>
-        <view>
-          <image class="task-pic" src="../../../images/studyIndex/plan.png" />
-        </view>
-        <view class='content'>预约练习</view>
-      </view>
-
-      <view bindtap='toStudyNow'>
-        <view>
-          <image class="task-pic" src="../../../images/studyIndex/plan.png" />
-        </view>
-        <view class='content'>立即匹配</view>
-      </view>
+    <view class="weui-cell " data-task_type='1'>
        
+      <view class="weui-flex__item studyArea" bindtap='toSpecialTaskList'>
+        <view>
+          <image class="task-pic" src="../../../images/taskIndex/voice.png" />
+        </view>
+        <view class='content'>听录音</view>
+      </view>
+
+       <view class="weui-flex__item studyArea" bindtap='toSpeechNameList'>
+        <view>
+          <image class="task-pic" src="../../../images/taskIndex/title.png" />
+        </view>
+        <view class='content'>出题目</view>
+      </view>
+
+      <view class="weui-flex__item studyArea"  bindtap='toEvaluateSpeechName'>
+        <view>
+          <image class="task-pic"  src="../../../images/taskIndex/star.png" />
+        </view>
+        <view class='content' >审题目</view>
+      </view>
+
+      
+      
     </view>
   </view>
 </view>
+
+

@@ -1,11 +1,43 @@
-<view >当前在线用户：{{onlineUser.length}}</view>
+
+
+
+  <view class="weui-flex commentArea top">
+    <view class="weui-flex__item">
+      <input class='commentInput' value="{{speechNames[index].speech_name}}" placeholder='' bindconfirm="saveSpeechName" value='玩法说明' disabled='true'></input>
+    </view>
+  </view>
+
+
+<view class='middle' style='padding-top:30px' wx:if='{{isMatching == 0}}' >
+<view class='tipTitle'>这个是一个双人即兴演讲练习项目，建议练习步骤如下：</view>
+<view class='tip'>1. 点击“开始匹配”，系统自动匹配玩家</view>
+<view class='tip'>2. 自动匹配30秒，匹配失败则停止，匹配成功则自动进入语音练习房间</view>
+<view class='tip'>3. 进入房间后，打招呼，确认双方在线</view>
+<view class='tip'>4. 先进入房间的玩家A点击“出题”，待系统出题后进行2分钟的即兴演讲</view>
+<view class='tip'>5. 玩家A演讲结束，玩家B进行1分钟点评</view>
+<view class='tip'>6. 玩家B点击“出题”，待系统出题后进行2分钟的即兴演讲</view>
+<view class='tip'>7. 玩家B演讲结束，玩家A进行1分钟点评</view>
+<view class='tip'>8. 结束练习，离开房间</view>
+
+<view class='tipTitle'>温馨提示：</view>
+<view class='tip'>1. 点击“演讲”按钮后，系统会自动计时</view>
+<view class='tip'>2. 点击切换按钮可以切换到“点评”模式</view>
+<view class='tip'>3. 点击“点评”按钮后，系统会自动计时</view>
+<view class='tip'>4. 演讲或者点评结束后可以保存录音，可以在首页的“听录音”找到录音</view>
+<view style='padding-bottom:30px;'></view>
+</view>
+
+<block wx:if='{{isMatching == 1}}'>
 <view class='wait'>{{waitSeconds}}</view>
+</block>
 <view class='match-tip' wx:if='{{isMatching == 1}}'>
 小懂演讲君卯足劲为您寻找伙伴中
 </view>
+<view class='bottom'>
 <block wx:if='{{isMatching == 0}}'>
 <button class='bottom' type='primary' catchtap='startMatch'>开始匹配</button>
 </block>
 <block wx:if='{{isMatching == 1}}'>
 <button class='bottom' type='' catchtap='stopMatch'>停止匹配</button>
 </block>
+</view>

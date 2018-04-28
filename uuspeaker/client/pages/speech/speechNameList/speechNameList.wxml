@@ -13,7 +13,7 @@
 <view class="weui-flex bottom ">
   <view class="weui-flex__item ">
     <button class='' type='primary' bindtap='toAddSpeechName'>我要出题</button>
-    <button class='' bindtap='toEvaluateSpeechName'>我要打分</button>
+    
 
   </view>
 </view>

@@ -59,9 +59,9 @@ var getOnlineUser = () => {
 var startMatch = (userId) => {
   var standByListLegnth = standByList.length
   for (var i = 0; i < standByListLegnth; i++) {
-    if (standByList[i].userId == userId){
-      standByList[i].startDate = new Date()
-    }return
+    // if (standByList[i].userId == userId){
+    //   standByList[i].startDate = new Date()
+    // }return
   }
   var matchedListLegnth = matchedList.length
   for (var i = 0; i < matchedListLegnth; i++) {

@@ -63,7 +63,7 @@
   </block>
 </view>
 
- <view class="weui-flex bottom">
+ <!--view class="weui-flex bottom">
     <view class="weui-flex__item">
       <button class="weui-btn" type="primary" bindtap='toDoSpecialTask'>练习</button>
     </view>

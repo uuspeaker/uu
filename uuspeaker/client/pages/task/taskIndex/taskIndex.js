@@ -213,6 +213,12 @@ Page({
       url: '../../impromptu/userMatch/userMatch'
     })
   },
+
+  toEvaluateSpeechName: function () {
+    wx.navigateTo({
+      url: '../../speech/evaluateSpeechName/evaluateSpeechName'
+    })
+  },
   
   onLoad:function(){
     this.initUserInfo()
