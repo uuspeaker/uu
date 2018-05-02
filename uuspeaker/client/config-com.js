@@ -3,11 +3,11 @@
  */
 
 // 此处主机域名修改成腾讯云解决方案分配的域名
-var host = 'https://r3uhpu7v.qcloud.la';
+var host = 'https://gytr1z9p.qcloud.la';
 
 var config = {
   // url: 'https://lvb.qcloud.com',
-  url: 'https://r3uhpu7v.qcloud.la',
+  url: 'https://gytr1z9p.qcloud.la',
 
   // 下面的地址配合云端 Demo 工作
   service: {
