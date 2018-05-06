@@ -1,0 +1,55 @@
+<view class="page">
+  <view class="weui-flex  ">
+
+    <view class="weui-flex__item ">
+      <view>
+        <image class="host-pic" src="{{userInfo.avatarUrl}}" />
+      </view>
+      <view class='content'>{{userInfo.nickName}}</view>
+    </view>
+
+    <view class="weui-flex__item ">
+      <view>
+        <image class="host-pic" src="{{matchedUser.avatarUrl}}" />
+      </view>
+      <view class='content'>{{matchedUser.nickName}}</view>
+    </view>
+
+  </view>
+</view>
+<block wx:if='{{speechStatus > 1}}'>
+<view>演讲题目：{{roomInfo.speechName}}</view>
+</block>
+<block wx:if='{{waitSeconds <= 10}}'>
+<view class='wait'>{{waitSeconds}}</view>
+</block>
+<view class='match-tip' wx:if='{{isMatching == 1}}'>
+</view>
+
+<view class="bottom">
+  <!--计时显示区域-->
+  
+    <view class="weui-flex timeArea">
+      <view class='weui-flex__item timeButton'>
+
+        <block wx:if="{{isPlay == 0}}">
+          <view class='weui-flex speechButton' bindtap='startTime'>
+
+            <block wx:if="{{audioType == 1}}">演 讲</block>
+            <block wx:if="{{audioType == 2}}">点 评</block>
+
+          </view>
+        </block>
+        <block wx:if="{{isPlay == 1}}">
+
+          <view class='weui-flex speechButton' bindtap='stopTime'>
+            <image class="audio-pic" style='opacity:{{playNotice}}' src="../../../images/studyIndex/study.png"></image>完 成</view>
+        </block>
+      </view>
+
+      <view class="weui-flex__item timeCard" style='{{timeNoticeBackground}}'>
+        <view>{{minute}}:{{second}}</view>
+      </view>
+    </view>
+
+  </view>

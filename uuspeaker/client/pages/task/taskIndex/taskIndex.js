@@ -153,6 +153,11 @@ Page({
       url: '../../impromptu/impromptuIndex/impromptuIndex',
     })
   },
+  toQuickMatch: function (e) {
+    wx.navigateTo({
+      url: '../../impromptu/quickMatch/quickMatch',
+    })
+  },
 
   toMyIntroduction: function () {
     wx.navigateTo({
@@ -221,14 +226,30 @@ Page({
   },
   
   onLoad:function(){
+    var that = this
+    wx.checkSession({
+      success: function () {
+        //session_key 未过期，并且在本生命周期一直有效
+        that.initIndex()
+      },
+      fail: function () {
+        // session_key 已经失效，需要重新执行登录流程
+        qcloud.login({
+          success: function () {
+            that.initIndex()
+          },
+        }) 
+  }
+})
+
+    
+  },
+ 
+  initIndex: function (options) {
     this.initUserInfo()
     this.queryLikeUserTotal()
     this.queryUserScore()
     this.queryNewCommentAmount()
-  },
- 
-  onShow: function (options) {
-    
   },
 
   onReady: function(){

@@ -169,6 +169,14 @@ router.get('/impromptu.impromptuDialog', controllers.impromptu.impromptuDialog.g
 router.post('/impromptu.userMatch', controllers.impromptu.userMatch.post)
 router.put('/impromptu.userMatch', controllers.impromptu.userMatch.put)
 router.get('/impromptu.userMatch', controllers.impromptu.userMatch.get)
+//立即匹配
+router.post('/impromptu.quickMatch', controllers.impromptu.quickMatch.post)
+router.put('/impromptu.quickMatch', controllers.impromptu.quickMatch.put)
+router.get('/impromptu.quickMatch', controllers.impromptu.quickMatch.get)
+//立即匹配房间信息
+router.post('/impromptu.quickRoom', controllers.impromptu.quickRoom.post)
+router.put('/impromptu.quickRoom', controllers.impromptu.quickRoom.put)
+router.get('/impromptu.quickRoom', controllers.impromptu.quickRoom.get)
 //再线用户
 router.post('/impromptu.onlineUser', controllers.impromptu.onlineUser.post)
 router.put('/impromptu.onlineUser', controllers.impromptu.onlineUser.put)

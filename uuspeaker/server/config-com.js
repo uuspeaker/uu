@@ -6,11 +6,11 @@ const CONF = {
   appId: 'wx43906d390cba4987',
 
   // 微信小程序 App Secret
-  appSecret: 'a9135db0ad26aed53152728a04a96525',
+  appSecret: '579a689db57a910aadf5b9796fd58731',
 
-  qcloudAppId: '1255773188',
-  qcloudSecretId: 'AKIDCcKCVdh9kQBqbhML3307HfZJA8WL36hj',
-  qcloudSecretKey: 'oTzYBIIU2OaG74zBFmhSRTihp0Nshcfq',
+  qcloudAppId: '1255679565',
+  qcloudSecretId: 'AKIDObZJpH5R9cpnY3SK6dy3xhGcmiRypOHx',
+  qcloudSecretKey: 'bzAGG3ez5vVpxqSoukJceR1MVQ5g8KHV',
 
   // 是否使用腾讯云代理登录小程序
   useQcloudLogin: true,
@@ -31,10 +31,10 @@ const CONF = {
 
   //云直播相关配置
   live: {
-    appID: 1255773188,
-    bizid: 20363,
-    pushSecretKey: '4a43a87b03e6085a44e76705a9d02686',
-    APIKey: '0b8414ceddf4a196d1b6f7ff273b9b80',
+    appID: 1255679565,
+    bizid: 23394,
+    pushSecretKey: '6f4153c7316b502d2c9b6e2bb87683c6',
+    APIKey: 'fcb37204c92ec976161eb26b832ea4cd',
     validTime: 3600 * 24 * 7
   },
 

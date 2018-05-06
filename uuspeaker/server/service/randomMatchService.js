@@ -56,18 +56,19 @@ var getOnlineUser = () => {
   return onlineList
 }
 
-var startMatch = (userId) => {
+var startMatch = (userInfo) => {
   var standByListLegnth = standByList.length
   for (var i = 0; i < standByListLegnth; i++) {
-    // if (standByList[i].userId == userId){
-    //   standByList[i].startDate = new Date()
-    // }return
+    if (standByList[i].userInfo.userId == userInfo.userId){
+      standByList[i].startDate = new Date()
+      return
+    }
   }
   var matchedListLegnth = matchedList.length
   for (var i = 0; i < matchedListLegnth; i++) {
-    if (matchedList[i].userId == userId) return
+    if (matchedList[i].userInfo.userId == userInfo.userId) return
   }
-  var newUser = { 'userId': userId, 'startDate': new Date() }
+  var newUser = { 'userId': userInfo, 'startDate': new Date() }
   standByList.unshift(newUser)
   log.info('用户开始匹配' + JSON.stringify(newUser))
   log.info('当前正在等待匹配的所有用户' + JSON.stringify(standByList))
@@ -94,7 +95,7 @@ var stopMatch = (userId) => {
   var standByListLegnth = standByList.length
   var removeAmount = 0
   for (var i = 0; i < standByListLegnth; i++) {
-    if (standByList[i].userId == userId) {
+    if (standByList[i].userInfo.userId == userId) {
       var removedUser = standByList.splice(i, 1)
       log.info('用户取消匹配' + JSON.stringify(removedUser))
       log.info('当前正在等待匹配的所有用户' + JSON.stringify(standByList))
@@ -130,8 +131,8 @@ var autoMatchUser = () => {
     var roomId = uuid.v1()
     var matchUserA = standByList.pop()
     var matchUserB = standByList.pop()
-    matchedList.push({ userInfo: matchUserA, roomId: roomId, enterType: 'create',startDate: new Date()})
-    matchedList.push({ userInfo: matchUserB, roomId: roomId, enterType: 'enter',startDate: new Date() })
+    matchedList.push({ userInfo: matchUserA, partnerInfo: matchUserB, roomId: roomId, enterType: 'create',startDate: new Date()})
+    matchedList.push({ userInfo: matchUserB, partnerInfo: matchUserA,roomId: roomId, enterType: 'enter',startDate: new Date() })
     log.info('匹配成功，将匹配成功的两个用户从等待列表删除，转移到匹配成功列表' + JSON.stringify(matchUserA) + JSON.stringify(matchUserB))
   }
 }
@@ -140,7 +141,6 @@ var getMatchInfo = (userId) => {
   var length = matchedList.length
   for (var i = 0; i < length; i++) {
     if (matchedList[i].userInfo.userId == userId) {
-      var roomId = matchedList[i].roomId
       var removedUser = matchedList.splice(i, 1)
       log.info('匹配成功，将用户从匹配成功列表删除' + JSON.stringify(removedUser))
       return removedUser[0]

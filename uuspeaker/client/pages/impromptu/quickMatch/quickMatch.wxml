@@ -1,0 +1,36 @@
+
+
+
+  <view class="weui-flex commentArea top">
+    <view class="weui-flex__item">
+      <input class='commentInput' value="{{speechNames[index].speech_name}}" placeholder='' bindconfirm="saveSpeechName" value='玩法说明' disabled='true'></input>
+    </view>
+  </view>
+
+
+<view class='middle' style='padding-top:30px' wx:if='{{isMatching == 0}}' >
+<view class='tipTitle'>双人即兴演讲练习：</view>  
+<view class='tip'>1. 系统自动匹配玩家</view>
+<view class='tip'>2. 系统自动出题</view>
+<view class='tip'>3. 10秒内开始演讲，演讲时间2分钟</view>
+<view class='tip'>4. 听对方的演讲，2分钟</view>
+<view class='tip'>5. 点评对方的演讲，1分钟</view>
+<view class='tip'>6. 结束练习，离开房间</view>
+
+<view style='padding-bottom:30px;'></view>
+</view>
+
+<block wx:if='{{isMatching == 1}}'>
+<view class='wait'>{{waitSeconds}}</view>
+</block>
+<view class='match-tip' wx:if='{{isMatching == 1}}'>
+小懂演讲君卯足劲为您寻找伙伴中
+</view>
+<view class='bottom'>
+<block wx:if='{{isMatching == 0}}'>
+<button class='bottom' type='primary' catchtap='startMatch'>开始匹配</button>
+</block>
+<block wx:if='{{isMatching == 1}}'>
+<button class='bottom' type='' catchtap='stopMatch'>停止匹配</button>
+</block>
+</view>
