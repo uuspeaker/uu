@@ -1,11 +1,71 @@
 
 .host-pic {
-  width: 50px;
-  height: 50px;
-  border-radius: 6px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50px;
   margin-right: 10px;
 }
+.host-pic2 {
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  margin-right: 10px;
+}
+.pic-center{
+  text-align: center;
+  align-content: center;
+  align-items: center;
+  align-self: center;
+}
+.vs{
+  font-size:40px;
+  padding-bottom:15px;
+}
+.speechName{
+  font-size:24px;
+  font-weight: bold;
+  text-align: center;
+  margin-top:15px;
+  margin-bottom: 10px;
+}
+.nickName{
+  font-size:17px;
+  text-align: center;
+  color: grey;
+}
+.title {
+  font-size: 15px;
+  font-weight: bold;
+  color: grey;
+}
 
+.audioArea{
+  padding-left:10px;
+  margin-top:10px;
+  border:0.5px solid lightgray;
+  width: 260px;
+  height: 50px;
+  background-color: #ffffff;
+}
+.audio{
+  width: 40px;
+  height: 40px;
+  margin-top:5px;
+  margin-right:6px;
+}
+.line{
+height:1.5px;
+background:lightgray;
+margin-top:25px;
+margin-right: 10px;
+width:150px;
+}
+.timeNotice{
+  font-size:13px;
+  color: gray;
+  margin: 15px 10px 0 5px;
+
+}
 .timeArea {
   background-color: white;
   padding: 8px;
