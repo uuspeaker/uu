@@ -25,8 +25,8 @@
   font-size:24px;
   font-weight: bold;
   text-align: center;
-  margin-top:15px;
-  margin-bottom: 10px;
+  margin-top:25px;
+  margin-bottom: 20px;
 }
 .nickName{
   font-size:17px;
@@ -51,19 +51,16 @@
   width: 40px;
   height: 40px;
   margin-top:5px;
-  margin-right:6px;
 }
-.line{
-height:1.5px;
-background:lightgray;
-margin-top:25px;
+.sliderAudio{
+margin-top:15px;
 margin-right: 10px;
-width:150px;
+width:90px;
 }
 .timeNotice{
   font-size:13px;
   color: gray;
-  margin: 15px 10px 0 5px;
+  margin: 15px 5px 0 5px;
 
 }
 .timeArea {
@@ -87,10 +84,8 @@ width:150px;
   text-align: center;
 }
 .timeCard{
-  border-radius: 5px 5px 5px 5px;
-  box-shadow: 0px 0px 5px 1px gray;
-  font-size: 35px;
-  font-weight: bold;
+  padding-top:20px;
+  font-size: 60px;
   text-align: center;
   margin: 5px;
 }

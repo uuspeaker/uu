@@ -25,77 +25,79 @@
 
 
 
-
-<view class="weui-cell">
-  <view class="user-avatar">
-    <image class="host-pic2" src="{{userInfo.avatarUrl}}" data-user_id='{{user_id}}' catchtap='toUserInfo' />
-  </view>
-  <view class="weui-cell__bd" style='padding-left:10px;'>
-    <view class='title'>Jenny的演讲(进行中)</view>
-    <audio poster="{{poster}}" name="{{name}}" author="{{author}}" src="{{src}}" id="myAudio" controls loop></audio>
-    <view class="weui-flex audioArea">
-
-    <view class="weui-flex__item">
-    <image class="audio" src="../../../images/userAudio/play.png" />
-    </view>
-    <view class=" timeNotice">00:00</view>
-    <view class=" line">
-  
-    </view>
-    <view class=" timeNotice">01:00</view>
- 
-    </view>
-  </view>
-</view>
-
-
-<block wx:if='{{waitSeconds <= 10}}'>
-  <view class='wait'>{{waitSeconds}}</view>
-</block>
-<view class="bottom">
-  <!--计时显示区域-->
-
-  <view class="weui-flex timeArea">
-    <view class='weui-flex__item timeButton'>
-
-      <block wx:if="{{isPlay == 0}}">
-        <view class='weui-flex speechButton' bindtap='startTime'>
-
-          <block wx:if="{{audioType == 1}}">演 讲</block>
-          <block wx:if="{{audioType == 2}}">点 评</block>
-
-        </view>
-      </block>
-      <block wx:if="{{isPlay == 1}}">
-
-        <view class='weui-flex speechButton' bindtap='stopTime'>
-          <image class="audio-pic" style='opacity:{{playNotice}}' src="../../../images/studyIndex/study.png"></image>完 成</view>
-      </block>
-    </view>
-
-    <view class="weui-flex__item timeCard" style='{{timeNoticeBackground}}'>
-      <view>{{minute}}:{{second}}</view>
-    </view>
-  </view>
-
-</view>
-
-
-
-<view class="weui-cell">
-  <view class="user-avatar">
-    <image class="user-pic" src="{{user_info.avatarUrl}}" data-user_id='{{user_id}}' catchtap='toUserInfo' />
-  </view>
-  <view class="weui-cell__bd">
+<view class="weui-cells  ">
+  <view class="weui-cell">
     <view class="">
-      <view class='article' style='padding-left:15px'>
-        <text>演讲：{{title}}</text>
-        <text class='surveyStatus'>
-        <text style='color:rgb(228, 140, 58);' wx:if="{{timeStatus == 1}}">报名中</text>
-        <text style='color:rgb(136, 186, 71);' wx:elif="{{timeStatus == 2}}">进行中</text>
-        <text style='color:grey;' wx:elif="{{timeStatus == 3}}">已完成</text>
-        </text>
+      <image class="host-pic2" src="{{userInfo.avatarUrl}}" />
+    </view>
+    <view class="weui-cell__bd" style='padding-left:10px;'>
+      <view class='title'>Jenny的演讲(进行中)</view>
+      <view class="weui-flex audioArea">
+
+        <view class="weui-flex__item">
+        <block wx:if='{{speechInfo.play == 0}}'>
+          <image class="audio" src="../../../images/userAudio/play.png"  catchtap='playSpeech' />
+          </block>
+          <block wx:if='{{speechInfo.play == 1}}'>
+          <image class="audio" src="../../../images/userAudio/hold.png"  catchtap='stopSpeech' />
+          </block>
+        </view>
+        <view class=" timeNotice">00:00</view>
+        <view >
+          <slider class='sliderAudio' block-size='12' block-color='#1296db' value='{{speechInfo.sliderValue}}' selected-color='#1296db' bindchange='changeSpeechSlider'></slider>
+        </view>
+        <view class=" timeNotice">01:00</view>
+
       </view>
     </view>
   </view>
+
+  <view class="weui-cell">
+    <view class="">
+      <image class="host-pic2" src="{{userInfo.avatarUrl}}" />
+    </view>
+    <view class="weui-cell__bd" style='padding-left:10px;'>
+      <view class='title'>Jenny对我的激励(进行中)</view>
+      <view class="weui-flex audioArea">
+
+        <view class="weui-flex__item">
+          <image class="audio" src="../../../images/userAudio/play.png" />
+        </view>
+        <view class=" timeNotice">00:00</view>
+        <view >
+          <slider class='sliderAudio' block-size='12' block-color='#1296db' selected-color='#1296db'></slider>
+        </view>
+        <view class=" timeNotice">01:00</view>
+
+      </view>
+    </view>
+  </view>
+</view>
+
+
+  <view class="weui-flex__item  timeCard" style='{{timeNoticeBackground}}'>
+  <block wx:if='{{waitSeconds == 0}}'>
+    <view>{{minute}}:{{second}}</view>
+    </block>
+    <block wx:if='{{waitSeconds > 0}}'>
+  <view class='wait'>{{waitSeconds}}</view>
+</block>
+  </view>
+
+
+<view class="bottom">
+  <!--计时显示区域-->
+    <block wx:if="{{audioType == 1 && isPlay == 0}}">
+      <button type='primary' bindtap='startSpeech'>开始演讲</button>
+    </block>
+    <block wx:if="{{audioType == 1 && isPlay == 1}}">
+      <button type='primary' bindtap='stopTime'>完成演讲</button>
+    </block>
+    <block wx:if="{{audioType == 2 && isPlay == 0}}">
+      <button type='primary' bindtap='startEvaluation'>开始点评</button>
+    </block>
+    <block wx:if="{{audioType == 2 && isPlay == 1}}">
+      <button type='primary' bindtap='stopTime'>完成点评</button>
+    </block>
+
 </view>

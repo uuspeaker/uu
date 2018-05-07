@@ -156,7 +156,7 @@ var giveSpeech = (roomId, userId, audioId, audioType, timeDuration) => {
   for (var i = 0; i < length; i++) {
     if (roomList[i].roomId == roomId) {
       if (roomList[i].userList[0].userId = userId) {
-        userInfo = roomList[i].userList[0]
+        roomList[i].userList[0].speech = 
       } else {
         userInfo = roomList[i].userList[1]
       }
