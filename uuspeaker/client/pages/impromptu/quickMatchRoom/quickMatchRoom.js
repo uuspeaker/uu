@@ -14,6 +14,7 @@ var waitSecondsId = ''
 
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext();
+const statusNotice = ['进入房间', '开始演讲', '完成演讲', '开始听你的演讲', '开始点评', '点评结束','开始听你的点评','离开房间']
 
 const options = {
   duration: 600000,
@@ -38,6 +39,7 @@ Page({
     roomId: {},
     userInfo: {},
     matchedUser: {},
+    matchedUserStatus:0,
     roomInfo: {},
     timeNoticeBackground: '',
     playNotice: 1,
@@ -45,26 +47,73 @@ Page({
     audioType: 1,
     speeches:{},
     speechStatus: 1,
-    waitSeconds:10,
+    waitSeconds:3,
+    studyStep:1,
+    disableEvaluation:true,
+    speechName:'',
 
     minute: '00',
     second: '00',
     isPlay:0,
-    audioType:1,
+    allAudio:[],
+    messageNotice:'',
 
-    speechInfo: { src: 'http://ws.stream.qqmusic.qq.com/M500001VfvsJ21xFqb.mp3?guid=ffffffff82def4af4b12b3cd9337d5e7&uin=346897220&vkey=6292F51E1E384E06DCBDC9AB7C49FD713D632D313AC4858BACB8DDD29067D3C601481D36E62053BF8DFEAF74C0A5CCFADD6471160CAF3E6A&fromtag=46', duration: 60, play: 0, sliderValue:0},
-    evaluationInfo:{},
+    speechInfo: {audioId:'', src: '', timeDuration: 0, currentDuration:0,play: 0, sliderValue: 0, currentTime:'00:00',duration:'00:00'},
+    evaluationInfo: {audioId:'', src: '', timeDuration: 0, currentDuration:0,play: 0, sliderValue: 0, currentTime: '00:00', duration: '00:00'},
 
     playNotice: 1,
     timeNoticeBackground: '',
   },
 
-  playSpeech: function(){
+  playSpeechAudio: function(){
+    this.sendSpeech({ status: 3 })
+    this.stopAllAudio()
+    console.log('playSpeech', this.data.speechInfo.currentTime)
     innerAudioContext.src = this.data.speechInfo.src
+    innerAudioContext.seek(this.data.speechInfo.currentDuration)
     innerAudioContext.play()
+    //innerAudioContext.seek(this.data.speechInfo.currentTime)
     this.data.speechInfo.play = 1
     this.setData({
       speechInfo: this.data.speechInfo
+    })
+  },
+
+  stopSpeechAudio: function(){
+    innerAudioContext.pause()
+    console.log('stop currentTime',this.data.speechInfo.currentTime)
+    this.data.speechInfo.play = 0
+    this.setData({
+      speechInfo: this.data.speechInfo
+    })
+  },
+  playEvaluationAudio: function(){
+    this.sendSpeech({ status: 6 })
+    this.stopAllAudio()
+    innerAudioContext.src = this.data.evaluationInfo.src
+    innerAudioContext.seek(this.data.evaluationInfo.currentDuration)
+    innerAudioContext.play()
+    this.data.evaluationInfo.play = 1
+    this.setData({
+      evaluationInfo: this.data.evaluationInfo
+    })
+  },
+
+  stopEvaluationAudio: function(){
+    innerAudioContext.pause()
+    this.data.evaluationInfo.play = 0
+    this.setData({
+      evaluationInfo: this.data.evaluationInfo
+    })
+  },
+
+  stopAllAudio: function(){
+    innerAudioContext.pause()
+    this.data.speechInfo.play = 0
+    this.data.evaluationInfo.play = 0
+    this.setData({
+      speechInfo: this.data.speechInfo,
+      evaluationInfo: this.data.evaluationInfo,
     })
   },
 
@@ -117,20 +166,60 @@ Page({
     })
   },
 
-  stopTime: function () {
-    recorderManager.stop();
-
-  },
+  
 
   startTime: function () {
+    wx.showLoading({
+        title: '录音中',
+      })
     recorderManager.start(options)
     this.setData({
       isPlay: 1
     })
     timeDuration = 0
     audioId = uuid.v1()
+    console.log('startTime audioId ', audioId)
     this.recordTime()
-    this.noticePlay()
+  },
+
+  stopTime: function () {
+    recorderManager.stop();
+    this.setData({
+      isPlay: 0
+    })
+  },
+
+  startSpeech: function(){
+    this.sendSpeech({ status: 1 })
+    this.startTime()
+    this.setData({
+      audioType:1
+    })
+    timeLimit = 120
+  },
+  stopSpeech: function(){
+    wx.hideLoading()
+    //this.sendSpeech({ status: 2, audioId: audioId, timeDuration: timeDuration})
+    this.stopTime()
+    this.setData({
+      studyStep: 2
+    })
+  },
+  startEvaluation: function(){
+    this.sendSpeech({ status: 4 })
+    this.startTime()
+    this.setData({
+      audioType: 2
+    })
+    timeLimit = 60
+  },
+  stopEvaluation: function(){
+    wx.hideLoading()
+    //this.sendSpeech({ status: 5, audioId: audioId, timeDuration: timeDuration})
+    this.stopTime()
+    this.setData({
+      studyStep: 3
+    })
   },
 
   recordTime: function () {
@@ -138,13 +227,21 @@ Page({
       timeDuration = timeDuration - 1
       return
     }
+    if (timeDuration >= timeLimit + 15) {
+      if(this.data.studyStep == 1){
+        this.stopSpeech()
+      }
+      if(this.data.studyStep == 1){
+        this.stopEvaluation()
+      }
+    }
     var timeNoticeBackground = ''
     if (timeDuration >= timeLimit) {
-      timeNoticeBackground = 'background-color:red'
+      timeNoticeBackground = 'color:red'
     } else if (timeDuration >= timeLimit - 30) {
-      timeNoticeBackground = 'background-color:yellow'
+      timeNoticeBackground = 'color:orange'
     } else if (timeDuration >= timeLimit - 60) {
-      timeNoticeBackground = 'background-color:green'
+      timeNoticeBackground = 'color:green'
     } else {
 
     }
@@ -155,9 +252,6 @@ Page({
       second: second,
       timeNoticeBackground: timeNoticeBackground
     })
-    if (Math.floor(timeDuration % 30) == 0 && timeDuration != 0) {
-      this.sendTextMsg('用时：' + dateFormat.getFormatDuration(timeDuration))
-    }
     timeDuration++
     setTimeout(this.recordTime, 1000)
   },
@@ -168,6 +262,12 @@ Page({
       formatedTime = '0' + formatedTime
     }
     return formatedTime
+  },
+
+  getFormatTimeForAudio: function(seconds){
+    var minute = this.formatTime(seconds / 60)
+    var second = this.formatTime(seconds % 60)
+    return minute + ':' + second
   },
 
   noticePlay: function () {
@@ -199,9 +299,16 @@ Page({
       filePath: tempFilePath,
       name: 'file',
       formData: { audioId: audioId },
-      success: function (res) {
-        that.saveAudioData()
-        that.updateSpeechStatus()
+      success: function (result) {
+        console.log('saveAudio success')
+        console.log(that.data.studyStep)
+        if (that.data.audioType == 1){
+          that.saveSpeechData()
+        }
+        if (that.data.audioType == 2){
+          that.saveEvaluationData()
+        }
+        
       },
 
       fail: function (error) {
@@ -210,15 +317,39 @@ Page({
     })
   },
 
-  saveAudioData: function () {
+  saveSpeechData: function () {
+    var requestData = { roomId: roomId, audioName: this.data.speechName, audioId: audioId, timeDuration: timeDuration, audioType: 1 }
+    var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.userAudio`,
       login: true,
-      data: { roomId: roomId, audioName: this.data.roomInfo.speechName, userId: userId, audioId: audioId, timeDuration: timeDuration, audioType: this.data.audioType },
+      data: requestData,
+      method: 'post',
+      success(result) { 
+        util.showSuccess('演讲保存成功')
+        console.log(result)
+        var src = result.data.data
+        that.sendSpeech({ status: 2, audioId: audioId, timeDuration: timeDuration, src: src })
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
+  saveEvaluationData: function () {
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/audio.audioComment`,
+      login: true,
+      data: { evaluationAudioId: audioId, targetAudioId: this.data.speechInfo.audioId, timeDuration: timeDuration, audioType: 2 },
       method: 'post',
       success(result) {
-        util.showSuccess('录音保存成功')
+        util.showSuccess('点评保存成功')
         console.log(result)
+        var src = result.data.data
+        that.sendSpeech({ status: 5, audioId: audioId, timeDuration: timeDuration, src: src })
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -232,7 +363,7 @@ Page({
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.quickRoom`,
       login: true,
-      data: { roomId: roomId, userId: userId, audioId: audioId, timeDuration: timeDuration, audioType: this.data.audioType },
+      data: { roomId: roomId, audioId: audioId, timeDuration: timeDuration, audioType: this.data.audioType },
       method: 'post',
       success(result) {
         util.showSuccess('录音保存成功')
@@ -288,7 +419,6 @@ Page({
 
   playAudio: function (e) {
     var src = e.currentTarget.dataset.src
-    var audioId = e.currentTarget.dataset.audio_id
     innerAudioContext.src = src
     innerAudioContext.play()
   },
@@ -297,19 +427,23 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    util.showSuccess('10秒后开始演讲')
+    //util.showSuccess('10秒后开始演讲')
     console.log(options)
     userId = options.userId
     roomId = options.roomId
     //getRoomInfoId = setInterval(this.getRoomInfo,3000)
+    this.setData({
+      matchedUser: { avatarUrl: options.avatarUrl,nickName:options.nickName},
+      speechName: options.speechName
+    })
     this.initUserInfo()
     this.initAudio()
-    waitSecondsId = setInterval(this.waitToBegin,1000)
-
-    
+    waitSecondsId = setInterval(this.waitToBegin,1000) 
+    this.openTunnel()
   },
 
   waitToBegin: function(){
+    console.log(uuid.v1())
     this.data.waitSeconds = this.data.waitSeconds - 1
     this.setData({
       waitSeconds: this.data.waitSeconds
@@ -317,11 +451,13 @@ Page({
     if (this.data.waitSeconds == 0){
       clearInterval(waitSecondsId)
       util.showSuccess('请开始演讲')
+      this.startSpeech()
     }
   },
 
   initAudio: function () {
     recorderManager.onStop((res) => {
+      util.showSuccess('录音结束')
       if (timeDuration < timeDurationMin) return
       this.saveAudio(res.tempFilePath)
       this.setData({
@@ -342,18 +478,150 @@ Page({
     innerAudioContext.onTimeUpdate(() => {
       
       if (this.data.speechInfo.play == 1) {
-        
-        var currentTime = innerAudioContext.currentTime
         this.data.speechInfo.sliderValue = (100 * innerAudioContext.currentTime / innerAudioContext.duration)
+        this.data.speechInfo.currentTime = this.getFormatTimeForAudio(Math.floor(innerAudioContext.currentTime))
+        this.data.speechInfo.currentDuration = Math.floor(innerAudioContext.currentTime)
         this.setData({
           speechInfo: this.data.speechInfo
+        })
+      }
+      if (this.data.evaluationInfo.play == 1) {
+        this.data.evaluationInfo.sliderValue = (100 * innerAudioContext.currentTime / innerAudioContext.duration)
+        this.data.evaluationInfo.currentTime = this.getFormatTimeForAudio(Math.floor(innerAudioContext.currentTime))
+        this.data.evaluationInfo.currentDuration = Math.floor(innerAudioContext.currentTime)
+        this.setData({
+          evaluationInfo: this.data.evaluationInfo
         })
       }
     })
   },
 
   changeSpeechSlider: function(e){
+    if(e.currentTarget.dataset.play == 0)return
     innerAudioContext.seek(innerAudioContext.duration * e.detail.value / 100)
+  },
+
+  openTunnel: function () {
+    //util.showBusy('信道连接中...')
+    // 创建信道，需要给定后台服务地址
+    var tunnel = this.tunnel = new qcloud.Tunnel(config.service.tunnelUrl)
+
+    // 监听信道内置消息，包括 connect/close/reconnecting/reconnect/error
+    tunnel.on('connect', () => {
+      //util.showSuccess('信道已连接')
+      console.log('WebSocket 信道已连接')
+      this.setData({ tunnelStatus: 'connected' })
+    })
+
+    tunnel.on('close', () => {
+      //util.showSuccess('信道已断开')
+      console.log('WebSocket 信道已断开')
+      this.setData({ tunnelStatus: 'closed' })
+    })
+
+    tunnel.on('reconnecting', () => {
+      console.log('WebSocket 信道正在重连...')
+      util.showBusy('正在重连')
+    })
+
+    tunnel.on('reconnect', () => {
+      console.log('WebSocket 信道重连成功')
+      util.showSuccess('重连成功')
+    })
+
+    tunnel.on('error', error => {
+      //util.showModel('信道发生错误', error)
+      console.error('信道发生错误：', error)
+    })
+
+    // 监听自定义消息（服务器进行推送）
+    tunnel.on('speak', speak => {
+      //util.showModel('信道消息', speak)
+      console.log('收到说话消息：', speak)
+      if (speak.who.avatarUrl == this.data.matchedUser.avatarUrl){
+        this.updateMatchedUserStatus(speak.data.status)
+        if (speak.data.status == 2){
+          this.initAudioInfo(this.data.speechInfo,speak.data)
+          this.setData({
+            disableEvaluation: false,
+            speechInfo: this.data.speechInfo
+          })
+        }
+        if (speak.data.status == 5) {
+          this.initAudioInfo(this.data.evaluationInfo, speak.data)
+          this.setData({
+            evaluationInfo: this.data.evaluationInfo
+          })
+        }
+      }
+      this.setData({
+        messageNotice: speak.who.nickName + statusNotice[speak.data.status]
+      })
+    })
+
+    // 打开信道
+    tunnel.open()
+    setTimeout(this.sendSpeech, 500, { status: 0 })
+    //this.sendSpeech({ status: 1 })
+    this.setData({ tunnelStatus: 'connecting' })
+  },
+
+  updateMatchedUserStatus: function(status){
+    if (this.data.matchedUserStatus >= status)return
+    this.setData({
+      matchedUserStatus : status
+    })
+  },
+
+  initAudioInfo: function(audioInfo,data){
+    audioInfo.audioId = data.audioId
+    audioInfo.timeDuration = data.timeDuration
+    audioInfo.src = data.src
+    audioInfo.duration = this.getFormatTimeForAudio(data.timeDuration)
+    return audioInfo
+  },
+
+  /**
+   * 点击「发送消息」按钮，测试使用信道发送消息
+   */
+  sendMessage() {
+    if (!this.data.tunnelStatus || !this.data.tunnelStatus === 'connected') return
+    // 使用 tunnel.isActive() 来检测当前信道是否处于可用状态
+    if (this.tunnel && this.tunnel.isActive()) {
+      // 使用信道给服务器推送「speak」消息
+      this.tunnel.emit('speak', {
+        'word': 'I say something at ' + new Date(),
+        status:0
+      });
+    }
+  },
+  /**
+   * 点击「发送消息」按钮，测试使用信道发送消息
+   */
+  sendSpeech(content) {
+    if (!this.data.tunnelStatus || !this.data.tunnelStatus === 'connected') return
+    // 使用 tunnel.isActive() 来检测当前信道是否处于可用状态
+    if (this.tunnel && this.tunnel.isActive()) {
+      // 使用信道给服务器推送「speak」消息
+      this.tunnel.emit('speech', content);
+    }
+  },
+
+  /**
+   * 点击「关闭信道」按钮，关闭已经打开的信道
+   */
+  closeTunnel() {
+    if (this.tunnel) {
+      this.tunnel.close();
+    }
+    //util.showBusy('信道连接中...')
+    this.setData({ tunnelStatus: 'closed' })
+  },
+
+  completeStudy: function(){
+    wx.navigateBack({
+      
+    })
   },
 
   onHide: function () {
@@ -362,6 +630,9 @@ Page({
 
   onUnload: function () {
     clearInterval(getRoomInfoId)
-
+    this.sendSpeech({ status: 7 })
+    if (this.tunnel) {
+      this.tunnel.close();
+    }
   },
 })

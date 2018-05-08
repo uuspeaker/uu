@@ -128,17 +128,17 @@ Page({
       data: { 'userId': userId },
       success(result) {
         console.log('getMatchInfo', result.data.data)
-        var roomId = result.data.data
-        if (roomId == 0) {
+        var userInfo = result.data.data
+        if (userInfo == 0) {
           //util.showBusy('搜索中...')
         } else {
           clearInterval(getMatchInfoId)
           clearInterval(waitId)
           util.showSuccess('匹配成功')
-          console.log('roomId', roomId)
+          console.log('userInfo', userInfo)
           //setTimeout(that.createAndGoRoom, Math.random() * 5, userInfo)
           //Math.floor(Math.random() * 3)
-          that.doGoRoom(roomId)
+          that.doGoRoom(userInfo)
         }
 
       },
@@ -150,8 +150,8 @@ Page({
   },
 
   // 进入rtcroom页面
-  doGoRoom: function (roomId) {
-    var url = '../quickMatchRoom/quickMatchRoom?roomId=' + roomId + '&userId=' + userId
+  doGoRoom: function (userInfo) {
+    var url = '../quickMatchRoom/quickMatchRoom?roomId=' + userInfo.roomId + '&userId=' + userId + '&nickName=' + userInfo.matchedUser.nickName + '&avatarUrl=' + userInfo.matchedUser.avatarUrl + '&speechName=' + userInfo.speechName
       console.log(url)
       wx.navigateTo({
         url: url

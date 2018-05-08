@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/impromptu/quickMatchRoom/quickMatchRoom",
     "pages/task/taskIndex/taskIndex",
+    "pages/impromptu/quickMatchRoom/quickMatchRoom",
     "pages/impromptu/quickMatch/quickMatch",
     "pages/task/specialTaskList/specialTaskList",
     "pages/task/doSpecialTask/doSpecialTask",

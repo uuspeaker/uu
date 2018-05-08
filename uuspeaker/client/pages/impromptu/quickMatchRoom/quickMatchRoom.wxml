@@ -13,40 +13,44 @@
     </view>
     <view class="weui-flex__item pic-center">
       <view>
-        <image class="host-pic" src="{{userInfo.avatarUrl}}" />
+        <image class="host-pic" src="{{matchedUser.avatarUrl}}" />
       </view>
-      <view class='nickName'>{{userInfo.nickName}}</view>
+      <view class='nickName'>{{matchedUser.nickName}}</view>
     </view>
 
   </view>
 </view>
 
-<view class='speechName'>演讲题目：第一次</view>
+<view class='speechName'>演讲题目：{{speechName}}</view>
 
 
 
 <view class="weui-cells  ">
   <view class="weui-cell">
     <view class="">
-      <image class="host-pic2" src="{{userInfo.avatarUrl}}" />
+      <image class="host-pic2" src="{{matchedUser.avatarUrl}}" />
     </view>
     <view class="weui-cell__bd" style='padding-left:10px;'>
-      <view class='title'>Jenny的演讲(进行中)</view>
+      <view class='title'>{{matchedUser.nickName}}的演讲 
+      <block wx:if='{{matchedUserStatus < 1}}'><text style='color:grey'>未开始</text></block>
+      <block wx:if='{{matchedUserStatus == 1}}'><text style='color:orange'>进行中</text></block>
+      <block wx:if='{{matchedUserStatus >= 2}}'><text style='color:green'>已完成</text></block>
+      </view>
       <view class="weui-flex audioArea">
 
         <view class="weui-flex__item">
         <block wx:if='{{speechInfo.play == 0}}'>
-          <image class="audio" src="../../../images/userAudio/play.png"  catchtap='playSpeech' />
+          <image class="audio" src="../../../images/userAudio/play.png"  catchtap='playSpeechAudio' />
           </block>
           <block wx:if='{{speechInfo.play == 1}}'>
-          <image class="audio" src="../../../images/userAudio/hold.png"  catchtap='stopSpeech' />
+          <image class="audio" src="../../../images/userAudio/hold.png"  catchtap='stopSpeechAudio' />
           </block>
         </view>
-        <view class=" timeNotice">00:00</view>
+        <view class=" timeNotice">{{speechInfo.currentTime}}</view>
         <view >
-          <slider class='sliderAudio' block-size='12' block-color='#1296db' value='{{speechInfo.sliderValue}}' selected-color='#1296db' bindchange='changeSpeechSlider'></slider>
+          <slider class='sliderAudio' block-size='12' block-color='#1296db' value='{{speechInfo.sliderValue}}' selected-color='#1296db' bindchange='changeSpeechSlider' data-play='{{speechInfo.play == 1}}'></slider>
         </view>
-        <view class=" timeNotice">01:00</view>
+        <view class=" timeNotice">{{speechInfo.duration}}</view>
 
       </view>
     </view>
@@ -54,20 +58,29 @@
 
   <view class="weui-cell">
     <view class="">
-      <image class="host-pic2" src="{{userInfo.avatarUrl}}" />
+      <image class="host-pic2" src="{{matchedUser.avatarUrl}}" />
     </view>
     <view class="weui-cell__bd" style='padding-left:10px;'>
-      <view class='title'>Jenny对我的激励(进行中)</view>
+      <view class='title'>{{matchedUser.nickName}}对我的鼓励 
+      <block wx:if='{{matchedUserStatus < 4}}'><text style='color:grey'>未开始</text></block>
+      <block wx:if='{{matchedUserStatus == 4}}'><text style='color:orange'>进行中</text></block>
+      <block wx:if='{{matchedUserStatus >= 5}}'><text style='color:green'>已完成</text></block>
+      </view>
       <view class="weui-flex audioArea">
 
         <view class="weui-flex__item">
-          <image class="audio" src="../../../images/userAudio/play.png" />
+        <block wx:if='{{evaluationInfo.play == 0}}'>
+          <image class="audio" src="../../../images/userAudio/play.png" catchtap='playEvaluationAudio' />
+          </block>
+          <block wx:if='{{evaluationInfo.play == 1}}'>
+          <image class="audio" src="../../../images/userAudio/hold.png"  catchtap='stopEvaluationAudio' />
+           </block>
         </view>
-        <view class=" timeNotice">00:00</view>
+        <view class=" timeNotice">{{evaluationInfo.currentTime}}</view>
         <view >
-          <slider class='sliderAudio' block-size='12' block-color='#1296db' selected-color='#1296db'></slider>
+          <slider class='sliderAudio' block-size='12' block-color='#1296db' value='{{evaluationInfo.sliderValue}}' selected-color='#1296db' bindchange='changeSpeechSlider' data-play='{{evaluationInfo.play == 1}}'></slider>
         </view>
-        <view class=" timeNotice">01:00</view>
+        <view class=" timeNotice">{{evaluationInfo.duration}}</view>
 
       </view>
     </view>
@@ -84,20 +97,23 @@
 </block>
   </view>
 
-
+<view class='messageNotice'>{{messageNotice}}</view>
 <view class="bottom">
   <!--计时显示区域-->
-    <block wx:if="{{audioType == 1 && isPlay == 0}}">
-      <button type='primary' bindtap='startSpeech'>开始演讲</button>
+    <block wx:if="{{studyStep == 1 && isPlay == 0}}">
+      <button type='primary' >计时结束后开始演讲</button>
     </block>
-    <block wx:if="{{audioType == 1 && isPlay == 1}}">
-      <button type='primary' bindtap='stopTime'>完成演讲</button>
+    <block wx:if="{{studyStep == 1 && isPlay == 1}}">
+      <button type='primary' bindtap='stopSpeech'>完成演讲</button>
     </block>
-    <block wx:if="{{audioType == 2 && isPlay == 0}}">
-      <button type='primary' bindtap='startEvaluation'>开始点评</button>
+    <block wx:if="{{studyStep == 2 && isPlay == 0}}">
+      <button type='primary' bindtap='startEvaluation' disabled='{{disableEvaluation}}'>开始鼓励</button>
     </block>
-    <block wx:if="{{audioType == 2 && isPlay == 1}}">
-      <button type='primary' bindtap='stopTime'>完成点评</button>
+    <block wx:if="{{studyStep == 2 &&  isPlay == 1}}">
+      <button type='primary' bindtap='stopEvaluation'>完成鼓励</button>
+    </block>
+    <block wx:if="{{studyStep == 3}}">
+      <button type='primary' bindtap='completeStudy'>结束练习</button>
     </block>
 
 </view>

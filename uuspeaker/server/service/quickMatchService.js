@@ -108,12 +108,15 @@ var autoMatchUser = () => {
     var roomId = uuid.v1()
     var matchUserA = standByList.pop()
     var matchUserB = standByList.pop()
-    matchedList.push({ userId: matchUserA.userId, roomId: roomId,  startDate: new Date() })
-    matchedList.push({ userId: matchUserB.userId, roomId: roomId,  startDate: new Date() })
     var speechName = getRandomSpeechName()
-    matchUserA.status = 1
-    matchUserB.status = 1
-    roomList.push({ roomId: roomId, userList: [matchUserA, matchUserB],speeches:[], speechName: speechName,startDate: new Date()})
+    matchedList.push({ userId: matchUserA.userId, matchedUser: matchUserB,roomId: roomId, speechName: speechName, startDate: new Date() })
+    matchedList.push({ userId: matchUserB.userId, matchedUser: matchUserA,roomId: roomId, speechName: speechName, startDate: new Date() })
+    
+    // matchUserA.status = 1
+    // matchUserA.audios = []
+    // matchUserB.status = 1
+    // matchUserB.audios = []
+    //roomList.push({ roomId: roomId, userList: [matchUserA, matchUserB],speeches:[], speechName: speechName,startDate: new Date()})
     log.info('匹配成功，将匹配成功的两个用户从等待列表删除，转移到匹配成功列表' + JSON.stringify(matchUserA) + JSON.stringify(matchUserB))
   }
 }
@@ -133,7 +136,7 @@ var getMatchInfo = (userId) => {
     if (matchedList[i].userId == userId) {
        var removedUser = matchedList.splice(i, 1)
        log.info('匹配成功，将用户从匹配成功列表删除' + JSON.stringify(removedUser))
-       return removedUser[0].roomId
+       return removedUser[0]
     }
   }
   return 0
@@ -156,17 +159,29 @@ var giveSpeech = (roomId, userId, audioId, audioType, timeDuration) => {
   for (var i = 0; i < length; i++) {
     if (roomList[i].roomId == roomId) {
       if (roomList[i].userList[0].userId = userId) {
-        roomList[i].userList[0].speech = 
-      } else {
-        userInfo = roomList[i].userList[1]
-      }
-      roomList[i].speeches.push({ 
-        userInfo: userInfo,
-        audioId: audioId,
-        src: audioService.getSrc(audioId), 
-        audioType: audioType, 
-        timeDuration: timeDuration
+        userInfo = roomList[i].userList[0].audios.push({
+          userInfo: userInfo,
+          audioId: audioId,
+          src: audioService.getSrc(audioId),
+          audioType: audioType,
+          timeDuration: timeDuration
         })
+      } else {
+        userInfo = roomList[i].userList[1].audios.push({
+          userInfo: userInfo,
+          audioId: audioId,
+          src: audioService.getSrc(audioId),
+          audioType: audioType,
+          timeDuration: timeDuration
+        })
+      }
+      // roomList[i].speeches.push({ 
+      //   userInfo: userInfo,
+      //   audioId: audioId,
+      //   src: audioService.getSrc(audioId), 
+      //   audioType: audioType, 
+      //   timeDuration: timeDuration
+      //   })
 
       log.info('提交录音，房间最新信息' + JSON.stringify(roomList[i]))
     }

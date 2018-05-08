@@ -21,6 +21,11 @@ router.get('/login', authorizationMiddleware, controllers.login)
 // 用户信息接口（可以用来验证登录态）
 router.get('/user', validationMiddleware, controllers.user)
 
+// GET  用来响应请求信道地址的
+router.get('/tunnel', controllers.tunnel.get)
+// POST 用来处理信道传递过来的消息
+router.post('/tunnel', controllers.tunnel.post)
+
 //查询所有人的积分详情
 router.get('/scoreDetail', controllers.score.scoreDetail)
 //查询所有人的积分排名
@@ -103,6 +108,7 @@ router.post('/audio.audioLike', controllers.audio.audioLike.post)
 router.delete('/audio.audioLike', controllers.audio.audioLike.del)
 router.get('/audio.audioLike', controllers.audio.audioLike.get)
 //音频察看
+router.get('/audio.audioView', controllers.audio.audioView.get)
 router.post('/audio.audioView', controllers.audio.audioView.post)
 //即兴会议音频更新状态
 router.put('/impromptu.updateAudio', controllers.impromptu.updateAudio.put)

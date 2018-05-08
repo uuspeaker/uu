@@ -18,6 +18,7 @@ module.exports = {
     }else{//如果是点评,则保存并更新演讲的点评次数
       audioService.evaluateLatestAudio(roomId, audioId, audioName, userId, timeDuration)
     }
+    ctx.state.data = await audioService.getSrc(audioId)
   },
 
   put: async ctx => {

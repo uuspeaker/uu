@@ -10,4 +10,9 @@ module.exports = {
     audioService.viewAudio(userId,audioId)
   },
 
+  get: async ctx => {
+    var queryPageType = ctx.query.audioId
+    var src = await audioService.getSrc(audioId)
+    ctx.state.data = src
+  },
 }

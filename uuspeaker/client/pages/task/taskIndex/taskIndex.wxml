@@ -54,20 +54,19 @@
         <view class='content'>单人练习</view>
       </view>
 
-       <view class="weui-flex__item studyArea" bindtap='toStudyNow'>
+       <view class="weui-flex__item studyArea" bindtap='toQuickMatch'>
         <view>
           <image class="task-pic" src="../../../images/taskIndex/multiple.png" />
         </view>
         <view class='content'>双人练习</view>
       </view>
 
-      <view class="weui-flex__item studyArea" style='margin-top:5px' bindtap='toQuickMatch'>
+      <view class="weui-flex__item studyArea" >
         <view>
-          <image class="task-pic2" src="../../../images/taskIndex/group.png" />
+          <image class="task-pic"  />
         </view>
-        <view class='content' style='margin-top:15px'>多人练习</view>
+        <view class='content'></view>
       </view>
-
       
       
     </view>
