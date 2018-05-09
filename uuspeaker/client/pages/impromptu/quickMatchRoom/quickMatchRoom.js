@@ -474,13 +474,13 @@ Page({
 
     innerAudioContext.obeyMuteSwitch = false
     innerAudioContext.onPlay(() => {
-      //wx.hideLoading()
+      wx.hideLoading()
       console.log('开始播放', innerAudioContext.currentTime)
     })
     innerAudioContext.onWaiting(() => {
-      // wx.showLoading({
-      //   title: '音频加载中',
-      // })
+      wx.showLoading({
+        title: '音频加载中',
+      })
     })
     innerAudioContext.onTimeUpdate(() => {
       
@@ -540,7 +540,12 @@ Page({
   openTunnel: function () {
     //util.showBusy('信道连接中...')
     // 创建信道，需要给定后台服务地址
-    var tunnel = this.tunnel = new qcloud.Tunnel(config.service.tunnelUrl)
+    var tunnel
+    if (this.tunnel){
+      tunnel = this.tunnel
+    }else{
+      tunnel = this.tunnel = new qcloud.Tunnel(config.service.tunnelUrl)
+    }
 
     // 监听信道内置消息，包括 connect/close/reconnecting/reconnect/error
     tunnel.on('connect', () => {
@@ -574,7 +579,7 @@ Page({
     tunnel.on('speak', speak => {
       //util.showModel('信道消息', speak)
       console.log('收到说话消息：', speak)
-      if (speak.who.avatarUrl == this.data.matchedUser.avatarUrl){
+      if (speak.who.openId == this.data.matchedUser.userId){
         if (speak.data.status == 99){
           this.setData({
             messageNotice: speak.who.nickName + '关注了你'
@@ -595,15 +600,16 @@ Page({
             evaluationInfo: this.data.evaluationInfo
           })
         }
+        this.setData({
+          messageNotice: speak.who.nickName + statusNotice[speak.data.status]
+        })
       }
-      this.setData({
-        messageNotice: speak.who.nickName + statusNotice[speak.data.status]
-      })
+      
     })
 
     // 打开信道
     tunnel.open()
-    setTimeout(this.sendSpeech, 500, { status: 0 })
+    setTimeout(this.sendSpeech, 1000, { status: 0 })
     //this.sendSpeech({ status: 1 })
     this.setData({ tunnelStatus: 'connecting' })
   },
@@ -661,6 +667,7 @@ Page({
   },
 
   completeStudy: function(){
+    this.closeTunnel()
     wx.navigateTo({
       url: '../../impromptu/quickMatch/quickMatch?start=1',
     })
@@ -720,12 +727,17 @@ Page({
     // }
   },
 
+  onShow: function(){
+    // 保持屏幕常亮
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    })
+  },
+
   onUnload: function () {
     clearInterval(waitSecondsId)
     this.stopTime()
     this.sendSpeech({ status: 7 })
-    if (this.tunnel) {
-      this.tunnel.close();
-    }
+    this.closeTunnel()
   },
 })
