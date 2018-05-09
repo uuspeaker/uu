@@ -9,11 +9,11 @@ module.exports = {
     var userId = await userInfo.getOpenId(ctx)
     var totalStudyDuration = await userInfoService.getTotalStudyDuration(userId)
     var todayStudyDuration = await userInfoService.getTodayStudyDuration(userId)
-    var totalInfluenceDuration = await userInfoService.getMyInfluenceTotal(userId)
+    //var totalInfluenceDuration = await userInfoService.getMyInfluenceTotal(userId)
     ctx.state.data = {
       totalStudyDuration: totalStudyDuration,
       todayStudyDuration: todayStudyDuration,
-      totalInfluenceDuration: totalInfluenceDuration
+      totalInfluenceDuration: 0
     }
   },
 

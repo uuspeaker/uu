@@ -12,6 +12,7 @@ var getUserInfo =  (userInfoStr) => {
   var userInfo = {}
   userInfo.nickName = userInfoTmp.nickName
   userInfo.avatarUrl = userInfoTmp.avatarUrl
+  userInfo.userId = userInfoTmp.openId
   return userInfo
 }
 

@@ -151,7 +151,7 @@ Page({
 
   // 进入rtcroom页面
   doGoRoom: function (userInfo) {
-    var url = '../quickMatchRoom/quickMatchRoom?roomId=' + userInfo.roomId + '&userId=' + userId + '&nickName=' + userInfo.matchedUser.nickName + '&avatarUrl=' + userInfo.matchedUser.avatarUrl + '&speechName=' + userInfo.speechName
+    var url = '../quickMatchRoom/quickMatchRoom?roomId=' + userInfo.roomId + '&userId=' + userId + '&nickName=' + userInfo.matchedUser.nickName + '&avatarUrl=' + userInfo.matchedUser.avatarUrl + '&speechName=' + userInfo.speechName + '&matchUserId=' + userInfo.userId
       console.log(url)
       wx.navigateTo({
         url: url
@@ -171,6 +171,12 @@ Page({
         }
       }
     })
+  },
+
+  onLoad:function(options){
+    if(options.start == 1){
+      this.startMatch()
+    }
   },
 
   onHide: function () {

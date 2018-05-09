@@ -1,19 +1,19 @@
-<view class="weui-cell write top">
+<!--view class="weui-cell write top">
   <view class=" myReport" style="{{viewStyle[0]}}" data-item='0' data-type='1' bindtap='queryStudyRank'>
   学习力
   </view>
   <view class=" myReport" style="{{viewStyle[1]}}" data-item='1' data-type='2' bindtap='queryStudyRank'>
   影响力
   </view>
-</view>
-
-<view class="weui-cells weui-cells_after-title middle" >
+</view-->
+<view class="small-grey" style='margin-bottom:10px;font-weight:bold;'>
+<view>说明：每练习1分钟积1分</view></view>
+<view class="weui-cells weui-cells_after-title" >
   <block wx:for="{{rankList}}" wx:key="item">
     <template is="scoreDetailTemplate" data="{{...item}}" />
   </block>
 </view>
-<view class="bottom small-grey" style='margin-bottom:10px;font-weight:bold;'>
-<view>说明：自己学习增加学习力，组织大家学习增加影响力</view></view>
+
 
   <template name="scoreDetailTemplate">
   <view class="weui-cell" bindtap='toUserInfo' data-user_id='{{user_info.userId}}' data-avatar_url='{{user_info.avatarUrl}}' data-nick_name='{{user_info.nickName}}' >

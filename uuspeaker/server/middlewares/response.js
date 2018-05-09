@@ -50,7 +50,7 @@ module.exports = async function (ctx, next) {
         log.info(JSON.stringify(global.log))
     } catch (e) {
       global.log.error = e
-      log.logErrMsg(ctx, JSON.stringify(global.log), start)
+      log.warn(JSON.stringify(global.log))
         // catch 住全局的错误信息
         debug('Catch Error: %o', e)
 

@@ -11,16 +11,16 @@ Page({
    */
   data: {
     targetStatus: 0,
-    rank:'',
-    newCommentAmount:0,
+    rank: '',
+    newCommentAmount: 0,
 
     userInfo: {},
     totalStudyScore: 0,
     todayStudyDuration: 0,
-    todayStudyScore:0,
-    totalInfluenceScore:0,
+    todayStudyScore: 0,
+    totalInfluenceScore: 0,
 
-    myFansTotal:'',
+    myFansTotal: '',
     likeUserTotal: '',
 
     speechScore: 0,
@@ -97,20 +97,20 @@ Page({
     })
   },
 
-  getTargetTaskData: function(data,taskType){
-    for(var i=0; i<data.length; i++){
-      if (data[i].task_type == taskType){
+  getTargetTaskData: function (data, taskType) {
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].task_type == taskType) {
         return data[i]
-      }  
+      }
     }
     return { view_amount: 0, like_amount: 0, comment_amount: 0, isComplete: 0 }
   },
 
-  getTotalTimeDuration: function(audioType){
+  getTotalTimeDuration: function (audioType) {
     var timeDurationAll = this.data.timeDurationAll
-    for (var i = 0; i<timeDurationAll.length; i++){
-      if (timeDurationAll[i].audio_type == audioType){
-        return Math.floor(timeDurationAll[i].totalDuration/60)
+    for (var i = 0; i < timeDurationAll.length; i++) {
+      if (timeDurationAll[i].audio_type == audioType) {
+        return Math.floor(timeDurationAll[i].totalDuration / 60)
       }
     }
     return 0
@@ -147,7 +147,7 @@ Page({
       url: '../specialTaskList/specialTaskList',
     })
   },
-  
+
   toImpromptuIndex: function (e) {
     wx.navigateTo({
       url: '../../impromptu/impromptuIndex/impromptuIndex',
@@ -155,7 +155,7 @@ Page({
   },
   toQuickMatch: function (e) {
     wx.navigateTo({
-      url: '../../impromptu/quickMatch/quickMatch',
+      url: '../../impromptu/quickMatch/quickMatch?start=0',
     })
   },
 
@@ -172,15 +172,15 @@ Page({
   },
 
   toStudyShow: function () {
-  wx.navigateTo({
-    url: '../../study/studyShow/studyShow',
-  })
+    wx.navigateTo({
+      url: '../../study/studyShow/studyShow',
+    })
   },
 
   toLikeUserList: function (e) {
-  wx.navigateTo({
-    url: '../../userInfo/likeUserList/likeUserList?queryUserType=' + e.currentTarget.dataset.type,
-  })
+    wx.navigateTo({
+      url: '../../userInfo/likeUserList/likeUserList?queryUserType=' + e.currentTarget.dataset.type,
+    })
   },
 
   toDoSpecialTask: function (e) {
@@ -224,27 +224,29 @@ Page({
       url: '../../speech/evaluateSpeechName/evaluateSpeechName'
     })
   },
-  
-  onLoad:function(){
+
+  onLoad: function () {
     var that = this
     wx.checkSession({
       success: function () {
         //session_key 未过期，并且在本生命周期一直有效
-        that.initIndex()
+        //that.initIndex()
       },
       fail: function () {
         // session_key 已经失效，需要重新执行登录流程
         qcloud.login({
           success: function () {
-            that.initIndex()
+            //that.initIndex()
           },
-        }) 
-  }
-})
-
-    
+        })
+      }
+    })
   },
- 
+
+  onShow: function () {
+    this.initIndex()
+  },
+
   initIndex: function (options) {
     this.initUserInfo()
     this.queryLikeUserTotal()
@@ -252,7 +254,7 @@ Page({
     this.queryNewCommentAmount()
   },
 
-  onReady: function(){
+  onReady: function () {
     wx.showShareMenu({
       withShareTicket: true
     })

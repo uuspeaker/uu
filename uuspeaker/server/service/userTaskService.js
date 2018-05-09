@@ -92,7 +92,7 @@ var deleteTask = async (taskId) => {
 
 //点评任务
 var evaluateTask = async (taskAudioId, evaluationAudioId, userId, timeDuration) => {
-  audioService.evaluateAudio('', evaluationAudioId, '', userId, timeDuration, taskAudioId)
+  audioService.evaluateAudio('', evaluationAudioId, userId, timeDuration, taskAudioId)
 }
 
 /**

@@ -22,8 +22,10 @@ module.exports = {
     var targetAudioId = ctx.request.body.targetAudioId
     var evaluationAudioId = ctx.request.body.evaluationAudioId
     var timeDuration = ctx.request.body.timeDuration
-    await audioService.evaluateAudio('', evaluationAudioId, userId, timeDuration, targetAudioId)
-    var src = await audioService.getSrc(audioId)
+    var roomId = ctx.request.body.roomId
+    if (roomId == undefined) roomId = ''
+    await audioService.evaluateAudio(roomId, evaluationAudioId, userId, timeDuration, targetAudioId)
+    var src = await audioService.getSrc(evaluationAudioId)
     ctx.state.data = src
   },
 

@@ -28,8 +28,14 @@
 <view class="weui-cells  ">
   <view class="weui-cell">
     <view class="">
+    <view>
       <image class="host-pic2" src="{{matchedUser.avatarUrl}}" />
+      </view>
+       <block wx:if="{{isLikeUser == 0}}">
+      <view class='likeYou' bindtap='likeUser'>关注TA</view>
+      </block>
     </view>
+    
     <view class="weui-cell__bd" style='padding-left:10px;'>
       <view class='title'>{{matchedUser.nickName}}的演讲 
       <block wx:if='{{matchedUserStatus < 1}}'><text style='color:grey'>未开始</text></block>
@@ -107,13 +113,18 @@
       <button type='primary' bindtap='stopSpeech'>完成演讲</button>
     </block>
     <block wx:if="{{studyStep == 2 && isPlay == 0}}">
-      <button type='primary' bindtap='startEvaluation' disabled='{{disableEvaluation}}'>开始鼓励</button>
+      <block wx:if="{{matchedUserStatus < 2}}">
+      <button type='primary' bindtap='startEvaluation' disabled='true'>待对方演讲结束后聆听并进行鼓励</button>
+      </block>
+      <block wx:if="{{matchedUserStatus >= 2}}">
+      <button type='primary' bindtap='startEvaluation' >开始鼓励</button>
+      </block>
     </block>
     <block wx:if="{{studyStep == 2 &&  isPlay == 1}}">
       <button type='primary' bindtap='stopEvaluation'>完成鼓励</button>
     </block>
     <block wx:if="{{studyStep == 3}}">
-      <button type='primary' bindtap='completeStudy'>结束练习</button>
+      <button type='primary' bindtap='completeStudy'>太棒了，你完成了本轮练习，再来一次吧</button>
     </block>
 
 </view>

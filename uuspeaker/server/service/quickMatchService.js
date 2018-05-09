@@ -36,10 +36,10 @@ var startMatch = (userInfo) => {
   
   var standByListLegnth = standByList.length
   for (var i = 0; i < standByListLegnth; i++) {
-    // if (standByList[i].userId == userInfo.userId) {
-    //   standByList[i].startDate = new Date()
-    //   return
-    // }
+    if (standByList[i].userId == userInfo.userId) {
+      standByList[i].startDate = new Date()
+      return
+    }
   }
   var matchedListLegnth = matchedList.length
   for (var i = 0; i < matchedListLegnth; i++) {
@@ -203,8 +203,8 @@ var updateUserStatus = (roomId, userId) => {
   
 }
 
+initSpeechNames()
 setInterval(autoMatchUser, 1 * 1000);
-setInterval(removeOfflineRooms, 5 * 1000);
-initSpeechNames();
+setInterval(initSpeechNames, 10 * 60 * 1000);
 
 module.exports = { startMatch, stopMatch, autoMatchUser, getMatchInfo, getRoomInfo, giveSpeech, updateUserStatus }

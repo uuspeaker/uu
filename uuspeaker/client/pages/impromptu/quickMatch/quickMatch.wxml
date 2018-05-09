@@ -9,13 +9,15 @@
 
 
 <view class='middle' style='padding-top:30px' wx:if='{{isMatching == 0}}' >
-<view class='tipTitle'>双人即兴演讲练习：</view>  
-<view class='tip'>1. 系统自动匹配玩家</view>
-<view class='tip'>2. 系统自动出题</view>
-<view class='tip'>3. 10秒内开始演讲，演讲时间2分钟</view>
-<view class='tip'>4. 听对方的演讲，2分钟</view>
-<view class='tip'>5. 点评对方的演讲，1分钟</view>
-<view class='tip'>6. 结束练习，离开房间</view>
+<view class='tipTitle'>即兴演讲练习流程：</view>  
+<view class='tip'>1. 匹配成功立即进入房间，系统自动出题</view>
+<view class='tip'>2. 10秒倒计时结束开始演讲，时间2分钟【练习演讲】</view>
+<view class='tip'>3. 对方演讲结束后请倾听并鼓励对方，时间1分钟【练习鼓励】</view>
+<view class='tip'>4. 结束练习</view>
+
+
+<view class='tipTitle'>温馨提示：</view>  
+<view class='tip'>即兴演讲练习具备较强的挑战性，有些题目不知道怎么讲是很正常的事情，但是只要你坚持练习，就一定会有所收获，加油！</view>
 
 <view style='padding-bottom:30px;'></view>
 </view>

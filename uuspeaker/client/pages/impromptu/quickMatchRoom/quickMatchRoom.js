@@ -6,7 +6,7 @@ var getlogininfo = require('../../../getlogininfo.js')
 var userInfo = require('../../../common/userInfo.js')
 var uuid = require('../../../common/uuid.js')
 
-var timeDurationMin = 1
+var timeDurationMin = 30
 var userId = ''
 var roomId = ''
 var getRoomInfoId = ''
@@ -47,7 +47,7 @@ Page({
     audioType: 1,
     speeches:{},
     speechStatus: 1,
-    waitSeconds:3,
+    waitSeconds:10,
     studyStep:1,
     disableEvaluation:true,
     speechName:'',
@@ -57,6 +57,8 @@ Page({
     isPlay:0,
     allAudio:[],
     messageNotice:'',
+
+    isLikeUser:1,
 
     speechInfo: {audioId:'', src: '', timeDuration: 0, currentDuration:0,play: 0, sliderValue: 0, currentTime:'00:00',duration:'00:00'},
     evaluationInfo: {audioId:'', src: '', timeDuration: 0, currentDuration:0,play: 0, sliderValue: 0, currentTime: '00:00', duration: '00:00'},
@@ -169,9 +171,6 @@ Page({
   
 
   startTime: function () {
-    wx.showLoading({
-        title: '录音中',
-      })
     recorderManager.start(options)
     this.setData({
       isPlay: 1
@@ -198,7 +197,7 @@ Page({
     timeLimit = 120
   },
   stopSpeech: function(){
-    wx.hideLoading()
+    //wx.hideLoading()
     //this.sendSpeech({ status: 2, audioId: audioId, timeDuration: timeDuration})
     this.stopTime()
     this.setData({
@@ -227,6 +226,10 @@ Page({
       timeDuration = timeDuration - 1
       return
     }
+    wx.showToast({
+      title: '录音中',
+      image: '../../../images/audioDetail/voice.png',
+    })
     if (timeDuration >= timeLimit + 15) {
       if(this.data.studyStep == 1){
         this.stopSpeech()
@@ -433,13 +436,14 @@ Page({
     roomId = options.roomId
     //getRoomInfoId = setInterval(this.getRoomInfo,3000)
     this.setData({
-      matchedUser: { avatarUrl: options.avatarUrl,nickName:options.nickName},
+      matchedUser: { avatarUrl: options.avatarUrl,nickName:options.nickName,userId: options.matchUserId},
       speechName: options.speechName
     })
     this.initUserInfo()
     this.initAudio()
     waitSecondsId = setInterval(this.waitToBegin,1000) 
     this.openTunnel()
+    this.isLikeUser()
   },
 
   waitToBegin: function(){
@@ -457,8 +461,11 @@ Page({
 
   initAudio: function () {
     recorderManager.onStop((res) => {
+      // if (timeDuration < timeDurationMin){
+      //   util.showSuccess('录音太短不做保存')
+      //   return
+      // } 
       util.showSuccess('录音结束')
-      if (timeDuration < timeDurationMin) return
       this.saveAudio(res.tempFilePath)
       this.setData({
         isPlay: 0,
@@ -489,6 +496,35 @@ Page({
         this.data.evaluationInfo.sliderValue = (100 * innerAudioContext.currentTime / innerAudioContext.duration)
         this.data.evaluationInfo.currentTime = this.getFormatTimeForAudio(Math.floor(innerAudioContext.currentTime))
         this.data.evaluationInfo.currentDuration = Math.floor(innerAudioContext.currentTime)
+        this.setData({
+          evaluationInfo: this.data.evaluationInfo
+        })
+      }
+    })
+
+    innerAudioContext.onStop((res) => {
+      this.data.speechInfo.play = 0
+      this.data.evaluationInfo.play = 0
+      this.setData({
+        speechInfo: this.data.speechInfo,
+        evaluationInfo: this.data.evaluationInfo,
+      })
+    })
+    innerAudioContext.onEnded((res) => {
+      if (this.data.speechInfo.play == 1) {
+        this.data.speechInfo.sliderValue = 0
+        this.data.speechInfo.currentTime = '00:00'
+        this.data.speechInfo.currentDuration = 0
+        this.data.speechInfo.play = 0
+        this.setData({
+          speechInfo: this.data.speechInfo
+        })
+      }
+      if (this.data.evaluationInfo.play == 1) {
+        this.data.evaluationInfo.sliderValue = 0
+        this.data.evaluationInfo.currentTime = '00:00'
+        this.data.evaluationInfo.currentDuration = 0
+        this.data.evaluationInfo.play = 0
         this.setData({
           evaluationInfo: this.data.evaluationInfo
         })
@@ -539,6 +575,12 @@ Page({
       //util.showModel('信道消息', speak)
       console.log('收到说话消息：', speak)
       if (speak.who.avatarUrl == this.data.matchedUser.avatarUrl){
+        if (speak.data.status == 99){
+          this.setData({
+            messageNotice: speak.who.nickName + '关注了你'
+          })
+          return
+        }
         this.updateMatchedUserStatus(speak.data.status)
         if (speak.data.status == 2){
           this.initAudioInfo(this.data.speechInfo,speak.data)
@@ -619,17 +661,68 @@ Page({
   },
 
   completeStudy: function(){
-    wx.navigateBack({
-      
+    wx.navigateTo({
+      url: '../../impromptu/quickMatch/quickMatch?start=1',
+    })
+  },
+
+  isLikeUser: function () {
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/userInfo.likeUser`,
+      login: true,
+      data: { likeUserId: this.data.matchedUser.userId },
+      method: 'get',
+      success(result) {
+        that.setData({
+          isLikeUser: result.data.data
+        })
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
+  likeUser: function () {
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/userInfo.likeUser`,
+      login: true,
+      data: { likeUserId: this.data.matchedUser.userId },
+      method: 'post',
+      success(result) {
+        util.showSuccess('已关注用户')
+        that.setData({
+          isLikeUser: 1
+        })
+        that.sendSpeech({status:99})
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
+  toUserInfo: function (e) {
+    wx.navigateTo({
+      url: '../../userInfo/userInfoShow/userInfoShow?userId=' + e.currentTarget.dataset.user_id
     })
   },
 
   onHide: function () {
-    clearInterval(getRoomInfoId)
+    //this.stopTime()
+    // this.sendSpeech({ status: 7 })
+    // if (this.tunnel) {
+    //   this.tunnel.close();
+    // }
   },
 
   onUnload: function () {
-    clearInterval(getRoomInfoId)
+    clearInterval(waitSecondsId)
+    this.stopTime()
     this.sendSpeech({ status: 7 })
     if (this.tunnel) {
       this.tunnel.close();

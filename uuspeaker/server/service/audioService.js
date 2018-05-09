@@ -172,7 +172,7 @@ var evaluateAudio = async (roomId, evaluationAudioId, userId, timeDuration, spee
       room_id: roomId,
       time_duration: timeDuration,
       audio_type: 2,
-      audio_status: 1,
+      audio_status: 2,
       relate_audio: speechAudioId
     })
   }
