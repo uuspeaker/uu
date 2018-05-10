@@ -18,7 +18,14 @@ const regionMap = {
   'eu-frankfurt': 'ger'
 }
 
+const cos = new CosSdk({
+  AppId: config.qcloudAppId,
+  SecretId: config.qcloudSecretId,
+  SecretKey: config.qcloudSecretKey,
+  Domain: `http://${config.cos.fileBucket}-${config.qcloudAppId}.cos.${config.cos.region}.myqcloud.com/`
+})
 
+debug('Cos sdk init finished')
 
 /**
  * 对象上传 API
@@ -28,14 +35,7 @@ const regionMap = {
 
 // 初始化 sdk
 const upload = async (ctx) => {
-  const cos = new CosSdk({
-    AppId: config.qcloudAppId,
-    SecretId: config.qcloudSecretId,
-    SecretKey: config.qcloudSecretKey,
-    Domain: `http://${config.cos.fileBucket}-${config.qcloudAppId}.cos.${config.cos.region}.myqcloud.com/`
-  })
-
-  debug('Cos sdk init finished')
+  
 
   // 处理文件上传
   const { fields, files } = await resolveUploadFileFromRequest(ctx.req)

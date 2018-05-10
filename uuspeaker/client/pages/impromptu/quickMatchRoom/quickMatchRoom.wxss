@@ -22,17 +22,36 @@
   padding-bottom:15px;
 }
 .speechName{
-  font-size:24px;
-  font-weight: bold;
+  font-size:20px;
   text-align: center;
   margin-top:20px;
   margin-bottom: 15px;
+  font-weight: bold;
 }
+.twinkle{
+	animation:myfirst 5s;
+	-webkit-animation:myfirst 5s; /* Safari and Chrome */
+}
+
+@keyframes myfirst
+{
+	from {color:red;}
+	to {color:black;}
+}
+
+
 .nickName{
   font-size:17px;
   text-align: center;
   color: grey;
+  width: 120px;
+  word-break: keep-all;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
 }
+
 .likeYou{
   border:0.5px solid grey;
   font-size: 11px;

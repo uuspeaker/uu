@@ -10,19 +10,13 @@ const fs = require('fs')
 
 var post = async (ctx) => {
     // const { fields, files } = await resolveUploadFileFromRequest(ctx.req)
-    try {
+
       //保存音频文件
-       await uploadAudio.upload(ctx)
+     await uploadAudio.upload(ctx)
       //将音频转化成文字
       // var audioArr = await audioToText(files)
       // ctx.state.data = audioArr
-    } catch (e) {
-      console.log('imromptuAudio fail', e)
-    } finally {
-      // if (files.file[0]) {
-      //   fs.unlink(files.file[0].path, (err) => { console.log(err) })
-      // }
-    }
+
   }
   /**
  * 从请求体重解析出文件

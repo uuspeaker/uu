@@ -376,6 +376,8 @@ Page({
       })
     })
     innerAudioContext.onError((res) => {
+      wx.hideLoading()
+      util.showNotice('音频加载失败')
       console.log(res.errMsg)
       console.log(res.errCode)
     })

@@ -226,15 +226,22 @@ Page({
       timeDuration = timeDuration - 1
       return
     }
-    wx.showToast({
-      title: '录音中',
-      image: '../../../images/audioDetail/voice.png',
-    })
+    if (timeDuration % 2 ==0){
+      wx.showToast({
+        title: '录音中',
+        image: '../../../images/audioDetail/voice2.png',
+      })
+    }else{
+      wx.showToast({
+        title: '录音中',
+        image: '../../../images/audioDetail/voice3.png',
+      })
+    }
     if (timeDuration >= timeLimit + 15) {
       if(this.data.studyStep == 1){
         this.stopSpeech()
       }
-      if(this.data.studyStep == 1){
+      if(this.data.studyStep == 2){
         this.stopEvaluation()
       }
     }
@@ -304,7 +311,6 @@ Page({
       formData: { audioId: audioId },
       success: function (result) {
         console.log('saveAudio success')
-        console.log(that.data.studyStep)
         if (that.data.audioType == 1){
           that.saveSpeechData()
         }
@@ -441,9 +447,13 @@ Page({
     })
     this.initUserInfo()
     this.initAudio()
-    waitSecondsId = setInterval(this.waitToBegin,1000) 
     this.openTunnel()
     this.isLikeUser()
+    setTimeout(this.noticeSpeechName,3000)
+  },
+
+  noticeSpeechName: function(){
+    waitSecondsId = setInterval(this.waitToBegin, 1000) 
   },
 
   waitToBegin: function(){
@@ -529,6 +539,13 @@ Page({
           evaluationInfo: this.data.evaluationInfo
         })
       }
+    })
+
+    innerAudioContext.onError((res) => {
+      wx.hideLoading()
+      util.showNotice('音频加载失败')
+      console.log(res.errMsg)
+      console.log(res.errCode)
     })
   },
 
@@ -669,8 +686,11 @@ Page({
 
   completeStudy: function(){
     this.closeTunnel()
-    wx.navigateTo({
-      url: '../../impromptu/quickMatch/quickMatch?start=1',
+    // wx.navigateTo({
+    //   url: '../../impromptu/quickMatch/quickMatch?start=1',
+    // })
+    wx.navigateBack({
+      
     })
   },
 

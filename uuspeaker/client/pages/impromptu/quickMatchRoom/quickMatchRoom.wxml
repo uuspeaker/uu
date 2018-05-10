@@ -5,7 +5,7 @@
       <view>
         <image class="host-pic" src="{{userInfo.avatarUrl}}" />
       </view>
-      <view class='nickName'>{{userInfo.nickName}}</view>
+      <view class='nickName'>{{userInfo.nickName}}432432423fdsfsdfsd423423</view>
     </view>
     <view class="weui-flex__item pic-center">
       <view class='vs' style=''>vs</view>
@@ -21,7 +21,7 @@
   </view>
 </view>
 
-<view class='speechName'>演讲题目：{{speechName}}</view>
+<view class='speechName twinkle'>演讲题目：{{speechName}}</view>
 
 
 
