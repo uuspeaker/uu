@@ -7,6 +7,7 @@ const debug = require('debug')('koa-weapp-demo')
  * 实际使用请使用数据库存储
  */
 const userMap = {}
+const tunnelMap = {}
 
 // 保存 当前已连接的 WebSocket 信道ID列表
 const connectedTunnelIds = []
@@ -18,6 +19,26 @@ const connectedTunnelIds = []
  */
 const $broadcast = (type, content) => {
   tunnel.broadcast(connectedTunnelIds, type, content)
+    .then(result => {
+      const invalidTunnelIds = result.data && result.data.invalidTunnelIds || []
+
+      if (invalidTunnelIds.length) {
+        console.log('检测到无效的信道 IDs =>', invalidTunnelIds)
+
+        // 从 userMap 和 connectedTunnelIds 中将无效的信道记录移除
+        invalidTunnelIds.forEach(tunnelId => {
+          delete userMap[tunnelId]
+
+          const index = connectedTunnelIds.indexOf(tunnelId)
+          if (~index) {
+            connectedTunnelIds.splice(index, 1)
+          }
+        })
+      }
+    })
+}
+const $sendMessage = (targetTunnelId,type, content) => {
+  tunnel.broadcast([targetTunnelId], type, content)
     .then(result => {
       const invalidTunnelIds = result.data && result.data.invalidTunnelIds || []
 
@@ -88,7 +109,7 @@ function onMessage(tunnelId, type, content) {
       break
     case 'speech':
       if (tunnelId in userMap) {
-        $broadcast('speak', {
+        $sendMessage(tunnelMap[content.targetUserId],'speak', {
           'who': userMap[tunnelId],
           'data': content
         })
@@ -115,6 +136,8 @@ function onClose(tunnelId) {
     return
   }
 
+  delete tunnelMap[userMap[tunnelId].openId]
+
   const leaveUser = userMap[tunnelId]
   delete userMap[tunnelId]
 
@@ -139,6 +162,7 @@ module.exports = {
     const tunnelInfo = data.tunnel
 
     userMap[tunnelInfo.tunnelId] = data.userinfo
+    tunnelMap[data.userinfo.openId] = tunnelInfo.tunnelId
 
     ctx.state.data = tunnelInfo
   },

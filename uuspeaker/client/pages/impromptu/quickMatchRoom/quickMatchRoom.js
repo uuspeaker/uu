@@ -14,7 +14,7 @@ var waitSecondsId = ''
 
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext();
-const statusNotice = ['进入房间', '开始演讲', '完成演讲', '开始听你的演讲', '开始点评', '点评结束','开始听你的点评','离开房间']
+const statusNotice = ['进入房间', '开始演讲', '完成演讲', '开始听你的演讲', '开始鼓励', '完成鼓励','开始听你的鼓励','离开房间']
 
 const options = {
   duration: 600000,
@@ -28,7 +28,7 @@ var timeDuration = 0 //演讲时间
 var timeLimit = 120  //演讲总时间
 
 var audioId = ''
-var audioTypeArr = ['', '演讲', '点评']
+var audioTypeArr = ['', '演讲', '鼓励']
 //包含房间信息，房主信息
 Page({
 
@@ -346,10 +346,10 @@ Page({
     qcloud.request({
       url: `${config.service.host}/weapp/audio.audioComment`,
       login: true,
-      data: { evaluationAudioId: audioId, targetAudioId: this.data.speechInfo.audioId, timeDuration: timeDuration, audioType: 2 },
+      data: { 'roomId': roomId , evaluationAudioId: audioId, targetAudioId: this.data.speechInfo.audioId, timeDuration: timeDuration, audioType: 2 },
       method: 'post',
       success(result) {
-        util.showSuccess('点评保存成功')
+        util.showSuccess('鼓励保存成功')
         console.log(result)
         var src = result.data.data
         that.sendSpeech({ status: 5, audioId: audioId, timeDuration: timeDuration, src: src })
@@ -651,6 +651,7 @@ Page({
     // 使用 tunnel.isActive() 来检测当前信道是否处于可用状态
     if (this.tunnel && this.tunnel.isActive()) {
       // 使用信道给服务器推送「speak」消息
+      content.targetUserId = this.data.matchedUser.userId
       this.tunnel.emit('speech', content);
     }
   },

@@ -149,7 +149,22 @@ var getMatchInfo = (userId) => {
   return 0
 }
 
-setInterval(autoMatchUser, 1 * 1000);
-setInterval(removeOfflineUser, 5 * 1000);
+//定期删除超过20分钟的房间
+var removeOfflineRooms = () => {
+  var now = new Date()
+  var roomListLegnth = roomList.length
+  var removeAmount = 0
+  for (var i = 0; i < roomListLegnth; i++) {
+    var lastTime = Math.floor(now - roomList[i].startDate)
+    if (lastTime >= roomTime) {
+      var removedRoom = roomList.splice(i - removeAmount, 1)
+      log.info('20分钟后将房间删除' + JSON.stringify(removedRoom))
+      removeAmount++
+    }
+  }
+}
+
+// setInterval(autoMatchUser, 1 * 1000);
+// setInterval(removeOfflineUser, 5 * 1000);
 
 module.exports = { enterRoom, leaveRoom, startMatch, stopMatch,autoMatchUser, getMatchInfo }

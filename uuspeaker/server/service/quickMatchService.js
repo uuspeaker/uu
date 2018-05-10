@@ -12,20 +12,7 @@ var onlineList = []
 var speechNames = []
 
 
-//定期删除超过20分钟的房间
-var removeOfflineRooms = () => {
-  var now = new Date()
-  var roomListLegnth = roomList.length
-  var removeAmount = 0
-  for (var i = 0; i < roomListLegnth; i++) {
-    var lastTime = Math.floor(now - roomList[i].startDate)
-    if (lastTime >= roomTime) {
-      var removedRoom = roomList.splice(i - removeAmount, 1)
-      log.info('20分钟后将房间删除' + JSON.stringify(removedRoom))
-      removeAmount++
-    }
-  }
-}
+
 
 var initSpeechNames = async () => {
   speechNames = await mysql("speech_name_info").select('speech_name')
@@ -41,10 +28,9 @@ var startMatch = (userInfo) => {
       return
     }
   }
-  var matchedListLegnth = matchedList.length
-  for (var i = 0; i < matchedListLegnth; i++) {
-    if (matchedList[i].userId == userInfo.userId) return
-  }
+
+  if (matchedList[userInfo.userId] != undefined) return
+
   userInfo.startDate = new Date()
   standByList.unshift(userInfo)
   log.info('用户开始匹配' + JSON.stringify(userInfo))
@@ -84,15 +70,11 @@ var stopMatch = (userId) => {
 //定期删除匹配到了但未参加的用户
 var removeMatchUser = () => {
   var now = new Date()
-  var matchedListLegnth = matchedList.length
-  var removeAmount = 0
-  for (var i = 0; i < matchedListLegnth; i++) {
-    var lastSeconds = Math.floor(now - matchedList[i].startDate)
+  for (var userId in matchedList) {
+    var lastSeconds = Math.floor(now - matchedList[userId].startDate)
     if (lastSeconds >= waitTime) {
-      var removedUser = matchedList.splice(i - removeAmount, 1)
-      log.info('匹配成功后30秒用户未响应，将用户从匹配成功列表删除' + JSON.stringify(removedUser))
-      log.info('当前所有匹配成功的用户' + JSON.stringify(standByList))
-      removeAmount++
+      log.info('匹配成功后30秒用户未响应，将用户从匹配成功列表删除' + JSON.stringify(matchedList[userId]))
+      delete matchedList[userId]
     }
   }
 }
@@ -109,8 +91,8 @@ var autoMatchUser = () => {
     var matchUserA = standByList.pop()
     var matchUserB = standByList.pop()
     var speechName = getRandomSpeechName()
-    matchedList.push({ userId: matchUserA.userId, matchedUser: matchUserB,roomId: roomId, speechName: speechName, startDate: new Date() })
-    matchedList.push({ userId: matchUserB.userId, matchedUser: matchUserA,roomId: roomId, speechName: speechName, startDate: new Date() })
+    matchedList[matchUserA.userId] = { userId: matchUserA.userId, matchedUser: matchUserB,roomId: roomId, speechName: speechName, startDate: new Date() }
+    matchedList[matchUserB.userId] = { userId: matchUserB.userId, matchedUser: matchUserA,roomId: roomId, speechName: speechName, startDate: new Date() }
     
     // matchUserA.status = 1
     // matchUserA.audios = []
@@ -131,80 +113,79 @@ var getRandomSpeechName = () => {
 }
 
 var getMatchInfo = (userId) => {
-  var length = matchedList.length
-  for (var i = 0; i < length; i++) {
-    if (matchedList[i].userId == userId) {
-       var removedUser = matchedList.splice(i, 1)
-       log.info('匹配成功，将用户从匹配成功列表删除' + JSON.stringify(removedUser))
-       return removedUser[0]
-    }
+
+  var removedUser = matchedList[userId] 
+  if (removedUser == undefined){
+    return 0
   }
-  return 0
+  log.info('匹配成功，将用户从匹配成功列表删除' + JSON.stringify(removedUser))
+  delete matchedList[userId] 
+  return removedUser
 }
 
-var getRoomInfo = (roomId) => {
-  var length = roomList.length
-  for (var i = 0; i < length; i++) {
-    if (roomList[i].roomId == roomId) {
-      return roomList[i]
-    }
-  }
-  return {}
-}
+// var getRoomInfo = (roomId) => {
+//   var length = roomList.length
+//   for (var i = 0; i < length; i++) {
+//     if (roomList[i].roomId == roomId) {
+//       return roomList[i]
+//     }
+//   }
+//   return {}
+// }
 
-var giveSpeech = (roomId, userId, audioId, audioType, timeDuration) => {
-  var length = roomList.length
-  var userInfo
-  updateUserStatus(roomId, userId)
-  for (var i = 0; i < length; i++) {
-    if (roomList[i].roomId == roomId) {
-      if (roomList[i].userList[0].userId = userId) {
-        userInfo = roomList[i].userList[0].audios.push({
-          userInfo: userInfo,
-          audioId: audioId,
-          src: audioService.getSrc(audioId),
-          audioType: audioType,
-          timeDuration: timeDuration
-        })
-      } else {
-        userInfo = roomList[i].userList[1].audios.push({
-          userInfo: userInfo,
-          audioId: audioId,
-          src: audioService.getSrc(audioId),
-          audioType: audioType,
-          timeDuration: timeDuration
-        })
-      }
-      // roomList[i].speeches.push({ 
-      //   userInfo: userInfo,
-      //   audioId: audioId,
-      //   src: audioService.getSrc(audioId), 
-      //   audioType: audioType, 
-      //   timeDuration: timeDuration
-      //   })
+// var giveSpeech = (roomId, userId, audioId, audioType, timeDuration) => {
+//   var length = roomList.length
+//   var userInfo
+//   updateUserStatus(roomId, userId)
+//   for (var i = 0; i < length; i++) {
+//     if (roomList[i].roomId == roomId) {
+//       if (roomList[i].userList[0].userId = userId) {
+//         userInfo = roomList[i].userList[0].audios.push({
+//           userInfo: userInfo,
+//           audioId: audioId,
+//           src: audioService.getSrc(audioId),
+//           audioType: audioType,
+//           timeDuration: timeDuration
+//         })
+//       } else {
+//         userInfo = roomList[i].userList[1].audios.push({
+//           userInfo: userInfo,
+//           audioId: audioId,
+//           src: audioService.getSrc(audioId),
+//           audioType: audioType,
+//           timeDuration: timeDuration
+//         })
+//       }
+//       // roomList[i].speeches.push({ 
+//       //   userInfo: userInfo,
+//       //   audioId: audioId,
+//       //   src: audioService.getSrc(audioId), 
+//       //   audioType: audioType, 
+//       //   timeDuration: timeDuration
+//       //   })
 
-      log.info('提交录音，房间最新信息' + JSON.stringify(roomList[i]))
-    }
-  }
+//       log.info('提交录音，房间最新信息' + JSON.stringify(roomList[i]))
+//     }
+//   }
   
-}
+// }
 
-var updateUserStatus = (roomId, userId) => {
-  var length = roomList.length
-  for (var i = 0; i < length; i++) {
-    if (roomList[i].roomId == roomId) {
-      if (roomList[i].userList[0].userId = userId) {
-        roomList[i].userList[0].status = roomList[i].userList[0].status + 1
-      } else {
-        roomList[i].userList[1].status = roomList[i].userList[0].status + 1
-      }
-    }
-  }
+// var updateUserStatus = (roomId, userId) => {
+//   var length = roomList.length
+//   for (var i = 0; i < length; i++) {
+//     if (roomList[i].roomId == roomId) {
+//       if (roomList[i].userList[0].userId = userId) {
+//         roomList[i].userList[0].status = roomList[i].userList[0].status + 1
+//       } else {
+//         roomList[i].userList[1].status = roomList[i].userList[0].status + 1
+//       }
+//     }
+//   }
   
-}
+// }
 
 initSpeechNames()
 setInterval(autoMatchUser, 1 * 1000);
 setInterval(initSpeechNames, 10 * 60 * 1000);
 
-module.exports = { startMatch, stopMatch, autoMatchUser, getMatchInfo, getRoomInfo, giveSpeech, updateUserStatus }
+module.exports = { startMatch, stopMatch, autoMatchUser, getMatchInfo }

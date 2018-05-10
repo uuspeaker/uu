@@ -180,21 +180,21 @@ Page({
   },
 
   onHide: function () {
-    this.leaveMatchRoom()
+    //this.leaveMatchRoom()
     if (this.data.isMatching == 1) {
       this.stopMatch()
     } else {
-      this.leaveMatchRoom()
+      //this.leaveMatchRoom()
     }
 
   },
 
   onUnload: function () {
-    this.leaveMatchRoom()
+    //this.leaveMatchRoom()
     if (this.data.isMatching == 1) {
       this.stopMatch()
     } else {
-      this.leaveMatchRoom()
+      //this.leaveMatchRoom()
     }
   },
 
