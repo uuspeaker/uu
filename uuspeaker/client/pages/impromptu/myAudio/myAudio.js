@@ -131,8 +131,7 @@ Page({
     queryPageType = 0
     firstDataTime = ''
     lastDataTime = ''
-    this.queryImpromptuAudios()
-    
+
     if (options.userId == undefined) {
 
     } else {
@@ -141,6 +140,7 @@ Page({
         nickName: options.nickName
       })
     }
+    this.queryImpromptuAudios()
     innerAudioContext.obeyMuteSwitch = false
     innerAudioContext.onPlay(() => {
       wx.hideLoading()
@@ -172,7 +172,9 @@ Page({
   },
 
   onShow: function(){
-     
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    })
   },
 
 

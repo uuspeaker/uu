@@ -157,6 +157,14 @@ Page({
         that.setData({
           userInfo: result.userInfo
         })
+        if (result.userInfo.gender == 1){
+          innerAudioContext.src = 'https://uuspeaker-1255679565.cos.ap-guangzhou.myqcloud.com/audio/5d412900-546d-11e8-840e-79d6fa3f1ef2.mp3'
+          innerAudioContext.play()
+        }else{
+          innerAudioContext.src = 'https://uuspeaker-1255679565.cos.ap-guangzhou.myqcloud.com/audio/9e91b000-5468-11e8-a755-db83a2682262.mp3'
+          innerAudioContext.play()
+        }
+         
       },
       fail(error) {
         util.showModel('请求失败', error)
@@ -171,6 +179,7 @@ Page({
   
 
   startTime: function () {
+    this.stopAllAudio()
     recorderManager.start(options)
     this.setData({
       isPlay: 1
@@ -238,10 +247,10 @@ Page({
       })
     }
     if (timeDuration >= timeLimit + 15) {
-      if(this.data.studyStep == 1){
+      if(this.data.audioType == 1){
         this.stopSpeech()
       }
-      if(this.data.studyStep == 2){
+      if (this.data.audioType == 2){
         this.stopEvaluation()
       }
     }
@@ -436,6 +445,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    
     //util.showSuccess('10秒后开始演讲')
     console.log(options)
     userId = options.userId
@@ -449,7 +459,7 @@ Page({
     this.initAudio()
     this.openTunnel()
     this.isLikeUser()
-    setTimeout(this.noticeSpeechName,3000)
+    setTimeout(this.noticeSpeechName,6000)
   },
 
   noticeSpeechName: function(){
@@ -734,12 +744,6 @@ Page({
     })
   },
 
-  toUserInfo: function (e) {
-    wx.navigateTo({
-      url: '../../userInfo/userInfoShow/userInfoShow?userId=' + e.currentTarget.dataset.user_id
-    })
-  },
-
   onHide: function () {
     //this.stopTime()
     // this.sendSpeech({ status: 7 })
@@ -753,6 +757,7 @@ Page({
     wx.setKeepScreenOn({
       keepScreenOn: true
     })
+    
   },
 
   onUnload: function () {
@@ -760,5 +765,6 @@ Page({
     this.stopTime()
     this.sendSpeech({ status: 7 })
     this.closeTunnel()
+    this.stopAllAudio()
   },
 })

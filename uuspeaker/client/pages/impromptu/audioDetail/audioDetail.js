@@ -421,7 +421,9 @@ Page({
   },
 
   onShow: function () {
-    
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    })
   },
 
   onReady: function () {

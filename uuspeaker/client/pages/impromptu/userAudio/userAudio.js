@@ -176,7 +176,9 @@ Page({
   },
 
   onShow: function(){
-    
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    })
   },
 
   toAudioDetail: function(e){

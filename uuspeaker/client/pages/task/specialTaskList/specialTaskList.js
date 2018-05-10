@@ -261,6 +261,12 @@ Page({
     })
   },
 
+  onShow: function(){
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    })
+  },
+
   onPullDownRefresh: function () {
     queryPageType = 1
     this.doQuerySpecialTask(queryUserType)
