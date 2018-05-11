@@ -1,7 +1,7 @@
 <view class="page">
   <view class="weui-flex  ">
 
-    <view class="weui-flex__item pic-center">
+    <view class="weui-flex__item pic-center picMoveRight">
       <view>
         <image class="host-pic" src="{{userInfo.avatarUrl}}" />
       </view>
@@ -11,7 +11,7 @@
       <view class='vs' style=''>vs</view>
 
     </view>
-    <view class="weui-flex__item pic-center">
+    <view class="weui-flex__item pic-center picMoveLeft">
       <view>
         <image class="host-pic" src="{{matchedUser.avatarUrl}}" />
       </view>
@@ -21,7 +21,7 @@
   </view>
 </view>
 
-<view class='speechName twinkle'>演讲题目：{{speechName}}</view>
+<view class='speechName'>演讲题目：{{speechName}}</view>
 
 
 

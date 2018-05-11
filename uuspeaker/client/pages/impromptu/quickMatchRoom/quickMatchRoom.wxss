@@ -5,6 +5,28 @@
   border-radius: 50px;
   margin-right: 10px;
 }
+.picMoveRight
+{
+	position:relative;
+	animation:myPicMoveRight 2s;
+	-webkit-animation:myPicMoveRight 2s; /* Safari and Chrome */
+}
+@keyframes myPicMoveRight
+{
+	0%  {left:150px;}
+	100% {left:0px}
+}
+.picMoveLeft
+{
+	position:relative;
+	animation:myPicMoveLeft 2s;
+	-webkit-animation:myPicMoveLeft 2s; /* Safari and Chrome */
+}
+@keyframes myPicMoveLeft
+{
+	0%  {right:150px; }
+	100% {right:0px}
+}
 .host-pic2 {
   width: 40px;
   height: 40px;
@@ -19,14 +41,31 @@
 }
 .vs{
   font-size:40px;
+  font-family: Arial, Helvetica, sans-serif;
   padding-bottom:15px;
+  animation:vsChange 1.5s;
+	-webkit-animation:vsChange 1.5s; 
+}
+@keyframes vsChange
+{
+	0%  {font-size:0px;}
+	100% {font-size:40px;}
 }
 .speechName{
-  font-size:20px;
+  height:24px;
+  color: orangered;
   text-align: center;
   margin-top:20px;
   margin-bottom: 15px;
   font-weight: bold;
+  animation:speechNameChange 4s;
+	-webkit-animation:speechNameChange 4s; 
+}
+@keyframes speechNameChange
+{
+	0%  {font-size:0px;}
+	30%  {font-size:0px;}
+	100% {font-size:24px;}
 }
 .twinkle{
 	animation:myfirst 5s;

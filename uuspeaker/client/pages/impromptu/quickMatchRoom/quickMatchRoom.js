@@ -54,7 +54,6 @@ Page({
 
     minute: '00',
     second: '00',
-    isPlay:0,
     allAudio:[],
     messageNotice:'',
 
@@ -156,15 +155,7 @@ Page({
       success(result) {
         that.setData({
           userInfo: result.userInfo
-        })
-        if (result.userInfo.gender == 1){
-          innerAudioContext.src = 'https://uuspeaker-1255679565.cos.ap-guangzhou.myqcloud.com/audio/5d412900-546d-11e8-840e-79d6fa3f1ef2.mp3'
-          innerAudioContext.play()
-        }else{
-          innerAudioContext.src = 'https://uuspeaker-1255679565.cos.ap-guangzhou.myqcloud.com/audio/5d412900-546d-11e8-840e-79d6fa3f1ef2.mp3'
-          innerAudioContext.play()
-        }
-         
+        })  
       },
       fail(error) {
         util.showModel('请求失败', error)
@@ -179,11 +170,11 @@ Page({
   
 
   startTime: function () {
-    this.stopAllAudio()
-    recorderManager.start(options)
     this.setData({
       isPlay: 1
     })
+    this.stopAllAudio()
+    recorderManager.start(options)
     timeDuration = 0
     audioId = uuid.v1()
     console.log('startTime audioId ', audioId)
@@ -191,10 +182,10 @@ Page({
   },
 
   stopTime: function () {
-    recorderManager.stop();
     this.setData({
       isPlay: 0
     })
+    recorderManager.stop();
   },
 
   startSpeech: function(){
@@ -348,6 +339,7 @@ Page({
         console.log(result)
         var src = result.data.data
         that.sendSpeech({ status: 2, audioId: audioId, timeDuration: timeDuration, src: src })
+        setTimeout(that.playAudioOfMatchedUser, 500)
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -368,12 +360,23 @@ Page({
         console.log(result)
         var src = result.data.data
         that.sendSpeech({ status: 5, audioId: audioId, timeDuration: timeDuration, src: src })
+        setTimeout(that.playAudioOfMatchedUser, 500)
       },
       fail(error) {
         util.showModel('请求失败', error);
         console.log('request fail', error);
       }
     })
+  },
+
+  playAudioOfMatchedUser: function(){
+    if (this.data.isPlay == 1)return
+    if (this.data.audioType == 1 && this.data.matchedUserStatus == 2){
+      this.playSpeechAudio()
+    }
+    if (this.data.audioType == 2 && this.data.matchedUserStatus == 5){
+      this.playEvaluationAudio()
+    }
   },
 
   updateSpeechStatus: function () {
@@ -445,7 +448,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    innerAudioContext.autoplay = true
+    innerAudioContext.src = 'https://uuspeaker-1255679565.cos.ap-guangzhou.myqcloud.com/audio/5d412900-546d-11e8-840e-79d6fa3f1ef2.mp3'
     //util.showSuccess('10秒后开始演讲')
     console.log(options)
     userId = options.userId
@@ -486,10 +490,10 @@ Page({
       //   return
       // } 
       util.showSuccess('录音结束')
-      this.saveAudio(res.tempFilePath)
       this.setData({
         isPlay: 0,
       })
+      this.saveAudio(res.tempFilePath)
     })
 
     innerAudioContext.obeyMuteSwitch = false
@@ -589,12 +593,12 @@ Page({
 
     tunnel.on('reconnecting', () => {
       console.log('WebSocket 信道正在重连...')
-      util.showBusy('正在重连')
+      //util.showBusy('正在重连')
     })
 
     tunnel.on('reconnect', () => {
       console.log('WebSocket 信道重连成功')
-      util.showSuccess('重连成功')
+      //util.showSuccess('重连成功')
     })
 
     tunnel.on('error', error => {
@@ -627,6 +631,7 @@ Page({
             evaluationInfo: this.data.evaluationInfo
           })
         }
+        setTimeout(this.playAudioOfMatchedUser,500)
         this.setData({
           messageNotice: speak.who.nickName + statusNotice[speak.data.status]
         })
