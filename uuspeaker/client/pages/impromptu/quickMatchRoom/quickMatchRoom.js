@@ -11,6 +11,7 @@ var userId = ''
 var roomId = ''
 var getRoomInfoId = ''
 var waitSecondsId = ''
+var isInRoom = 1
 
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext();
@@ -47,7 +48,7 @@ Page({
     audioType: 1,
     speeches:{},
     speechStatus: 1,
-    waitSeconds:10,
+    waitSeconds:15,
     studyStep:1,
     disableEvaluation:true,
     speechName:'',
@@ -189,6 +190,7 @@ Page({
   },
 
   startSpeech: function(){
+    if(isInRoom == 0)return
     this.sendSpeech({ status: 1 })
     this.startTime()
     this.setData({
@@ -339,7 +341,7 @@ Page({
         console.log(result)
         var src = result.data.data
         that.sendSpeech({ status: 2, audioId: audioId, timeDuration: timeDuration, src: src })
-        setTimeout(that.playAudioOfMatchedUser, 500)
+        that.playAudioOfMatchedUser()
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -360,7 +362,7 @@ Page({
         console.log(result)
         var src = result.data.data
         that.sendSpeech({ status: 5, audioId: audioId, timeDuration: timeDuration, src: src })
-        setTimeout(that.playAudioOfMatchedUser, 500)
+        that.playAudioOfMatchedUser()
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -448,8 +450,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    innerAudioContext.autoplay = true
-    innerAudioContext.src = 'https://uuspeaker-1255679565.cos.ap-guangzhou.myqcloud.com/audio/5d412900-546d-11e8-840e-79d6fa3f1ef2.mp3'
+    // innerAudioContext.autoplay = true
+    // innerAudioContext.src = 'https://uuspeaker-1255679565.cos.ap-guangzhou.myqcloud.com/audio/5d412900-546d-11e8-840e-79d6fa3f1ef2.mp3'
     //util.showSuccess('10秒后开始演讲')
     console.log(options)
     userId = options.userId
@@ -463,22 +465,23 @@ Page({
     this.initAudio()
     this.openTunnel()
     this.isLikeUser()
-    setTimeout(this.noticeSpeechName,6000)
-  },
-
-  noticeSpeechName: function(){
-    waitSecondsId = setInterval(this.waitToBegin, 1000) 
+    //this.waitToBegin()
+    //setTimeout(this.startSpeech,16000)
+    waitSecondsId = setInterval(this.waitToBegin, 1000)
   },
 
   waitToBegin: function(){
-    console.log(uuid.v1())
+    if(isInRoom == 0){
+      clearInterval(waitSecondsId)
+      return
+    }
+    console.log(this.data.waitSeconds)
     this.data.waitSeconds = this.data.waitSeconds - 1
     this.setData({
       waitSeconds: this.data.waitSeconds
     })
     if (this.data.waitSeconds == 0){
       clearInterval(waitSecondsId)
-      util.showSuccess('请开始演讲')
       this.startSpeech()
     }
   },
@@ -631,7 +634,7 @@ Page({
             evaluationInfo: this.data.evaluationInfo
           })
         }
-        setTimeout(this.playAudioOfMatchedUser,500)
+        this.playAudioOfMatchedUser()
         this.setData({
           messageNotice: speak.who.nickName + statusNotice[speak.data.status]
         })
@@ -762,11 +765,13 @@ Page({
     wx.setKeepScreenOn({
       keepScreenOn: true
     })
+    isInRoom = 1
     
   },
 
   onUnload: function () {
     clearInterval(waitSecondsId)
+    isInRoom = 0
     this.stopTime()
     this.sendSpeech({ status: 7 })
     this.closeTunnel()

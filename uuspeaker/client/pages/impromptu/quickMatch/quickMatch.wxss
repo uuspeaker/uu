@@ -47,7 +47,7 @@
   
 }
 .tip{
-  font-size:13px;
+  font-size:15px;
   margin-left: 30px;
   margin-right: 30px;
 }

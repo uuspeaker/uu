@@ -95,11 +95,14 @@
 
 
   <view class="weui-flex__item  timeCard" style='{{timeNoticeBackground}}'>
-  <block wx:if='{{waitSeconds == 0}}'>
+  <block wx:if='{{waitSeconds <= 0}}'>
     <view>{{minute}}:{{second}}</view>
     </block>
-    <block wx:if='{{waitSeconds > 0}}'>
+    <block wx:if='{{waitSeconds > 0 && waitSeconds < 10}}'>
   <view class='wait'>{{waitSeconds}}</view>
+</block>
+    <block wx:if='{{waitSeconds >= 10}}'>
+  <view style='font-size:24px;padding-top:30px'>计时结束后开始演讲</view>
 </block>
   </view>
 

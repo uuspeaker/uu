@@ -8,11 +8,13 @@
     <view class="weui-cell__bd">
       <view class="title">
         <view style='padding-left:10px'>
+        <block wx:if='{{comment_type == 1}}'>【点赞】</block>
+        <block wx:if='{{comment_type == 2}}'>【点评】</block>
           <text>{{audio_name}}</text>
         </view>
       </view>
       <view class="small-grey" style='margin-top:10px;'>
-        <text>作者：{{user_info.nickName}} </text>
+        <text>评论人：{{user_info.nickName}} </text>
       </view>
       <view class="weui-flex__item date">
         <view>{{createDateStr}} {{timeDurationStr}} </view>

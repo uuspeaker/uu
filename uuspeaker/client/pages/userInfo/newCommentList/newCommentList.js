@@ -105,8 +105,8 @@ Page({
   //保存第一条和最后一条数据的id,上拉和下拉的时候查询用
   refreshDataId: function () {
     var length = this.data.audios.length
-    firstDataTime = this.data.audios[0].create_date
-    lastDataTime = this.data.audios[length - 1].create_date
+    firstDataTime = this.data.audios[0].comment_date
+    lastDataTime = this.data.audios[length - 1].comment_date
   },
 
   //查询点赞用户信息
@@ -136,7 +136,7 @@ Page({
     var data = this.data.audios
     for (var i = 0; i < data.length; i++) {
       var now = new Date()
-      data[i].createDateStr = dateFormat.getSimpleFormatDate(data[i].create_date)
+      data[i].createDateStr = dateFormat.getSimpleFormatDate(data[i].comment_date)
       data[i].timeDurationStr = dateFormat.getFormatDuration(data[i].time_duration)
       if (data[i].src == src) {
         data[i].isPlay = 1

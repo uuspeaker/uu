@@ -13,15 +13,26 @@ const config = require('../config')
 var likeAudio = async (audioId,userId) => {
   var audioLikeUser = await mysql('impromptu_audio_like').where({ audio_id: audioId,user_id: userId })
   if (audioLikeUser.length == 0){
-    var audioView = await mysql('impromptu_audio').select('like_amount').where({ audio_id: audioId })
+    var audioData = await mysql('impromptu_audio').where({ audio_id: audioId })
     await mysql('impromptu_audio').update({
-      like_amount: audioView[0].like_amount + 1
+      like_amount: audioData[0].like_amount + 1
     }).where({ audio_id: audioId })
 
     await mysql('impromptu_audio_like').insert({
       audio_id: audioId,
       user_id: userId
     })
+
+    if (audioData[0].user_id != userId){
+      await mysql('new_comment').insert({
+        audio_id: audioId,
+        user_id: audioData[0].user_id,
+        comment_type: 1,
+        comment_user_id: userId,
+        audio_name: audioData[0].audio_name
+      })
+    }
+    
     return 1
   }else{
     return 0
@@ -45,6 +56,11 @@ var dontLikeAudio = async (audioId, userId) => {
     await mysql('impromptu_audio_like').where({
       audio_id: audioId,
       user_id: userId
+    }).del()
+
+    await mysql('new_comment').where({
+      audio_id: audioId,
+      comment_user_id: userId
     }).del()
   }
 }
@@ -183,7 +199,9 @@ var evaluateAudio = async (roomId, evaluationAudioId, userId, timeDuration, spee
     await mysql('new_comment').insert({
       audio_id: evaluationAudioId,
       user_id: audioData[0].user_id,
-      audio_name: '点评' + audioData[0].audio_name
+      comment_type: 2,
+      comment_user_id: userId,
+      audio_name: audioData[0].audio_name
     })
   }
 }
@@ -331,15 +349,20 @@ var queryNewCommentList = async (userId, queryPageType, firstDataTime, lastDataT
   //查询音频评论
   var audioDataComment
   if (queryPageType == 0) {
-    audioDataComment = await mysql('impromptu_audio').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').innerJoin('new_comment', 'new_comment.audio_id', 'impromptu_audio.audio_id').select('new_comment.audio_name','impromptu_audio.*', 'cSessionInfo.user_info').where({ 'new_comment.user_id': userId }).orderBy('impromptu_audio.create_date', 'asc')
+    audioDataComment = await mysql('new_comment').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'new_comment.comment_user_id').innerJoin('impromptu_audio', 'new_comment.audio_id', 'impromptu_audio.audio_id').select('new_comment.create_date as comment_date','new_comment.*', 'impromptu_audio.*', 'cSessionInfo.user_info').where({ 'new_comment.user_id': userId }).orderBy('new_comment.create_date', 'asc')
+    
   }
 
   if (queryPageType == 1) {
-    audioDataComment = await mysql('impromptu_audio').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').innerJoin('new_comment', 'new_comment.audio_id', 'impromptu_audio.audio_id').select('new_comment.audio_name','impromptu_audio.*', 'cSessionInfo.user_info').where({ 'new_comment.user_id': userId }).andWhere('impromptu_audio.create_date', '<', new Date(firstDataTime)).orderBy('impromptu_audio.create_date', 'asc')
+    audioDataComment = await mysql('new_comment').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'new_comment.comment_user_id').innerJoin('impromptu_audio', 'new_comment.audio_id', 'impromptu_audio.audio_id').select('new_comment.create_date as comment_date','new_comment.*', 'impromptu_audio.*', 'cSessionInfo.user_info').where({ 'new_comment.user_id': userId }).andWhere('new_comment.create_date', '<', new Date(firstDataTime)).orderBy('new_comment.create_date', 'asc')
   }
 
   if (queryPageType == 2) {
-    audioDataComment = await mysql('impromptu_audio').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').innerJoin('new_comment', 'new_comment.audio_id', 'impromptu_audio.audio_id').select('new_comment.audio_name','impromptu_audio.*', 'cSessionInfo.user_info').where({ 'new_comment.user_id': userId }).andWhere('impromptu_audio.create_date', '>', new Date(lastDataTime)).orderBy('impromptu_audio.create_date', 'asc')
+    audioDataComment = await mysql('new_comment').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'new_comment.comment_user_id').innerJoin('impromptu_audio', 'new_comment.audio_id', 'impromptu_audio.audio_id').select('new_comment.create_date as comment_date','new_comment.*', 'impromptu_audio.*', 'cSessionInfo.user_info').where({ 'new_comment.user_id': userId }).andWhere('new_comment.create_date', '>', new Date(lastDataTime)).orderBy('new_comment.create_date', 'asc')
+  }
+
+  if (audioDataComment.length > 0) {
+   await mysql('new_comment').where('create_date', '<=', new Date(audioDataComment[audioDataComment.length - 1].comment_date)).andWhere({ 'new_comment.user_id': userId, comment_type: 1 }).del()
   }
 
   for (var i = 0; i < audioDataComment.length; i++) {
