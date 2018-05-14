@@ -8,9 +8,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    scoreData: {},
-    userInfo: {},
-    totalScore:0
+    myFansTotal: 0,
+    rank:0,
+    speechScoreTotal: 0,
+    evaluateScoreTotal: 0,
+    avatarUrl:'',
+    nickName:''
   },  
 
   //查询用户参会数据
@@ -55,13 +58,39 @@ Page({
     })
   },  
 
+  drawPicture: function(){
+    const ctx = wx.createCanvasContext('shareImg')
+    ctx.drawImage('', 0, 0, '100%', 573)
+    ctx.stroke()
+    ctx.draw()
+
+    wx.canvasToTempFilePath({
+      x: 100,
+      y: 200,
+      width: 50,
+      height: 50,
+      destWidth: 100,
+      destHeight: 100,
+      canvasId: 'myCanvas',
+      success: function (res) {
+        console.log(res.tempFilePath)
+      }
+    })
+  },
+
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.initUserInfo();
-    this.queryUserScore();
+    this.setData({
+      myFansTotal: options.myFansTotal,
+      rank: options.rank,
+      speechScoreTotal: options.speechScoreTotal,
+      evaluateScoreTotal: options.evaluateScoreTotal,
+      avatarUrl: options.avatarUrl,
+      nickName: options.nickName
+    })
   },
 
   

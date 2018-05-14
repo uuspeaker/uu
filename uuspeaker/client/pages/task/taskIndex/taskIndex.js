@@ -218,7 +218,8 @@ Page({
       return
     }
     wx.navigateTo({
-      url: '../../study/studyShow/studyShow',
+      url: '../../study/studyShow/studyShow?myFansTotal=' + this.data.myFansTotal + '&rank=' + this.data.rank 
+      + '&speechScoreTotal=' + this.data.speechScoreTotal + '&evaluateScoreTotal=' + this.data.evaluateScoreTotal + '&avatarUrl=' + this.data.userInfo.avatarUrl + '&nickName=' + this.data.userInfo.nickName,
     })
   },
 
@@ -327,7 +328,7 @@ Page({
     //     })
     //     //session_key 未过期，并且在本生命周期一直有效
     //     console.log('has login')
-    //     that.initIndex()
+    //     //that.initIndex()
     //   },
     //   fail: function () {
     //     that.setData({
@@ -337,7 +338,7 @@ Page({
     //     console.log('has not login')
     //     wx.login({
     //       success: function () {
-    //         that.initIndex()
+    //         //that.initIndex()
     //       },
     //     })
     //   }

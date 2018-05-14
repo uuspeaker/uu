@@ -12,7 +12,6 @@ var queryUserType = ''
 var queryPageType = 0
 var firstDataTime = ''
 var lastDataTime = ''
-var playAudioStartDate = ''
 
 Page({
 
@@ -169,16 +168,10 @@ Page({
   },
 
   playAudio: function (e) {
-    if (playAudioStartDate != '') {
-      this.updatePlayDuration()
-    }
-    playAudioStartDate = new Date()
     this.updateViewTimes(e)
   },
 
-  updatePlayDuration: function () {
-    var now = new Date()
-    var playDuration = Math.floor((now - playAudioStartDate) / 1000)
+  updatePlayDuration: function (playDuration) {
     qcloud.request({
       url: `${config.service.host}/weapp/audio.playAudio`,
       login: true,
@@ -269,22 +262,13 @@ Page({
       console.log(res.errCode)
     })
     innerAudioContext.onStop((res) => {
-      if (playAudioStartDate != '') {
-        console.log('updatePlayDuration')
-        this.updatePlayDuration()
-        playAudioStartDate = ''
-      }
       this.formatDateAndStatus()
       this.setData({
         currentLikeUser: []
       })
     })
     innerAudioContext.onEnded((res) => {
-      if (playAudioStartDate != ''){
-        console.log('updatePlayDuration')
-        this.updatePlayDuration()
-        playAudioStartDate = ''
-      }
+      this.updatePlayDuration(innerAudioContext.duration)
       this.formatDateAndStatus()
       this.setData({
         currentLikeUser: []

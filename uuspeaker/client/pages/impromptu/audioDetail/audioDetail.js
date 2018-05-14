@@ -21,7 +21,6 @@ const options = {
 var startDate
 var endDate
 var timeDuration = 0
-var playAudioStartDate = ''
 
 //查询标记(0-查询最新;1-查询前面10条;2-查询后面10条)
 var queryPageType = 0
@@ -235,29 +234,7 @@ Page({
   },
 
   playAudio: function (e) {
-      if (playAudioStartDate != ''){
-        this.updatePlayDuration()
-      }
-      playAudioStartDate = new Date()
       this.updateViewTimes(e)
-  },
-
-  updatePlayDuration: function(){
-    var now = new Date()
-    var playDuration = Math.floor((now - playAudioStartDate)/1000)
-    qcloud.request({
-      url: `${config.service.host}/weapp/audio.playAudio`,
-      login: true,
-      data: { playDuration: playDuration},
-      method: 'post',
-      success(result) {
-        
-      },
-      fail(error) {
-        util.showModel('请求失败', error);
-        console.log('request fail', error);
-      }
-    })
   },
 
   updateViewAmount: function (audioId) {
@@ -405,22 +382,13 @@ Page({
       console.log(res.errCode)
     })
     innerAudioContext.onStop((res) => {
-      if (playAudioStartDate != '') {
-        console.log('updatePlayDuration')
-        this.updatePlayDuration()
-        playAudioStartDate = ''
-      }
       this.formatDateAndStatus()
       this.setData({
         currentLikeUser: []
       })
     })
     innerAudioContext.onEnded((res) => {
-      if (playAudioStartDate != '') {
-        console.log('updatePlayDuration')
-        this.updatePlayDuration()
-        playAudioStartDate = ''
-      }
+      audioService.updatePlayDuration(innerAudioContext.duration)
       this.formatDateAndStatus()
       this.setData({
         currentLikeUser: []
@@ -441,6 +409,7 @@ Page({
 
   onUnload: function () {
     innerAudioContext.stop();
+    //innerAudioContext.destroy()
   },
 
   editAudio: function (e) {

@@ -9,28 +9,19 @@
     <view class='small-black' style=''>来演讲，陪你成长</view>
 
 
-    <view class="tip">懂你会员|Nelson寄语</view>
+    <view class="tip">小懂演讲君寄语</view>
   </view>
   <view class="content" style='margin-top: 120px;'>
     <view class="weui-flex">
       <view class='unlogin'>
-        <image class="unlogin" src="{{userInfo.avatarUrl}}" ></image>
+        <image class="unlogin" src="{{avatarUrl}}" ></image>
       </view>
       <view class="weui-flex__item">
         <view class='name'>
-          <text style='font-size: 20px;'>{{userInfo.nickName}}</text>
-          <text style='font-size: 13px;' wx:if="{{totalScore == 0}}">【乞丐演讲君】</text>
-          <text style='font-size: 13px;' wx:if="{{totalScore >= 1 && totalScore < 20}}">【贫民演讲君】</text>
-          <text style='font-size: 13px;' wx:if="{{totalScore >= 20 && totalScore < 50}}">【布衣演讲君】</text>
-          <text style='font-size: 13px;' wx:if="{{totalScore >= 50 && totalScore < 100}}">【青铜演讲君】</text>
-          <text style='font-size: 13px;' wx:if="{{totalScore >= 100 && totalScore < 200}}">【白银演讲君】</text>
-          <text style='font-size: 13px;' wx:if="{{totalScore >= 200 && totalScore < 300}}">【黄金演讲君】</text>
-          <text style='font-size: 13px;' wx:if="{{totalScore >= 300 && totalScore < 500}}">【铂金演讲君】</text>
-          <text style='font-size: 13px;' wx:if="{{totalScore >= 500 && totalScore < 700}}">【钻石演讲君】</text>
-          <text style='font-size: 13px;' wx:if="{{totalScore >= 700 && totalScore < 1000}}">【星耀演讲君】</text>
-          <text style='font-size: 13px;' wx:if="{{totalScore >= 1000}}">【王者演讲君】</text>
+          <text style='font-size: 20px;'>{{nickName}}</text>
+          <text style='font-size: 13px;'>  {{rank}}</text>
         </view>
-        <view class='small-grey'>刚刚在「懂你演讲」上完成了演讲练习</view>
+        <view class='small-grey'>正在「懂你演讲」上练习演讲</view>
       </view>
     </view>
 
@@ -38,21 +29,21 @@
 
     <view class="weui-flex" style='padding-left:15px'>
       <view class="weui-flex__item">
-        <view class='small-grey'>累计学习</view>
-        <view class="weui-flex" style='font-size:25px'>{{scoreData.meetingScore}}
+        <view class='small-grey'>练习演讲</view>
+        <view class="weui-flex" style='font-size:30px'>{{speechScoreTotal}}
           <view class='small-grey-2'>次</view>
         </view>
       </view>
       <view class="weui-flex__item">
-        <view class='small-grey'>行动力超过</view>
-        <view class="weui-flex" style='font-size:25px'>{{scoreData.overRate}}
-          <view class='small-grey-2'>%的同学</view>
+        <view class='small-grey'>练习激励</view>
+        <view class="weui-flex" style='font-size:30px'>{{evaluateScoreTotal}}
+          <view class='small-grey-2'>次</view>
         </view>
       </view>
       <view class="weui-flex__item">
-        <view class='small-grey'>今日学习</view>
-        <view class="weui-flex" style='font-size:25px'>{{scoreData.studyDuration}}
-          <view class='small-grey-2'>分钟</view>
+        <view class='small-grey'>影响力</view>
+        <view class="weui-flex" style='font-size:30px'>{{myFansTotal}}
+          <view class='small-grey-2' style='font-size:11px'>人</view>
         </view>
       </view>
     </view>
@@ -81,3 +72,17 @@
     <view class="weui-footer__text" style='color:white;font-size:11px'>懂你演讲 · 出品</view>
   </view>
 </view>
+
+<!-- 画布大小按需定制 这里我按照背景图的尺寸定的  -->
+<canvas  canvas-id="shareImg" style="width:545px;height:771px"></canvas>
+
+<!-- 生成分享图 这里的操作是把canvas绘制的图预览出来  -->
+<button class='share' type='primary' bindtap='share'>生成分享图</button>
+
+<!-- 预览分享图 这里就是上图展示的效果   -->
+<!-- 刚开始是隐藏的 生成分享图之后显示, 用一个布尔变量来控制 这里的样式大家看图就写出来了 -->
+<view hidden='{{hidden}}' class='preview'>
+  <image src='{{prurl}}' mode='widthFix'></image>
+  <button type='primary' size='mini' bindtap='save'>保存分享图</button>
+</view>
+

@@ -5,6 +5,7 @@ var dateFormat = require('../../../common/dateFormat')
 var getlogininfo = require('../../../getlogininfo.js')
 var userInfo = require('../../../common/userInfo.js')
 var uuid = require('../../../common/uuid.js')
+var audioService = require('../../../common/audioService.js')
 
 var timeDurationMin = 30
 var userId = ''
@@ -12,6 +13,7 @@ var roomId = ''
 var getRoomInfoId = ''
 var waitSecondsId = ''
 var isInRoom = 1
+var playAudioStartDate = ''
 
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext();
@@ -67,6 +69,23 @@ Page({
     timeNoticeBackground: '',
   },
 
+  updateViewTimes: function (audioId) {
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/audio.audioView`,
+      login: true,
+      method: 'post',
+      data: { audioId: audioId },
+      success(result) {
+        that.updateViewAmount(audioId)
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
   playSpeechAudio: function(){
     this.sendSpeech({ status: 3 })
     this.stopAllAudio()
@@ -79,6 +98,7 @@ Page({
     this.setData({
       speechInfo: this.data.speechInfo
     })
+    this.updateViewTimes(this.data.speechInfo.audioId)
   },
 
   stopSpeechAudio: function(){
@@ -99,6 +119,7 @@ Page({
     this.setData({
       evaluationInfo: this.data.evaluationInfo
     })
+    this.updateViewTimes(this.data.evaluationInfo.audioId)
   },
 
   stopEvaluationAudio: function(){
@@ -440,11 +461,6 @@ Page({
     })
   },
 
-  playAudio: function (e) {
-    var src = e.currentTarget.dataset.src
-    innerAudioContext.src = src
-    innerAudioContext.play()
-  },
 
   /**
    * 生命周期函数--监听页面加载
@@ -538,6 +554,7 @@ Page({
       })
     })
     innerAudioContext.onEnded((res) => {
+      var audioService = require('../../../common/audioService.js').updatePlayDuration(innerAudioContext.duration)
       if (this.data.speechInfo.play == 1) {
         this.data.speechInfo.sliderValue = 0
         this.data.speechInfo.currentTime = '00:00'
@@ -776,5 +793,6 @@ Page({
     this.sendSpeech({ status: 7 })
     this.closeTunnel()
     this.stopAllAudio()
+    //innerAudioContext.destroy()
   },
 })
