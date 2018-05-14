@@ -264,6 +264,23 @@ var getTodayStudyDuration = async (userId) => {
   }
 }
 
+//查询用户学习总时间
+var getTotalStudyInfo = async (userId) => {
+  var data = await mysql('user_study_duration').where({
+    user_id: userId
+  }).groupBy('study_type').select('study_type',mysql.raw('sum(study_duration) as totalDuration'), mysql.raw('sum(study_amount) as totalAmount'))
+  return data
+}
+
+//查询用户学习总时间
+var getTodayStudyInfo = async (userId) => {
+  var today = dateUtil.format(new Date(),'yyyyMMdd')
+  var data = await mysql('user_study_duration').where({
+    user_id: userId
+  }).andWhere('study_date', '=', today).groupBy('study_type').select('study_type',mysql.raw('sum(study_duration) as totalDuration'), mysql.raw('sum(study_amount) as totalAmount'))
+  return data
+}
+
 //查询用户学习排名
 var getStudyRank = async (userId) => {
   var limit = 50
@@ -313,6 +330,8 @@ module.exports = {
   getMyFansList,
   getTotalStudyDuration,
   getTodayStudyDuration,
+  getTotalStudyInfo,
+  getTodayStudyInfo,
   getMyInfluenceList,
   getMyInfluenceTotal,
   getStudyRank,

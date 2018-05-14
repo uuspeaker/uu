@@ -17,6 +17,7 @@
     <view class="weui-cell__hd" style='vertical-align: text-top;'>
       <view class="user-avatar">
         <image class="user-pic" src="{{user_info.avatarUrl}}" data-user_id='{{user_id}}' catchtap='toUserInfo'/>
+        <image class="user-pic" src="{{userInfo.avatarUrl}}" />
       </view>
     </view>
     <view class="weui-cell__bd" style='padding-left:30px;'>

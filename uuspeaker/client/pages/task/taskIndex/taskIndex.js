@@ -11,14 +11,23 @@ Page({
    */
   data: {
     targetStatus: 0,
-    rank: '',
+    isLogin: 0,
+    rank: 'Lv1：乞丐演讲君',
     newCommentAmount: 0,
 
     userInfo: {},
-    totalStudyScore: 0,
+    totalStudyInfo: [],
+    speechScoreTotal: 0,
+    reviewScoreTotal: 0,
+    listenScoreTotal: 0,
+    evaluateScoreTotal: 0,
+    totalStudyDuration: 0,
+    todayStudyInfo: [],
+    speechScoreToday: 0,
+    reviewScoreToday: 0,
+    listenScoreToday: 0,
+    evaluateScoreToday: 0,
     todayStudyDuration: 0,
-    todayStudyScore: 0,
-    totalInfluenceScore: 0,
 
     myFansTotal: '',
     likeUserTotal: '',
@@ -42,11 +51,19 @@ Page({
       success(result) {
         wx.hideLoading()
         that.setData({
-          totalStudyDuration: result.data.data.totalStudyDuration,
-          todayStudyScore: Math.floor((result.data.data.todayStudyDuration + 59) / 60),
-          rank: userInfo.getRank(result.data.data.totalStudyDuration),
-          totalStudyScore: Math.floor((result.data.data.totalStudyDuration + 59) / 60),
-          totalInfluenceScore: Math.floor((result.data.data.totalInfluenceDuration + 59) / 60),
+          rank: userInfo.getRank(Math.floor(that.getDuration(result.data.data.totalStudyInfo))),
+          totalStudyInfo: result.data.data.totalStudyInfo,
+          speechScoreTotal: that.getScore(result.data.data.totalStudyInfo,1),
+          reviewScoreTotal: that.getScore(result.data.data.totalStudyInfo,2),
+          listenScoreTotal: that.getScore(result.data.data.totalStudyInfo,3),
+          evaluateScoreTotal: that.getScore(result.data.data.totalStudyInfo,4),
+          totalStudyDuration: Math.floor((that.getDuration(result.data.data.totalStudyInfo) + 59) / 60),
+          todayStudyInfo: result.data.data.todayStudyInfo,
+          speechScoreToday: that.getScore(result.data.data.todayStudyInfo,1),
+          reviewScoreToday: that.getScore(result.data.data.todayStudyInfo,2),
+          listenScoreToday: that.getScore(result.data.data.todayStudyInfo,3),
+          evaluateScoreToday: that.getScore(result.data.data.todayStudyInfo,4),
+          todayStudyDuration: Math.floor((that.getDuration(result.data.data.todayStudyInfo) + 59) / 60),
         })
       },
       fail(error) {
@@ -54,6 +71,26 @@ Page({
         console.log('request fail', error);
       }
     })
+  },
+
+  getScore: function(studyInfo,studyType){
+    console.log('studyInfo', studyInfo)
+    if (studyInfo == undefined || studyInfo == '' || studyInfo == [])return 0
+    for (var i = 0; i < studyInfo.length; i++){
+      if (studyInfo[i].study_type == studyType){
+        return studyInfo[i].totalAmount
+      }
+    }
+    return 0
+  },
+  
+  getDuration: function(studyInfo){
+    if (studyInfo == undefined || studyInfo == '' || studyInfo == [])return 0
+    var duration = 0
+    for (var i = 0; i < studyInfo.length; i++){
+      duration = duration + studyInfo[i].totalDuration
+    }
+    return duration
   },
 
   //查询用户参会数据
@@ -116,6 +153,197 @@ Page({
     return 0
   },
 
+  toDailyTask: function (e) {
+    if (this.data.isLogin == 0) {
+      util.showSuccess('请先登陆')
+      return
+    }
+    wx.navigateTo({
+      url: '../dailyTaskToDo/dailyTaskToDo',
+    })
+  },
+
+  toSpecialTaskList: function (e) {
+    if (this.data.isLogin == 0) {
+      util.showSuccess('请先登陆')
+      return
+    }
+    wx.navigateTo({
+      url: '../specialTaskList/specialTaskList',
+    })
+  },
+
+  toImpromptuIndex: function (e) {
+    if (this.data.isLogin == 0) {
+      util.showSuccess('请先登陆')
+      return
+    }
+    wx.navigateTo({
+      url: '../../impromptu/impromptuIndex/impromptuIndex',
+    })
+  },
+  toQuickMatch: function (e) {
+    if (this.data.isLogin == 0) {
+      util.showSuccess('请先登陆')
+      return
+    }
+    wx.navigateTo({
+      url: '../../impromptu/quickMatch/quickMatch?start=0',
+    })
+  },
+
+  toMyIntroduction: function () {
+    if (this.data.isLogin == 0) {
+      util.showSuccess('请先登陆')
+      return
+    }
+    wx.navigateTo({
+      url: '../../userInfo/myIntroduction/myIntroduction',
+    })
+  },
+
+  toScoreRank: function (e) {
+    if (this.data.isLogin == 0) {
+      util.showSuccess('请先登陆')
+      return
+    }
+    wx.navigateTo({
+      url: '../../userInfo/scoreRank/scoreRank?scoreType=' + e.currentTarget.dataset.type,
+    })
+  },
+
+  toStudyShow: function () {
+    if (this.data.isLogin == 0) {
+      util.showSuccess('请先登陆')
+      return
+    }
+    wx.navigateTo({
+      url: '../../study/studyShow/studyShow',
+    })
+  },
+
+  toLikeUserList: function (e) {
+    if (this.data.isLogin == 0) {
+      util.showSuccess('请先登陆')
+      return
+    }
+    wx.navigateTo({
+      url: '../../userInfo/likeUserList/likeUserList?queryUserType=' + e.currentTarget.dataset.type,
+    })
+  },
+
+  toDoSpecialTask: function (e) {
+    if (this.data.isLogin == 0) {
+      util.showSuccess('请先登陆')
+      return
+    }
+    wx.navigateTo({
+      url: '../doSpecialTask/doSpecialTask?'
+    })
+  },
+
+  openImpromptuRoom: function () {
+    if (this.data.isLogin == 0) {
+      util.showSuccess('请先登陆')
+      return
+    }
+    wx.navigateTo({
+      url: '../../impromptu/impromptuRoom/impromptuRoom?operation=add'
+    })
+  },
+
+  toNewCommentList: function () {
+    if (this.data.isLogin == 0) {
+      util.showSuccess('请先登陆')
+      return
+    }
+    wx.navigateTo({
+      url: '../../userInfo/newCommentList/newCommentList'
+    })
+  },
+
+  toSpeechNameList: function () {
+    if (this.data.isLogin == 0) {
+      util.showSuccess('请先登陆')
+      return
+    }
+    wx.navigateTo({
+      url: '../../speech/speechNameList/speechNameList'
+    })
+  },
+
+  toStudyRank: function () {
+    if (this.data.isLogin == 0) {
+      util.showSuccess('请先登陆')
+      return
+    }
+    wx.navigateTo({
+      url: '../../rank/studyRank/studyRank'
+    })
+  },
+
+  toStudyNow: function () {
+    if (this.data.isLogin == 0) {
+      util.showSuccess('请先登陆')
+      return
+    }
+    wx.navigateTo({
+      url: '../../impromptu/userMatch/userMatch'
+    })
+  },
+
+  toEvaluateSpeechName: function () {
+    if(this.data.isLogin == 0){
+      util.showSuccess('请先登陆')
+      return
+    }
+    wx.navigateTo({
+      url: '../../speech/evaluateSpeechName/evaluateSpeechName'
+    })
+  },
+
+  onShow: function () {
+    var that = this
+    
+    qcloud.login({
+      success: function () {
+        that.setData({
+          isLogin: 1
+        })
+        console.log('login success')
+        that.initIndex()
+      },
+      fail:function(){
+        console.log('login fail')
+        that.setData({
+          isLogin : 0
+        })
+      }
+    })
+    // wx.checkSession({
+    //   success: function () {
+    //     that.setData({
+    //       isLogin: 1
+    //     })
+    //     //session_key 未过期，并且在本生命周期一直有效
+    //     console.log('has login')
+    //     that.initIndex()
+    //   },
+    //   fail: function () {
+    //     that.setData({
+    //       isLogin: 0
+    //     })
+    //     // session_key 已经失效，需要重新执行登录流程
+    //     console.log('has not login')
+    //     wx.login({
+    //       success: function () {
+    //         that.initIndex()
+    //       },
+    //     })
+    //   }
+    // })
+  },
+
   initUserInfo: function () {
     var that = this
     wx.getUserInfo({
@@ -134,117 +362,6 @@ Page({
 
       },
     })
-  },
-
-  toDailyTask: function (e) {
-    wx.navigateTo({
-      url: '../dailyTaskToDo/dailyTaskToDo',
-    })
-  },
-
-  toSpecialTaskList: function (e) {
-    wx.navigateTo({
-      url: '../specialTaskList/specialTaskList',
-    })
-  },
-
-  toImpromptuIndex: function (e) {
-    wx.navigateTo({
-      url: '../../impromptu/impromptuIndex/impromptuIndex',
-    })
-  },
-  toQuickMatch: function (e) {
-    wx.navigateTo({
-      url: '../../impromptu/quickMatch/quickMatch?start=0',
-    })
-  },
-
-  toMyIntroduction: function () {
-    wx.navigateTo({
-      url: '../../userInfo/myIntroduction/myIntroduction',
-    })
-  },
-
-  toScoreRank: function (e) {
-    wx.navigateTo({
-      url: '../../userInfo/scoreRank/scoreRank?scoreType=' + e.currentTarget.dataset.type,
-    })
-  },
-
-  toStudyShow: function () {
-    wx.navigateTo({
-      url: '../../study/studyShow/studyShow',
-    })
-  },
-
-  toLikeUserList: function (e) {
-    wx.navigateTo({
-      url: '../../userInfo/likeUserList/likeUserList?queryUserType=' + e.currentTarget.dataset.type,
-    })
-  },
-
-  toDoSpecialTask: function (e) {
-    wx.navigateTo({
-      url: '../doSpecialTask/doSpecialTask?'
-    })
-  },
-
-  openImpromptuRoom: function () {
-    wx.navigateTo({
-      url: '../../impromptu/impromptuRoom/impromptuRoom?operation=add'
-    })
-  },
-
-  toNewCommentList: function () {
-    wx.navigateTo({
-      url: '../../userInfo/newCommentList/newCommentList'
-    })
-  },
-
-  toSpeechNameList: function () {
-    wx.navigateTo({
-      url: '../../speech/speechNameList/speechNameList'
-    })
-  },
-
-  toStudyRank: function () {
-    wx.navigateTo({
-      url: '../../rank/studyRank/studyRank'
-    })
-  },
-
-  toStudyNow: function () {
-    wx.navigateTo({
-      url: '../../impromptu/userMatch/userMatch'
-    })
-  },
-
-  toEvaluateSpeechName: function () {
-    wx.navigateTo({
-      url: '../../speech/evaluateSpeechName/evaluateSpeechName'
-    })
-  },
-
-  onLoad: function () {
-    var that = this
-    wx.checkSession({
-      success: function () {
-        //session_key 未过期，并且在本生命周期一直有效
-        //that.initIndex()
-      },
-      fail: function () {
-        // session_key 已经失效，需要重新执行登录流程
-        qcloud.login({
-          success: function () {
-            //that.initIndex()
-          },
-        })
-      }
-    })
-  },
-
-  onShow: function () {
-    this.initIndex()
   },
 
   initIndex: function (options) {

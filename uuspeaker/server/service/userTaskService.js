@@ -19,7 +19,7 @@ var saveDailyTask = async (taskId, taskType, userId, timeDuration) => {
     task_status: 2
   })
 
-  await audioService.saveAudio(taskId, '', '',userId, timeDuration)
+  await audioService.saveSpeechAudio('',taskId, '',userId, timeDuration)
 }
 
 /**
@@ -105,7 +105,7 @@ var saveSpecialTask = async (taskId, taskName, taskText, userId, timeDuration) =
   //   user_id: userId
   // })
 
-  await audioService.saveAudio(taskId, taskName, taskText,userId, timeDuration)
+  await audioService.saveSpeechAudio('',taskId, taskName,userId, timeDuration)
 }
 
 /**

@@ -129,7 +129,7 @@ var saveSpeechAudio = async (roomId, audioId, audioName, userId, timeDuration) =
     audio_type: 1,
     audio_status: 2
   })
-  await increaseDuration(userId, timeDuration)
+  await increaseDuration(userId,1, timeDuration)
 }
 
 /**
@@ -147,7 +147,7 @@ var completeSpeechAudio = async ( audioId, timeDuration) => {
     }).where({
       audio_id: audioId
     })
-  await increaseDuration(userId, timeDuration)
+  await increaseDuration(userId,1, timeDuration)
 }
 
 /**
@@ -192,10 +192,14 @@ var evaluateAudio = async (roomId, evaluationAudioId, userId, timeDuration, spee
       relate_audio: speechAudioId
     })
   }
-  await increaseDuration(userId, timeDuration)
+  if (audioData[0].user_id == userId){
+    await increaseDuration(userId, 2,timeDuration)
+  }else{
+    await increaseDuration(userId,4, timeDuration)
+  }
 
   //如果不是在直播房间发起的点评且不是点评自己，则新增一条点评通知消息
-  if (roomId == '' && audioData[0].userId != userId){
+  if (roomId == '' && audioData[0].user_id != userId){
     await mysql('new_comment').insert({
       audio_id: evaluationAudioId,
       user_id: audioData[0].user_id,
@@ -225,26 +229,6 @@ var getSpeechAudioByRoom = async (roomId,  userId) => {
     }
   }
   return audioData
-}
-
-/**
- * 保存演讲记录 
- * 返回：
- */
-var saveAudio = async (audioId, audioName, audioText, userId, timeDuration) => {
-  if (audioName == null || audioName == undefined || audioName == ''){
-    audioName = dateUtil.format(new Date(),'yyyy-MM-dd hh:mm:ss')
-  }
-  await mysql('impromptu_audio').insert({
-    audio_id: audioId,
-    audio_name: audioName,
-    audio_text: audioText,
-    user_id: userId,
-    time_duration: timeDuration,
-    audio_type: 1,
-    audio_status: 2
-  })
-  await increaseDuration(userId, timeDuration)
 }
 
 var getSrc =  (audioId) => {
@@ -306,29 +290,69 @@ var queryAudioComment = async (audioId, queryPageType, firstDataTime, lastDataTi
 }
 
 // 累计演讲练习时间
-var increaseDuration = async (userId, increaseStudyDuration) => {
+/**
+ * type 1-演讲 2-复盘 3-聆听 4-鼓励
+ */
+var increaseDuration = async (userId, studyType,increaseStudyDuration) => {
   if (increaseStudyDuration == 0 || increaseStudyDuration == undefined || increaseStudyDuration == null)return
   var today = new Date()
   var studyDate = dateUtil.format(today, 'yyyyMMdd')
 
-  var todayPastStudyDuration = await mysql('user_study_duration').where({
+  var todayPastStudy = await mysql('user_study_duration').where({
     user_id: userId,
+    study_type: studyType,
     study_date: studyDate
   })
 
-  var todayTotalStudyDuration = 0
-  if (todayPastStudyDuration.length == 0) {
+  if (todayPastStudy.length == 0) {
     await mysql('user_study_duration').insert(
       {
         user_id: userId,
         study_date: studyDate,
+        study_type: studyType,
+        study_amount: 1,
         study_duration: increaseStudyDuration
       })
   } else {
     await mysql('user_study_duration').update(
-      { study_duration: todayPastStudyDuration[0].study_duration + increaseStudyDuration })
+      { study_duration: todayPastStudy[0].study_duration + increaseStudyDuration, study_amount: todayPastStudy[0].study_amount + 1 })
       .where({
         user_id: userId,
+        study_type: studyType,
+        study_date: studyDate
+      })
+  }
+}
+// 累计演讲练习时间
+/**
+ * type 1-演讲 2-复盘 3-聆听 4-鼓励
+ */
+var increasePlayDuration = async (userId,playDuration) => {
+  if (playDuration == 0 || playDuration == undefined || playDuration == null)return
+  var today = new Date()
+  var studyDate = dateUtil.format(today, 'yyyyMMdd')
+
+  var todayPastStudy = await mysql('user_study_duration').where({
+    user_id: userId,
+    study_type: 3,
+    study_date: studyDate
+  })
+
+  if (todayPastStudy.length == 0) {
+    await mysql('user_study_duration').insert(
+      {
+        user_id: userId,
+        study_date: studyDate,
+        study_type: 3,
+        study_amount: 1,
+        study_duration: playDuration
+      })
+  } else {
+    await mysql('user_study_duration').update(
+      { study_duration: todayPastStudy[0].study_duration + playDuration, study_amount: todayPastStudy[0].study_amount + 1 })
+      .where({
+        user_id: userId,
+        study_type: 3,
         study_date: studyDate
       })
   }
@@ -383,12 +407,12 @@ var queryNewCommentList = async (userId, queryPageType, firstDataTime, lastDataT
     evaluateLatestAudio, 
     evaluateAudio, 
     getSpeechAudioByRoom, 
-    saveAudio, 
     getSrc, 
     queryAudioById, 
     deleteAudio, 
     queryAudioDuration, 
     queryAudioComment,
     queryNewCommentAmount,
-    queryNewCommentList
+    queryNewCommentList,
+    increasePlayDuration
     }

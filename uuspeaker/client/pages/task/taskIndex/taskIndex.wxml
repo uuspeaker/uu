@@ -10,9 +10,8 @@
       </view>
     </view>
     <view class="weui-cell__ft totoalScore">
-      {{todayStudyScore}} 分
-
-    </view>
+      {{totalStudyDuration}} 分 <text style='color:red' wx:if='{{todayStudyDuration !=0}}'>+{{todayStudyDuration}}</text>
+    </view> 
   </view>
 
   <view class='line'></view>
@@ -20,16 +19,25 @@
   <view>
     <view class="weui-flex" catchtap='toStudyRank' style='padding-left:25px;padding-bottom:5px' >
       <view class="weui-flex__item" data-type='1' catchtap='toScoreRank'>
-        <view class='small-grey'>学习力</view>
-        <view class="weui-flex" style='font-size:15px'>{{totalStudyScore}} 分</view>
+        <view class='small-grey'>演讲</view>
+        <view class="weui-flex" style='font-size:15px'>{{speechScoreTotal}}<text class='small-grey2'>次</text><text class='small-increase' wx:if='{{speechScoreToday != 0}}'>+{{speechScoreToday}}</text></view>
       </view>
-     <view class="weui-flex__item" data-type='1' catchtap='toLikeUserList'>
-        <view class='small-grey'>关注</view>
-        <view class="weui-flex" style='font-size:15px' >{{likeUserTotal}} 人</view>
+      <view class="weui-flex__item" data-type='1' catchtap='toScoreRank'>
+        <view class='small-grey'>复盘</view>
+        <view class="weui-flex" style='font-size:15px'>{{reviewScoreTotal}}<text class='small-grey2'>次</text><text class='small-increase' wx:if='{{reviewScoreTotal != 0}}'>+{{reviewScoreToday}}</text></view>
       </view>
+      <view class="weui-flex__item" data-type='1' catchtap='toScoreRank'>
+        <view class='small-grey'>聆听</view>
+        <view class="weui-flex" style='font-size:15px'>{{listenScoreTotal}}<text class='small-grey2'>次</text><text class='small-increase' wx:if='{{listenScoreTotal != 0}}'>+{{listenScoreToday}}</text></view>
+      </view>
+      <view class="weui-flex__item" data-type='1' catchtap='toScoreRank'>
+        <view class='small-grey'>鼓励</view>
+        <view class="weui-flex" style='font-size:15px'>{{evaluateScoreTotal}}<text class='small-grey2'>次</text><text class='small-increase' wx:if='{{evaluateScoreTotal != 0}}'>+{{evaluateScoreToday}}</text></view>
+      </view>
+     
       <view class="weui-flex__item" data-type='2' catchtap='toLikeUserList'>
-        <view class='small-grey'>粉丝</view>
-        <view class="weui-flex" style='font-size:15px' >{{myFansTotal}} 人</view>
+        <view class='small-grey'>影响</view>
+        <view class="weui-flex" style='font-size:15px' >{{myFansTotal}}<text class='small-grey2'>人</text></view>
       </view>
     </view>
   </view>
@@ -47,21 +55,21 @@
         <view>
           <image class="task-pic" src="../../../images/taskIndex/single.png" />
         </view>
-        <view class='content'>单人练习</view>
+        <view class='content' style='padding-left:3px'>单人练</view>
       </view>
 
        <view class="weui-flex__item studyArea" bindtap='toQuickMatch'>
         <view>
           <image class="task-pic" src="../../../images/taskIndex/multiple.png" />
         </view>
-        <view class='content'>双人练习</view>
+        <view class='content'>一起练</view>
       </view>
 
-      <view class="weui-flex__item studyArea" >
+      <view class="weui-flex__item studyArea" bindtap='toSpecialTaskList'>
         <view>
-          <image class="task-pic"  />
+          <image class="task-pic" src="../../../images/taskIndex/voice.png" />
         </view>
-        <view class='content'></view>
+        <view class='content'>听演讲</view>
       </view>
       
       
@@ -77,11 +85,11 @@
     </view>
     <view class="weui-cell " data-task_type='1'>
        
-      <view class="weui-flex__item studyArea" bindtap='toSpecialTaskList'>
+      <view class="weui-flex__item studyArea" data-type='1' catchtap='toScoreRank'>
         <view>
-          <image class="task-pic" src="../../../images/taskIndex/voice.png" />
+          <image class="task-pic" src="../../../images/taskIndex/rank.png" />
         </view>
-        <view class='content'>听演讲</view>
+        <view class='content' style='padding-left:3px'>看排名</view>
       </view>
 
        <view class="weui-flex__item studyArea" bindtap='toSpeechNameList'>
@@ -103,5 +111,8 @@
     </view>
   </view>
 </view>
+<block wx:if='{{isLogin == 0}}'>
+ <button class='bottom' type='primary' open-type="getUserInfo" bindgetuserinfo='initIndex'>登陆</button>
+ </block>
 
 

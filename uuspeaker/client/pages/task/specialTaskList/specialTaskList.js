@@ -12,6 +12,7 @@ var queryUserType = ''
 var queryPageType = 0
 var firstDataTime = ''
 var lastDataTime = ''
+var playAudioStartDate = ''
 
 Page({
 
@@ -168,8 +169,28 @@ Page({
   },
 
   playAudio: function (e) {
-    //this.queryAudioLikeUser(e)
+    if (playAudioStartDate != '') {
+      this.updatePlayDuration()
+    }
+    playAudioStartDate = new Date()
     this.updateViewTimes(e)
+  },
+
+  updatePlayDuration: function () {
+    var now = new Date()
+    var playDuration = Math.floor((now - playAudioStartDate) / 1000)
+    qcloud.request({
+      url: `${config.service.host}/weapp/audio.playAudio`,
+      login: true,
+      data: { playDuration: playDuration },
+      method: 'post',
+      success(result) {
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
   },
 
   updateViewAmount: function (audioId) {
@@ -248,12 +269,22 @@ Page({
       console.log(res.errCode)
     })
     innerAudioContext.onStop((res) => {
+      if (playAudioStartDate != '') {
+        console.log('updatePlayDuration')
+        this.updatePlayDuration()
+        playAudioStartDate = ''
+      }
       this.formatDateAndStatus()
       this.setData({
         currentLikeUser: []
       })
     })
     innerAudioContext.onEnded((res) => {
+      if (playAudioStartDate != ''){
+        console.log('updatePlayDuration')
+        this.updatePlayDuration()
+        playAudioStartDate = ''
+      }
       this.formatDateAndStatus()
       this.setData({
         currentLikeUser: []

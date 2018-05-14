@@ -7,13 +7,14 @@ module.exports = {
 
   get: async ctx => {
     var userId = await userInfo.getOpenId(ctx)
-    var totalStudyDuration = await userInfoService.getTotalStudyDuration(userId)
-    var todayStudyDuration = await userInfoService.getTodayStudyDuration(userId)
+    //var totalStudyDuration = await userInfoService.getTotalStudyDuration(userId)
+    //var todayStudyDuration = await userInfoService.getTodayStudyDuration(userId)
+    var todayStudyInfo = await userInfoService.getTodayStudyInfo(userId)
+    var totalStudyInfo = await userInfoService.getTotalStudyInfo(userId)
     //var totalInfluenceDuration = await userInfoService.getMyInfluenceTotal(userId)
     ctx.state.data = {
-      totalStudyDuration: totalStudyDuration,
-      todayStudyDuration: todayStudyDuration,
-      totalInfluenceDuration: 0
+      todayStudyInfo: todayStudyInfo,
+      totalStudyInfo: totalStudyInfo
     }
   },
 
