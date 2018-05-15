@@ -6,6 +6,12 @@ margin-top: 0px;
 margin-bottom: 10px;
 background:#F6F6F6;
 }
+.notice{
+  font-size: 13px;
+  padding-top:10px;
+  padding-left: 10px;
+  color: grey;
+}
 .card-pic{
   margin-right: 5px;
   vertical-align: 
@@ -112,5 +118,10 @@ height: 40px;
 .showStudy{
   position: relative;
   right:40px;
-  color:orangered;
+  color:orangered;  
+}
+.showStudy2{
+  position: relative;
+  right:40px;
+  color:grey;  
 }

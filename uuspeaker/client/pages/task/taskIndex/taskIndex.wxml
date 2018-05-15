@@ -10,7 +10,7 @@
       </view>
     </view>
     <view class="weui-cell__ft totoalScore">
-      {{totalStudyDuration}} 分 <text style='color:red' wx:if='{{todayStudyDuration !=0}}'>+{{todayStudyDuration}}</text>
+      {{totalStudyDuration}} 分 <text style='color:orangered' wx:if='{{todayStudyDuration !=0}}'>+{{todayStudyDuration}}</text>
     </view> 
   </view>
 
@@ -44,7 +44,7 @@
 </view>
 
 <view class="page__bd">
-  <view class="weui-cells__title"></view>
+  <view class="weui-cells__title "></view>
   <view class="weui-cells weui-cells_after-title">
     <view class="weui-cell content" data-task_type='1'>
     <view class="weui-flex__item" >
@@ -65,7 +65,7 @@
         <view>
           <image class="task-pic" src="../../../images/taskIndex/multiple.png" />
         </view>
-        <view class='content'>一起练</view>
+        <view class='content' style=''>一起练</view>
       </view>
 
       <view class="weui-flex__item studyArea" bindtap='toSpecialTaskList'>
@@ -84,7 +84,8 @@
   <view class="weui-cells__title"></view>
   <view class="weui-cells weui-cells_after-title">
     <view class="weui-cell content" data-task_type='1'>
-      休闲区 
+    <view class="weui-flex__item" >休闲区 </view>
+    <view class="showStudy"><button open-type="contact" /><contact-button  type="default-dark" size="25" session-from="weapp"><text style='padding-left: 10px;'>咨询</text></contact-button></view>
     </view>
     <view class="weui-cell " data-task_type='1'>
        
@@ -117,5 +118,6 @@
 <block wx:if='{{isLogin == 0}}'>
  <button class='bottom' type='primary' open-type="getUserInfo" bindgetuserinfo='onShow'>登陆</button>
  </block>
+
 
 

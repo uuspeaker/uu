@@ -115,6 +115,7 @@ var deleteIntroduction = async (userId) => {
 
 //关注用户
 var likeUser = async (userId,likeUserId) => {
+  await cancelLikeUser(userId, likeUserId)
   var data = await mysql('user_like').insert({
     user_id: userId,
     like_user_id: likeUserId
