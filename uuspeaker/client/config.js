@@ -24,6 +24,9 @@ var config = {
     // 测试的信道服务地址
     tunnelUrl: `${host}/weapp/tunnel`,
 
+    // 测试的信道服务地址
+    chatUrl: `${host}/weapp/impromptu.chatUrl`,
+
     // 上传图片接口
     voiceUrl: `${host}/weapp/recognize`
   }

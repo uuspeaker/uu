@@ -28,7 +28,7 @@
 <view class='match-tip' wx:if='{{isMatching == 1}}'>
 小懂演讲君卯足劲为您寻找伙伴中
 </view>
-<view class='bottom'>
+<view class=''>
 <block wx:if='{{isMatching == 0}}'>
 <button class='bottom' type='primary' catchtap='startMatch'>开始匹配</button>
 </block>
@@ -36,3 +36,26 @@
 <button class='bottom' type='' catchtap='stopMatch'>停止匹配</button>
 </block>
 </view>
+<!--聊天展示区-->
+<view class="page-wrap" wx:if='{{false}}'>
+    <scroll-view class="chat-container" scroll-y scroll-into-view="{{lastMessageId}}" scroll-top="9999999999">
+        <view wx:for="{{messages}}" wx:for-item="message" wx:key="id" id="{{message.id}}" class="message {{message.type}}">
+            <view wx:if="{{message.type == 'speak'}}" class="user-message {{message.isMe ? 'me' : 'other'}}">
+                <image class="avatar" src="{{message.user.avatarUrl}}" mode="aspectFill"></image>
+                <view class="text">
+                    <view class="nickname">{{message.user.nickName}}</view>
+                    <view class="content">{{message.content}}</view>
+                </view>
+            </view>
+            <view wx:if="{{message.type == 'system'}}" class="system-message">
+                {{message.content}}
+            </view>
+        </view>
+    </scroll-view>
+    <view class="input-panel">
+        <button class="pic-icon"></button>
+        <input type="text" value="{{inputContent}}" bindchange="changeInputContent" class="send-input"></input>
+        <button bindtap="sendMessage" class="send-btn">发送</button>
+    </view>
+</view>
+<!--聊天展示区-->
