@@ -1,27 +1,80 @@
-/***************************聊天展示区样式**************************/
-.userAmountNotice{
-  color:orangered;
-  padding-left: 10px;
-  padding-right:5px;
-}
-.link {
-  font-size: 17px;
+.wait{
+  text-align: center;
+  font-size: 120px;
   font-weight: bold;
-  color: #576b95;
-  padding-right:15px;
+  margin-top: 150px;
 }
-.small-grey{
-  font-size: 13px;
-  color:#888888;
-  font-weight: normal;
+.match-tip{
+  text-align: center;
+  color: gray;
+  font-size: 20px;
+  margin-top:50px;
 }
+
+
+.commentArea {
+  background-color: gainsboro;
+  padding: 8px;
+  border-radius: 10px 10px 10px 10px; 
+  width: 96%;
+  height: 70px;
+  align-items: center;
+  
+}
+.commentInput {
+  background-color: white;
+  height: 50px;
+  width: 90%;
+  font-weight: bold;
+  text-align: center;
+  margin-left: 5%;
+  font-size: 30px;
+
+}
+.pastSpeechName{
+  
+  text-align: center;
+  margin-top:60px ;
+  font-weight: bold;
+  font-size: 20px;
+  margin-left: 15px;
+}
+
+.tipTitle{
+  font-size:15px;
+  margin: 30px 30px 10px 30px;
+  font-weight: bold;
+  
+}
+.tip{
+  font-size:15px;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+.center{
+  text-align: center;
+}
+.star-pic-tip{
+  width:25px;
+  height: 25px;
+ margin: 6px;
+ margin-top: 20px;
+}
+.star-pic{
+  width:40px;
+  height: 40px;
+ margin: 6px;
+ margin-top: 20px;
+}
+
+/***************************聊天展示区样式**************************/
 .page-wrap {
     display: flex;
     flex-direction: column;
     background: #ebebeb;
-    position: absolute;
-    top: 0;
-    bottom: 20px;
+
+
+    bottom: 0;
     left: 0;
     right: 0;
     overflow: hidden;

@@ -1,8 +1,9 @@
 {
   "pages": [
+    "pages/impromptu/quickMatch/quickMatch",
     "pages/task/taskIndex/taskIndex",
     "pages/impromptu/quickMatchRoom/quickMatchRoom",
-    "pages/impromptu/quickMatch/quickMatch",
+    
     "pages/task/specialTaskList/specialTaskList",
     "pages/task/doSpecialTask/doSpecialTask",
     "pages/task/doDailyTask/doDailyTask",
@@ -40,6 +41,8 @@
     "pages/impromptu/impromptuDialog/impromptuDialog",
     "pages/impromptu/audioDetail/audioDetail",
     "pages/impromptu/userMatch/userMatch", 
+    "pages/impromptu/matchRule/matchRule", 
+    
 
     "pages/article/allArticle/allArticle",
     "pages/article/writeArticle/writeArticle",

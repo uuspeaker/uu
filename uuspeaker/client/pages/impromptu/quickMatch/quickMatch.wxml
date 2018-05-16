@@ -1,43 +1,10 @@
 
-
-
-  <view class="weui-flex commentArea top">
-    <view class="weui-flex__item">
-      <input class='commentInput' value="{{speechNames[index].speech_name}}" placeholder='' bindconfirm="saveSpeechName" value='玩法说明' disabled='true'></input>
-    </view>
-  </view>
-
-
-<view class='middle' style='padding-top:30px' wx:if='{{isMatching == 0}}' >
-<view class='tipTitle'>即兴演讲练习流程：</view>  
-<view class='tip'>1. 匹配成功立即进入房间，系统自动出题</view>
-<view class='tip'>2. 10秒倒计时结束开始演讲，时间2分钟【练习演讲】</view>
-<view class='tip'>3. 对方演讲结束后请倾听并鼓励对方，时间1分钟【练习鼓励】</view>
-<view class='tip'>4. 结束练习</view>
-
-
-<view class='tipTitle'>温馨提示：</view>  
-<view class='tip'>即兴演讲较为挑战，有些题目不知道怎么讲很正常，但是只要你坚持练习，就一定会有所收获，加油！</view>
-<view class="tip" style='color:orangered'>每天20:00-22:00是一起练的高峰时段</view>
-<view style='padding-bottom:30px;'></view>
-</view>
-
-<block wx:if='{{isMatching == 1}}'>
-<view class='wait'>{{waitSeconds}}</view>
-</block>
-<view class='match-tip' wx:if='{{isMatching == 1}}'>
-小懂演讲君卯足劲为您寻找伙伴中
-</view>
-<view class=''>
-<block wx:if='{{isMatching == 0}}'>
-<button class='bottom' type='primary' catchtap='startMatch'>开始匹配</button>
-</block>
-<block wx:if='{{isMatching == 1}}'>
-<button class='bottom' type='' catchtap='stopMatch'>停止匹配</button>
-</block>
-</view>
 <!--聊天展示区-->
-<view class="page-wrap" wx:if='{{false}}'>
+<view class="page-wrap" >
+<view class="weui-flex" style='padding-top:5px;'>
+<view class="weui-flex__item" ><text class='userAmountNotice' >{{userAmount}}</text><text class='small-grey'>位小伙伴想要和你一起学习</text></view>
+<view class="link" bindtap='toMatchRule'>规则介绍</view>
+</view>
     <scroll-view class="chat-container" scroll-y scroll-into-view="{{lastMessageId}}" scroll-top="9999999999">
         <view wx:for="{{messages}}" wx:for-item="message" wx:key="id" id="{{message.id}}" class="message {{message.type}}">
             <view wx:if="{{message.type == 'speak'}}" class="user-message {{message.isMe ? 'me' : 'other'}}">
@@ -55,7 +22,17 @@
     <view class="input-panel">
         <button class="pic-icon"></button>
         <input type="text" value="{{inputContent}}" bindchange="changeInputContent" class="send-input"></input>
-        <button bindtap="sendMessage" class="send-btn">发送</button>
+        <button bindtap="sendMessage" class="send-btn">发 送</button>
     </view>
+
+    <view class=''>
+<block wx:if='{{isMatching == 0}}'>
+<button type='primary' catchtap='startMatch' style='width:100%'>开始匹配</button>
+</block>
+<block wx:if='{{isMatching == 1}}'>
+<button  type='' catchtap='stopMatch' style='width:100%'>停止匹配 {{waitSeconds}}</button>
+</block>
+</view>
+  
 </view>
 <!--聊天展示区-->

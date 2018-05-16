@@ -1,0 +1,31 @@
+
+
+
+  <view class="weui-flex commentArea top">
+    <view class="weui-flex__item">
+      <input class='commentInput' value="{{speechNames[index].speech_name}}" placeholder='' bindconfirm="saveSpeechName" value='玩法说明' disabled='true'></input>
+    </view>
+  </view>
+
+
+<view class='middle' style='padding-top:30px' wx:if='{{isMatching == 0}}' >
+<view class='tipTitle'>即兴演讲练习流程：</view>  
+<view class='tip'>1. 匹配成功立即进入房间，系统自动出题</view>
+<view class='tip'>2. 10秒倒计时结束开始演讲，时间2分钟【练习演讲】</view>
+<view class='tip'>3. 对方演讲结束后请倾听并鼓励对方，时间1分钟【练习鼓励】</view>
+<view class='tip'>4. 结束练习</view>
+
+
+<view class='tipTitle'>温馨提示：</view>  
+<view class='tip'>即兴演讲较为挑战，有些题目不知道怎么讲很正常，但是只要你坚持练习，就一定会有所收获，加油！</view>
+<view class="tip" style='color:orangered'>每天20:00-22:00是一起练的高峰时段</view>
+<view style='padding-bottom:30px;'></view>
+</view>
+
+<block wx:if='{{isMatching == 1}}'>
+<view class='wait'>{{waitSeconds}}</view>
+</block>
+<view class='match-tip' wx:if='{{isMatching == 1}}'>
+小懂演讲君卯足劲为您寻找伙伴中
+</view>
+
