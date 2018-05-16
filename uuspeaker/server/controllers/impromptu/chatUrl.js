@@ -2,13 +2,13 @@ const { tunnel } = require('../../qcloud')
 
 /**
  * 这里实现一个简单的聊天室
- * userMap 为 tunnelId 和 用户信息的映射
+ * chatUserMap 为 tunnelId 和 用户信息的映射
  * 实际使用请使用数据库存储
  */
-const userMap = {}
+var chatUserMap = {}
 
 // 保存 当前已连接的 WebSocket 信道ID列表
-const connectedTunnelIds = []
+var chatConnectedTunnelIds = []
 
 /**
  * 调用 tunnel.broadcast() 进行广播
@@ -16,20 +16,20 @@ const connectedTunnelIds = []
  * @param  {String} content 消息内容
  */
 const $broadcast = (type, content) => {
-  tunnel.broadcast(connectedTunnelIds, type, content)
+  tunnel.broadcast(chatConnectedTunnelIds, type, content)
     .then(result => {
       const invalidTunnelIds = result.data && result.data.invalidTunnelIds || []
 
       if (invalidTunnelIds.length) {
         console.log('检测到无效的信道 IDs =>', invalidTunnelIds)
 
-        // 从 userMap 和 connectedTunnelIds 中将无效的信道记录移除
+        // 从 chatUserMap 和 chatConnectedTunnelIds 中将无效的信道记录移除
         invalidTunnelIds.forEach(tunnelId => {
-          delete userMap[tunnelId]
+          delete chatUserMap[tunnelId]
 
-          const index = connectedTunnelIds.indexOf(tunnelId)
+          const index = chatConnectedTunnelIds.indexOf(tunnelId)
           if (~index) {
-            connectedTunnelIds.splice(index, 1)
+            chatConnectedTunnelIds.splice(index, 1)
           }
         })
       }
@@ -50,17 +50,17 @@ const $close = (tunnelId) => {
  * 此时通知所有其它在线的用户当前总人数以及刚加入的用户是谁
  */
 function onConnect(tunnelId) {
-  console.log(`[onConnect] =>`, { tunnelId })
+  console.log(`[chatUrl onConnect] =>`, { tunnelId })
 
-  if (tunnelId in userMap) {
-    connectedTunnelIds.push(tunnelId)
+  if (tunnelId in chatUserMap) {
+    chatConnectedTunnelIds.push(tunnelId)
 
     $broadcast('people', {
-      'total': connectedTunnelIds.length,
-      'enter': userMap[tunnelId]
+      'total': chatConnectedTunnelIds.length,
+      'enter': chatUserMap[tunnelId]
     })
   } else {
-    console.log(`Unknown tunnelId(${tunnelId}) was connectd, close it`)
+    console.log(`chatUrl Unknown tunnelId(${tunnelId}) was connectd, close it`)
     $close(tunnelId)
   }
 }
@@ -76,9 +76,9 @@ function onMessage(tunnelId, type, content) {
 
   switch (type) {
     case 'speak':
-      if (tunnelId in userMap) {
+      if (tunnelId in chatUserMap) {
         $broadcast('speak', {
-          'who': userMap[tunnelId],
+          'who': chatUserMap[tunnelId],
           'word': content.word
         })
       } else {
@@ -97,26 +97,26 @@ function onMessage(tunnelId, type, content) {
  * 会调用该方法，此时可以进行清理及通知操作
  */
 function onClose(tunnelId) {
-  console.log(`[onClose] =>`, { tunnelId })
+  console.log(`[chatUrl onClose] =>`, { tunnelId })
 
-  if (!(tunnelId in userMap)) {
-    console.log(`[onClose][Invalid TunnelId]=>`, tunnelId)
+  if (!(tunnelId in chatUserMap)) {
+    console.log(`[chatUrl onClose][Invalid TunnelId]=>`, tunnelId)
     $close(tunnelId)
     return
   }
 
-  const leaveUser = userMap[tunnelId]
-  delete userMap[tunnelId]
+  const leaveUser = chatUserMap[tunnelId]
+  delete chatUserMap[tunnelId]
 
-  const index = connectedTunnelIds.indexOf(tunnelId)
+  const index = chatConnectedTunnelIds.indexOf(tunnelId)
   if (~index) {
-    connectedTunnelIds.splice(index, 1)
+    chatConnectedTunnelIds.splice(index, 1)
   }
 
   // 聊天室没有人了（即无信道ID）不再需要广播消息
-  if (connectedTunnelIds.length > 0) {
+  if (chatConnectedTunnelIds.length > 0) {
     $broadcast('people', {
-      'total': connectedTunnelIds.length,
+      'total': chatConnectedTunnelIds.length,
       'leave': leaveUser
     })
   }
@@ -128,8 +128,8 @@ module.exports = {
     const data = await tunnel.getTunnelUrl(ctx.req)
     const tunnelInfo = data.tunnel
 
-    userMap[tunnelInfo.tunnelId] = data.userinfo
-
+    chatUserMap[tunnelInfo.tunnelId] = data.userinfo
+    console.log('chatUrl chatUserMap', chatUserMap)
     ctx.state.data = tunnelInfo
   },
 
@@ -137,7 +137,7 @@ module.exports = {
   post: async ctx => {
     const packet = await tunnel.onTunnelMessage(ctx.request.body)
 
-    console.log('Tunnel recive a package: %o', packet)
+    console.log('chatUrl Tunnel recive a package: %o', packet)
 
     switch (packet.type) {
       case 'connect':

@@ -1,16 +1,15 @@
-const { tunnel } = require('../qcloud')
-const debug = require('debug')('koa-weapp-demo')
+const { tunnel } = require('../../qcloud')
 
 /**
  * 这里实现一个简单的聊天室
- * userMap 为 tunnelId 和 用户信息的映射
+ * meetingUserMap 为 tunnelId 和 用户信息的映射
  * 实际使用请使用数据库存储
  */
-const userMap = {}
-const tunnelMap = {}
+var meetingUserMap = {}
+var tunnelMap = {}
 
 // 保存 当前已连接的 WebSocket 信道ID列表
-const connectedTunnelIds = []
+const meetingConnectedTunnelIds = []
 
 /**
  * 调用 tunnel.broadcast() 进行广播
@@ -18,26 +17,26 @@ const connectedTunnelIds = []
  * @param  {String} content 消息内容
  */
 const $broadcast = (type, content) => {
-  tunnel.broadcast(connectedTunnelIds, type, content)
+  tunnel.broadcast(meetingConnectedTunnelIds, type, content)
     .then(result => {
       const invalidTunnelIds = result.data && result.data.invalidTunnelIds || []
 
       if (invalidTunnelIds.length) {
         console.log('检测到无效的信道 IDs =>', invalidTunnelIds)
 
-        // 从 userMap 和 connectedTunnelIds 中将无效的信道记录移除
+        // 从 meetingUserMap 和 meetingConnectedTunnelIds 中将无效的信道记录移除
         invalidTunnelIds.forEach(tunnelId => {
-          delete userMap[tunnelId]
+          delete meetingUserMap[tunnelId]
 
-          const index = connectedTunnelIds.indexOf(tunnelId)
+          const index = meetingConnectedTunnelIds.indexOf(tunnelId)
           if (~index) {
-            connectedTunnelIds.splice(index, 1)
+            meetingConnectedTunnelIds.splice(index, 1)
           }
         })
       }
     })
 }
-const $sendMessage = (targetTunnelId,type, content) => {
+const $sendMessage = (targetTunnelId, type, content) => {
   tunnel.broadcast([targetTunnelId], type, content)
     .then(result => {
       const invalidTunnelIds = result.data && result.data.invalidTunnelIds || []
@@ -45,13 +44,13 @@ const $sendMessage = (targetTunnelId,type, content) => {
       if (invalidTunnelIds.length) {
         console.log('检测到无效的信道 IDs =>', invalidTunnelIds)
 
-        // 从 userMap 和 connectedTunnelIds 中将无效的信道记录移除
+        // 从 meetingUserMap 和 meetingConnectedTunnelIds 中将无效的信道记录移除
         invalidTunnelIds.forEach(tunnelId => {
-          delete userMap[tunnelId]
+          delete meetingUserMap[tunnelId]
 
-          const index = connectedTunnelIds.indexOf(tunnelId)
+          const index = meetingConnectedTunnelIds.indexOf(tunnelId)
           if (~index) {
-            connectedTunnelIds.splice(index, 1)
+            meetingConnectedTunnelIds.splice(index, 1)
           }
         })
       }
@@ -72,17 +71,17 @@ const $close = (tunnelId) => {
  * 此时通知所有其它在线的用户当前总人数以及刚加入的用户是谁
  */
 function onConnect(tunnelId) {
-  console.log(`[onConnect] =>`, { tunnelId })
-
-  if (tunnelId in userMap) {
-    connectedTunnelIds.push(tunnelId)
+  console.log(`[meetingUrl onConnect] =>`, tunnelId )
+  console.log(meetingUserMap)
+  if (tunnelId in meetingUserMap) {
+    meetingConnectedTunnelIds.push(tunnelId)
 
     $broadcast('people', {
-      'total': connectedTunnelIds.length,
-      'enter': userMap[tunnelId]
+      'total': meetingConnectedTunnelIds.length,
+      'enter': meetingUserMap[tunnelId]
     })
   } else {
-    console.log(`Unknown tunnelId(${tunnelId}) was connectd, close it`)
+    console.log(`meetingUrl Unknown tunnelId(${tunnelId}) was connectd, close it`)
     $close(tunnelId)
   }
 }
@@ -94,13 +93,13 @@ function onConnect(tunnelId) {
  * 我们把这个发言的信息广播到所有在线的 WebSocket 信道上
  */
 function onMessage(tunnelId, type, content) {
-  console.log(`[onMessage] =>`, { tunnelId, type, content })
+  console.log(`[meetingUrl onMessage] =>`, { tunnelId, type, content })
 
   switch (type) {
     case 'speak':
-      if (tunnelId in userMap) {
+      if (tunnelId in meetingUserMap) {
         $broadcast('speak', {
-          'who': userMap[tunnelId],
+          'who': meetingUserMap[tunnelId],
           'word': content.word
         })
       } else {
@@ -108,9 +107,9 @@ function onMessage(tunnelId, type, content) {
       }
       break
     case 'speech':
-      if (tunnelId in userMap) {
-        $sendMessage(tunnelMap[content.targetUserId],'speak', {
-          'who': userMap[tunnelId],
+      if (tunnelId in meetingUserMap) {
+        $sendMessage(tunnelMap[content.targetUserId], 'speak', {
+          'who': meetingUserMap[tunnelId],
           'data': content
         })
       } else {
@@ -128,28 +127,28 @@ function onMessage(tunnelId, type, content) {
  * 会调用该方法，此时可以进行清理及通知操作
  */
 function onClose(tunnelId) {
-  console.log(`[onClose] =>`, { tunnelId })
+  console.log(`[meetingUrl onClose] =>`, { tunnelId })
 
-  if (!(tunnelId in userMap)) {
-    console.log(`[onClose][Invalid TunnelId]=>`, tunnelId)
+  if (!(tunnelId in meetingUserMap)) {
+    console.log(`[meetingUrl onClose][Invalid TunnelId]=>`, tunnelId)
     $close(tunnelId)
     return
   }
 
-  delete tunnelMap[userMap[tunnelId].openId]
+  delete tunnelMap[meetingUserMap[tunnelId].openId]
 
-  const leaveUser = userMap[tunnelId]
-  delete userMap[tunnelId]
+  const leaveUser = meetingUserMap[tunnelId]
+  delete meetingUserMap[tunnelId]
 
-  const index = connectedTunnelIds.indexOf(tunnelId)
+  const index = meetingConnectedTunnelIds.indexOf(tunnelId)
   if (~index) {
-    connectedTunnelIds.splice(index, 1)
+    meetingConnectedTunnelIds.splice(index, 1)
   }
 
   // 聊天室没有人了（即无信道ID）不再需要广播消息
-  if (connectedTunnelIds.length > 0) {
+  if (meetingConnectedTunnelIds.length > 0) {
     $broadcast('people', {
-      'total': connectedTunnelIds.length,
+      'total': meetingConnectedTunnelIds.length,
       'leave': leaveUser
     })
   }
@@ -161,9 +160,9 @@ module.exports = {
     const data = await tunnel.getTunnelUrl(ctx.req)
     const tunnelInfo = data.tunnel
 
-    userMap[tunnelInfo.tunnelId] = data.userinfo
+    meetingUserMap[tunnelInfo.tunnelId] = data.userinfo
     tunnelMap[data.userinfo.openId] = tunnelInfo.tunnelId
-
+    console.log('meetingUrl meetingUserMap', meetingUserMap)
     ctx.state.data = tunnelInfo
   },
 
@@ -171,7 +170,7 @@ module.exports = {
   post: async ctx => {
     const packet = await tunnel.onTunnelMessage(ctx.request.body)
 
-    debug('Tunnel recive a package: %o', packet)
+    console.log('meetingUrl Tunnel recive a package: %o', packet)
 
     switch (packet.type) {
       case 'connect':

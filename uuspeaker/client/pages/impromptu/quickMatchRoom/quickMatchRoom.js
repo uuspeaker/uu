@@ -50,7 +50,7 @@ Page({
     audioType: 1,
     speeches:{},
     speechStatus: 1,
-    waitSeconds:15,
+    waitSeconds:13,
     studyStep:1,
     disableEvaluation:true,
     speechName:'',
@@ -77,7 +77,6 @@ Page({
       method: 'post',
       data: { audioId: audioId },
       success(result) {
-        that.updateViewAmount(audioId)
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -171,24 +170,21 @@ Page({
 
   initUserInfo: function () {
     var that = this
-    wx.getUserInfo({
-      withCredentials: false,
-      lang: '',
+    qcloud.request({
+      url: config.service.requestUrl,
+      login: true,
       success(result) {
         that.setData({
-          userInfo: result.userInfo
-        })  
+          userInfo: result.data.data,
+        })
       },
+
       fail(error) {
         util.showModel('请求失败', error)
         console.log('request fail', error)
-      },
-      complete: function (res) {
-
-      },
+      }
     })
   },
-
   
 
   startTime: function () {
@@ -466,6 +462,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    innerAudioContext.src = ''
     // innerAudioContext.autoplay = true
     // innerAudioContext.src = 'https://uuspeaker-1255679565.cos.ap-guangzhou.myqcloud.com/audio/5d412900-546d-11e8-840e-79d6fa3f1ef2.mp3'
     //util.showSuccess('10秒后开始演讲')
@@ -591,12 +588,18 @@ Page({
   openTunnel: function () {
     //util.showBusy('信道连接中...')
     // 创建信道，需要给定后台服务地址
+    
+    console.log(this.tunnel)
+    this.tunnel = new qcloud.Tunnel(`${config.service.host}/weapp/impromptu.meetingUrl`)
+    console.log(this.tunnel)
+    var tunnel = this.tunnel
     console.log('quickMatchRoom 初始化信道服务', tunnel)
-    var tunnel = this.tunnel = new qcloud.Tunnel(config.service.tunnelUrl)
 
     // if (this.tunnel){
+    //   console.log('use old tunnel')
     //   tunnel = this.tunnel
     // }else{
+    //   console.log('use new tunnel')
     //   tunnel = this.tunnel = new qcloud.Tunnel(config.service.tunnelUrl)
     // }
 

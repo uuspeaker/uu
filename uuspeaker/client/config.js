@@ -7,7 +7,6 @@ var host = 'https://gytr1z9p.qcloud.la';
 // var host = 'https://734232337.uuspeaker.com';
 
 var config = {
-  // url: 'https://lvb.qcloud.com',
   url: 'https://gytr1z9p.qcloud.la',
   // url: 'https://734232337.uuspeaker.com',
 

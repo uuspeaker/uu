@@ -22,8 +22,8 @@ router.get('/login', authorizationMiddleware, controllers.login)
 router.get('/user', validationMiddleware, controllers.user)
 
 // GET  用来响应请求信道地址的
-router.get('/tunnel', controllers.tunnel.get)
-router.post('/tunnel', controllers.tunnel.post)
+router.get('/impromptu.meetingUrl', controllers.impromptu.meetingUrl.get)
+router.post('/impromptu.meetingUrl', controllers.impromptu.meetingUrl.post)
 // GET  用来响应请求信道地址的
 router.get('/impromptu.chatUrl', controllers.impromptu.chatUrl.get)
 router.post('/impromptu.chatUrl', controllers.impromptu.chatUrl.post)

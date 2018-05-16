@@ -338,6 +338,7 @@ var increasePlayDuration = async (userId,playDuration) => {
     study_date: studyDate
   })
 
+  var validPlayDuration = Math.floor(playDuration/3)
   if (todayPastStudy.length == 0) {
     await mysql('user_study_duration').insert(
       {
@@ -345,11 +346,11 @@ var increasePlayDuration = async (userId,playDuration) => {
         study_date: studyDate,
         study_type: 3,
         study_amount: 1,
-        study_duration: playDuration
+        study_duration: validPlayDuration
       })
   } else {
     await mysql('user_study_duration').update(
-      { study_duration: todayPastStudy[0].study_duration + playDuration, study_amount: todayPastStudy[0].study_amount + 1 })
+      { study_duration: todayPastStudy[0].study_duration + validPlayDuration, study_amount: todayPastStudy[0].study_amount + 1 })
       .where({
         user_id: userId,
         study_type: 3,

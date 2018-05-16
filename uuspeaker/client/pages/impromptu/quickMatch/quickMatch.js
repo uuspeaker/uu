@@ -139,8 +139,8 @@ Page({
           //setTimeout(that.createAndGoRoom, Math.random() * 5, userInfo)
           //Math.floor(Math.random() * 3)
           that.quit()
-          setTimeout(that.doGoRoom,1000)
-          //that.doGoRoom(userInfo)
+          //setTimeout(that.doGoRoom,5000)
+          that.doGoRoom(userInfo)
         }
 
       },
@@ -166,11 +166,11 @@ Page({
   /**
    * 连接到聊天室信道服务
    */
-  enter() {
+  openTunnel() {
     //this.amendMessage(createSystemMessage('正在加入学习频道...'));
 
     // 创建信道
-    var tunnel = this.tunnel = new qcloud.Tunnel(config.service.chatUrl)
+    var tunnel = this.tunnel = new qcloud.Tunnel(`${config.service.host}/weapp/impromptu.meetingUrl`)
     console.log('quickMatch 初始化信道服务',tunnel)
     // if (this.tunnel) {
     //   tunnel = this.tunnel
@@ -289,7 +289,7 @@ Page({
     if (!this.tunnel || !this.tunnel.isActive()) {
       this.pushMessage(createSystemMessage('您还没有加入学习频道，请稍后重试'));
       if (this.tunnel.isClosed()) {
-        this.enter();
+        this.openTunnel();
       }
       return;
     }
@@ -310,7 +310,7 @@ Page({
   onReady() {
     if (!this.pageReady) {
       this.pageReady = true;
-      this.enter();
+      this.openTunnel();
     }
   },
 
@@ -334,9 +334,9 @@ Page({
   },
 
   onShow() {
-    //this.initUserInfo()
+    this.initUserInfo()
     if (this.pageReady) {
-      this.enter();
+      this.openTunnel();
     }
   },
 

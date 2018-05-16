@@ -73,16 +73,4 @@
   </view>
 </view>
 
-<!-- 画布大小按需定制 这里我按照背景图的尺寸定的  -->
-<canvas  canvas-id="shareImg" style="width:545px;height:771px"></canvas>
-
-<!-- 生成分享图 这里的操作是把canvas绘制的图预览出来  -->
-<button class='share' type='primary' bindtap='share'>生成分享图</button>
-
-<!-- 预览分享图 这里就是上图展示的效果   -->
-<!-- 刚开始是隐藏的 生成分享图之后显示, 用一个布尔变量来控制 这里的样式大家看图就写出来了 -->
-<view hidden='{{hidden}}' class='preview'>
-  <image src='{{prurl}}' mode='widthFix'></image>
-  <button type='primary' size='mini' bindtap='save'>保存分享图</button>
-</view>
 

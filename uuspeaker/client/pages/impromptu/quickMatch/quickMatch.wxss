@@ -79,7 +79,7 @@
 .text .nickname {
     color: grey;
     font-size: 13px;
-    margin-bottom: 6rpx;
+    margin-bottom: 2rpx;
 }
 .text .content {
     border: #ccc 1rpx solid;
