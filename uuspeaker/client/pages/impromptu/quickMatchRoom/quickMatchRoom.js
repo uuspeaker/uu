@@ -591,45 +591,47 @@ Page({
   openTunnel: function () {
     //util.showBusy('信道连接中...')
     // 创建信道，需要给定后台服务地址
-    var tunnel
-    if (this.tunnel){
-      tunnel = this.tunnel
-    }else{
-      tunnel = this.tunnel = new qcloud.Tunnel(config.service.tunnelUrl)
-    }
+    console.log('quickMatchRoom 初始化信道服务', tunnel)
+    var tunnel = this.tunnel = new qcloud.Tunnel(config.service.tunnelUrl)
+
+    // if (this.tunnel){
+    //   tunnel = this.tunnel
+    // }else{
+    //   tunnel = this.tunnel = new qcloud.Tunnel(config.service.tunnelUrl)
+    // }
 
     // 监听信道内置消息，包括 connect/close/reconnecting/reconnect/error
     tunnel.on('connect', () => {
       //util.showSuccess('信道已连接')
-      console.log('WebSocket 信道已连接')
+      console.log('quickMatchRoom 信道已连接')
       this.setData({ tunnelStatus: 'connected' })
     })
 
     tunnel.on('close', () => {
       //util.showSuccess('信道已断开')
-      console.log('WebSocket 信道已断开')
+      console.log('quickMatchRoom 信道已断开')
       this.setData({ tunnelStatus: 'closed' })
     })
 
     tunnel.on('reconnecting', () => {
-      console.log('WebSocket 信道正在重连...')
+      console.log('quickMatchRoom 信道正在重连...')
       //util.showBusy('正在重连')
     })
 
     tunnel.on('reconnect', () => {
-      console.log('WebSocket 信道重连成功')
+      console.log('quickMatchRoom 信道重连成功')
       //util.showSuccess('重连成功')
     })
 
     tunnel.on('error', error => {
       //util.showModel('信道发生错误', error)
-      console.error('信道发生错误：', error)
+      console.error('quickMatchRoom 信道发生错误：', error)
     })
 
     // 监听自定义消息（服务器进行推送）
     tunnel.on('speak', speak => {
       //util.showModel('信道消息', speak)
-      console.log('收到说话消息：', speak)
+      console.log('quickMatchRoom 收到说话消息：', speak)
       if (speak.who.openId == this.data.matchedUser.userId){
         if (speak.data.status == 99){
           this.setData({
@@ -699,13 +701,13 @@ Page({
    * 点击「发送消息」按钮，测试使用信道发送消息
    */
   sendSpeech(content) {
-    if (!this.data.tunnelStatus || !this.data.tunnelStatus === 'connected') return
-    // 使用 tunnel.isActive() 来检测当前信道是否处于可用状态
-    if (this.tunnel && this.tunnel.isActive()) {
-      // 使用信道给服务器推送「speak」消息
-      content.targetUserId = this.data.matchedUser.userId
-      this.tunnel.emit('speech', content);
+    // 信道当前不可用
+    if (!this.tunnel || !this.tunnel.isActive()) {
+      util.showSuccess('连接失败')
     }
+    // 使用信道给服务器推送「speak」消息
+    content.targetUserId = this.data.matchedUser.userId
+    this.tunnel.emit('speech', content);
   },
 
   /**

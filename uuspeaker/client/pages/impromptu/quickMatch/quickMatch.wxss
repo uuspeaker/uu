@@ -1,17 +1,24 @@
 /***************************聊天展示区样式**************************/
+.topNotice{
+  padding-top:6px;
+  padding-bottom: 6px;
+  background-color:white;
+}
 .userAmountNotice{
   color:orangered;
   padding-left: 10px;
   padding-right:5px;
+  font-size: 20px;
+  font-weight: bold
 }
 .link {
-  font-size: 17px;
+  font-size: 20px;
   font-weight: bold;
   color: #576b95;
   padding-right:15px;
 }
 .small-grey{
-  font-size: 13px;
+  font-size: 15px;
   color:#888888;
   font-weight: normal;
 }
@@ -30,6 +37,7 @@
     flex: 1;
     text-align: center;
     overflow-y:auto;
+    padding-top: 20px;
 }
 .system-message {
     font-size: 14px;
@@ -52,8 +60,8 @@
     flex-direction: row-reverse;
 }
 .avatar {
-    width: 84rpx;
-    height: 84rpx;
+    width: 78rpx;
+    height: 78rpx;
     border: #a5a5a7 1rpx solid;
     display: inline-block;
     vertical-align: top;
@@ -69,16 +77,16 @@
     margin-right: 19rpx;
 }
 .text .nickname {
-    color: #737373;
-    font-size: 14px;
+    color: grey;
+    font-size: 13px;
     margin-bottom: 6rpx;
 }
 .text .content {
     border: #ccc 1rpx solid;
     border-radius: 4px;
     background: #fff;
-    font-size: 36rpx;
-    line-height: 36rpx;
+    font-size: 32rpx;
+    line-height: 32rpx;
     padding: 20rpx;
     position: relative;
 }

@@ -12,6 +12,7 @@ var userId = ''
 var searchSeconds = 30
 var hasEnter = 0
 var tryTimes = 0
+var thisUserInfo = {}
 /**
  * 生成一条聊天室的消息的唯一 ID
  */
@@ -45,6 +46,9 @@ Page({
     waitSeconds: '',
     isMatching: 0,
     onlineUser: [],
+    userInfo:{},
+
+    userList: [{ avatarUrl: '' }, { avatarUrl: '' }, { avatarUrl: '' },],
 
     messages: [],
     inputContent: '',
@@ -131,9 +135,12 @@ Page({
           clearInterval(waitId)
           util.showSuccess('匹配成功')
           console.log('userInfo', userInfo)
+          thisUserInfo = userInfo
           //setTimeout(that.createAndGoRoom, Math.random() * 5, userInfo)
           //Math.floor(Math.random() * 3)
-          that.doGoRoom(userInfo)
+          that.quit()
+          setTimeout(that.doGoRoom,1000)
+          //that.doGoRoom(userInfo)
         }
 
       },
@@ -146,7 +153,8 @@ Page({
 
   // 进入rtcroom页面
   doGoRoom: function (userInfo) {
-    this.quit()
+    userInfo = thisUserInfo
+    console.log('关闭信道，进入即兴演讲页面')
     var url = '../quickMatchRoom/quickMatchRoom?roomId=' + userInfo.roomId + '&userId=' + userId + '&nickName=' + userInfo.matchedUser.nickName + '&avatarUrl=' + userInfo.matchedUser.avatarUrl + '&speechName=' + userInfo.speechName + '&matchUserId=' + userInfo.matchedUser.userId
       console.log(url)
       wx.navigateTo({
@@ -159,13 +167,22 @@ Page({
    * 连接到聊天室信道服务
    */
   enter() {
-    this.amendMessage(createSystemMessage('正在加入学习频道...'));
+    //this.amendMessage(createSystemMessage('正在加入学习频道...'));
 
     // 创建信道
-    var tunnel = this.tunnel = new qcloud.Tunnel(config.service.chatUrl);
+    var tunnel = this.tunnel = new qcloud.Tunnel(config.service.chatUrl)
+    console.log('quickMatch 初始化信道服务',tunnel)
+    // if (this.tunnel) {
+    //   tunnel = this.tunnel
+    // } else {
+    //   tunnel = this.tunnel = new qcloud.Tunnel(config.service.chatUrl)
+    // }
 
     // 连接成功后，去掉「正在加入学习频道」的系统提示
-    tunnel.on('connect', () => this.popMessage());
+    tunnel.on('connect', () => {
+      console.log('quickMatch 信道已连接')
+      //this.popMessage()
+      });
 
     // 聊天室有人加入或退出，反馈到 UI 上
     tunnel.on('people', people => {
@@ -182,23 +199,31 @@ Page({
 
     // 有人说话，创建一条消息
     tunnel.on('speak', speak => {
+      console.log(this.tunnel)
       const { word, who } = speak;
-      this.pushMessage(createUserMessage(word, who, who.openId === this.me.openId));
+      this.pushMessage(createUserMessage(word, who, who.openId === this.data.userInfo.openId));
     });
 
-    // 信道关闭后，显示退出学习频道
     tunnel.on('close', () => {
-      this.pushMessage(createSystemMessage('您已退出学习频道'));
-    });
+      //util.showSuccess('信道已断开')
+      console.log('quickMatch 信道已断开')
+      this.setData({ tunnelStatus: 'closed' })
+    })
 
-    // 重连提醒
     tunnel.on('reconnecting', () => {
-      this.pushMessage(createSystemMessage('已断线，正在重连...'));
-    });
+      console.log('quickMatch 信道正在重连...')
+      //util.showBusy('正在重连')
+    })
 
     tunnel.on('reconnect', () => {
-      this.amendMessage(createSystemMessage('重连成功'));
-    });
+      console.log('quickMatch 信道重连成功')
+      //util.showSuccess('重连成功')
+    })
+
+    tunnel.on('error', error => {
+      //util.showModel('信道发生错误', error)
+      console.error('quickMatch 信道发生错误：', error)
+    })
 
     // 打开信道
     tunnel.open();
@@ -219,6 +244,7 @@ Page({
   updateMessages(updater) {
     var messages = this.data.messages;
     updater(messages);
+    console.log('this.data.messages', this.data.messages[0])
 
     this.setData({ messages });
 
@@ -263,17 +289,15 @@ Page({
     if (!this.tunnel || !this.tunnel.isActive()) {
       this.pushMessage(createSystemMessage('您还没有加入学习频道，请稍后重试'));
       if (this.tunnel.isClosed()) {
-        //this.enter();
+        this.enter();
       }
       return;
     }
 
-    setTimeout(() => {
-      if (this.data.inputContent && this.tunnel) {
-        this.tunnel.emit('speak', { word: this.data.inputContent });
-        this.setData({ inputContent: '' });
-      }
-    });
+    this.tunnel.emit('speak', { word: e.detail.value });
+    this.setData({ inputContent: '' });
+
+
   },
 
   toMatchRule: function(){
@@ -286,13 +310,33 @@ Page({
   onReady() {
     if (!this.pageReady) {
       this.pageReady = true;
-      //this.enter();
+      this.enter();
     }
   },
 
+  initUserInfo: function(){
+    var that = this
+    qcloud.request({
+      url: config.service.requestUrl,
+      login: true,
+      success(result) {
+        console.log('result',result)
+        that.setData({
+          userInfo: result.data.data,
+        })
+      },
+
+      fail(error) {
+        util.showModel('请求失败', error)
+        console.log('request fail', error)
+      }
+    })
+  },
+
   onShow() {
+    //this.initUserInfo()
     if (this.pageReady) {
-      //this.enter();
+      this.enter();
     }
   },
 

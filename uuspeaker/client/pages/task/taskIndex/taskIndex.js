@@ -11,7 +11,7 @@ Page({
    */
   data: {
     targetStatus: 0,
-    isLogin: 0,
+    isLogin: 1,
     rank: 'Lv1：乞丐演讲君',
     newCommentAmount: 0,
 
@@ -307,7 +307,8 @@ Page({
     var that = this
     
     qcloud.login({
-      success: function () {
+      success: function (result) {
+        console.log('userInfo',result)
         that.setData({
           isLogin: 1
         })
@@ -347,22 +348,37 @@ Page({
 
   initUserInfo: function () {
     var that = this
-    wx.getUserInfo({
-      withCredentials: false,
-      lang: '',
+    qcloud.request({
+      url: config.service.requestUrl,
+      login: true,
       success(result) {
         that.setData({
-          userInfo: result.userInfo
+          userInfo: result.data.data,
         })
       },
+
       fail(error) {
         util.showModel('请求失败', error)
         console.log('request fail', error)
-      },
-      complete: function (res) {
-
-      },
+      }
     })
+    
+    // wx.getUserInfo({
+    //   withCredentials: false,
+    //   lang: '',
+    //   success(result) {
+    //     that.setData({
+    //       userInfo: result.userInfo
+    //     })
+    //   },
+    //   fail(error) {
+    //     util.showModel('请求失败', error)
+    //     console.log('request fail', error)
+    //   },
+    //   complete: function (res) {
+
+    //   },
+    // })
   },
 
   initIndex: function (options) {

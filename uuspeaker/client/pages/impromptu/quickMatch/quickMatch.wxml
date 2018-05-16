@@ -1,8 +1,9 @@
 
 <!--聊天展示区-->
 <view class="page-wrap" >
-<view class="weui-flex" style='padding-top:5px;'>
-<view class="weui-flex__item" ><text class='userAmountNotice' >{{userAmount}}</text><text class='small-grey'>位小伙伴想要和你一起学习</text></view>
+<view class="weui-flex topNotice">
+<view class="weui-flex__item" ><text class='userAmountNotice' >{{userAmount}}</text><text class='small-grey'>位小伙伴准备学习</text></view>
+
 <view class="link" bindtap='toMatchRule'>规则介绍</view>
 </view>
     <scroll-view class="chat-container" scroll-y scroll-into-view="{{lastMessageId}}" scroll-top="9999999999">
@@ -21,8 +22,8 @@
     </scroll-view>
     <view class="input-panel">
         <button class="pic-icon"></button>
-        <input type="text" value="{{inputContent}}" bindchange="changeInputContent" class="send-input"></input>
-        <button bindtap="sendMessage" class="send-btn">发 送</button>
+        <input type="text" value="{{inputContent}}" class="send-input" bindconfirm="sendMessage" confirm-type="send"></input>
+        
     </view>
 
     <view class=''>
