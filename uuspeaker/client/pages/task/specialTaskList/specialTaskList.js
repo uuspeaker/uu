@@ -270,7 +270,7 @@ Page({
     innerAudioContext.onEnded((res) => {
       wx.showToast({
         title: '完成聆听 +1',
-        image: '../../../images/speechName/star2.png',
+        image: '../../../images/impromptuMeeting/money.png',
       })
       this.updatePlayDuration(innerAudioContext.duration)
       this.formatDateAndStatus()

@@ -172,7 +172,7 @@ Page({
       success(result) {
         wx.showToast({
           title: '完成演讲 +1',
-          image: '../../../images/speechName/star2.png',
+          image: '../../../images/impromptuMeeting/money.png',
         })
         that.setData({
           isCompleteTask: 1

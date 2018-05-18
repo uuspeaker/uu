@@ -46,7 +46,7 @@
 
         <view class="weui-flex__item">
         <block wx:if='{{speechInfo.play == 0}}'>
-          <image class="audio" src="../../../images/userAudio/play.png"  catchtap='playSpeechAudio' />
+          <image class="audio" src="../../../images/userAudio/play.png" style='opacity:{{matchedUserStatus<2?0.3:1}};' catchtap='playSpeechAudio' />
           </block>
           <block wx:if='{{speechInfo.play == 1}}'>
           <image class="audio" src="../../../images/userAudio/hold.png"  catchtap='stopSpeechAudio' />
@@ -76,7 +76,7 @@
 
         <view class="weui-flex__item">
         <block wx:if='{{evaluationInfo.play == 0}}'>
-          <image class="audio" src="../../../images/userAudio/play.png" catchtap='playEvaluationAudio' />
+          <image class="audio" src="../../../images/userAudio/play.png" style='opacity:{{matchedUserStatus<5?0.3:1}};' catchtap='playEvaluationAudio' />
           </block>
           <block wx:if='{{evaluationInfo.play == 1}}'>
           <image class="audio" src="../../../images/userAudio/hold.png"  catchtap='stopEvaluationAudio' />
@@ -107,17 +107,21 @@
   </view>
 
 <view class='messageNotice'>{{messageNotice}}</view>
-<view class="bottom">
+<view class="bottom input-panel">
+<view>
+<input style='height:45px;' type="text" value="{{inputContent}}" class="send-input" bindconfirm="sendTextMessage" confirm-type="send" placeholder='输入聊天：'></input>
+</view>
+<view  style='width:40%;'>
   <!--计时显示区域-->
     <block wx:if="{{studyStep == 1 && isPlay == 0}}">
-      <button type='primary' >计时结束后开始演讲</button>
+      <button type='primary' >准备演讲</button>
     </block>
     <block wx:if="{{studyStep == 1 && isPlay == 1}}">
       <button type='primary' bindtap='stopSpeech'>完成演讲</button>
     </block>
     <block wx:if="{{studyStep == 2 && isPlay == 0}}">
       <block wx:if="{{matchedUserStatus < 2}}">
-      <button type='primary' bindtap='startEvaluation' disabled='true'>待对方演讲结束后聆听并进行鼓励</button>
+      <button type='primary' bindtap='startEvaluation' disabled='true'>准备鼓励</button>
       </block>
       <block wx:if="{{matchedUserStatus >= 2}}">
       <button type='primary' bindtap='startEvaluation' >开始鼓励</button>
@@ -127,7 +131,8 @@
       <button type='primary' bindtap='stopEvaluation'>完成鼓励</button>
     </block>
     <block wx:if="{{studyStep == 3}}">
-      <button type='primary' bindtap='completeStudy'>太棒了，你完成了本轮练习，再来一次吧</button>
+      <button type='primary' bindtap='completeStudy'>完成练习</button>
     </block>
 
+</view>
 </view>

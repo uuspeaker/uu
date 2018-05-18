@@ -295,7 +295,7 @@ Page({
       return
     }
     wx.navigateTo({
-      url: '../../impromptu/userMatch/userMatch'
+      url: '../../impromptu/userMatch/userMatch?rank=' + this.data.rank
     })
   },
 

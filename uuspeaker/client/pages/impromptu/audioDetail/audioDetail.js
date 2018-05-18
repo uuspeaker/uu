@@ -343,15 +343,15 @@ Page({
       data: { evaluationAudioId: evaluationAudioId, targetAudioId:this.data.audioId,timeDuration: timeDuration, audioType: 2 },
       method: 'post',
       success(result) {
-        if (this.data.audioData[0].isMine == 1){
+        if (that.data.audioData[0].isMine == 1){
           wx.showToast({
             title: '完成复盘 +1',
-            image: '../../../images/speechName/star2.png',
+            image: '../../../images/impromptuMeeting/money.png',
           })
         }else{
           wx.showToast({
             title: '完成鼓励 +1',
-            image: '../../../images/speechName/star2.png',
+            image: '../../../images/impromptuMeeting/money.png',
           })
         }
        
@@ -401,7 +401,7 @@ Page({
     innerAudioContext.onEnded((res) => {
       wx.showToast({
         title: '完成聆听 +1',
-        image: '../../../images/speechName/star2.png',
+        image: '../../../images/impromptuMeeting/money.png',
       })
       audioService.updatePlayDuration(innerAudioContext.duration)
       this.formatDateAndStatus()

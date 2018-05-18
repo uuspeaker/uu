@@ -2,11 +2,14 @@
 <!--聊天展示区-->
 <view class="page-wrap" >
 <view class="weui-flex topNotice">
-<view class="weui-flex__item" ><text class='userAmountNotice' >{{userAmount}}</text><text class='small-grey'>位小伙伴准备学习</text></view>
+<view class="weui-flex__item" style='text-align:center'><text class='small-grey'>学习人数：</text><text class='userAmountNotice' >{{userAmount}}</text> 人</view>
 
-<view class="link" bindtap='toMatchRule'>规则介绍</view>
 </view>
     <scroll-view class="chat-container" scroll-y scroll-into-view="{{lastMessageId}}" scroll-top="9999999999">
+    <view class='tip' style='font-weight: bold;'>即兴演讲玩法说明：</view>  
+<view class='tip'>1、匹配成功进入房间，系统出题</view>
+<view class='tip'>2、10秒倒计时结束，两人同时开始2分钟演讲</view>
+<view class='tip'>3、对方演讲结束，倾听并1分钟鼓励对方</view>
         <view wx:for="{{messages}}" wx:for-item="message" wx:key="id" id="{{message.id}}" class="message {{message.type}}">
             <view wx:if="{{message.type == 'speak'}}" class="user-message {{message.isMe ? 'me' : 'other'}}">
                 <image class="avatar" src="{{message.user.avatarUrl}}" mode="aspectFill"></image>
@@ -20,20 +23,21 @@
             </view>
         </view>
     </scroll-view>
-    <view class="input-panel">
-        <button class="pic-icon"></button>
-        <input type="text" value="{{inputContent}}" class="send-input" bindconfirm="sendMessage" confirm-type="send"></input>
-        
-    </view>
-
-    <view class=''>
-<block wx:if='{{isMatching == 0}}'>
-<button type='primary' catchtap='startMatch' style='width:100%'>开始匹配</button>
+    <view class="input-panel" >
+        <view >
+        <input style='height:45px;' type="text" value="{{inputContent}}" class="send-input" bindconfirm="sendMessage" confirm-type="send" placeholder='输入聊天：'></input>
+        </view>
+        <view style='width:40%;'>
+        <block wx:if='{{isMatching == 0}}'>
+<button type='primary' catchtap='startMatch' style='height:95%'>开始匹配</button>
 </block>
 <block wx:if='{{isMatching == 1}}'>
-<button  type='' catchtap='stopMatch' style='width:100%'>停止匹配 {{waitSeconds}}</button>
+<button  catchtap='stopMatch' style='height:95%'>停止匹配 {{waitSeconds}}</button>
 </block>
 </view>
+    </view>
+
+
   
 </view>
 <!--聊天展示区-->

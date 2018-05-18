@@ -54,6 +54,7 @@ Page({
     studyStep:1,
     disableEvaluation:true,
     speechName:'',
+    inputContent:'',
 
     minute: '00',
     second: '00',
@@ -86,6 +87,7 @@ Page({
   },
 
   playSpeechAudio: function(){
+    if (this.data.matchedUserStatus < 2)return
     this.sendSpeech({ status: 3 })
     this.stopAllAudio()
     console.log('playSpeech', this.data.speechInfo.currentTime)
@@ -109,6 +111,7 @@ Page({
     })
   },
   playEvaluationAudio: function(){
+    if (this.data.matchedUserStatus < 5) return
     this.sendSpeech({ status: 6 })
     this.stopAllAudio()
     innerAudioContext.src = this.data.evaluationInfo.src
@@ -357,7 +360,7 @@ Page({
         //util.showSuccess('演讲保存成功')
         wx.showToast({
           title: '完成演讲 +1',
-          image: '../../../images/speechName/star2.png',
+          image: '../../../images/impromptuMeeting/money.png',
         })
         console.log(result)
         var src = result.data.data
@@ -382,7 +385,7 @@ Page({
         //util.showSuccess('鼓励保存成功')
         wx.showToast({
           title: '完成鼓励 +1',
-          image: '../../../images/speechName/star2.png',
+          image: '../../../images/impromptuMeeting/money.png',
         })
         console.log(result)
         var src = result.data.data
@@ -470,7 +473,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    innerAudioContext.src = ''
     // innerAudioContext.autoplay = true
     // innerAudioContext.src = 'https://uuspeaker-1255679565.cos.ap-guangzhou.myqcloud.com/audio/5d412900-546d-11e8-840e-79d6fa3f1ef2.mp3'
     //util.showSuccess('10秒后开始演讲')
@@ -561,7 +563,7 @@ Page({
     innerAudioContext.onEnded((res) => {
       wx.showToast({
         title: '完成聆听 +1',
-        image: '../../../images/speechName/star2.png',
+        image: '../../../images/impromptuMeeting/money.png',
       })
       audioService.updatePlayDuration(innerAudioContext.duration)
       if (this.data.speechInfo.play == 1) {
@@ -648,9 +650,15 @@ Page({
       //util.showModel('信道消息', speak)
       console.log('quickMatchRoom 收到说话消息：', speak)
       if (speak.who.openId == this.data.matchedUser.userId){
-        if (speak.data.status == 99){
+        if (speak.data.status == 101){
           this.setData({
             messageNotice: speak.who.nickName + '关注了你'
+          })
+          return
+        }
+        if (speak.data.status == 102) {
+          this.setData({
+            messageNotice: speak.who.nickName + '：' +speak.data.text
           })
           return
         }
@@ -777,13 +785,19 @@ Page({
         that.setData({
           isLikeUser: 1
         })
-        that.sendSpeech({status:99})
+        that.sendSpeech({status:101})
       },
       fail(error) {
         util.showModel('请求失败', error);
         console.log('request fail', error);
       }
     })
+  },
+
+  sendTextMessage: function(e){
+    if (e.detail.value == '')return
+    this.sendSpeech({ status: 102,text:e.detail.value })
+    this.setData({ inputContent: '', messageNotice: '我：' + e.detail.value});
   },
 
   onHide: function () {
