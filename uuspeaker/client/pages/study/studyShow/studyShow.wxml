@@ -29,19 +29,31 @@
 
     <view class="weui-flex" style='padding-left:15px'>
       <view class="weui-flex__item">
-        <view class='small-grey'>练习演讲</view>
+        <view class='small-grey'>演讲</view>
         <view class="weui-flex" style='font-size:30px'>{{speechScoreTotal}}
           <view class='small-grey-2'>次</view>
         </view>
       </view>
       <view class="weui-flex__item">
-        <view class='small-grey'>练习激励</view>
+        <view class='small-grey'>复盘</view>
+        <view class="weui-flex" style='font-size:30px'>{{reviewScoreTotal}}
+          <view class='small-grey-2'>次</view>
+        </view>
+      </view>
+      <view class="weui-flex__item">
+        <view class='small-grey'>聆听</view>
+        <view class="weui-flex" style='font-size:30px'>{{listenScoreTotal}}
+          <view class='small-grey-2'>次</view>
+        </view>
+      </view>
+      <view class="weui-flex__item">
+        <view class='small-grey'>激励</view>
         <view class="weui-flex" style='font-size:30px'>{{evaluateScoreTotal}}
           <view class='small-grey-2'>次</view>
         </view>
       </view>
       <view class="weui-flex__item">
-        <view class='small-grey'>影响力</view>
+        <view class='small-grey'>粉丝</view>
         <view class="weui-flex" style='font-size:30px'>{{myFansTotal}}
           <view class='small-grey-2' style='font-size:11px'>人</view>
         </view>
@@ -55,7 +67,7 @@
         <view>懂你演讲</view>
         <view>让表达成为一种享受</view>
         <view class='weui-flex code-notice'>
-          <view>长按识别二维码</view>
+          <view>扫码跟我一起学习吧</view>
           <view style='width:5px'></view>
           <view class='arrow-right'>></view>
         </view>

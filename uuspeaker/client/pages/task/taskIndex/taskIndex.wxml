@@ -10,7 +10,7 @@
       </view>
     </view>
     <view class="weui-cell__ft totoalScore">
-      {{totalStudyDuration}} 分 <text style='color:orangered' wx:if='{{todayStudyDuration !=0}}'>+{{todayStudyDuration}}</text>
+      +{{todayStudyDuration}} 分
     </view> 
   </view>
 
@@ -20,23 +20,23 @@
     <view class="weui-flex"  style='padding-left:25px;padding-bottom:5px' >
       <view class="weui-flex__item" >
         <view class='small-grey'>演讲</view>
-        <view class="weui-flex" style='font-size:15px'>{{speechScoreTotal}}<text class='small-grey2'>次</text><text class='small-increase' wx:if='{{speechScoreToday != 0}}'>+{{speechScoreToday}}</text></view>
+        <view class="weui-flex" style='font-size:15px'>{{speechScoreTotal}}<text class='small-grey2'>次</text></view>
       </view>
       <view class="weui-flex__item" >
         <view class='small-grey'>复盘</view>
-        <view class="weui-flex" style='font-size:15px'>{{reviewScoreTotal}}<text class='small-grey2'>次</text><text class='small-increase' wx:if='{{reviewScoreTotal != 0}}'>+{{reviewScoreToday}}</text></view>
+        <view class="weui-flex" style='font-size:15px'>{{reviewScoreTotal}}<text class='small-grey2'>次</text></view>
       </view>
       <view class="weui-flex__item" >
         <view class='small-grey'>聆听</view>
-        <view class="weui-flex" style='font-size:15px'>{{listenScoreTotal}}<text class='small-grey2'>次</text><text class='small-increase' wx:if='{{listenScoreTotal != 0}}'>+{{listenScoreToday}}</text></view>
+        <view class="weui-flex" style='font-size:15px'>{{listenScoreTotal}}<text class='small-grey2'>次</text></view>
       </view>
       <view class="weui-flex__item" >
         <view class='small-grey'>鼓励</view>
-        <view class="weui-flex" style='font-size:15px'>{{evaluateScoreTotal}}<text class='small-grey2'>次</text><text class='small-increase' wx:if='{{evaluateScoreTotal != 0}}'>+{{evaluateScoreToday}}</text></view>
+        <view class="weui-flex" style='font-size:15px'>{{evaluateScoreTotal}}<text class='small-grey2'>次</text></view>
       </view>
      
       <view class="weui-flex__item" data-type='2' catchtap='toLikeUserList'>
-        <view class='small-grey'>影响</view>
+        <view class='small-grey'>粉丝</view>
         <view class="weui-flex" style='font-size:15px' >{{myFansTotal}}<text class='small-grey2'>人</text></view>
       </view>
     </view>
@@ -50,7 +50,7 @@
     <view class="weui-flex__item" >
       学习区 <block wx:if='{{newCommentAmount > 0}}'><text class="commentNotice" catchtap='toNewCommentList'>{{newCommentAmount}}条消息</text></block>
       </view>
-    <view class="showStudy"  bindtap='toStudyShow'>打卡</view>
+    <view class="showStudy"  bindtap='toStudyShow'>成绩单</view>
     </view>
     <view class="weui-cell " data-task_type='1'>
        
@@ -85,7 +85,7 @@
   <view class="weui-cells weui-cells_after-title">
     <view class="weui-cell content" data-task_type='1'>
     <view class="weui-flex__item" >休闲区 </view>
-    <view class="showStudy"><button open-type="contact" /><contact-button  type="default-dark" size="25" session-from="weapp"><text style='padding-left: 10px;'>咨询</text></contact-button></view>
+    <view class="showStudy"><button open-type="contact" /></view>
     </view>
     <view class="weui-cell " data-task_type='1'>
        

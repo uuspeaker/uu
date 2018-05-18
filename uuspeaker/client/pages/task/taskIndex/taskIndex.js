@@ -218,8 +218,14 @@ Page({
       return
     }
     wx.navigateTo({
-      url: '../../study/studyShow/studyShow?myFansTotal=' + this.data.myFansTotal + '&rank=' + this.data.rank 
-      + '&speechScoreTotal=' + this.data.speechScoreTotal + '&evaluateScoreTotal=' + this.data.evaluateScoreTotal + '&avatarUrl=' + this.data.userInfo.avatarUrl + '&nickName=' + this.data.userInfo.nickName,
+      url: '../../study/studyShow/studyShow?myFansTotal=' + this.data.myFansTotal 
+      + '&rank=' + this.data.rank 
+      + '&speechScoreTotal=' + this.data.speechScoreTotal 
+      + '&reviewScoreTotal=' + this.data.reviewScoreTotal 
+      + '&listenScoreTotal=' + this.data.listenScoreTotal 
+      + '&evaluateScoreTotal=' + this.data.evaluateScoreTotal 
+      + '&avatarUrl=' + this.data.userInfo.avatarUrl 
+      + '&nickName=' + this.data.userInfo.nickName,
     })
   },
 
@@ -363,22 +369,6 @@ Page({
       }
     })
     
-    // wx.getUserInfo({
-    //   withCredentials: false,
-    //   lang: '',
-    //   success(result) {
-    //     that.setData({
-    //       userInfo: result.userInfo
-    //     })
-    //   },
-    //   fail(error) {
-    //     util.showModel('请求失败', error)
-    //     console.log('request fail', error)
-    //   },
-    //   complete: function (res) {
-
-    //   },
-    // })
   },
 
   initIndex: function (options) {

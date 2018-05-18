@@ -354,7 +354,11 @@ Page({
       data: requestData,
       method: 'post',
       success(result) { 
-        util.showSuccess('演讲保存成功')
+        //util.showSuccess('演讲保存成功')
+        wx.showToast({
+          title: '完成演讲 +1',
+          image: '../../../images/speechName/star2.png',
+        })
         console.log(result)
         var src = result.data.data
         that.sendSpeech({ status: 2, audioId: audioId, timeDuration: timeDuration, src: src })
@@ -375,7 +379,11 @@ Page({
       data: { 'roomId': roomId , evaluationAudioId: audioId, targetAudioId: this.data.speechInfo.audioId, timeDuration: timeDuration, audioType: 2 },
       method: 'post',
       success(result) {
-        util.showSuccess('鼓励保存成功')
+        //util.showSuccess('鼓励保存成功')
+        wx.showToast({
+          title: '完成鼓励 +1',
+          image: '../../../images/speechName/star2.png',
+        })
         console.log(result)
         var src = result.data.data
         that.sendSpeech({ status: 5, audioId: audioId, timeDuration: timeDuration, src: src })
@@ -439,7 +447,7 @@ Page({
       data: { roomId: roomId, userId: userId},
       method: 'put',
       success(result) {
-        util.showSuccess('录音保存成功')
+        //util.showSuccess('录音保存成功')
         console.log(result)
         if (that.data.audioType == 1) {
           that.data.audioType = 2
@@ -505,7 +513,7 @@ Page({
       //   util.showSuccess('录音太短不做保存')
       //   return
       // } 
-      util.showSuccess('录音结束')
+      //util.showSuccess('录音结束')
       this.setData({
         isPlay: 0,
       })
@@ -551,7 +559,11 @@ Page({
       })
     })
     innerAudioContext.onEnded((res) => {
-      var audioService = require('../../../common/audioService.js').updatePlayDuration(innerAudioContext.duration)
+      wx.showToast({
+        title: '完成聆听 +1',
+        image: '../../../images/speechName/star2.png',
+      })
+      audioService.updatePlayDuration(innerAudioContext.duration)
       if (this.data.speechInfo.play == 1) {
         this.data.speechInfo.sliderValue = 0
         this.data.speechInfo.currentTime = '00:00'

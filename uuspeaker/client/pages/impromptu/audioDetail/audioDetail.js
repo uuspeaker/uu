@@ -343,7 +343,18 @@ Page({
       data: { evaluationAudioId: evaluationAudioId, targetAudioId:this.data.audioId,timeDuration: timeDuration, audioType: 2 },
       method: 'post',
       success(result) {
-        util.showSuccess('录音保存成功')
+        if (this.data.audioData[0].isMine == 1){
+          wx.showToast({
+            title: '完成复盘 +1',
+            image: '../../../images/speechName/star2.png',
+          })
+        }else{
+          wx.showToast({
+            title: '完成鼓励 +1',
+            image: '../../../images/speechName/star2.png',
+          })
+        }
+       
         console.log(result)
         that.queryAudioComment()
         that.increaseCommentTime()
@@ -388,6 +399,10 @@ Page({
       })
     })
     innerAudioContext.onEnded((res) => {
+      wx.showToast({
+        title: '完成聆听 +1',
+        image: '../../../images/speechName/star2.png',
+      })
       audioService.updatePlayDuration(innerAudioContext.duration)
       this.formatDateAndStatus()
       this.setData({

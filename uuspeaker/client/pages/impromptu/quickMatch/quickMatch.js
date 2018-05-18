@@ -334,12 +334,23 @@ Page({
   },
 
   onShow() {
+    
     this.initUserInfo()
     if (this.pageReady) {
       this.openTunnel();
     }
   },
 
+  onLoad: function(){
+    qcloud.login({
+      success: function (result) {
+      },
+      fail: function () {
+        util.showSuccess('登陆失效')
+        wx.navigateBack({ delta: 99999 })
+      }
+    })
+  },
 
   onHide: function () {
     this.quit()

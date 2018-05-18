@@ -170,7 +170,10 @@ Page({
       data: { taskId: audioId, timeDuration: timeDuration, audioName: this.data.audioName, audioText: this.data.audioText },
       method: 'post',
       success(result) {
-        util.showSuccess('录音保存成功')
+        wx.showToast({
+          title: '完成演讲 +1',
+          image: '../../../images/speechName/star2.png',
+        })
         that.setData({
           isCompleteTask: 1
         })

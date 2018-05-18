@@ -87,6 +87,8 @@ Page({
       myFansTotal: options.myFansTotal,
       rank: options.rank,
       speechScoreTotal: options.speechScoreTotal,
+      reviewScoreTotal: options.reviewScoreTotal,
+      listenScoreTotal: options.listenScoreTotal,
       evaluateScoreTotal: options.evaluateScoreTotal,
       avatarUrl: options.avatarUrl,
       nickName: options.nickName
