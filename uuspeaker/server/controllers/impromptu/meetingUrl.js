@@ -76,8 +76,11 @@ function onConnect(tunnelId) {
   if (tunnelId in meetingUserMap) {
     meetingConnectedTunnelIds.push(tunnelId)
 
+    $sendMessage(tunnelId, 'userList', {
+      'data': meetingUserMap
+    })
+
     $broadcast('people', {
-      'total': meetingConnectedTunnelIds.length,
       'enter': meetingUserMap[tunnelId]
     })
   } else {
@@ -159,10 +162,14 @@ module.exports = {
   get: async ctx => {
     const data = await tunnel.getTunnelUrl(ctx.req)
     const tunnelInfo = data.tunnel
-
+    data.userinfo.rank = ctx.query.rank
+    //清除原先打开的信道
+    if (tunnelMap[data.userinfo.openId] != undefined){
+      delete meetingUserMap[tunnelMap[data.userinfo.openId]]
+    }
     meetingUserMap[tunnelInfo.tunnelId] = data.userinfo
     tunnelMap[data.userinfo.openId] = tunnelInfo.tunnelId
-    console.log('meetingUrl meetingUserMap', meetingUserMap)
+    //console.log('meetingUrl meetingUserMap', meetingUserMap)
     ctx.state.data = tunnelInfo
   },
 

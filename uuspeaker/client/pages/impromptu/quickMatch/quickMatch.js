@@ -13,6 +13,7 @@ var searchSeconds = 30
 var hasEnter = 0
 var tryTimes = 0
 var thisUserInfo = {}
+var rank
 /**
  * 生成一条聊天室的消息的唯一 ID
  */
@@ -47,8 +48,8 @@ Page({
     isMatching: 0,
     onlineUser: [],
     userInfo:{},
-
-    userList: [{ avatarUrl: '' }, { avatarUrl: '' }, { avatarUrl: '' },],
+    userList:[],
+    infoType:1,
 
     messages: [],
     inputContent: '',
@@ -168,9 +169,9 @@ Page({
    */
   openTunnel() {
     //this.amendMessage(createSystemMessage('正在加入学习频道...'));
-
+    console.log('rank', rank)
     // 创建信道
-    var tunnel = this.tunnel = new qcloud.Tunnel(`${config.service.host}/weapp/impromptu.meetingUrl`)
+    var tunnel = this.tunnel = new qcloud.Tunnel(`${config.service.host}/weapp/impromptu.meetingUrl?rank=` + rank)
     console.log('quickMatch 初始化信道服务',tunnel)
     // if (this.tunnel) {
     //   tunnel = this.tunnel
@@ -184,12 +185,28 @@ Page({
       //this.popMessage()
       });
 
+    // 连接成功后，去掉「正在加入学习频道」的系统提示
+    tunnel.on('userList', (userList) => {
+      const { data } = userList;
+      this.setData({
+        userList: data, 
+        userAmount: Object.getOwnPropertyNames(data).length
+
+      })
+      });
+
     // 聊天室有人加入或退出，反馈到 UI 上
     tunnel.on('people', people => {
       const { total, enter, leave } = people;
-      this.setData({
-        userAmount: total
-      })
+      console.log('enter', enter)
+      if(enter.openId != this.data.userInfo.openId){
+        this.data.userList[enter.openId] = enter
+        var totalAmount = Object.getOwnPropertyNames(this.data.userList).length
+        this.setData({
+          userList: this.data.userList,
+          userAmount: totalAmount
+        })
+      }
       // if (enter) {
       //   this.pushMessage(createSystemMessage(`${enter.nickName}已加入学习频道，当前共 ${total} 人`));
       // } else {
@@ -300,6 +317,12 @@ Page({
 
   },
 
+  showInfo: function(e){
+    this.setData({
+      infoType: e.currentTarget.dataset.info_type
+    })
+  },
+
   toMatchRule: function(){
     this.quit()
     wx.navigateTo({
@@ -341,7 +364,9 @@ Page({
     }
   },
 
-  onLoad: function(){
+  onLoad: function (options){
+    console.log('options',options)
+    rank = options.rank
     qcloud.login({
       success: function (result) {
       },

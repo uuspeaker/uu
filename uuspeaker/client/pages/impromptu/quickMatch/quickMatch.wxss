@@ -1,4 +1,9 @@
 /***************************聊天展示区样式**************************/
+.userSmallPic {
+  width: 30px;
+  height: 30px;
+  padding-left: 10px;
+}
 .topNotice{
   padding-top:6px;
   padding-bottom: 6px;
@@ -30,7 +35,7 @@
 	0%  {font-size:0px;}
 	100% {font-size:15px;}
 }
-.small-grey{
+.big-grey{
   font-size: 20px;
   font-weight: bold;
 }
@@ -50,6 +55,7 @@
     text-align: center;
     overflow-y:auto;
     padding-top: 20px;
+    padding-bottom: 10px;
 }
 .system-message {
     font-size: 14px;
@@ -98,9 +104,11 @@
     border-radius: 4px;
     background: #fff;
     font-size: 32rpx;
-    line-height: 32rpx;
+    line-height: 45rpx;
     padding: 20rpx;
     position: relative;
+
+  word-break:break-all;
 }
 .user-message.me .text .content {
     background: #a0e75b;
@@ -266,4 +274,21 @@
         background-color: #a0e75a;
         font-size: 36rpx;
     }
+}
+.user-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 3px;
+}
+.small-grey{
+  font-size: 13px;
+  color:#888888;
+  font-weight: normal;
+  padding-left:10px;
+  margin-top: 4px;
+}
+.title{
+  font-size: 18px;
+  font-weight: bold;
+  color: #576b95;
 }

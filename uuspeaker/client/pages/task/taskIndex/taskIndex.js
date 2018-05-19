@@ -74,7 +74,6 @@ Page({
   },
 
   getScore: function(studyInfo,studyType){
-    console.log('studyInfo', studyInfo)
     if (studyInfo == undefined || studyInfo == '' || studyInfo == [])return 0
     for (var i = 0; i < studyInfo.length; i++){
       if (studyInfo[i].study_type == studyType){
@@ -188,7 +187,7 @@ Page({
       return
     }
     wx.navigateTo({
-      url: '../../impromptu/quickMatch/quickMatch?start=0',
+      url: '../../impromptu/quickMatch/quickMatch?start=0&rank= ' + this.data.rank,
     })
   },
 
@@ -286,16 +285,6 @@ Page({
     }
     wx.navigateTo({
       url: '../../rank/studyRank/studyRank'
-    })
-  },
-
-  toStudyNow: function () {
-    if (this.data.isLogin == 0) {
-      util.showSuccess('请先登陆')
-      return
-    }
-    wx.navigateTo({
-      url: '../../impromptu/userMatch/userMatch?rank=' + this.data.rank
     })
   },
 
