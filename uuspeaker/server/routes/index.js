@@ -23,6 +23,7 @@ router.get('/user', validationMiddleware, controllers.user)
 
 // GET  用来响应请求信道地址的
 router.get('/impromptu.meetingUrl', controllers.impromptu.meetingUrl.get)
+router.put('/impromptu.meetingUrl', controllers.impromptu.meetingUrl.put)
 router.post('/impromptu.meetingUrl', controllers.impromptu.meetingUrl.post)
 // GET  用来响应请求信道地址的
 router.get('/impromptu.chatUrl', controllers.impromptu.chatUrl.get)

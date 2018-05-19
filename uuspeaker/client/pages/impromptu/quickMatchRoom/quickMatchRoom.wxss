@@ -53,6 +53,7 @@
 }
 .speechName{
   height:30px;
+  font-size:20px;
   text-align: center;
   margin-top:20px;
   margin-bottom: 15px;
@@ -64,7 +65,7 @@
 {
 	0%  {font-size:0px;}
 	30%  {font-size:0px;}
-	100% {font-size:30px;}
+	100% {font-size:20px;}
 }
 .twinkle{
 	animation:myfirst 5s;

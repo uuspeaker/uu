@@ -298,7 +298,7 @@ Page({
     })
   },
 
-  onShow: function () {
+  onLoad: function () {
     var that = this
     
     qcloud.login({

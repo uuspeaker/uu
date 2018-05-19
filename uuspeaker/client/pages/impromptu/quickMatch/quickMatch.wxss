@@ -96,7 +96,7 @@
 }
 .text .nickname {
     color: grey;
-    font-size: 13px;
+    font-size: 12px;
     margin-bottom: 2rpx;
 }
 .text .content {
@@ -105,7 +105,7 @@
     background: #fff;
     font-size: 32rpx;
     line-height: 45rpx;
-    padding: 20rpx;
+    padding: 15rpx;
     position: relative;
 
   word-break:break-all;

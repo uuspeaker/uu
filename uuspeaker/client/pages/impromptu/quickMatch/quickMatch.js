@@ -54,7 +54,7 @@ Page({
     messages: [],
     inputContent: '',
     lastMessageId: 'none',
-    userAmount: 0,
+    userAmount: '',
   },
 
   startMatch: function () {
@@ -65,14 +65,11 @@ Page({
     })
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/impromptu.quickMatch`,
+      url: `${config.service.host}/weapp/impromptu.meetingUrl`,
       login: true,
-      method: 'post',
+      method: 'put',
+      data: { matchType:'startMatch'},
       success(result) {
-        console.log('userId', result.data.data)
-        userId = result.data.data
-        getMatchInfoId = setInterval(that.getMatchInfo, 1000)
-        //that.getMatchInfo()
         waitId = setInterval(that.wait, 1000)
       },
       fail(error) {
@@ -91,9 +88,10 @@ Page({
     })
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/impromptu.quickMatch`,
+      url: `${config.service.host}/weapp/impromptu.meetingUrl`,
       login: true,
       method: 'put',
+      data: { matchType: 'stopMatch' },
       success(result) {
 
       },
@@ -119,44 +117,10 @@ Page({
     }
   },
 
-  getMatchInfo: function () {
-    var that = this
-    qcloud.request({
-      url: `${config.service.host}/weapp/impromptu.quickMatch`,
-      login: true,
-      method: 'get',
-      data: { 'userId': userId },
-      success(result) {
-        console.log('getMatchInfo', result.data.data)
-        var userInfo = result.data.data
-        if (userInfo == 0) {
-          //util.showBusy('搜索中...')
-        } else {
-          clearInterval(getMatchInfoId)
-          clearInterval(waitId)
-          util.showSuccess('匹配成功')
-          console.log('userInfo', userInfo)
-          thisUserInfo = userInfo
-          //setTimeout(that.createAndGoRoom, Math.random() * 5, userInfo)
-          //Math.floor(Math.random() * 3)
-          that.quit()
-          //setTimeout(that.doGoRoom,5000)
-          that.doGoRoom(userInfo)
-        }
-
-      },
-      fail(error) {
-        util.showModel('请求失败', error);
-        console.log('request fail', error);
-      }
-    })
-  },
-
   // 进入rtcroom页面
   doGoRoom: function (userInfo) {
-    userInfo = thisUserInfo
-    console.log('关闭信道，进入即兴演讲页面')
-    var url = '../quickMatchRoom/quickMatchRoom?roomId=' + userInfo.roomId + '&userId=' + userId + '&nickName=' + userInfo.matchedUser.nickName + '&avatarUrl=' + userInfo.matchedUser.avatarUrl + '&speechName=' + userInfo.speechName + '&matchUserId=' + userInfo.matchedUser.userId
+    this.quit()
+    var url = '../quickMatchRoom/quickMatchRoom?userId=' + userId + '&nickName=' + userInfo.matchedUser.nickName + '&avatarUrl=' + userInfo.matchedUser.avatarUrl + '&speechName=' + userInfo.speechName + '&matchUserId=' + userInfo.matchedUser.userId + '&rank=' + rank
       console.log(url)
       wx.navigateTo({
         url: url
@@ -198,15 +162,27 @@ Page({
     // 聊天室有人加入或退出，反馈到 UI 上
     tunnel.on('people', people => {
       const { total, enter, leave } = people;
-      console.log('enter', enter)
-      if(enter.openId != this.data.userInfo.openId){
-        this.data.userList[enter.openId] = enter
-        var totalAmount = Object.getOwnPropertyNames(this.data.userList).length
-        this.setData({
-          userList: this.data.userList,
-          userAmount: totalAmount
-        })
+      console.log('people',people)
+      console.log('userList', this.data.userList)
+      if(enter){
+        if (enter.openId != this.data.userInfo.openId) {
+          this.data.userList[enter.tunnelId] = enter
+          var totalAmount = Object.getOwnPropertyNames(this.data.userList).length
+          this.setData({
+            userList: this.data.userList,
+            userAmount: totalAmount
+          })
+        }
+      }else{
+          var newUserList =  this.data.userList
+          delete newUserList[leave.tunnelId]
+          var totalAmount = Object.getOwnPropertyNames(newUserList).length
+          this.setData({
+            userList: newUserList,
+            userAmount: totalAmount
+          })
       }
+      
       // if (enter) {
       //   this.pushMessage(createSystemMessage(`${enter.nickName}已加入学习频道，当前共 ${total} 人`));
       // } else {
@@ -214,6 +190,11 @@ Page({
       // }
     });
 
+    // 有人说话，创建一条消息
+    tunnel.on('match', speak => {
+      console.log('match',speak.data)
+      this.doGoRoom(speak.data)
+    });
     // 有人说话，创建一条消息
     tunnel.on('speak', speak => {
       console.log(this.tunnel)

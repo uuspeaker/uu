@@ -14,6 +14,8 @@ var getRoomInfoId = ''
 var waitSecondsId = ''
 var isInRoom = 1
 var playAudioStartDate = ''
+var rank
+var coinPlay = 0
 
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext();
@@ -358,6 +360,9 @@ Page({
       method: 'post',
       success(result) { 
         //util.showSuccess('演讲保存成功')
+        innerAudioContext.src = audioService.coinSrc
+        innerAudioContext.play()
+        coinPlay = 1
         wx.showToast({
           title: '完成演讲 +1',
           image: '../../../images/impromptuMeeting/money.png',
@@ -383,6 +388,9 @@ Page({
       method: 'post',
       success(result) {
         //util.showSuccess('鼓励保存成功')
+        innerAudioContext.src = audioService.coinSrc
+        innerAudioContext.play()
+        coinPlay = 1
         wx.showToast({
           title: '完成鼓励 +1',
           image: '../../../images/impromptuMeeting/money.png',
@@ -473,6 +481,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    rank = options.rank
     // innerAudioContext.autoplay = true
     // innerAudioContext.src = 'https://uuspeaker-1255679565.cos.ap-guangzhou.myqcloud.com/audio/5d412900-546d-11e8-840e-79d6fa3f1ef2.mp3'
     //util.showSuccess('10秒后开始演讲')
@@ -524,13 +533,15 @@ Page({
 
     innerAudioContext.obeyMuteSwitch = false
     innerAudioContext.onPlay(() => {
-      wx.hideLoading()
       console.log('开始播放', innerAudioContext.currentTime)
+      if (coinPlay == 1) return
+      //wx.hideLoading()
     })
     innerAudioContext.onWaiting(() => {
-      wx.showLoading({
-        title: '音频加载中',
-      })
+      if (coinPlay == 1) return
+      // wx.showLoading({
+      //   title: '音频加载中',
+      // })
     })
     innerAudioContext.onTimeUpdate(() => {
       
@@ -561,6 +572,14 @@ Page({
       })
     })
     innerAudioContext.onEnded((res) => {
+      if (coinPlay == 1) {
+        coinPlay = 0
+        return
+      } else {
+        coinPlay = 1
+        innerAudioContext.src = audioService.coinSrc
+        innerAudioContext.play()
+      }
       wx.showToast({
         title: '完成聆听 +1',
         image: '../../../images/impromptuMeeting/money.png',
@@ -604,18 +623,10 @@ Page({
     // 创建信道，需要给定后台服务地址
     
     console.log(this.tunnel)
-    this.tunnel = new qcloud.Tunnel(`${config.service.host}/weapp/impromptu.meetingUrl`)
+    this.tunnel = new qcloud.Tunnel(`${config.service.host}/weapp/impromptu.meetingUrl?rank=` + rank)
     console.log(this.tunnel)
     var tunnel = this.tunnel
     console.log('quickMatchRoom 初始化信道服务', tunnel)
-
-    // if (this.tunnel){
-    //   console.log('use old tunnel')
-    //   tunnel = this.tunnel
-    // }else{
-    //   console.log('use new tunnel')
-    //   tunnel = this.tunnel = new qcloud.Tunnel(config.service.tunnelUrl)
-    // }
 
     // 监听信道内置消息，包括 connect/close/reconnecting/reconnect/error
     tunnel.on('connect', () => {
@@ -646,7 +657,7 @@ Page({
     })
 
     // 监听自定义消息（服务器进行推送）
-    tunnel.on('speak', speak => {
+    tunnel.on('speech', speak => {
       //util.showModel('信道消息', speak)
       console.log('quickMatchRoom 收到说话消息：', speak)
       if (speak.who.openId == this.data.matchedUser.userId){
@@ -726,7 +737,8 @@ Page({
   sendSpeech(content) {
     // 信道当前不可用
     if (!this.tunnel || !this.tunnel.isActive()) {
-      util.showSuccess('连接失败')
+      //util.showSuccess('连接失败')
+      return
     }
     // 使用信道给服务器推送「speak」消息
     content.targetUserId = this.data.matchedUser.userId
@@ -821,7 +833,10 @@ Page({
     clearInterval(waitSecondsId)
     isInRoom = 0
     this.stopTime()
-    this.sendSpeech({ status: 7 })
+    if (this.data.matchedUserStatus != 7){
+      this.sendSpeech({ status: 7 })
+    }
+    
     this.closeTunnel()
     this.stopAllAudio()
     //innerAudioContext.destroy()

@@ -19,7 +19,7 @@
             <view wx:if="{{message.type == 'speak'}}" class="user-message {{message.isMe ? 'me' : 'other'}}">
                 <image class="avatar" src="{{message.user.avatarUrl}}" mode="aspectFill"></image>
                 <view class="text">
-                    <view class="nickname">{{message.user.nickName}}</view>
+                    <view class="nickname">{{message.user.nickName}}【{{message.user.rank}}】</view>
                     <view class="content">{{message.content}}</view>
                 </view>
             </view>

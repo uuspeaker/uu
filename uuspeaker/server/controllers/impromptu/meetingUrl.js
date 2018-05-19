@@ -1,4 +1,9 @@
 const { tunnel } = require('../../qcloud')
+const { mysql } = require('../../qcloud')
+const uuid = require('../../common/uuid.js')
+const log = require('../../log');
+const audioService = require('../../service/audioService.js')
+const userInfoService = require('../../service/userInfoService')
 
 /**
  * 这里实现一个简单的聊天室
@@ -10,6 +15,106 @@ var tunnelMap = {}
 
 // 保存 当前已连接的 WebSocket 信道ID列表
 const meetingConnectedTunnelIds = []
+
+var waitTime = 30000
+var roomTime = 1200000
+var standByList = []
+var matchedList = []
+var speechNames = []
+
+var initSpeechNames = async () => {
+  speechNames = await mysql("speech_name_info").select('speech_name')
+}
+
+var getRandomSpeechName = () => {
+  var index = Math.floor(Math.random() * speechNames.length)
+  if (index - 1 >= 0 && index < speechNames.length) {
+    return speechNames[index - 1].speech_name
+  } else {
+    return '第一次'
+  }
+}
+
+var startMatch = (userInfo) => {
+  var standByListLegnth = standByList.length
+  for (var i = 0; i < standByListLegnth; i++) {
+    if (standByList[i].userId == userInfo.userId) {
+      standByList[i].startDate = new Date()
+      return
+    }
+  }
+  //if (matchedList[userInfo.userId] != undefined) return
+
+  userInfo.startDate = new Date()
+  standByList.unshift(userInfo)
+  log.info('用户开始匹配' + JSON.stringify(userInfo))
+  log.info('当前正在等待匹配的所有用户' + JSON.stringify(standByList))
+}
+
+//定期删除超过30秒还未匹配到的用户
+var removeUnmatchUser = () => {
+  var now = new Date()
+  var standByListLegnth = standByList.length
+  var removeAmount = 0
+  for (var i = 0; i < standByListLegnth; i++) {
+    var lastSeconds = Math.floor(now - standByList[i].startDate)
+    if (lastSeconds >= waitTime) {
+      var removedUser = standByList.splice(i - removeAmount, 1)
+      log.info('30秒后还未匹配到，将用户从等待列表删除' + JSON.stringify(removedUser))
+      log.info('当前正在等待匹配的所有用户' + JSON.stringify(standByList))
+      removeAmount++
+    }
+  }
+}
+
+//用户停止匹配
+var stopMatch = (userId) => {
+  var standByListLegnth = standByList.length
+  var removeAmount = 0
+  for (var i = 0; i < standByListLegnth; i++) {
+    if (standByList[i].userId == userId) {
+      var removedUser = standByList.splice(i, 1)
+      log.info('用户取消匹配' + JSON.stringify(removedUser))
+      log.info('当前正在等待匹配的所有用户' + JSON.stringify(standByList))
+      return
+    }
+  }
+}
+
+//定期删除匹配到了但未参加的用户
+var removeMatchUser = () => {
+  var now = new Date()
+  for (var userId in matchedList) {
+    var lastSeconds = Math.floor(now - matchedList[userId].startDate)
+    if (lastSeconds >= waitTime) {
+      log.info('匹配成功后30秒用户未响应，将用户从匹配成功列表删除' + JSON.stringify(matchedList[userId]))
+      delete matchedList[userId]
+    }
+  }
+}
+
+var autoMatchUser = () => {
+  removeUnmatchUser()
+  //removeMatchUser()
+  var matchTimes = Math.floor(standByList.length / 2)
+  for (var i = 0; i < matchTimes; i++) {
+    var roomId = uuid.v1()
+    var matchUserA = standByList.pop()
+    var matchUserB = standByList.pop()
+    var speechName = getRandomSpeechName()
+    // matchedList[matchUserA.userId] = { userId: matchUserA.userId, matchedUser: matchUserB, roomId: roomId, speechName: speechName, startDate: new Date() }
+    // matchedList[matchUserB.userId] = { userId: matchUserB.userId, matchedUser: matchUserA, roomId: roomId, speechName: speechName, startDate: new Date() }
+
+    log.info('匹配成功，将匹配成功的两个用户从等待列表删除，转移到匹配成功列表' + JSON.stringify(matchUserA) + JSON.stringify(matchUserB))
+
+    $sendMessage(tunnelMap[matchUserA.userId], 'match', {
+      'data': { matchedUser: matchUserB, speechName: speechName}
+    })
+    $sendMessage(tunnelMap[matchUserB.userId], 'match', {
+      'data': { matchedUser: matchUserA, speechName: speechName}
+    })
+  }
+}
 
 /**
  * 调用 tunnel.broadcast() 进行广播
@@ -111,7 +216,7 @@ function onMessage(tunnelId, type, content) {
       break
     case 'speech':
       if (tunnelId in meetingUserMap) {
-        $sendMessage(tunnelMap[content.targetUserId], 'speak', {
+        $sendMessage(tunnelMap[content.targetUserId], 'speech', {
           'who': meetingUserMap[tunnelId],
           'data': content
         })
@@ -163,6 +268,7 @@ module.exports = {
     const data = await tunnel.getTunnelUrl(ctx.req)
     const tunnelInfo = data.tunnel
     data.userinfo.rank = ctx.query.rank
+    data.userinfo.tunnelId = tunnelInfo.tunnelId
     //清除原先打开的信道
     if (tunnelMap[data.userinfo.openId] != undefined){
       delete meetingUserMap[tunnelMap[data.userinfo.openId]]
@@ -172,6 +278,20 @@ module.exports = {
     //console.log('meetingUrl meetingUserMap', meetingUserMap)
     ctx.state.data = tunnelInfo
   },
+
+  // 小程序请求 websocket 地址
+  put: async ctx => {
+    var matchType = ctx.request.body.matchType
+      if (matchType == 'startMatch'){
+        var userInfo = await userInfoService.getUserInfoByKey(ctx)
+        startMatch(userInfo)
+      } else if (matchType == 'stopMatch'){
+        var userId = await userInfoService.getOpenId(ctx)
+        stopMatch(userId)
+      }
+
+  },
+
 
   // 信道将信息传输过来的时候
   post: async ctx => {
@@ -193,3 +313,7 @@ module.exports = {
   }
 
 }
+
+initSpeechNames()
+setInterval(autoMatchUser, 1 * 1000);
+setInterval(initSpeechNames, 10 * 60 * 1000);

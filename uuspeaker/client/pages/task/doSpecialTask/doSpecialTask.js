@@ -3,10 +3,12 @@ var config = require('../../../config')
 var util = require('../../../utils/util.js')
 var dateFormat = require('../../../common/dateFormat.js')
 var uuid = require('../../../common/uuid.js')
+var audioService = require('../../../common/audioService.js')
 
 var tempFilePath = ''
-
+var coinPlay = 0
 const recorderManager = wx.getRecorderManager()
+const innerAudioContext = wx.createInnerAudioContext();
 
 const options = {
   duration: 600000,
@@ -170,6 +172,8 @@ Page({
       data: { taskId: audioId, timeDuration: timeDuration, audioName: this.data.audioName, audioText: this.data.audioText },
       method: 'post',
       success(result) {
+        innerAudioContext.src = audioService.coinSrc
+        innerAudioContext.play()
         wx.showToast({
           title: '完成演讲 +1',
           image: '../../../images/impromptuMeeting/money.png',

@@ -21,6 +21,7 @@ const options = {
 var startDate
 var endDate
 var timeDuration = 0
+var coinPlay = 0
 
 //查询标记(0-查询最新;1-查询前面10条;2-查询后面10条)
 var queryPageType = 0
@@ -344,6 +345,9 @@ Page({
       method: 'post',
       success(result) {
         if (that.data.audioData[0].isMine == 1){
+          innerAudioContext.src = audioService.coinSrc
+          innerAudioContext.play()
+          coinPlay = 1
           wx.showToast({
             title: '完成复盘 +1',
             image: '../../../images/impromptuMeeting/money.png',
@@ -378,17 +382,19 @@ Page({
 
     innerAudioContext.obeyMuteSwitch = false
     innerAudioContext.onPlay(() => {
-      wx.hideLoading()
       console.log('开始播放', innerAudioContext.currentTime)
+      if (coinPlay == 1)return
+      wx.hideLoading()
     })
     innerAudioContext.onWaiting(() => {
+      if (coinPlay == 1) return
       wx.showLoading({
         title: '音频加载中',
       })
     })
     innerAudioContext.onError((res) => {
-      wx.hideLoading()
-      util.showNotice('音频加载失败')
+      //wx.hideLoading()
+      //util.showNotice('音频加载失败')
       console.log(res.errMsg)
       console.log(res.errCode)
     })
@@ -399,10 +405,21 @@ Page({
       })
     })
     innerAudioContext.onEnded((res) => {
+      if (coinPlay == 1) {
+        coinPlay = 0
+        return 
+      }else{
+        coinPlay = 1
+        innerAudioContext.src = audioService.coinSrc
+        innerAudioContext.play()
+      }
+
       wx.showToast({
         title: '完成聆听 +1',
         image: '../../../images/impromptuMeeting/money.png',
       })
+      
+      
       audioService.updatePlayDuration(innerAudioContext.duration)
       this.formatDateAndStatus()
       this.setData({
@@ -454,7 +471,7 @@ Page({
       withShareTicket: true
     })
     return {
-      title: '请帮忙点评我的练习',
+      title: '请为我的演讲打call！',
     }
   },
 

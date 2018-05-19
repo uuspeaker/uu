@@ -2,6 +2,7 @@ var config = require('../config')
 var qcloud = require('../vendor/wafer2-client-sdk/index')
 
 var playData = ''
+var coinSrc = 'https://lg-oztvih8q-1255679565.cos.ap-shanghai.myqcloud.com/coin.mp3'
 
 var updatePlayDuration = (playDuration) =>{
   var that = this
@@ -26,4 +27,4 @@ var updatePlayDuration = (playDuration) =>{
   })
 }
 
-module.exports = { updatePlayDuration }
+module.exports = { updatePlayDuration, coinSrc }

@@ -4,8 +4,8 @@
     <view class="weui-cell__hd" style="position: relative;margin-right: 10px;" catchtap='toMyIntroduction'>
       <image class="user-pic" src="{{userInfo.avatarUrl}}" />
     </view>
-    <view class="weui-cell__bd" catchtap='toMyIntroduction'>
-      <view class='link' >{{userInfo.nickName}}<image class='card-pic' src="../../../images/studyManage/introduction.png" ></image></view>
+    <view class="weui-cell__bd" catchtap='toStudyShow'>
+      <view class='link' >{{userInfo.nickName}}<image class='card-pic' src="../../../images/studyManage/checkIn.png" ></image></view>
       <view style="font-size: 13px;color: #888888;padding-top:5px">{{rank}}
       </view>
     </view>
@@ -50,7 +50,7 @@
     <view class="weui-flex__item" >
       学习区 <block wx:if='{{newCommentAmount > 0}}'><text class="commentNotice" catchtap='toNewCommentList'>{{newCommentAmount}}条消息</text></block>
       </view>
-    <view class="showStudy"  bindtap='toStudyShow'>成绩单</view>
+    
     </view>
     <view class="weui-cell " data-task_type='1'>
        

@@ -2,6 +2,7 @@ var qcloud = require('../../../vendor/wafer2-client-sdk/index')
 var config = require('../../../config')
 var util = require('../../../utils/util.js')
 var dateFormat = require('../../../common/dateFormat.js')
+var audioService = require('../../../common/audioService.js')
 
 const innerAudioContext = wx.createInnerAudioContext()
 var showTimes = 0
@@ -12,7 +13,7 @@ var queryUserType = ''
 var queryPageType = 0
 var firstDataTime = ''
 var lastDataTime = ''
-
+var coinPlay = 0
 Page({
 
   /**
@@ -247,10 +248,12 @@ Page({
     })
     innerAudioContext.obeyMuteSwitch = false
     innerAudioContext.onPlay(() => {
-      wx.hideLoading()
       console.log('开始播放', innerAudioContext.currentTime)
+      if (coinPlay == 1) return
+      wx.hideLoading()
     })
     innerAudioContext.onWaiting(() => {
+      if (coinPlay == 1) return
       wx.showLoading({
         title: '音频加载中',
       })
@@ -268,6 +271,14 @@ Page({
       })
     })
     innerAudioContext.onEnded((res) => {
+      if (coinPlay == 1) {
+        coinPlay = 0
+        return
+      } else {
+        coinPlay = 1
+        innerAudioContext.src = audioService.coinSrc
+        innerAudioContext.play()
+      }
       wx.showToast({
         title: '完成聆听 +1',
         image: '../../../images/impromptuMeeting/money.png',
