@@ -168,7 +168,7 @@ Page({
       return
     }
     wx.navigateTo({
-      url: '../specialTaskList/specialTaskList',
+      url: '../specialTaskList/specialTaskList?totalStudyDuration=' + this.data.totalStudyDuration,
     })
   },
 
@@ -361,6 +361,9 @@ Page({
   },
 
   initIndex: function (options) {
+    this.setData({
+      isLogin: 1
+    })
     this.initUserInfo()
     this.queryLikeUserTotal()
     this.queryUserScore()

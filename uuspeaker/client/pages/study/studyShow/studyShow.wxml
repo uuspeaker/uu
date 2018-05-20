@@ -41,7 +41,7 @@
         </view>
       </view>
       <view class="weui-flex__item">
-        <view class='small-grey'>练习激励</view>
+        <view class='small-grey'>练习鼓励</view>
         <view class="weui-flex" style='font-size:30px'>{{evaluateScoreTotal}}
           <view class='small-grey-2'>次</view>
         </view>

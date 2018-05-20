@@ -24,7 +24,8 @@ Page({
     audios: {},
     roomId: '',
     audioLikeUser: [],
-    currentLikeUser: []
+    currentLikeUser: [],
+    totalStudyDuration:0
   },
 
   initViewStyle: function () {
@@ -239,6 +240,9 @@ Page({
 
   onLoad: function (options) {
     console.log(options)
+    this.setData({
+      totalStudyDuration: options.totalStudyDuration
+    })
     queryPageType = 0
     queryUserType = 1
     this.doQuerySpecialTask(queryUserType)

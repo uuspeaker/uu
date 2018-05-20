@@ -233,7 +233,7 @@ var getSpeechAudioByRoom = async (roomId,  userId) => {
 
 var getSrc =  (audioId) => {
   var uploadFolder = config.cos.uploadFolder ? config.cos.uploadFolder + '/' : ''
-  var src = `https://${config.cos.fileBucket}-${config.qcloudAppId}.cos.${config.cos.region}.myqcloud.com/${uploadFolder}${audioId}.mp3`
+  var src = `http://${config.cos.fileBucket}-${config.qcloudAppId}.cos.${config.cos.region}.myqcloud.com/${uploadFolder}${audioId}.mp3`
   return src
 }
 

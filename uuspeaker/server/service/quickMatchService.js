@@ -184,8 +184,8 @@ var getMatchInfo = (userId) => {
   
 // }
 
-//initSpeechNames()
-//setInterval(autoMatchUser, 1 * 1000);
-//setInterval(initSpeechNames, 10 * 60 * 1000);
+initSpeechNames()
+setInterval(autoMatchUser, 1 * 1000);
+setInterval(initSpeechNames, 10 * 60 * 1000);
 
 module.exports = { startMatch, stopMatch, autoMatchUser, getMatchInfo }
