@@ -33,7 +33,8 @@ Page({
     playNotice: 1,
     audioName: '',
     audioText: '',
-    hotTask:[]
+    hotTask:[],
+    showContent:0
   },
 
   //用户按下录音按钮
@@ -201,8 +202,11 @@ Page({
     })
   },
 
-   onLoad:function(){
+   onLoad:function(options){
      this.initAudio()
+     this.setData({
+       showContent: options.showContent
+     })
      //this.queryHotTask()
    },
 

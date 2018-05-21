@@ -4,10 +4,8 @@
     </view>
   </view>
 <view class='pageContent' style='padding-top:50px'> 
-<view class='tip'>用语音</view>
-<view class='content'>打造你的专属名片</view>
 <view class='tip'>三十秒</view>
-<view class='content'>让小伙伴们认识你</view>
+<view class='content'>打造你的语音名片</view>
 </view>
 
 

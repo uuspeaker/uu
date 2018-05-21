@@ -20,7 +20,8 @@ Page({
     speechNameList: [],
     userName: '',
     tapTime: '',
-    isMine: 1
+    isMine: 1,
+    showContent:0
   },
 
   initViewStyle: function () {
@@ -210,6 +211,9 @@ Page({
   
 
   onLoad: function (options) {
+    this.setData({
+      showContent: options.showContent
+    })
     queryPageType = 0
     queryUserType = 1
     this.queryImpromptuspeechNameList(queryUserType)

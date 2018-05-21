@@ -4,8 +4,8 @@
     <view class="weui-cell__hd" style="position: relative;margin-right: 10px;" catchtap='toMyIntroduction'>
       <image class="user-pic" src="{{userInfo.avatarUrl}}" />
     </view>
-    <view class="weui-cell__bd" catchtap='toStudyShow'>
-      <view class='link' >{{userInfo.nickName}}<image class='card-pic' src="../../../images/studyManage/checkIn.png" ></image></view>
+    <view class="weui-cell__bd" >
+      <view class='link' >{{userInfo.nickName}}<image class='card-pic' src="../../../images/studyManage/checkIn.png" catchtap='toStudyShow' wx:if='{{showContent == 1}}'></image></view>
       <view style="font-size: 13px;color: #888888;padding-top:5px">{{rank}}
       </view>
     </view>
@@ -16,7 +16,7 @@
 
   <view class='line'></view>
 
-  <view>
+  <view wx:if='{{showContent == 1}}'>
     <view class="weui-flex"  style='padding-left:25px;padding-bottom:5px' >
       <view class="weui-flex__item" >
         <view class='small-grey'>演讲</view>
@@ -43,7 +43,7 @@
   </view>
 </view>
 
-<view class="page__bd">
+<view class="page__bd" wx:if='{{showContent == 1}}'>
   <view class="weui-cells__title "></view>
   <view class="weui-cells weui-cells_after-title">
     <view class="weui-cell content" data-task_type='1'>
@@ -80,7 +80,7 @@
   </view>
 </view>
 
-<view class="page__bd">
+<view class="page__bd" wx:if='{{showContent == 1}}'>
   <view class="weui-cells__title"></view>
   <view class="weui-cells weui-cells_after-title">
     <view class="weui-cell content" data-task_type='1'>
@@ -110,6 +110,43 @@
         <view class='content' >审题目</view>
       </view>
 
+    </view>
+  </view>
+</view>
+
+<view class="page__bd" wx:if='{{showContent == 0}}'>
+  <view class="weui-cells__title "></view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell content" data-task_type='1'>
+    <view class="weui-flex__item" >
+      学习区
+      </view>
+    
+    </view>
+    <view class="weui-cell " data-task_type='1'>
+       
+      <view class="weui-flex__item studyArea" bindtap='toMyIntroduction'>
+        <view>
+          <image class="task-pic" src="../../../images/studyManage/introduction.png" />
+        </view>
+        <view class='content' style='padding-left:3px'>练习介绍</view>
+      </view>
+
+       <view class="weui-flex__item studyArea" bindtap='toDoSpecialTask'>
+        <view>
+          <image class="task-pic" src="../../../images/studyManage/record.png" />
+        </view>
+        <view class='content' style=''>练习演讲</view>
+      </view>
+
+      <view class="weui-flex__item studyArea" bindtap='toSpeechNameList'>
+        <view>
+          <image class="task-pic" src="../../../images/taskIndex/title.png" />
+        </view>
+        <view class='content'>演讲题目</view>
+      </view>
+      
+      
     </view>
   </view>
 </view>

@@ -28,6 +28,7 @@ Page({
     listenScoreToday: 0,
     evaluateScoreToday: 0,
     todayStudyDuration: 0,
+    showContent:0,
 
     myFansTotal: '',
     likeUserTotal: '',
@@ -197,7 +198,7 @@ Page({
       return
     }
     wx.navigateTo({
-      url: '../../userInfo/myIntroduction/myIntroduction',
+      url: '../../userInfo/myIntroduction/myIntroduction?showContent=' + this.data.showContent,
     })
   },
 
@@ -274,7 +275,7 @@ Page({
       return
     }
     wx.navigateTo({
-      url: '../../speech/speechNameList/speechNameList'
+      url: '../../speech/speechNameList/speechNameList?showContent=' + this.data.showContent
     })
   },
 
@@ -361,13 +362,32 @@ Page({
   },
 
   initIndex: function (options) {
-    this.setData({
-      isLogin: 1
-    })
     this.initUserInfo()
-    this.queryLikeUserTotal()
-    this.queryUserScore()
-    this.queryNewCommentAmount()
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/userInfo.userControl`,
+      login: true,
+      method: 'get',
+      success(result) {
+        console.log('result',result)
+        that.setData({
+          showContent: result.data.data
+        })
+        if(result.data.data == 1){
+          
+          that.queryLikeUserTotal()
+          that.queryUserScore()
+          that.queryNewCommentAmount()
+        }
+        
+      },
+
+      fail(error) {
+        util.showModel('请求失败', error)
+        console.log('request fail', error)
+      }
+    })
+    
   },
 
   onReady: function () {
