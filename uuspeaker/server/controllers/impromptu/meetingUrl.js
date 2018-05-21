@@ -16,7 +16,7 @@ var tunnelMap = {}
 // 保存 当前已连接的 WebSocket 信道ID列表
 const meetingConnectedTunnelIds = []
 
-var waitTime = 30000
+var waitTime = 99000
 var roomTime = 1200000
 var standByList = []
 var matchedList = []
@@ -87,7 +87,7 @@ var removeMatchUser = () => {
   for (var userId in matchedList) {
     var lastSeconds = Math.floor(now - matchedList[userId].startDate)
     if (lastSeconds >= waitTime) {
-      log.info('匹配成功后30秒用户未响应，将用户从匹配成功列表删除' + JSON.stringify(matchedList[userId]))
+      log.info('匹配成功后99秒用户未响应，将用户从匹配成功列表删除' + JSON.stringify(matchedList[userId]))
       delete matchedList[userId]
     }
   }
