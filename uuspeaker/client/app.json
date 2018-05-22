@@ -1,10 +1,12 @@
 {
   "pages": [
     "pages/task/taskIndex/taskIndex",
+    "pages/task/specialTaskList2/specialTaskList2",
     "pages/impromptu/quickMatch/quickMatch",
     "pages/impromptu/quickMatchRoom/quickMatchRoom",
     
     "pages/task/specialTaskList/specialTaskList",
+    
     "pages/task/doSpecialTask/doSpecialTask",
     "pages/task/doDailyTask/doDailyTask",
     "pages/task/dailyTaskToDo/dailyTaskToDo",

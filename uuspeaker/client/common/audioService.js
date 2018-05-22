@@ -4,12 +4,19 @@ var qcloud = require('../vendor/wafer2-client-sdk/index')
 var playData = ''
 var coinSrc = 'https://lg-oztvih8q-1255679565.cos.ap-shanghai.myqcloud.com/coin.mp3'
 
-var updatePlayDuration = (playDuration) =>{
+var updatePlayDuration = (playDuration, innerAudioContext) =>{
   var that = this
   if (playData != ''){
     var duration = new Date() - playData
     if(duration < 10000)return
   }
+  innerAudioContext.src = coinSrc
+  innerAudioContext.play()
+  wx.showToast({
+    title: '完成聆听 +1',
+    image: '../../../images/impromptuMeeting/money.png',
+  })
+  
   //showScoreNoitce()
   playData = new Date()
   qcloud.request({

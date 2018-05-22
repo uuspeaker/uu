@@ -25,7 +25,7 @@ Page({
     roomId: '',
     audioLikeUser: [],
     currentLikeUser: [],
-    totalStudyDuration:0
+    totalStudyDuration: 0
   },
 
   initViewStyle: function () {
@@ -48,7 +48,7 @@ Page({
     var that = this
   },
 
-  queryTaskInfo: function(e){
+  queryTaskInfo: function (e) {
     var index = e.currentTarget.dataset.item
     this.pressView(index)
     var thisQueryUserType = e.currentTarget.dataset.type
@@ -67,8 +67,8 @@ Page({
       title: '加载中',
     })
     //util.showBusy('请求中...')
-    var queryData = { 'queryPageType': queryPageType, 'firstDataTime': firstDataTime, 'lastDataTime': lastDataTime, queryUserType: queryUserType  }
-    console.log('queryData',queryData)
+    var queryData = { 'queryPageType': queryPageType, 'firstDataTime': firstDataTime, 'lastDataTime': lastDataTime, queryUserType: queryUserType }
+    console.log('queryData', queryData)
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/task.specialTask`,
@@ -78,10 +78,10 @@ Page({
       success(result) {
         wx.hideLoading()
         console.log(result)
-        if (result.data.data == ''){
+        if (result.data.data == '') {
           util.showSuccess('没有更多记录')
           return
-        } 
+        }
         var resultData = []
         if (queryPageType == 0) {
           resultData = result.data.data
@@ -212,7 +212,7 @@ Page({
       url: `${config.service.host}/weapp/audio.audioView`,
       login: true,
       method: 'post',
-      data: { audioId: audioId},
+      data: { audioId: audioId },
       success(result) {
         that.updateViewAmount(audioId)
       },
@@ -282,7 +282,7 @@ Page({
     })
   },
 
-  onShow: function(){
+  onShow: function () {
     wx.setKeepScreenOn({
       keepScreenOn: true
     })
@@ -299,7 +299,7 @@ Page({
     this.doQuerySpecialTask(queryUserType)
   },
 
-  onHide:function(){
+  onHide: function () {
     //innerAudioContext.stop();
   },
 
@@ -313,7 +313,7 @@ Page({
     })
   },
 
-  toUserInfo: function(e) {
+  toUserInfo: function (e) {
     wx.navigateTo({
       url: '../../userInfo/userInfoShow/userInfoShow?userId=' + e.currentTarget.dataset.user_id + '&nickName=' + e.currentTarget.dataset.nick_name + '&avatarUrl=' + e.currentTarget.dataset.avatar_url,
     })
@@ -321,11 +321,11 @@ Page({
 
   toAllSpecialTask: function (e) {
     wx.navigateTo({
-      url: '../allSpecialTask/allSpecialTask' 
+      url: '../allSpecialTask/allSpecialTask'
     })
   },
 
-  toDoSpecialTask: function(e) {
+  toDoSpecialTask: function (e) {
     wx.navigateTo({
       url: '../doSpecialTask/doSpecialTask?'
     })

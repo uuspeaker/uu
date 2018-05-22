@@ -383,11 +383,10 @@ Page({
     innerAudioContext.obeyMuteSwitch = false
     innerAudioContext.onPlay(() => {
       console.log('开始播放', innerAudioContext.currentTime)
-      if (coinPlay == 1)return
       wx.hideLoading()
     })
     innerAudioContext.onWaiting(() => {
-      if (coinPlay == 1) return
+      if (innerAudioContext.duration < 5)return
       wx.showLoading({
         title: '音频加载中',
       })
@@ -405,22 +404,7 @@ Page({
       })
     })
     innerAudioContext.onEnded((res) => {
-      if (coinPlay == 1) {
-        coinPlay = 0
-        return 
-      }else{
-        coinPlay = 1
-        innerAudioContext.src = audioService.coinSrc
-        innerAudioContext.play()
-      }
-
-      wx.showToast({
-        title: '完成聆听 +1',
-        image: '../../../images/impromptuMeeting/money.png',
-      })
-      
-      
-      audioService.updatePlayDuration(innerAudioContext.duration)
+      audioService.updatePlayDuration(innerAudioContext.duration, innerAudioContext)
       this.formatDateAndStatus()
       this.setData({
         currentLikeUser: []
