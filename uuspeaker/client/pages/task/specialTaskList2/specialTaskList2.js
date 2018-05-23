@@ -14,6 +14,7 @@ var queryPageType = 0
 var firstDataTime = ''
 var lastDataTime = ''
 var coinPlay = 0
+var currentAudioIndex = ''
 Page({
 
   /**
@@ -22,7 +23,6 @@ Page({
   data: {
     viewStyle: [],
     audios: {},
-    roomId: '',
     audioLikeUser: [],
     currentLikeUser: [],
     totalStudyDuration: 0
@@ -93,7 +93,7 @@ Page({
         that.setData({
           audios: resultData
         })
-        that.formatDateAndStatus()
+        that.initDateAndStatus()
         //保存第一条和最后一条数据的id,上拉和下拉的时候查询用
         that.refreshDataId()
       },
@@ -134,17 +134,19 @@ Page({
   },
 
 
-  formatDateAndStatus: function (src) {
+  initDateAndStatus: function () {
     var data = this.data.audios
     for (var i = 0; i < data.length; i++) {
       var now = new Date()
       data[i].createDateStr = dateFormat.getSimpleFormatDate(data[i].create_date)
       data[i].timeDurationStr = dateFormat.getFormatDuration(data[i].time_duration)
-      if (data[i].src == src) {
-        data[i].isPlay = 1
-      } else {
-        data[i].isPlay = 0
-      }
+      data[i].isPlay = 0
+      data[i].timeDuration = data[i].time_duration
+      data[i].currentDuration = 0
+      data[i].sliderValue = 0
+      data[i].currentTime = '00:00'
+      data[i].duration = dateFormat.getFormatTimeForAudio(Math.floor(data[i].time_duration))
+      data[i].audioIndex = i
     }
     console.log(data)
     this.setData({
@@ -170,57 +172,25 @@ Page({
   },
 
   playAudio: function (e) {
-    this.updateViewTimes(e)
-  },
-
-  updatePlayDuration: function (playDuration) {
-    qcloud.request({
-      url: `${config.service.host}/weapp/audio.playAudio`,
-      login: true,
-      data: { playDuration: playDuration },
-      method: 'post',
-      success(result) {
-      },
-      fail(error) {
-        util.showModel('请求失败', error);
-        console.log('request fail', error);
-      }
-    })
-  },
-
-  updateViewAmount: function (audioId) {
-    var data = this.data.audios
-    for (var i = 0; i < data.length; i++) {
-      if (data[i].audio_id == audioId) {
-        data[i].view_amount = data[i].view_amount + 1
-      }
+    //播放音频时将前一个播放的音频置为暂停
+    if (currentAudioIndex != ''){
+      this.data.audios[currentAudioIndex].isPlay = 0
     }
-    this.setData({
-      audios: data
-    })
-  },
-
-  updateViewTimes: function (e) {
-    var src = e.currentTarget.dataset.src
-    var audioId = e.currentTarget.dataset.audio_id
+    
+    currentAudioIndex = e.currentTarget.dataset.index
+    var src = this.data.audios[currentAudioIndex].src
+    var audioId = this.data.audios[currentAudioIndex].audio_id
+    var currentDuration = this.data.audios[currentAudioIndex].current_duration
     innerAudioContext.src = src
+    innerAudioContext.seek(currentDuration)
     innerAudioContext.play()
-    this.formatDateAndStatus(src)
 
-    var that = this
-    qcloud.request({
-      url: `${config.service.host}/weapp/audio.audioView`,
-      login: true,
-      method: 'post',
-      data: { audioId: audioId },
-      success(result) {
-        that.updateViewAmount(audioId)
-      },
-      fail(error) {
-        util.showModel('请求失败', error);
-        console.log('request fail', error);
-      }
+    this.data.audios[currentAudioIndex].isPlay = 1
+    this.setData({
+      audios: this.data.audios
     })
+    
+    audioService.updateViewAmount(audioId)
   },
 
   editAudio: function (e) {
@@ -234,8 +204,16 @@ Page({
 
   stopAudio: function (e) {
     var src = e.currentTarget.dataset.src
-    innerAudioContext.stop()
-    this.formatDateAndStatus()
+    innerAudioContext.pause()
+    this.data.audios[currentAudioIndex].isPlay = 0
+    this.setData({
+      audios: this.data.audios
+    })
+  },
+
+  changeSlider: function (e) {
+    if (e.currentTarget.dataset.play == 0) return
+    innerAudioContext.seek(innerAudioContext.duration * e.detail.value / 100)
   },
 
   onLoad: function (options) {
@@ -247,16 +225,13 @@ Page({
     queryUserType = 1
     this.doQuerySpecialTask(queryUserType)
     this.pressView(0)
-    this.setData({
-      roomId: options.roomId
-    })
     innerAudioContext.obeyMuteSwitch = false
     innerAudioContext.onPlay(() => {
-      console.log('开始播放', innerAudioContext.currentTime)
       wx.hideLoading()
     })
     innerAudioContext.onWaiting(() => {
       if (innerAudioContext.duration < 5) return
+      if (innerAudioContext.src == audioService.getSrc()) return
       wx.showLoading({
         title: '音频加载中',
       })
@@ -268,17 +243,31 @@ Page({
       console.log(res.errCode)
     })
     innerAudioContext.onStop((res) => {
-      this.formatDateAndStatus()
       this.setData({
         currentLikeUser: []
       })
     })
+
+    innerAudioContext.onTimeUpdate(() => {
+      if (innerAudioContext.src == audioService.getSrc()) return
+      this.data.audios[currentAudioIndex].sliderValue = (100 * innerAudioContext.currentTime / innerAudioContext.duration)
+      this.data.audios[currentAudioIndex].currentTime = dateFormat.getFormatTimeForAudio(Math.floor(innerAudioContext.currentTime))
+      this.data.audios[currentAudioIndex].currentDuration = Math.floor(innerAudioContext.currentTime)
+        this.setData({
+          audios: this.data.audios
+        })
+    })
+
     innerAudioContext.onEnded((res) => {
-      this.updatePlayDuration(innerAudioContext.duration, innerAudioContext)
-      this.formatDateAndStatus()
+      audioService.updatePlayDuration(innerAudioContext.duration, innerAudioContext)
+      this.data.audios[currentAudioIndex].sliderValue = 0
+      this.data.audios[currentAudioIndex].currentTime = '00:00'
+      this.data.audios[currentAudioIndex].currentDuration = 0
+      this.data.audios[currentAudioIndex].isPlay = 0
       this.setData({
-        currentLikeUser: []
+        audios: this.data.audios
       })
+      
     })
   },
 
@@ -308,24 +297,28 @@ Page({
   },
 
   toAudioDetail: function (e) {
+    innerAudioContext.stop();
     wx.navigateTo({
       url: '../../impromptu/audioDetail/audioDetail?audioId=' + e.currentTarget.dataset.audio_id,
     })
   },
 
   toUserInfo: function (e) {
+    innerAudioContext.stop();
     wx.navigateTo({
       url: '../../userInfo/userInfoShow/userInfoShow?userId=' + e.currentTarget.dataset.user_id + '&nickName=' + e.currentTarget.dataset.nick_name + '&avatarUrl=' + e.currentTarget.dataset.avatar_url,
     })
   },
 
   toAllSpecialTask: function (e) {
+    innerAudioContext.stop();
     wx.navigateTo({
       url: '../allSpecialTask/allSpecialTask'
     })
   },
 
   toDoSpecialTask: function (e) {
+    innerAudioContext.stop();
     wx.navigateTo({
       url: '../doSpecialTask/doSpecialTask?'
     })

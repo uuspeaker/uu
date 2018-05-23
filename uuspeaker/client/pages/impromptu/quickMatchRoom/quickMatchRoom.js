@@ -534,12 +534,17 @@ Page({
     innerAudioContext.obeyMuteSwitch = false
     innerAudioContext.onPlay(() => {
       console.log('开始播放', innerAudioContext.currentTime)
+      wx.hideLoading()
     })
     innerAudioContext.onWaiting(() => {
-
+      if (innerAudioContext.duration < 5) return
+      if (innerAudioContext.src == audioService.getSrc()) return
+      wx.showLoading({
+        title: '音频加载中',
+      })
     })
     innerAudioContext.onTimeUpdate(() => {
-      
+      if (innerAudioContext.src == audioService.getSrc()) return
       if (this.data.speechInfo.play == 1) {
         this.data.speechInfo.sliderValue = (100 * innerAudioContext.currentTime / innerAudioContext.duration)
         this.data.speechInfo.currentTime = this.getFormatTimeForAudio(Math.floor(innerAudioContext.currentTime))

@@ -386,7 +386,8 @@ Page({
       wx.hideLoading()
     })
     innerAudioContext.onWaiting(() => {
-      if (innerAudioContext.duration < 5)return
+      if (innerAudioContext.duration < 5) return
+      if (innerAudioContext.src == audioService.getSrc()) return
       wx.showLoading({
         title: '音频加载中',
       })

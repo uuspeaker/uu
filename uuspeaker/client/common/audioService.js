@@ -4,7 +4,24 @@ var qcloud = require('../vendor/wafer2-client-sdk/index')
 var playData = ''
 var coinSrc = 'https://lg-oztvih8q-1255679565.cos.ap-shanghai.myqcloud.com/coin.mp3'
 
+var updateViewAmount = (audioId) =>{
+  var that = this
+  qcloud.request({
+    url: `${config.service.host}/weapp/audio.audioView`,
+    login: true,
+    method: 'post',
+    data: { audioId: audioId },
+    success(result) {
+    },
+    fail(error) {
+      util.showModel('请求失败', error);
+      console.log('request fail', error);
+    }
+  })
+}
+
 var updatePlayDuration = (playDuration, innerAudioContext) =>{
+  if (innerAudioContext.src == coinSrc) return
   var that = this
   if (playData != ''){
     var duration = new Date() - playData
@@ -34,4 +51,12 @@ var updatePlayDuration = (playDuration, innerAudioContext) =>{
   })
 }
 
-module.exports = { updatePlayDuration, coinSrc }
+var getSrc = () => {
+  return coinSrc
+}
+
+module.exports = { 
+  updateViewAmount,
+  updatePlayDuration, 
+  getSrc
+}

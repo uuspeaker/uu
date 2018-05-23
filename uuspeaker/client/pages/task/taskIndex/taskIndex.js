@@ -28,7 +28,7 @@ Page({
     listenScoreToday: 0,
     evaluateScoreToday: 0,
     todayStudyDuration: 0,
-    showContent:0,
+    showContent:'',
 
     myFansTotal: '',
     likeUserTotal: '',
@@ -169,7 +169,7 @@ Page({
       return
     }
     wx.navigateTo({
-      url: '../specialTaskList/specialTaskList?totalStudyDuration=' + this.data.totalStudyDuration,
+      url: '../specialTaskList2/specialTaskList2?totalStudyDuration=' + this.data.totalStudyDuration,
     })
   },
 
@@ -299,6 +299,10 @@ Page({
     })
   },
 
+  onShow: function(){
+    this.queryNewCommentAmount()
+  },
+
   onLoad: function () {
     var that = this
     
@@ -374,10 +378,8 @@ Page({
           showContent: result.data.data
         })
         if(result.data.data == 1){
-          
           that.queryLikeUserTotal()
           that.queryUserScore()
-          that.queryNewCommentAmount()
         }
         
       },

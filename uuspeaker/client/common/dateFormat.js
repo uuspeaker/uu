@@ -148,4 +148,28 @@ var getFormatDuration2 = function (timeDuration) {
   }
 }
 
-module.exports = { format, getTimeNotice, getTimeNoticeFuture, getWeek, getTimeStatus, getSimpleFormatDate, getFormatDuration, getFormatDuration2}
+var getNumberOfFixedWidth = function (time) {
+  var formatedTime = Math.floor(time)
+  if (formatedTime < 10) {
+    formatedTime = '0' + formatedTime
+  }
+  return formatedTime
+}
+
+var getFormatTimeForAudio =  function(seconds) {
+  var minute = getNumberOfFixedWidth(seconds / 60)
+  var second = getNumberOfFixedWidth(seconds % 60)
+  return minute + ':' + second
+}
+
+module.exports = { 
+format, 
+getTimeNotice, 
+getTimeNoticeFuture, 
+getWeek, 
+getTimeStatus, 
+getSimpleFormatDate, 
+getFormatDuration, 
+getFormatDuration2,
+getFormatTimeForAudio
+}
