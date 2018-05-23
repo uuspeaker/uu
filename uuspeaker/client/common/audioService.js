@@ -27,8 +27,8 @@ var updatePlayDuration = (playDuration, innerAudioContext) =>{
     var duration = new Date() - playData
     if(duration < 10000)return
   }
-  innerAudioContext.src = coinSrc
-  innerAudioContext.play()
+  // innerAudioContext.src = coinSrc
+  // innerAudioContext.play()
   wx.showToast({
     title: '完成聆听 +1',
     image: '../../../images/impromptuMeeting/money.png',

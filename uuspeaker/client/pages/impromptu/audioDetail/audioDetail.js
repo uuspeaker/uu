@@ -345,8 +345,8 @@ Page({
       method: 'post',
       success(result) {
         if (that.data.audioData[0].isMine == 1){
-          innerAudioContext.src = audioService.coinSrc
-          innerAudioContext.play()
+          // innerAudioContext.src = audioService.coinSrc
+          // innerAudioContext.play()
           coinPlay = 1
           wx.showToast({
             title: '完成复盘 +1',
@@ -386,8 +386,8 @@ Page({
       wx.hideLoading()
     })
     innerAudioContext.onWaiting(() => {
-      if (innerAudioContext.duration < 5) return
-      if (innerAudioContext.src == audioService.getSrc()) return
+      //if (innerAudioContext.duration < 5) return
+      //if (innerAudioContext.src == audioService.getSrc()) return
       wx.showLoading({
         title: '音频加载中',
       })
