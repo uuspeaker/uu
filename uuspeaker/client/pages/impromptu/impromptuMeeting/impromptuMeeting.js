@@ -234,7 +234,7 @@ Page({
     })
   },
 
-  onReady: function () {
+  onReady1: function () {
     wx.showShareMenu({
       withShareTicket:true
     })

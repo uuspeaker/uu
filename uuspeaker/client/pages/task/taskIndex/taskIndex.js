@@ -301,6 +301,7 @@ Page({
 
   onShow: function(){
     this.queryNewCommentAmount()
+    this.queryUserScore()
   },
 
   onLoad: function () {
@@ -379,7 +380,7 @@ Page({
         })
         if(result.data.data == 1){
           that.queryLikeUserTotal()
-          that.queryUserScore()
+          
         }
         
       },
