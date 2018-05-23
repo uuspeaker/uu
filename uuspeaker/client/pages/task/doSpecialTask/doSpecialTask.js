@@ -9,6 +9,7 @@ var tempFilePath = ''
 var coinPlay = 0
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext();
+var timeLimit = 120
 
 const options = {
   duration: 600000,
@@ -34,7 +35,10 @@ Page({
     audioName: '',
     audioText: '',
     hotTask:[],
-    showContent:0
+    showContent:0,
+    minute: '00',
+    second: '00',
+    timeNoticeBackground:'',
   },
 
   //用户按下录音按钮
@@ -42,30 +46,54 @@ Page({
     recorderManager.start(options)
     startDate = new Date()
     this.setData({
-      pressStyle: 'box-shadow: 0px 0px 0px 0px;',
       isPlay:1
-
     })
-    this.noticePlay()
+    this.recordTime()
   },
 
-  noticePlay: function () {
-    if (this.data.isPlay == 0){
-      this.setData({
-        playNotice: 1
-      })
+  recordTime: function () {
+    if (this.data.isPlay == 0) {
+      timeDuration = timeDuration - 1
       return
     }
-    if (this.data.playNotice == 1){
-      this.setData({
-        playNotice: 0.2
+    if (timeDuration % 2 == 0) {
+      wx.showToast({
+        title: '录音中',
+        image: '../../../images/audioDetail/voice2.png',
       })
-    }else{
-      this.setData({
-        playNotice: 1
+    } else {
+      wx.showToast({
+        title: '录音中',
+        image: '../../../images/audioDetail/voice3.png',
       })
     }
-    setTimeout(this.noticePlay, 600)
+    if (timeDuration >= timeLimit + 15) {
+      if (this.data.audioType == 1) {
+        this.stopSpeech()
+      }
+      if (this.data.audioType == 2) {
+        this.stopEvaluation()
+      }
+    }
+    var timeNoticeBackground = ''
+    if (timeDuration >= timeLimit) {
+      timeNoticeBackground = 'color:red'
+    } else if (timeDuration >= timeLimit - 30) {
+      timeNoticeBackground = 'color:orange'
+    } else if (timeDuration >= timeLimit - 60) {
+      timeNoticeBackground = 'color:green'
+    } else {
+
+    }
+    var minute = dateFormat.getNumberOfFixedWidth(timeDuration / 60)
+    var second = dateFormat.getNumberOfFixedWidth(timeDuration % 60)
+    this.setData({
+      minute: minute,
+      second: second,
+      timeNoticeBackground: timeNoticeBackground
+    })
+    timeDuration++
+    setTimeout(this.recordTime, 1000)
   },
 
   audioNameInput: function(e){
@@ -131,27 +159,21 @@ Page({
     })
   },
 
-   queryHotTask: function () {
+   getSpeechName: function () {
      wx.showLoading({
        title: '加载中',
      })
      console.log('saveAudioRecord')
      var that = this
      qcloud.request({
-       url: `${config.service.host}/weapp/task.hotTask`,
+       url: `${config.service.host}/weapp/speech.speechNameRandom`,
        login: true,
-       data: {},
        method: 'get',
        success(result) {
          wx.hideLoading()
          that.setData({
-           hotTask: result.data.data
+           audioName: result.data.data
          })
-        //  if (result.data.data != ''){
-        //    that.setData({
-        //      audioName: result.data.data[0].audio_name
-        //    })
-        //  }
          
        },
        fail(error) {

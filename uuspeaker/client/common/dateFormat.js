@@ -171,5 +171,6 @@ getTimeStatus,
 getSimpleFormatDate, 
 getFormatDuration, 
 getFormatDuration2,
-getFormatTimeForAudio
+getFormatTimeForAudio,
+getNumberOfFixedWidth
 }
