@@ -307,6 +307,16 @@ var getInfluenceRank = async (userId) => {
   }
   return data
 }
+//查询用户积分数据
+var getStudyReport = async (userId) => {
+  var beginDate = new Date()
+  beginDate.setDate(beginDate.getDate - 6)
+  beginDate.setHours(0)
+  beginDate.setMinutes(0)
+  beginDate.setSeconds(0)
+  var data = await mysql('user_study_duration').where(create_date, '>=', beginDate).select('study_date',mysql.raw('sum(study_duration) as totalDuration')).groupBy('study_date')
+  return data
+}
 
 module.exports = { 
   getOpenId, 
@@ -336,5 +346,6 @@ module.exports = {
   getMyInfluenceList,
   getMyInfluenceTotal,
   getStudyRank,
-  getInfluenceRank
+  getInfluenceRank,
+  getStudyReport
   }

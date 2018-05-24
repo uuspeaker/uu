@@ -1,17 +1,15 @@
 {
   "pages": [
     "pages/task/taskIndex/taskIndex",
+    "pages/userInfo/studyReport/studyReport",
     "pages/task/doSpecialTask/doSpecialTask",
     "pages/task/specialTaskList2/specialTaskList2",
     "pages/impromptu/quickMatch/quickMatch",
     "pages/impromptu/quickMatchRoom/quickMatchRoom",
     
     "pages/task/specialTaskList/specialTaskList",
-    
-    
     "pages/task/doDailyTask/doDailyTask",
     
-
     "pages/speech/mySpeechSubject/mySpeechSubject",
     "pages/speech/allSpeechSubject/allSpeechSubject",
     "pages/speech/addSpeechSubject/addSpeechSubject",
