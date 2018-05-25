@@ -119,7 +119,7 @@ Page({
     endDate = new Date()
     timeDuration = Math.floor((endDate - startDate) / 1000)
     console.log('timeDuration', timeDuration)
-    if (timeDuration <= 1) {
+    if (timeDuration <= 10) {
       util.showModel('录音太短', '请录制一段超过10秒的语音');
       return
     }
@@ -195,8 +195,6 @@ Page({
       data: { taskId: audioId, timeDuration: timeDuration, audioName: this.data.audioName, audioText: this.data.audioText },
       method: 'post',
       success(result) {
-        innerAudioContext.src = audioService.coinSrc
-        innerAudioContext.play()
         wx.showToast({
           title: '完成演讲 +1',
           image: '../../../images/impromptuMeeting/money.png',

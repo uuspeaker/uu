@@ -16,7 +16,7 @@
 
   <view class='line'></view>
 
-  <view wx:if='{{showContent == 1}}'>
+  <view wx:if='{{showContent == 1}}' bindtap='toStudyReport'>
     <view class="weui-flex"  style='padding-left:25px;padding-bottom:5px' >
       <view class="weui-flex__item" >
         <view class='small-grey'>演讲</view>
@@ -35,7 +35,7 @@
         <view class="weui-flex" style='font-size:15px'>{{evaluateScoreTotal}}<text class='small-grey2'>次</text></view>
       </view>
      
-      <view class="weui-flex__item" data-type='2' catchtap='toLikeUserList' wx:if='{{myFansTotal > 0}}'>
+      <view class="weui-flex__item" data-type='2' catchtap='toLikeUserList' >
         <view class='small-grey'>粉丝</view>
         <view class="weui-flex" style='font-size:15px' >{{myFansTotal}}<text class='small-grey2'>人</text></view>
       </view>

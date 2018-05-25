@@ -296,7 +296,7 @@ Page({
     endDate = new Date()
     timeDuration = Math.floor((endDate - startDate) / 1000)
     console.log('timeDuration', timeDuration)
-    if (timeDuration <= 1) {
+    if (timeDuration <= 3) {
       util.showModel('录音太短', '请录制一段超过3秒的语音');
       return
     }

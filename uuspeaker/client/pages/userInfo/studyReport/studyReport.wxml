@@ -4,3 +4,8 @@
 	</view>
     <canvas canvas-id="columnCanvas" class="canvas" ></canvas>
 </view>
+
+<view class="container">
+<view class='totalScore'>总体学习情况</view>
+    <canvas canvas-id="pieCanvas" class="canvas" style="height:300px" bindtouchstart="touchHandler"></canvas>
+</view>

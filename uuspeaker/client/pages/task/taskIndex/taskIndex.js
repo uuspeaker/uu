@@ -40,17 +40,16 @@ Page({
 
   //查询学习力积分
   queryUserScore: function (e) {
-    //util.showBusy('请求中...')
-    wx.showLoading({
-      title: '加载中',
-    })
+    // wx.showLoading({
+    //   title: '加载中',
+    // })
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/userInfo.userScore`,
       login: true,
       method: 'get',
       success(result) {
-        wx.hideLoading()
+        //wx.hideLoading()
         that.setData({
           rank: userInfo.getRank(Math.floor(that.getDuration(result.data.data.totalStudyInfo))),
           totalStudyInfo: result.data.data.totalStudyInfo,
@@ -96,12 +95,16 @@ Page({
   //查询用户参会数据
   queryLikeUserTotal: function () {
     //util.showBusy('请求中...')
+    wx.showLoading({
+      title: '加载中',
+    })
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/userInfo.likeUserTotal`,
       login: true,
       method: 'get',
       success(result) {
+        wx.hideLoading()
         that.setData({
           likeUserTotal: result.data.data.likeUserTotal,
           myFansTotal: result.data.data.myFansTotal,
@@ -296,6 +299,19 @@ Page({
     }
     wx.navigateTo({
       url: '../../speech/evaluateSpeechName/evaluateSpeechName'
+    })
+  },
+
+  toStudyReport: function () {
+    if(this.data.isLogin == 0){
+      util.showSuccess('请先登陆')
+      return
+    }
+    wx.navigateTo({
+      url: '../../userInfo/studyReport/studyReport?speechScoreTotal=' + this.data.speechScoreTotal
+      + '&reviewScoreTotal=' + this.data.reviewScoreTotal
+      + '&listenScoreTotal=' + this.data.listenScoreTotal
+      + '&evaluateScoreTotal=' + this.data.evaluateScoreTotal,
     })
   },
 

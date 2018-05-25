@@ -325,7 +325,7 @@ Page({
 
   //保存录音文件
   saveAudio: function (tempFilePath) {
-    util.showBusy('请求中...')
+    util.showBusy('保存中...')
     var that = this
     console.log('saveAudio.tempFilePath', tempFilePath)
     const uploadTask = wx.uploadFile({
@@ -359,10 +359,7 @@ Page({
       data: requestData,
       method: 'post',
       success(result) { 
-        //util.showSuccess('演讲保存成功')
-        innerAudioContext.src = audioService.coinSrc
-        innerAudioContext.play()
-        coinPlay = 1
+        util.showSuccess('演讲保存成功')
         wx.showToast({
           title: '完成演讲 +1',
           image: '../../../images/impromptuMeeting/money.png',
@@ -387,10 +384,7 @@ Page({
       data: { 'roomId': roomId , evaluationAudioId: audioId, targetAudioId: this.data.speechInfo.audioId, timeDuration: timeDuration, audioType: 2 },
       method: 'post',
       success(result) {
-        //util.showSuccess('鼓励保存成功')
-        innerAudioContext.src = audioService.coinSrc
-        innerAudioContext.play()
-        coinPlay = 1
+        util.showSuccess('鼓励保存成功')
         wx.showToast({
           title: '完成鼓励 +1',
           image: '../../../images/impromptuMeeting/money.png',
@@ -422,7 +416,7 @@ Page({
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.quickRoom`,
       login: true,
-      data: { roomId: roomId, audioId: audioId, timeDuration: timeDuration, audioType: this.data.audioType },
+      data: { roomId: '', audioId: audioId, timeDuration: timeDuration, audioType: this.data.audioType },
       method: 'post',
       success(result) {
         util.showSuccess('录音保存成功')
