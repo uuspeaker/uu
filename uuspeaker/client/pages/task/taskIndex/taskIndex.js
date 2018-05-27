@@ -272,13 +272,13 @@ Page({
     })
   },
 
-  toSpeechNameList: function () {
+  toTaskList: function () {
     if (this.data.isLogin == 0) {
       util.showSuccess('请先登陆')
       return
     }
     wx.navigateTo({
-      url: '../../speech/speechNameList/speechNameList?showContent=' + this.data.showContent
+      url: '../taskList/taskList'
     })
   },
 

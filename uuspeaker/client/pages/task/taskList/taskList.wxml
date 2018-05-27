@@ -1,0 +1,21 @@
+<view class="page__bd">
+    <view class="weui-cells__title"></view>
+
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell">
+    <view class="task-left">
+      <image class="task-left" src="https://lg-oztvih8q-1255679565.cos.ap-shanghai.myqcloud.com/start.jpg" />
+    </view>
+    <view class="weui-cell__bd task-right">
+      <view class='task-content'>破冰之旅</view>
+      <view class='small-grey'>任务等级：基础任务</view>
+      <view class='small-grey'>领取人数：19人</view>
+    </view>
+  </view>
+
+  
+ 
+</view>
+</view>
+
+

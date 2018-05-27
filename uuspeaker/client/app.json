@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/task/taskIndex/taskIndex",
+    "pages/task/taskList/taskList",
     "pages/userInfo/studyReport/studyReport",
     "pages/task/doSpecialTask/doSpecialTask",
     "pages/task/specialTaskList2/specialTaskList2",

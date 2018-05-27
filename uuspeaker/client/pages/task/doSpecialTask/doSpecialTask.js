@@ -43,6 +43,7 @@ Page({
 
   //用户按下录音按钮
   startRecord: function () {
+    timeDuration = 0 
     recorderManager.start(options)
     startDate = new Date()
     this.setData({
@@ -67,24 +68,17 @@ Page({
         image: '../../../images/audioDetail/voice3.png',
       })
     }
-    if (timeDuration >= timeLimit + 15) {
-      if (this.data.audioType == 1) {
-        this.stopSpeech()
-      }
-      if (this.data.audioType == 2) {
-        this.stopEvaluation()
-      }
-    }
-    var timeNoticeBackground = ''
-    if (timeDuration >= timeLimit) {
-      timeNoticeBackground = 'color:red'
-    } else if (timeDuration >= timeLimit - 30) {
-      timeNoticeBackground = 'color:orange'
-    } else if (timeDuration >= timeLimit - 60) {
-      timeNoticeBackground = 'color:green'
-    } else {
 
-    }
+    var timeNoticeBackground = ''
+    // if (timeDuration >= timeLimit) {
+    //   timeNoticeBackground = 'color:red'
+    // } else if (timeDuration >= timeLimit - 30) {
+    //   timeNoticeBackground = 'color:orange'
+    // } else if (timeDuration >= timeLimit - 60) {
+    //   timeNoticeBackground = 'color:green'
+    // } else {
+
+    // }
     var minute = dateFormat.getNumberOfFixedWidth(timeDuration / 60)
     var second = dateFormat.getNumberOfFixedWidth(timeDuration % 60)
     this.setData({
@@ -119,7 +113,7 @@ Page({
     endDate = new Date()
     timeDuration = Math.floor((endDate - startDate) / 1000)
     console.log('timeDuration', timeDuration)
-    if (timeDuration <= 10) {
+    if (timeDuration <= 3) {
       util.showModel('录音太短', '请录制一段超过10秒的语音');
       return
     }

@@ -189,6 +189,12 @@ Page({
     })
   },
 
+  toEvaluateSpeechName: function () {
+    wx.navigateTo({
+      url: '../../speech/evaluateSpeechName/evaluateSpeechName'
+    })
+  },
+
 
   toUserInfo: function (e) {
     wx.navigateTo({

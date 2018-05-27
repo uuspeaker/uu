@@ -1,4 +1,10 @@
-
+.evaluateSpeechName{
+  position:fixed;
+  right:20px;
+  font-size:15px;
+  color: #576b95;
+  font-weight: bold;
+}
 .myReport {
   font-size: 15px;
   padding-left: 10px;
