@@ -9,7 +9,7 @@
 
 </view>
     <scroll-view class="chat-container" scroll-y scroll-into-view="{{lastMessageId}}" scroll-top="9999999999">
-    <view style='height:95px'>
+    <view style='height:110px'>
     <view class='tip' style='font-weight: bold;'>即兴演讲玩法说明：</view>  
 <view class='tip'>1、匹配成功后系统出题</view>
 <view class='tip'>2、倒计时结束开始演讲，2分钟</view>

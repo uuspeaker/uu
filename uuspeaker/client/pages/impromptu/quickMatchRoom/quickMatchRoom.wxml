@@ -137,7 +137,7 @@
       <button type='primary' bindtap='stopReview'>完成复盘</button>
     </block>
     <block wx:if="{{studyStep == 4}}">
-      <button type='primary' bindtap='completeStudy'>完成练习</button>
+      <button type='primary' bindtap='toStudyReportToday'>学习报告</button>
     </block>
 
 </view>

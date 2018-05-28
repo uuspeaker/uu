@@ -225,7 +225,7 @@ Page({
     })
   },
   startEvaluation: function(){
-    this.sendSpeech({ status: 1 })
+    this.sendSpeech({ status: 4 })
     this.setData({
       audioType: 2
     })
@@ -240,6 +240,7 @@ Page({
     })
   },
   startReview: function(){
+    this.sendSystemMessage('开始复盘')
     this.setData({
       audioType: 3
     })
@@ -278,7 +279,7 @@ Page({
         this.stopEvaluation()
       }
       if (this.data.audioType == 3) {
-        this.stopEvaluation()
+        this.stopReview()
       }
     }
     var timeNoticeBackground = ''
@@ -382,7 +383,9 @@ Page({
         console.log(result)
         var src = result.data.data
         that.sendSpeech({ status: 2, audioId: audioId, timeDuration: timeDuration, src: src })
-        that.playAudioOfMatchedUser()
+        if (that.data.speechInfo.status == 2 && that.data.isPlay == 0) {
+          that.playSpeechAudio()
+        }
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -406,7 +409,9 @@ Page({
         console.log(result)
         var src = result.data.data
         that.sendSpeech({ status: 5, audioId: audioId, timeDuration: timeDuration, src: src })
-        that.playAudioOfMatchedUser()
+        if (that.data.evaluationInfo.status == 2 && that.data.isPlay == 0) {
+          that.playEvaluationAudio()
+        }
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -432,16 +437,6 @@ Page({
         console.log('request fail', error);
       }
     })
-  },
-
-  playAudioOfMatchedUser: function(){
-    if (this.data.isPlay == 1)return
-    if (this.data.speechInfo.status == 2){
-      this.playSpeechAudio()
-    }
-    if (this.data.evaluation.status == 2){
-      this.playEvaluationAudio()
-    }
   },
 
   updateSpeechStatus: function () {
@@ -534,8 +529,8 @@ Page({
     this.setData({
       audioType: 1,
       speechStatus: 1,
-      speechInfo: { audioId: '', src: '', timeDuration: 0, currentDuration: 0, play: 0, sliderValue: 0, currentTime: '00:00', duration: '00:00' },
-      evaluationInfo: { audioId: '', src: '', timeDuration: 0, currentDuration: 0, play: 0, sliderValue: 0, currentTime: '00:00', duration: '00:00' },
+      speechInfo: { audioId: '', src: '', timeDuration: 0, currentDuration: 0, play: 0, sliderValue: 0, currentTime: '00:00', duration: '00:00',status: 0 },
+      evaluationInfo: { audioId: '', src: '', timeDuration: 0, currentDuration: 0, play: 0, sliderValue: 0, currentTime: '00:00', duration: '00:00', status: 0 },
     })
   },
 
@@ -698,20 +693,31 @@ Page({
           })
           return
         }
+        if (speak.data.status == 7) {
+          this.setData({
+            matchedUserStatus: 7
+          })
+          return
+        }
         this.updateMatchedUserStatus(speak.data.status)
         if (speak.data.status == 2){
           this.initAudioInfo(this.data.speechInfo,speak.data)
           this.setData({
             speechInfo: this.data.speechInfo
           })
+          if (this.data.speechInfo.status == 2 && this.data.isPlay == 0) {
+            this.playSpeechAudio()
+          }
         }
         if (speak.data.status == 5) {
           this.initAudioInfo(this.data.evaluationInfo, speak.data)
           this.setData({
             evaluationInfo: this.data.evaluationInfo
           })
+          if (this.data.evaluationInfo.status == 2 && this.data.isPlay == 0) {
+            this.playEvaluationAudio()
+          }
         }
-        this.playAudioOfMatchedUser()
         this.setData({
           messageNotice: speak.who.nickName + statusNotice[speak.data.status]
         })
@@ -725,26 +731,28 @@ Page({
   },
 
   updateMatchedUserStatus: function(status){
-    if(status == 1){
-      this.data.speechInfo.status == 1
+    console.log('updateMatchedUserStatus',status)
+    if (status == 1){
+      console.log('11111111111')
+      this.data.speechInfo.status = 1
       this.setData({
         speechInfo: this.data.speechInfo
       })
     }
-    if(status == 2){
-      this.data.speechInfo.status == 2
+    if (status == 2){
+      this.data.speechInfo.status = 2
       this.setData({
         speechInfo: this.data.speechInfo
       })
     }
-    if(status == 4){
-      this.data.evaluationInfo.status == 1
+    if (status == 4){
+      this.data.evaluationInfo.status = 1
       this.setData({
         evaluationInfo: this.data.evaluationInfo
       })
     }
-    if(status == 5){
-      this.data.evaluationInfo.status == 2
+    if (status == 5){
+      this.data.evaluationInfo.status = 2
       this.setData({
         evaluationInfo: this.data.evaluationInfo
       })
@@ -860,6 +868,13 @@ Page({
   },
   sendSystemMessage: function(content){
     this.sendSpeech({ status: 102, text: content })
+  },
+
+  toStudyReportToday: function () {
+    this.sendSystemMessage('完成练习')
+    wx.navigateTo({
+      url: '../../userInfo/studyReportToday/studyReportToday'
+    })
   },
 
   onHide: function () {
