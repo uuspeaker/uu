@@ -292,13 +292,13 @@ Page({
     })
   },
 
-  toEvaluateSpeechName: function () {
+  toSpeechNameList: function () {
     if(this.data.isLogin == 0){
       util.showSuccess('请先登陆')
       return
     }
     wx.navigateTo({
-      url: '../../speech/evaluateSpeechName/evaluateSpeechName'
+      url: '../../speech/speechNameList/speechNameList'
     })
   },
 
@@ -312,6 +312,17 @@ Page({
       + '&reviewScoreTotal=' + this.data.reviewScoreTotal
       + '&listenScoreTotal=' + this.data.listenScoreTotal
       + '&evaluateScoreTotal=' + this.data.evaluateScoreTotal,
+    })
+  },
+
+  toStudyReportToday: function () {
+    if(this.data.isLogin == 0){
+      util.showSuccess('请先登陆')
+      return
+    }
+    if (this.data.showContent != 1)return
+    wx.navigateTo({
+      url: '../../userInfo/studyReportToday/studyReportToday'
     })
   },
 

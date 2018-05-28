@@ -121,7 +121,7 @@
     </block>
     <block wx:if="{{studyStep == 2 && isPlay == 0}}">
       <block wx:if="{{matchedUserStatus < 2}}">
-      <button type='primary' bindtap='startEvaluation' disabled='true'>准备鼓励</button>
+      <button type='primary' disabled='true'>准备鼓励</button>
       </block>
       <block wx:if="{{matchedUserStatus >= 2}}">
       <button type='primary' bindtap='startEvaluation' >开始鼓励</button>
@@ -130,7 +130,13 @@
     <block wx:if="{{studyStep == 2 &&  isPlay == 1}}">
       <button type='primary' bindtap='stopEvaluation'>完成鼓励</button>
     </block>
-    <block wx:if="{{studyStep == 3}}">
+    <block wx:if="{{studyStep == 3 && isPlay == 0}}">
+      <button type='primary' bindtap='startReview'>开始复盘</button>
+    </block>
+    <block wx:if="{{studyStep == 3 && isPlay == 1}}">
+      <button type='primary' bindtap='stopReview'>完成复盘</button>
+    </block>
+    <block wx:if="{{studyStep == 4}}">
       <button type='primary' bindtap='completeStudy'>完成练习</button>
     </block>
 

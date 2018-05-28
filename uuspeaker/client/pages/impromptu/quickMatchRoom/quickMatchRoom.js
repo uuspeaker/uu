@@ -10,12 +10,11 @@ var audioService = require('../../../common/audioService.js')
 var timeDurationMin = 30
 var userId = ''
 var roomId = ''
-var getRoomInfoId = ''
 var waitSecondsId = ''
 var isInRoom = 1
-var playAudioStartDate = ''
 var rank
 var coinPlay = 0
+var speechAudioId= ''
 
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext();
@@ -54,7 +53,6 @@ Page({
     speechStatus: 1,
     waitSeconds:13,
     studyStep:1,
-    disableEvaluation:true,
     speechName:'',
     inputContent:'',
 
@@ -230,11 +228,11 @@ Page({
   },
   startEvaluation: function(){
     this.sendSpeech({ status: 4 })
-    this.startTime()
     this.setData({
       audioType: 2
     })
     timeLimit = 60
+    this.startTime()
   },
   stopEvaluation: function(){
     wx.hideLoading()
@@ -242,6 +240,21 @@ Page({
     this.stopTime()
     this.setData({
       studyStep: 3
+    })
+  },
+  startReview: function(){
+    this.setData({
+      audioType: 3
+    })
+    this.startTime()
+    timeLimit = 60
+  },
+  stopReview: function(){
+    wx.hideLoading()
+    //this.sendSpeech({ status: 5, audioId: audioId, timeDuration: timeDuration})
+    this.stopTime()
+    this.setData({
+      studyStep: 4
     })
   },
 
@@ -266,6 +279,9 @@ Page({
         this.stopSpeech()
       }
       if (this.data.audioType == 2){
+        this.stopEvaluation()
+      }
+      if (this.data.audioType == 3) {
         this.stopEvaluation()
       }
     }
@@ -341,7 +357,9 @@ Page({
         if (that.data.audioType == 2){
           that.saveEvaluationData()
         }
-        
+        if (that.data.audioType == 3) {
+          that.saveReviewData()
+        }
       },
 
       fail: function (error) {
@@ -351,6 +369,7 @@ Page({
   },
 
   saveSpeechData: function () {
+    speechAudioId = audioId
     var requestData = { roomId: roomId, audioName: this.data.speechName, audioId: audioId, timeDuration: timeDuration, audioType: 1 }
     var that = this
     qcloud.request({
@@ -384,7 +403,6 @@ Page({
       data: { 'roomId': roomId , evaluationAudioId: audioId, targetAudioId: this.data.speechInfo.audioId, timeDuration: timeDuration, audioType: 2 },
       method: 'post',
       success(result) {
-        util.showSuccess('鼓励保存成功')
         wx.showToast({
           title: '完成鼓励 +1',
           image: '../../../images/impromptuMeeting/money.png',
@@ -393,6 +411,25 @@ Page({
         var src = result.data.data
         that.sendSpeech({ status: 5, audioId: audioId, timeDuration: timeDuration, src: src })
         that.playAudioOfMatchedUser()
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+  saveReviewData: function () {
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/audio.audioComment`,
+      login: true,
+      data: { 'roomId': roomId , evaluationAudioId: audioId, targetAudioId: speechAudioId, timeDuration: timeDuration, audioType: 2 },
+      method: 'post',
+      success(result) {
+        wx.showToast({
+          title: '完成复盘 +1',
+          image: '../../../images/impromptuMeeting/money.png',
+        })
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -476,6 +513,7 @@ Page({
    */
   onLoad: function (options) {
     rank = options.rank
+    this.initData()
     // innerAudioContext.autoplay = true
     // innerAudioContext.src = 'https://uuspeaker-1255679565.cos.ap-guangzhou.myqcloud.com/audio/5d412900-546d-11e8-840e-79d6fa3f1ef2.mp3'
     //util.showSuccess('10秒后开始演讲')
@@ -494,6 +532,15 @@ Page({
     //this.waitToBegin()
     //setTimeout(this.startSpeech,16000)
     waitSecondsId = setInterval(this.waitToBegin, 1000)
+  },
+
+  initData: function(){
+    this.setData({
+      audioType: 1,
+      speechStatus: 1,
+      speechInfo: { audioId: '', src: '', timeDuration: 0, currentDuration: 0, play: 0, sliderValue: 0, currentTime: '00:00', duration: '00:00' },
+      evaluationInfo: { audioId: '', src: '', timeDuration: 0, currentDuration: 0, play: 0, sliderValue: 0, currentTime: '00:00', duration: '00:00' },
+    })
   },
 
   waitToBegin: function(){
@@ -659,7 +706,6 @@ Page({
         if (speak.data.status == 2){
           this.initAudioInfo(this.data.speechInfo,speak.data)
           this.setData({
-            disableEvaluation: false,
             speechInfo: this.data.speechInfo
           })
         }
@@ -792,6 +838,10 @@ Page({
     if (e.detail.value == '')return
     this.sendSpeech({ status: 102,text:e.detail.value })
     this.setData({ inputContent: '', messageNotice: '我：' + e.detail.value});
+  },
+  sendSystemMessage: function(content){
+    if (e.detail.value == '')return
+    this.sendSpeech({ status: 102, text: content })
   },
 
   onHide: function () {

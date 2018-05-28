@@ -59,6 +59,7 @@ router.post('/studyDuration', controllers.study.studyDuration.post)
 router.get('/studyDuration', controllers.study.studyDuration.get)
 //查询用户积分
 router.get('/userInfo.studyReport', controllers.userInfo.studyReport.get)
+router.get('/userInfo.studyReportToday', controllers.userInfo.studyReportToday.get)
 //查询学习时长
 router.get('/userInfo.userScore', controllers.userInfo.userScore.get)
 //查询学习时长

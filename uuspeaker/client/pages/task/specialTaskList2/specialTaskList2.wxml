@@ -4,13 +4,13 @@
   <view class=" myReport" style="{{viewStyle[3]}}" data-item='3' data-type='4' bindtap='queryTaskInfo'>关注的</view>
 </view>
 <template name="scoreDetailTemplate">
-  <view class="weui-cell"  >
+  <view class="weui-cell" data-audio_id='{{audio_id}}' bindtap='toAudioDetail'>
     <view class="weui-cell__hd userAvatar">
       <image class="user-pic" src="{{user_info.avatarUrl}}" data-user_id='{{user_id}}' catchtap='toUserInfo' />
     </view>
     <view class="weui-cell__bd">
       <view class="weui-flex">
-        <view class="weui-flex__item title" data-audio_id='{{audio_id}}' bindtap='toAudioDetail'>
+        <view class="weui-flex__item title" >
           <text>{{audio_name}}</text>
         </view>
         <view class="small-grey">
@@ -21,7 +21,7 @@
       <view class="small-grey" style='margin-top:10px;margin-left:5px'>
         <text>作者：{{user_info.nickName}} {{createDateStr}}</text>
       </view>
-      <view class="weui-flex audioArea">
+      <view class="weui-flex audioArea" catchtap='doNothing'>
       
         <view class="weui-flex__item">
           <image class="audio" src="../../../images/userAudio/play.png" data-index='{{audioIndex}}' catchtap='playAudio' wx:if='{{isPlay==0}}'/>

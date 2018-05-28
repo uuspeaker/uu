@@ -18,7 +18,7 @@ const format = (date, fmt) => {
 }
 
 const getToday = () => {
-  return getFormatDate(new Date(),'yyyyMMdd')
+  return format(new Date(),'yyyyMMdd')
 }
 
 module.exports = { format,getToday }

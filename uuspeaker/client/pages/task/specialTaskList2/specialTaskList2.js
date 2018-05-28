@@ -325,7 +325,7 @@ Page({
   },
 
   onReady: function () {
-    wx.setNavigationBarTitle({ title: '听录音' });
+    wx.setNavigationBarTitle({ title: '听演讲' });
   },
 
 })

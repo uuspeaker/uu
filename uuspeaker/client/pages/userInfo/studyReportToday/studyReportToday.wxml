@@ -1,0 +1,19 @@
+
+<block wx:if='{{standardStudyAmount>0}}'>
+<view class='studyNotice'>{{userInfo.nickName}}，非常棒!</view>
+<view class='studyNotice2'>今天你进行了达标学习{{standardStudyAmount}}次，获得</view>
+<view class='starContent'>
+<block wx:for="{{standardStudyArr}}" wx:key="item" >
+<image class="star-pic" src='../../../images/speechName/star2.png'/>
+</block>
+</view>
+
+</block>
+<block wx:if='{{standardStudyAmount==0}}'>
+<view class='studyNotice' style='padding-top:50px;'>今天还未完成达标学习</view>
+</block>
+<view class="container">
+    <canvas canvas-id="pieCanvas" class="canvas" style="height:300px" bindtouchstart="touchHandler"></canvas>
+</view>
+<view class='studyTip'>1次达标学习 = 1次演讲 + 1次复盘 + 1次聆听 + 1次鼓励</view>
+

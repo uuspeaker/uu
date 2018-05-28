@@ -311,12 +311,13 @@ var getInfluenceRank = async (userId) => {
 var getStudyReport = async (userId) => {
   var limit = 7
   var offset = 0
-  // var beginDate = new Date()
-  // beginDate.setDate(beginDate.getDate - 6)
-  // beginDate.setHours(0)
-  // beginDate.setMinutes(0)
-  // beginDate.setSeconds(0)
   var data = await mysql('user_study_duration').where({'user_id':userId}).select('study_date', mysql.raw('sum(study_duration) as totalDuration')).groupBy('study_date').orderBy('study_date', 'desc').limit(limit).offset(offset)
+  return data
+}
+//查询用户当天学习报告
+var getStudyReportToday = async (userId) => {
+  var today = dateUtil.getToday()
+  var data = await mysql('user_study_duration').where({ 'user_id': userId, 'study_date': today})
   return data
 }
 
@@ -349,5 +350,6 @@ module.exports = {
   getMyInfluenceTotal,
   getStudyRank,
   getInfluenceRank,
-  getStudyReport
+  getStudyReport,
+  getStudyReportToday
   }

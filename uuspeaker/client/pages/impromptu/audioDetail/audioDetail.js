@@ -449,6 +449,7 @@ Page({
     wx.showShareMenu({
       withShareTicket: true
     })
+    wx.setNavigationBarTitle({ title: '即兴演讲' });
   },
 
   onShareAppMessage: function (res) {
