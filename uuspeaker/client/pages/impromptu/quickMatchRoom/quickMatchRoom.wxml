@@ -38,15 +38,15 @@
     
     <view class="weui-cell__bd" style='padding-left:10px;'>
       <view class='title'>{{matchedUser.nickName}}的演讲 
-      <block wx:if='{{matchedUserStatus < 1}}'><text style='color:grey'>未开始</text></block>
-      <block wx:if='{{matchedUserStatus == 1}}'><text style='color:orange'>进行中</text></block>
-      <block wx:if='{{matchedUserStatus >= 2}}'><text style='color:green'>已完成</text></block>
+      <block wx:if='{{speechInfo.status == 0}}'><text style='color:grey'>未开始</text></block>
+      <block wx:if='{{speechInfo.status == 1}}'><text style='color:orange'>进行中</text></block>
+      <block wx:if='{{speechInfo.status == 2}}'><text style='color:green'>已完成</text></block>
       </view>
       <view class="weui-flex audioArea">
 
         <view class="weui-flex__item">
         <block wx:if='{{speechInfo.play == 0}}'>
-          <image class="audio" src="../../../images/userAudio/play.png" style='opacity:{{matchedUserStatus<2?0.3:1}};' catchtap='playSpeechAudio' />
+          <image class="audio" src="../../../images/userAudio/play.png" style='opacity:{{speechInfo.status!=2?0.3:1}};' catchtap='playSpeechAudio' />
           </block>
           <block wx:if='{{speechInfo.play == 1}}'>
           <image class="audio" src="../../../images/userAudio/hold.png"  catchtap='stopSpeechAudio' />
@@ -68,15 +68,15 @@
     </view>
     <view class="weui-cell__bd" style='padding-left:10px;'>
       <view class='title'>{{matchedUser.nickName}}对我的鼓励 
-      <block wx:if='{{matchedUserStatus < 4}}'><text style='color:grey'>未开始</text></block>
-      <block wx:if='{{matchedUserStatus == 4}}'><text style='color:orange'>进行中</text></block>
-      <block wx:if='{{matchedUserStatus >= 5}}'><text style='color:green'>已完成</text></block>
+      <block wx:if='{{evaluationInfo.status == 0}}'><text style='color:grey'>未开始</text></block>
+      <block wx:if='{{evaluationInfo.status == 1}}'><text style='color:orange'>进行中</text></block>
+      <block wx:if='{{evaluationInfo.status >= 2}}'><text style='color:green'>已完成</text></block>
       </view>
       <view class="weui-flex audioArea">
 
         <view class="weui-flex__item">
         <block wx:if='{{evaluationInfo.play == 0}}'>
-          <image class="audio" src="../../../images/userAudio/play.png" style='opacity:{{matchedUserStatus<5?0.3:1}};' catchtap='playEvaluationAudio' />
+          <image class="audio" src="../../../images/userAudio/play.png" style='opacity:{{evaluationInfo.status!=2?0.3:1}};' catchtap='playEvaluationAudio' />
           </block>
           <block wx:if='{{evaluationInfo.play == 1}}'>
           <image class="audio" src="../../../images/userAudio/hold.png"  catchtap='stopEvaluationAudio' />
@@ -120,10 +120,10 @@
       <button type='primary' bindtap='stopSpeech'>完成演讲</button>
     </block>
     <block wx:if="{{studyStep == 2 && isPlay == 0}}">
-      <block wx:if="{{matchedUserStatus < 2}}">
+      <block wx:if="{{speechInfo.status != 2}}">
       <button type='primary' disabled='true'>准备鼓励</button>
       </block>
-      <block wx:if="{{matchedUserStatus >= 2}}">
+      <block wx:if="{{speechInfo.status == 2}}">
       <button type='primary' bindtap='startEvaluation' >开始鼓励</button>
       </block>
     </block>

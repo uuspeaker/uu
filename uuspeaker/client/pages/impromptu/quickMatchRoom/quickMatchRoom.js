@@ -63,8 +63,8 @@ Page({
 
     isLikeUser:1,
 
-    speechInfo: {audioId:'', src: '', timeDuration: 0, currentDuration:0,play: 0, sliderValue: 0, currentTime:'00:00',duration:'00:00'},
-    evaluationInfo: {audioId:'', src: '', timeDuration: 0, currentDuration:0,play: 0, sliderValue: 0, currentTime: '00:00', duration: '00:00'},
+    speechInfo: {audioId:'', src: '', timeDuration: 0, currentDuration:0,play: 0, sliderValue: 0, currentTime:'00:00',duration:'00:00',status:0},
+    evaluationInfo: { audioId: '', src: '', timeDuration: 0, currentDuration: 0, play: 0, sliderValue: 0, currentTime: '00:00', duration: '00:00', status: 0},
 
     playNotice: 1,
     timeNoticeBackground: '',
@@ -87,8 +87,8 @@ Page({
   },
 
   playSpeechAudio: function(){
-    if (this.data.matchedUserStatus < 2)return
-    this.sendSpeech({ status: 3 })
+    if (this.data.speechInfo.status != 2)return
+    this.sendSystemMessage('开始听你的演讲')
     this.stopAllAudio()
     console.log('playSpeech', this.data.speechInfo.currentTime)
     innerAudioContext.src = this.data.speechInfo.src
@@ -111,8 +111,8 @@ Page({
     })
   },
   playEvaluationAudio: function(){
-    if (this.data.matchedUserStatus < 5) return
-    this.sendSpeech({ status: 6 })
+    if (this.data.evaluationInfo.status != 2) return
+    this.sendSystemMessage('开始听你的鼓励')
     this.stopAllAudio()
     innerAudioContext.src = this.data.evaluationInfo.src
     innerAudioContext.seek(this.data.evaluationInfo.currentDuration)
@@ -211,7 +211,7 @@ Page({
 
   startSpeech: function(){
     if(isInRoom == 0)return
-    this.sendSpeech({ status: 1 })
+    this.sendSpeech({ status: 1})
     this.startTime()
     this.setData({
       audioType:1
@@ -219,15 +219,13 @@ Page({
     timeLimit = 120
   },
   stopSpeech: function(){
-    //wx.hideLoading()
-    //this.sendSpeech({ status: 2, audioId: audioId, timeDuration: timeDuration})
     this.stopTime()
     this.setData({
       studyStep: 2
     })
   },
   startEvaluation: function(){
-    this.sendSpeech({ status: 4 })
+    this.sendSpeech({ status: 1 })
     this.setData({
       audioType: 2
     })
@@ -236,7 +234,6 @@ Page({
   },
   stopEvaluation: function(){
     wx.hideLoading()
-    //this.sendSpeech({ status: 5, audioId: audioId, timeDuration: timeDuration})
     this.stopTime()
     this.setData({
       studyStep: 3
@@ -251,7 +248,6 @@ Page({
   },
   stopReview: function(){
     wx.hideLoading()
-    //this.sendSpeech({ status: 5, audioId: audioId, timeDuration: timeDuration})
     this.stopTime()
     this.setData({
       studyStep: 4
@@ -440,10 +436,10 @@ Page({
 
   playAudioOfMatchedUser: function(){
     if (this.data.isPlay == 1)return
-    if (this.data.audioType == 1 && this.data.matchedUserStatus == 2){
+    if (this.data.speechInfo.status == 2){
       this.playSpeechAudio()
     }
-    if (this.data.audioType == 2 && this.data.matchedUserStatus == 5){
+    if (this.data.evaluation.status == 2){
       this.playEvaluationAudio()
     }
   },
@@ -725,16 +721,39 @@ Page({
 
     // 打开信道
     tunnel.open()
-    setTimeout(this.sendSpeech, 1000, { status: 0 })
-    //this.sendSpeech({ status: 1 })
     this.setData({ tunnelStatus: 'connecting' })
   },
 
   updateMatchedUserStatus: function(status){
-    if (this.data.matchedUserStatus >= status)return
+    if(status == 1){
+      this.data.speechInfo.status == 1
+      this.setData({
+        speechInfo: this.data.speechInfo
+      })
+    }
+    if(status == 2){
+      this.data.speechInfo.status == 2
+      this.setData({
+        speechInfo: this.data.speechInfo
+      })
+    }
+    if(status == 4){
+      this.data.evaluationInfo.status == 1
+      this.setData({
+        evaluationInfo: this.data.evaluationInfo
+      })
+    }
+    if(status == 5){
+      this.data.evaluationInfo.status == 2
+      this.setData({
+        evaluationInfo: this.data.evaluationInfo
+      })
+    }
+
     this.setData({
-      matchedUserStatus : status
+      matchedUserStatus: status
     })
+
   },
 
   initAudioInfo: function(audioInfo,data){
@@ -840,7 +859,6 @@ Page({
     this.setData({ inputContent: '', messageNotice: '我：' + e.detail.value});
   },
   sendSystemMessage: function(content){
-    if (e.detail.value == '')return
     this.sendSpeech({ status: 102, text: content })
   },
 

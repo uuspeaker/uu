@@ -14,7 +14,7 @@
 <view class='tip'>1、匹配成功后系统出题</view>
 <view class='tip'>2、倒计时结束开始演讲，2分钟</view>
 <view class='tip'>3、对方演讲结束，倾听并鼓励对方，1分钟</view>
-<view class='tip'>4、复盘自己的演讲，1分钟</view>
+<view class='tip'>4、复盘，1分钟</view>
 </view>
         <view wx:for="{{messages}}" wx:for-item="message" wx:key="id" id="{{message.id}}" class="message {{message.type}}">
             <view wx:if="{{message.type == 'speak'}}" class="user-message {{message.isMe ? 'me' : 'other'}}">
