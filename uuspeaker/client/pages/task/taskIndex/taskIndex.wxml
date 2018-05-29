@@ -1,7 +1,7 @@
 <!--积分汇总-->
 <view class="weui-cells weui-cells_after-title">
   <view class="weui-cell" >
-    <view class="weui-cell__hd" style="position: relative;margin-right: 10px;" catchtap='toMyIntroduction'>
+    <view class="weui-cell__hd" style="position: relative;margin-right: 10px;" >
       <image class="user-pic" src="{{userInfo.avatarUrl}}" />
     </view>
     <view class="weui-cell__bd" >

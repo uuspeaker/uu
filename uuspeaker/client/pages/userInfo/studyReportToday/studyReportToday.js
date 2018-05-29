@@ -101,7 +101,7 @@ Page({
   },
 
   onReady: function () {
-    wx.setNavigationBarTitle({ title: '今日学习情况' });
+    wx.setNavigationBarTitle({ title: '懂你演讲' });
   },
   
 });

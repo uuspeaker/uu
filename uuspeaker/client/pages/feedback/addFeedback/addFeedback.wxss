@@ -32,3 +32,14 @@
   font-weight: bold;
   color: grey;
 }
+.title{
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top:60px;
+}
+.content{
+  text-align: center;
+  font-size: 17px;
+  margin-top:30px;
+}

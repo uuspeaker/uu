@@ -7,7 +7,9 @@
 <image class="star-pic" src='../../../images/speechName/star2.png'/>
 </block>
 </view>
-
+<block wx:if='{{standardStudyAmount>=3}}'>
+<view class='studyNotice3'>今天的学习已经非常完美啦，注意休息哦！</view>
+</block>
 </block>
 <block wx:if='{{standardStudyAmount==0}}'>
 <view class='studyNotice' style='padding-top:30px;'>加油哦！</view>

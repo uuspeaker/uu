@@ -4,9 +4,8 @@
   </view>
 </view>
 
-<view>
-
-</view>
+<view class='title'>让我们一起打磨小懂</view>
+<view class='content'>让更多小伙伴从演讲学习中收获成长</view>
 
 <view class='bottom'>
   <view class="weui-flex__item  timeCard" style='{{timeNoticeBackground}}'>
