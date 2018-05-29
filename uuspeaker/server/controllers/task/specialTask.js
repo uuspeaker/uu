@@ -13,7 +13,8 @@ module.exports = {
     var audioName = ctx.request.body.audioName
     var audioText = ctx.request.body.audioText
     var timeDuration = ctx.request.body.timeDuration
-    await userTaskService.saveSpecialTask(taskId, audioName, audioText,userId, timeDuration)
+    var audioType = ctx.request.body.audioType
+    await userTaskService.saveSpecialTask(taskId, audioName, audioType,audioText,userId, timeDuration)
 
   },
 
@@ -23,15 +24,16 @@ module.exports = {
     var queryPageType = ctx.query.queryPageType
     var firstDataTime = ctx.query.firstDataTime
     var lastDataTime = ctx.query.lastDataTime
+    var audioType = ctx.query.audioType
     var taskData = []
     if(queryUserType == 1){
-      taskData = await userTaskService.getMySpecialTask(userId, queryPageType, firstDataTime, lastDataTime)
+      taskData = await userTaskService.getMySpecialTask(userId, audioType,queryPageType, firstDataTime, lastDataTime)
     }
     if (queryUserType == 2 || queryUserType == 3) {
-      taskData = await userTaskService.getAllSpecialTask(queryUserType, queryPageType, firstDataTime, lastDataTime)
+      taskData = await userTaskService.getAllSpecialTask(queryUserType, audioType, queryPageType, firstDataTime, lastDataTime)
     }
     if (queryUserType == 4) {
-      taskData = await userTaskService.getTaskOfLikeUser(userId,queryUserType, queryPageType, firstDataTime, lastDataTime)
+      taskData = await userTaskService.getTaskOfLikeUser(userId, audioType, queryUserType, queryPageType, firstDataTime, lastDataTime)
     }
     for(var i=0; i<taskData.length; i++){
       if(taskData[i].user_id == userId){

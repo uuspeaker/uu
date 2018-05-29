@@ -9,7 +9,7 @@ Page({
     chartTitle: '近期学习情况',
     isMainChartDisplay: true,
     studyData: [], 
-    standardStudyAmount: 0,
+    standardStudyAmount: 'none',
     userInfo:{},
     tandardStudyArr:[]
   },
@@ -44,6 +44,9 @@ Page({
       if (standardStudyAmount > studyData[i].study_amount){
         standardStudyAmount = studyData[i].study_amount
       }
+    }
+    if (standardStudyAmount == 999 || studyData.length != 4){
+      standardStudyAmount = 0
     }
     this.setData({
       studyData: studyData,

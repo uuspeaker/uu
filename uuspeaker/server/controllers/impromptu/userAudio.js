@@ -14,7 +14,7 @@ module.exports = {
 
     //如果是演讲,直接保存
     if (audioType == 1){
-      audioService.saveSpeechAudio(roomId, audioId, audioName, userId, timeDuration)
+      audioService.saveSpeechAudio(roomId, audioId,1, audioName,userId, timeDuration)
     }else{//如果是点评,则保存并更新演讲的点评次数
       audioService.evaluateLatestAudio(roomId, audioId, audioName, userId, timeDuration)
     }

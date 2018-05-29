@@ -3,6 +3,8 @@
     "pages/task/taskIndex/taskIndex",
     "pages/userInfo/studyReportToday/studyReportToday",
     "pages/feedback/feedbackList/feedbackList",
+    "pages/feedback/addFeedback/addFeedback",
+    "pages/feedback/feedbackDetail/feedbackDetail",
     "pages/task/taskList/taskList",
     "pages/userInfo/studyReport/studyReport",
     

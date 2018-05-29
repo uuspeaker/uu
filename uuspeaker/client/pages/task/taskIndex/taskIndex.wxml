@@ -103,19 +103,12 @@
         <view class='content'>出题目</view>
       </view>
 
-       <view class="weui-flex__item studyArea" bindtap=''>
-        <view>
-          <image class="task-pic" src="" />
-        </view>
-        <view class='content'></view>
-      </view>
-
-      <!--view class="weui-flex__item studyArea"  bindtap='toFeedbackList'>
+      <view class="weui-flex__item studyArea"  bindtap='toFeedbackList'>
         <view>
           <image class="task-pic"  src="../../../images/taskIndex/star.png" />
         </view>
         <view class='content' >提建议</view>
-      </view-->
+      </view>
 
     </view>
   </view>

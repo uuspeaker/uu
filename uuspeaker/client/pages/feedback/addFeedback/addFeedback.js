@@ -34,20 +34,20 @@ Page({
     playNotice: 1,
     audioName: '',
     audioText: '',
-    hotTask:[],
-    showContent:0,
+    hotTask: [],
+    showContent: 0,
     minute: '00',
     second: '00',
-    timeNoticeBackground:'',
+    timeNoticeBackground: '',
   },
 
   //用户按下录音按钮
   startRecord: function () {
-    timeDuration = 0 
+    timeDuration = 0
     recorderManager.start(options)
     startDate = new Date()
     this.setData({
-      isPlay:1
+      isPlay: 1
     })
     this.recordTime()
   },
@@ -90,8 +90,8 @@ Page({
     setTimeout(this.recordTime, 1000)
   },
 
-  audioNameInput: function(e){
-    console.log('audioNameInput',e)
+  audioNameInput: function (e) {
+    console.log('audioNameInput', e)
     this.setData({
       audioName: e.detail.value
     })
@@ -119,24 +119,24 @@ Page({
     }
     var audioId = uuid.v1()
 
-      var that = this
-      wx.showModal({
-        title: '提示',
-        content: '是否保存录音？',
-        success: function (sm) {
-          if (sm.confirm) {
-            setTimeout(that.saveAudio, 100, audioId)
-            
-          } else if (sm.cancel) {
-            console.log('用户点击取消')
-          }
+    var that = this
+    wx.showModal({
+      title: '提示',
+      content: '是否保存录音？',
+      success: function (sm) {
+        if (sm.confirm) {
+          setTimeout(that.saveAudio, 100, audioId)
+
+        } else if (sm.cancel) {
+          console.log('用户点击取消')
         }
-      })
+      }
+    })
   },
 
-   saveAudio: function(audioId){
-     util.showBusy('请求中...')
-     var that = this
+  saveAudio: function (audioId) {
+    util.showBusy('请求中...')
+    var that = this
     console.log('tempFilePath', tempFilePath)
     const uploadTask = wx.uploadFile({
       url: `${config.service.host}/weapp/impromptu.impromptuAudio`,
@@ -153,44 +153,44 @@ Page({
     })
   },
 
-   getSpeechName: function () {
-     wx.showLoading({
-       title: '加载中',
-     })
-     console.log('saveAudioRecord')
-     var that = this
-     qcloud.request({
-       url: `${config.service.host}/weapp/speech.speechNameRandom`,
-       login: true,
-       method: 'get',
-       success(result) {
-         wx.hideLoading()
-         that.setData({
-           audioName: result.data.data
-         })
-         
-       },
-       fail(error) {
-         util.showModel('请求失败', error);
-         console.log('request fail', error);
-       }
-     })
-   },
+  getSpeechName: function () {
+    wx.showLoading({
+      title: '加载中',
+    })
+    console.log('saveAudioRecord')
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/speech.speechNameRandom`,
+      login: true,
+      method: 'get',
+      success(result) {
+        wx.hideLoading()
+        that.setData({
+          audioName: result.data.data
+        })
+
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
 
 
   //完成任务
-   saveAudioRecord: function (audioId) {
-     var requestData = { taskId: audioId, timeDuration: timeDuration, audioName: this.data.audioName, audioText: this.data.audioText }
-     console.log(requestData)
+  saveAudioRecord: function (audioId) {
+    var requestData = { taskId: audioId, timeDuration: timeDuration, audioName: this.data.audioName, audioText: this.data.audioText }
+    console.log(requestData)
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/task.specialTask`,
       login: true,
-      data: { taskId: audioId, timeDuration: timeDuration, audioName: this.data.audioName, audioText: this.data.audioText,audioType:1 },
+      data: { taskId: audioId, timeDuration: timeDuration, audioName: this.data.audioName, audioText: this.data.audioText,audioType:3 },
       method: 'post',
       success(result) {
         wx.showToast({
-          title: '完成演讲 +1',
+          title: '完成建议 +1',
           image: '../../../images/impromptuMeeting/money.png',
         })
         that.setData({
@@ -204,7 +204,7 @@ Page({
     })
   },
 
-  toMySpecialTask:function(){
+  toMySpecialTask: function () {
     wx.navigateTo({
       url: '../mySpecialTask/mySpecialTask',
     })
@@ -216,17 +216,17 @@ Page({
     })
   },
 
-   onLoad:function(options){
-     this.initAudio()
-     this.setData({
-       showContent: options.showContent
-     })
-     //this.queryHotTask()
-   },
+  onLoad: function (options) {
+    this.initAudio()
+    this.setData({
+      showContent: options.showContent
+    })
+    //this.queryHotTask()
+  },
 
-   onReady: function(){
-     wx.setNavigationBarTitle({ title: '自由练习' });
-   },
+  onReady: function () {
+    wx.setNavigationBarTitle({ title: '提建议' });
+  },
 
   initAudio: function () {
     recorderManager.onStop((res) => {

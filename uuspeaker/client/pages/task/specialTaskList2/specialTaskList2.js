@@ -67,7 +67,7 @@ Page({
       title: '加载中',
     })
     //util.showBusy('请求中...')
-    var queryData = { 'queryPageType': queryPageType, 'firstDataTime': firstDataTime, 'lastDataTime': lastDataTime, queryUserType: queryUserType }
+    var queryData = { 'queryPageType': queryPageType, 'firstDataTime': firstDataTime, 'lastDataTime': lastDataTime, queryUserType: queryUserType, audioType:1 }
     console.log('queryData', queryData)
     var that = this
     qcloud.request({

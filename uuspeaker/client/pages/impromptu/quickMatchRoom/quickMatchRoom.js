@@ -395,6 +395,7 @@ Page({
   },
 
   saveEvaluationData: function () {
+    console.log('saveEvaluationData', audioId)
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/audio.audioComment`,
@@ -424,7 +425,7 @@ Page({
     qcloud.request({
       url: `${config.service.host}/weapp/audio.audioComment`,
       login: true,
-      data: { 'roomId': roomId , evaluationAudioId: audioId, targetAudioId: speechAudioId, timeDuration: timeDuration, audioType: 2 },
+      data: { 'roomId': roomId , evaluationAudioId: audioId, targetAudioId: speechAudioId, timeDuration: timeDuration, audioType: 3 },
       method: 'post',
       success(result) {
         wx.showToast({

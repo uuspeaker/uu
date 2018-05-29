@@ -19,7 +19,7 @@ var saveDailyTask = async (taskId, taskType, userId, timeDuration) => {
     task_status: 2
   })
 
-  await audioService.saveSpeechAudio('',taskId, '',userId, timeDuration)
+  await audioService.saveSpeechAudio('',taskId, 1,'',userId, timeDuration)
 }
 
 /**
@@ -99,34 +99,34 @@ var evaluateTask = async (taskAudioId, evaluationAudioId, userId, timeDuration) 
  * 保存用户自定义任务任
  * 返回：
  */
-var saveSpecialTask = async (taskId, taskName, taskText, userId, timeDuration) => {
+var saveSpecialTask = async (taskId, taskName, audioType,taskText, userId, timeDuration) => {
   // await mysql('user_special_task').insert({
   //   task_id: taskId,
   //   user_id: userId
   // })
 
-  await audioService.saveSpeechAudio('',taskId, taskName,userId, timeDuration)
+  await audioService.saveSpeechAudio('', taskId, audioType, taskName,userId, timeDuration)
 }
 
 /**
  * 查询我所有的自定义任务 
  * 返回：
  */
-var getMySpecialTask = async (userId, queryPageType, firstDataTime, lastDataTime) => {
+var getMySpecialTask = async (userId,audioType, queryPageType, firstDataTime, lastDataTime) => {
   var limit = 10
   var offset = 0
   var taskData = []
 
   if (queryPageType == 0) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where({ 'impromptu_audio.user_id': userId ,audio_type:1}).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where({ 'impromptu_audio.user_id': userId, audio_type: audioType}).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
   }
 
   if (queryPageType == 1) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where({ 'impromptu_audio.user_id': userId, audio_type: 1 }).andWhere('impromptu_audio.create_date', '>', new Date(firstDataTime)).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where({ 'impromptu_audio.user_id': userId, audio_type: audioType }).andWhere('impromptu_audio.create_date', '>', new Date(firstDataTime)).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
   }
 
   if (queryPageType == 2) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where({ 'impromptu_audio.user_id': userId, audio_type: 1 }).andWhere('impromptu_audio.create_date', '<', new Date(lastDataTime)).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where({ 'impromptu_audio.user_id': userId, audio_type: audioType }).andWhere('impromptu_audio.create_date', '<', new Date(lastDataTime)).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
   }
 
 
@@ -141,21 +141,21 @@ var getMySpecialTask = async (userId, queryPageType, firstDataTime, lastDataTime
  * 查询所有的自定义任务 
  * 返回：
  */
-var getAllSpecialTask = async (queryUserType, queryPageType, firstDataTime, lastDataTime) => {
+var getAllSpecialTask = async (queryUserType, audioType, queryPageType, firstDataTime, lastDataTime) => {
   var limit = 10
   var offset = 0
   var taskData = []
 
   if (queryPageType == 0) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where({ audio_type: 1 }).andWhere('time_duration','>=',60).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where({ audio_type: audioType }).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
   }
 
   if (queryPageType == 1) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where('impromptu_audio.create_date', '>', new Date(firstDataTime)).andWhere({ audio_type: 1 }).andWhere('time_duration', '>=', 60).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where('impromptu_audio.create_date', '>', new Date(firstDataTime)).andWhere({ audio_type: audioType }).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
   }
 
   if (queryPageType == 2) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where('impromptu_audio.create_date', '<', new Date(lastDataTime)).andWhere({ audio_type: 1 }).andWhere('time_duration', '>=', 60).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where('impromptu_audio.create_date', '<', new Date(lastDataTime)).andWhere({ audio_type: audioType }).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
   }
 
   for (var i = 0; i < taskData.length; i++) {
@@ -169,7 +169,7 @@ var getAllSpecialTask = async (queryUserType, queryPageType, firstDataTime, last
  * 查询所关注用户的自定义任务 
  * 返回：
  */
-var getTaskOfLikeUser = async (userId,queryUserType, queryPageType, firstDataTime, lastDataTime) => {
+var getTaskOfLikeUser = async (userId, queryUserType, audioType, queryPageType, firstDataTime, lastDataTime) => {
   var limit = 10
   var offset = 0
   var orderBy = 'impromptu_audio.create_date'
@@ -179,15 +179,15 @@ var getTaskOfLikeUser = async (userId,queryUserType, queryPageType, firstDataTim
   var taskData = []
 
   if (queryPageType == 0) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').innerJoin('user_like', 'user_like.like_user_id', 'impromptu_audio.user_id').where({ 'user_like.user_id': userId, audio_type: 1 }).andWhere('time_duration', '>=', 60).orderBy(orderBy, 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').innerJoin('user_like', 'user_like.like_user_id', 'impromptu_audio.user_id').where({ 'user_like.user_id': userId, audio_type: audioType }).andWhere('time_duration', '>=', 60).orderBy(orderBy, 'desc').limit(limit).offset(offset)
   }
 
   if (queryPageType == 1) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').innerJoin('user_like', 'user_like.like_user_id', 'impromptu_audio.user_id').where({ 'user_like.user_id': userId, audio_type: 1 }).andWhere('impromptu_audio.create_date', '>', new Date(firstDataTime)).andWhere('time_duration', '>=', 60).orderBy(orderBy, 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').innerJoin('user_like', 'user_like.like_user_id', 'impromptu_audio.user_id').where({ 'user_like.user_id': userId, audio_type: audioType }).andWhere('impromptu_audio.create_date', '>', new Date(firstDataTime)).andWhere('time_duration', '>=', 60).orderBy(orderBy, 'desc').limit(limit).offset(offset)
   }
 
   if (queryPageType == 2) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').innerJoin('user_like', 'user_like.like_user_id', 'impromptu_audio.user_id').where({ 'user_like.user_id': userId, audio_type: 1}).andWhere('impromptu_audio.create_date', '<', new Date(lastDataTime)).orderBy(orderBy, 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').innerJoin('user_like', 'user_like.like_user_id', 'impromptu_audio.user_id').where({ 'user_like.user_id': userId, audio_type: audioType}).andWhere('impromptu_audio.create_date', '<', new Date(lastDataTime)).orderBy(orderBy, 'desc').limit(limit).offset(offset)
   }
 
   for (var i = 0; i < taskData.length; i++) {

@@ -38,7 +38,7 @@
 <button type='primary' catchtap='startMatch' style='height:95%'>开始匹配</button>
 </block>
 <block wx:if='{{isMatching == 1}}'>
-<button  catchtap='stopMatch' style='height:95%'>停止匹配 {{waitSeconds}}</button>
+<button  catchtap='stopMatch' style='height:95%'>匹配中 {{waitSeconds}}</button>
 </block>
 </view>
     </view>

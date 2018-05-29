@@ -1,0 +1,34 @@
+
+.commentArea {
+  background-color: gainsboro;
+  padding: 8px;
+  border-radius: 10px 10px 10px 10px; 
+  width: 90%;
+  height: 50px;
+  align-items: center;
+  margin-top:20px;
+  margin-left: 4%
+}
+.commentInput {
+  background-color: white;
+  height: 50px;
+  width: 96%;
+  font-weight: bold;
+  text-align: center;
+  margin-left: 2%;
+  font-size: 24px;
+}
+
+.timeCard{
+  padding-bottom:50px;
+  font-size: 60px;
+  text-align: center;
+  margin: 5px;
+}
+.getSpeechName{
+  text-align: center;
+  padding-bottom: 30px;
+  font-size: 24px;
+  font-weight: bold;
+  color: grey;
+}

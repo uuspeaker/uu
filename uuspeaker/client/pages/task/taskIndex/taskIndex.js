@@ -326,6 +326,17 @@ Page({
     })
   },
 
+  toFeedbackList: function () {
+    if(this.data.isLogin == 0){
+      util.showSuccess('请先登陆')
+      return
+    }
+    if (this.data.showContent != 1)return
+    wx.navigateTo({
+      url: '../../feedback/feedbackList/feedbackList'
+    })
+  },
+
   onShow: function(){
     this.queryNewCommentAmount()
     this.queryUserScore()

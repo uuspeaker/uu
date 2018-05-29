@@ -1,0 +1,128 @@
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell">
+    <view class="user-avatar">
+      <image class="user-pic" src="{{audioData[0].user_info.avatarUrl}}" data-user_id='{{audioData[0].user_id}}' bindtap='toUserInfo'/>
+    </view>
+    <view class="weui-cell__bd">
+      <view class="title">
+        <view style='padding-left:10px'>
+          <text>{{audioData[0].audio_name}}</text>
+        </view>
+      </view>
+      <view class="small-grey" style='margin-top:10px;'>
+        <text>作者：{{audioData[0].user_info.nickName}} </text>
+<block wx:if='{{audioData[0].isMine == 1}}'>
+        <text class="link"  catchtap='editAudio'>备注</text>
+        </block>
+        <block wx:if='{{audioData[0].isMine == 0 && audioData[0].audio_text != null}}'>
+        <text class="link"  catchtap='editAudio'>备注</text>
+        </block>
+      </view>
+      <view class="weui-flex__item date">
+        <view>{{audioData[0].createDateStr}} {{audioData[0].timeDurationStr}} </view>
+      </view>
+      <view class="small-grey" style='padding-left:0px'>
+      <image class="like" src="../../../images/studyIndex/view.png" /> {{audioData[0].view_amount}}   
+       <image class="like" data-audio_id='{{audio_id}}' src="../../../images/studyIndex/like.png" /> {{audioData[0].like_amount}}   
+      <image class="like" src="../../../images/studyIndex/comment.png" /> {{audioData[0].comment_amount}}
+      </view>
+    </view>
+    <view>
+    <block wx:if="{{audioData[0].isPlay == 0}}">
+      <view class='right ' data-src='{{audioData[0].src}}' data-audio_id='{{audioData[0].audio_id}}' catchtap='playAudio'>
+        <image class="audio" src="../../../images/userAudio/start.png" />
+      </view>
+    </block>
+    <block wx:if="{{audioData[0].isPlay == 1}}">
+      <view class='right link' data-src='{{audioData[0].src}}' data-audio_id='{{audioData[0].audio_id}}' catchtap='stopAudio'>
+        <image class="audio" src="../../../images/userAudio/stop.png" />
+      </view>
+    </block>
+    </view>
+    
+    
+  </view>
+</view>
+
+
+<!--点赞展示页面-->
+ 
+  <view class='likeUser'></view>
+  <view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell" >
+  <block wx:if="{{likeIt == 0}}">
+      <image  class="audio-pic" style="margin-right:10px" src="../../../images/studyIndex/like.png" catchtap='likeAudio'></image>
+      </block>
+      
+      <block wx:if="{{likeIt == 1}}">
+      <image  class="audio-pic" style="margin-right:10px" src="../../../images/userAudio/like.png" catchtap='cancelLike'></image>
+      </block>
+      <block wx:for="{{audioDataLike}}" wx:key="item">
+        <image class="user-like-pic" src="{{item.user_info.avatarUrl}}" data-user_id='{{item.user_id}}' catchtap='toUserInfo'></image>
+      </block>
+      </view>
+    </view>
+  
+  
+
+<!--点评展示页面-->
+  <block wx:if="{{audioDataComment.length > 0}}">
+  <view class='likeUser'></view>
+  <view class="weui-cells weui-cells_after-title">
+    <block wx:for="{{audioDataComment}}" wx:key="item">
+      <view class="weui-cell" bindtap='toAudioDetail' data-audio_id='{{item.audio_id}}'>
+        <image class="audio-pic" style="margin-right:10px" src="../../../images/studyIndex/comment.png"></image>
+
+        <view class="user-avatar">
+          <image class="user-like-pic" src="{{item.user_info.avatarUrl}}" data-user_id='{{item.user_id}}' catchtap='toUserInfo'></image>
+        </view>
+        <view class="weui-cell__bd">
+          <view class="title2">
+            <view style='padding-left:10px'>
+              <text>{{item.user_info.nickName}} </text>
+              <text class='right'></text>
+            </view>
+          </view>
+          <view>
+
+          </view>
+          <view class="weui-flex__item date">
+            <view>{{item.createDateStr}} {{item.timeDurationStr}} </view>
+          </view>
+        </view>
+        <block wx:if="{{item.isPlay == 0}}">
+          <view class='right ' data-src='{{item.src}}' data-audio_id='{{item.audio_id}}' catchtap='playAudio'>
+            <image class="audio2" src="../../../images/userAudio/start.png" />
+          </view>
+        </block>
+        <block wx:if="{{item.isPlay == 1}}">
+          <view class='right link' data-src='{{item.src}}' data-audio_id='{{item.audio_id}}' catchtap='stopAudio'>
+            <image class="audio2" src="../../../images/userAudio/stop.png" />
+          </view>
+        </block>
+
+
+      </view>
+    </block>
+    </view>
+  </block>
+
+
+<view class="weui-flex ">
+ <block wx:if="{{isPlay == 0}}">
+  <view class="weui-flex__item record-button" style="{{pressStyle}}" bindtap="startRecord" >
+    <image class="audio-pic" src="../../../images/audioDetail/voice.png"></image>
+    <text class="weui-flex recordText" wx:if='{{audioData[0].isMine != 1}}'>补充建议</text>
+    <text class="weui-flex recordText" wx:if='{{audioData[0].isMine == 1}}'>回复建议</text>
+  </view>
+  </block>
+  <block wx:if="{{isPlay == 1}}">
+  <view class="weui-flex__item record-button" style="{{pressStyle}}" bindtap="stopRecord">
+
+    <image class="audio-pic" style='opacity:{{playNotice}}' src="../../../images/audioDetail/voice.png"></image>
+
+    <text class="weui-flex recordText" wx:if='{{audioData[0].isMine != 1}}'>完成建议</text>
+    <text class="weui-flex recordText" wx:if='{{audioData[0].isMine == 1}}'>完成回复</text>
+  </view>
+  </block>
+</view>

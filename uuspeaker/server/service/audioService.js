@@ -116,7 +116,7 @@ var getSpeakingAudio = async (roomId) => {
  * audioId 音频ID
  * 返回：
  */
-var saveSpeechAudio = async (roomId, audioId, audioName, userId, timeDuration) => {
+var saveSpeechAudio = async (roomId, audioId, audioType, audioName, userId, timeDuration) => {
   if (audioName == null || audioName == undefined || audioName == '') {
     audioName = dateUtil.format(new Date(), 'yyyy-MM-dd hh:mm:ss')
   }
@@ -126,10 +126,13 @@ var saveSpeechAudio = async (roomId, audioId, audioName, userId, timeDuration) =
     user_id: userId,
     room_id: roomId,
     time_duration: timeDuration,
-    audio_type: 1,
+    audio_type: parseInt(audioType),
     audio_status: 2
   })
-  await increaseDuration(userId,1, timeDuration)
+  if (parseInt(audioType) == 1){
+    await increaseDuration(userId, 1, timeDuration)
+  }
+  
 }
 
 /**
@@ -175,7 +178,7 @@ var evaluateAudio = async (roomId, evaluationAudioId, userId, timeDuration, spee
   //获取最近完成的演讲
   var audioData = await mysql('impromptu_audio').where({ audio_id: speechAudioId})
 
-  if (audioData.length > 0) {
+  if (audioData.length < 0) return
     //更新演讲的点评次数
     await mysql('impromptu_audio').update({
       comment_amount: audioData[0].comment_amount + 1
@@ -183,7 +186,7 @@ var evaluateAudio = async (roomId, evaluationAudioId, userId, timeDuration, spee
 
     await mysql('impromptu_audio').insert({
       audio_id: evaluationAudioId,
-      audio_name: '点评' + audioData[0].audio_name,
+      audio_name: audioData[0].audio_name,
       user_id: userId,
       room_id: roomId,
       time_duration: timeDuration,
@@ -191,12 +194,16 @@ var evaluateAudio = async (roomId, evaluationAudioId, userId, timeDuration, spee
       audio_status: 2,
       relate_audio: speechAudioId
     })
-  }
-  if (audioData[0].user_id == userId){
-    await increaseDuration(userId, 2,timeDuration)
-  }else{
-    await increaseDuration(userId,4, timeDuration)
-  }
+
+
+  //如果是对演讲进行回复,才更新积分
+  if (audioData[0].audio_type ==1){
+    if (audioData[0].user_id == userId) {
+      await increaseDuration(userId, 2, timeDuration)
+    } else {
+      await increaseDuration(userId, 4, timeDuration)
+    }
+  } 
 
   //如果不是在直播房间发起的点评且不是点评自己，则新增一条点评通知消息
   if (roomId == '' && audioData[0].user_id != userId){
