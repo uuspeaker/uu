@@ -157,7 +157,7 @@ Page({
         })
         if(that.data.title == ''){
           that.setData({
-            title: '即兴演讲'
+            title: '学习报名'
           })
         }
       },
