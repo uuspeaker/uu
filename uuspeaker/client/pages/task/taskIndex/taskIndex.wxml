@@ -6,7 +6,7 @@
     </view>
     <view class="weui-cell__bd" >
       <view class='link' >{{userInfo.nickName}}<image class='card-pic' src="../../../images/studyManage/checkIn.png" catchtap='toStudyShow' wx:if='{{showContent == 1}}'></image></view>
-      <view style="font-size: 13px;color: #888888;padding-top:5px">{{rank}}<image class='card-pic' src="../../../images/studyManage/introduction.png" catchtap='toLetter' wx:if='{{showContent == 1 && totalStudyDuration >= 120}}'></image>
+      <view style="font-size: 13px;color: #888888;padding-top:5px">{{rank}}<image class='card-pic' src="../../../images/studyManage/letter.png" catchtap='toLetter' wx:if='{{showContent == 1 && totalStudyDuration >= 120}}'></image>
       </view>
     </view>
     <view class="weui-cell__ft totoalScore" bindtap='toStudyReportToday'>
