@@ -9,7 +9,6 @@
   margin-right:30px;
   font-size: 15px;
   line-height: 28px;
-  font-family: 'Times New Roman', Times, serif
 }
 .end{
   position: relative;
@@ -20,7 +19,7 @@
   padding-bottom: 30px;
 }
 .letterBackground {
-  background-image: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1527681250851&di=d28172829eee5592819632d16e1c2b34&imgtype=0&src=http%3A%2F%2Fbpic.ooopic.com%2F16%2F16%2F58%2F16165854-e98fb13d57f048388e41ef9ff1aee286-1.jpg');
+  background-image: url('https://lg-oztvih8q-1255679565.cos.ap-shanghai.myqcloud.com/letter.png');
   background-repeat: repeat-y;
   padding: 15px;
   width: 100%;

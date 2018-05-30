@@ -321,7 +321,7 @@ Page({
       return
     }
     wx.navigateTo({
-      url: '../../letter/letterForLevel4/letterForLevel4?nickName=' + this.data.userInfo.nickName
+      url: '../../letter/letterForLevel3/letterForLevel3?nickName=' + this.data.userInfo.nickName
       + '&rank=' + this.data.rank
     })
   },
