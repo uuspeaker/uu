@@ -174,15 +174,15 @@ var getLikeUserList = async (userId, queryPageType, firstDataTime, lastDataTime)
   var data = []
   if (queryPageType == 0){
     data = await mysql('user_like').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_like.like_user_id')
-      .where({ 'user_like.user_id': userId }).select('cSessionInfo.user_info', 'user_like.create_date').orderBy('user_like.create_date', 'desc').limit(limit).offset(offset)
+      .where({ 'user_like.user_id': userId }).select('cSessionInfo.user_info', 'user_like.create_date').orderBy('user_like.create_date', 'asc').limit(limit).offset(offset)
   }
   if (queryPageType == 1) {
     data = await mysql('user_like').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_like.like_user_id')
-      .where({ 'user_like.user_id': userId }).andWhere('user_like.create_date', '>', new Date(firstDataTime)).select('cSessionInfo.user_info', 'user_like.create_date').orderBy('user_like.create_date', 'desc').limit(limit).offset(offset)
+      .where({ 'user_like.user_id': userId }).andWhere('user_like.create_date', '>', new Date(firstDataTime)).select('cSessionInfo.user_info', 'user_like.create_date').orderBy('user_like.create_date', 'asc').limit(limit).offset(offset)
   }
   if (queryPageType == 2) {
     data = await mysql('user_like').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_like.like_user_id')
-      .where({ 'user_like.user_id': userId }).andWhere('user_like.create_date', '<', new Date(lastDataTime)).select('cSessionInfo.user_info', 'user_like.create_date').orderBy('user_like.create_date', 'desc').limit(limit).offset(offset)
+      .where({ 'user_like.user_id': userId }).andWhere('user_like.create_date', '<', new Date(lastDataTime)).select('cSessionInfo.user_info', 'user_like.create_date').orderBy('user_like.create_date', 'asc').limit(limit).offset(offset)
   }
 
   for (var i = 0; i < data.length; i++) {

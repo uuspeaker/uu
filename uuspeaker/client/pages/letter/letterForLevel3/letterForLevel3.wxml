@@ -1,0 +1,32 @@
+
+<view class='letterBackground'>
+<view class='title'>亲爱的{{nickName}}：</view>                                                                  
+<view class='content'>你还记得{{studyData.firstStudyDateStr}}是什么日子吗？</view>
+<view class='content'>也许你已经忘了，但是我不会忘</view>
+<view class='content'>因为那是小懂和你相遇的日子</view>
+<view class='content'>算起来，我们已经认识有{{studyData.days}}天了</view>
+<view class='content'>{{studyData.firstSpeechDateStr}}你做了自己的第一篇演讲</view>
+<view class='content'>我想那天你的心情一定很特别吧</view>
+<view class='content'>我数了数，你一共学习了{{studyData.studyDays}}天，练习了{{studyData.studyAmount}}次，到今天你成为了{{rank}}，我发自内心为你感到骄傲</view>
+<view class='content' wx:if='{{studyData.studyPartner.length > 0}}'>自从加入懂你，{{studyData.partnerNames}}，还有好些优秀的小伙伴就一直在伴你学习</view>
+<view class='content' wx:if='{{studyData.studyPartner.length == 0}}'>自从加入懂你，好些优秀的小伙伴就一直在伴你学习</view>
+<view class='content'>也许大家离得很远</view>
+<view class='content'>可是大家的心却靠得很近</view>
+<view class='content'>是成长让大家走到了一起</view>
+<view class='content'>演讲从来不是一件容易的事情</view>
+<view class='content'>可你的坚持也让我明白</view>
+<view class='content'>你绝不是一个简单的人</view>
+<view class='content'>这个时代需要坚定而执着的人</view>
+<view class='content'>不惧未知，勇往直前</view>
+<view class='content'>不忘初心，方得始终</view>
+<view class='content'>看到小伙伴们持续成长</view>
+<view class='content'>是一件特别美妙的事情</view>
+<view class='content'>如果这个世界上多一个人开始学习</view>
+<view class='content'>那就会多一个人收获自信，敢于表达</view>
+<view class='content'>如果我们每个人都不惧未知</view>
+<view class='content'>如果我们每个人都敢于追求</view>
+<view class='content'>那我们的世界也一定会更加的绚丽而精彩</view>
+<view class='content'>让我们一起帮助更多的人开始学习</view>
+<view class='content'>多年以后，也许这个世界会因你而不同！</view>
+<view class='end'>小懂演讲君</view>
+</view>

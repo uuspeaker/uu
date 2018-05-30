@@ -162,6 +162,21 @@ var getFormatTimeForAudio =  function(seconds) {
   return minute + ':' + second
 }
 
+var getBetweenDays = function (history) {
+  var now = new Date()
+  now.setHours(0)
+  now.setMinutes(0)
+  now.setSeconds(0)
+  now.setMilliseconds(0)
+  var historyDate = new Date(history)
+  historyDate.setHours(0)
+  historyDate.setMinutes(0)
+  historyDate.setSeconds(0)
+  historyDate.setMilliseconds(0)
+  var days = Math.floor((now - historyDate) / (24 * 60 * 60 * 1000)) + 1
+  return days 
+}
+
 module.exports = { 
 format, 
 getTimeNotice, 
@@ -172,5 +187,6 @@ getSimpleFormatDate,
 getFormatDuration, 
 getFormatDuration2,
 getFormatTimeForAudio,
-getNumberOfFixedWidth
+getNumberOfFixedWidth,
+getBetweenDays
 }

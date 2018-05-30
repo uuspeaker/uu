@@ -218,6 +218,8 @@ router.post('/speech.speechNameEvaluate', controllers.speech.speechNameEvaluate.
 router.delete('/speech.speechNameEvaluate', controllers.speech.speechNameEvaluate.del)
 //演讲题目管理
 router.get('/speech.speechNameRandom', controllers.speech.speechNameRandom.get)
+//演讲题目管理
+router.get('/letter.letterForLevel4', controllers.letter.letterForLevel4.get)
 
 
 

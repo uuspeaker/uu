@@ -315,6 +315,17 @@ Page({
     })
   },
 
+  toLetter: function () {
+    if(this.data.isLogin == 0){
+      util.showSuccess('请先登陆')
+      return
+    }
+    wx.navigateTo({
+      url: '../../letter/letterForLevel4/letterForLevel4?nickName=' + this.data.userInfo.nickName
+      + '&rank=' + this.data.rank
+    })
+  },
+
   toStudyReportToday: function () {
     if(this.data.isLogin == 0){
       util.showSuccess('请先登陆')

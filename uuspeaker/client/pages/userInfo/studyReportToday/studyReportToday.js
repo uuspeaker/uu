@@ -57,6 +57,7 @@ Page({
   },
 
   showStudyAmount: function () {
+    //if (this.data.studyData == '' || this.data.studyData == [])return
     var windowWidth = 320;
     try {
       var res = wx.getSystemInfoSync();

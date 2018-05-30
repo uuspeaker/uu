@@ -8,6 +8,14 @@ module.exports = {
   get: async ctx => {
     var userId = await userInfo.getOpenId(ctx)
     var studyReport = await userInfoService.getStudyReportToday(userId)
+    if (studyReport.length == 0){
+      studyReport = [
+        {study_type:1,study_amount:0},
+        { study_type: 2, study_amount: 0 },
+        { study_type: 3, study_amount: 0 },
+        { study_type: 4, study_amount: 0 }
+        ]
+    }
     ctx.state.data = studyReport
   },
 

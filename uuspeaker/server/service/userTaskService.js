@@ -169,7 +169,7 @@ var getAllSpecialTask = async (queryUserType, audioType, queryPageType, firstDat
  * 查询所关注用户的自定义任务 
  * 返回：
  */
-var getTaskOfLikeUser = async (userId, queryUserType, audioType, queryPageType, firstDataTime, lastDataTime) => {
+var getTaskOfLikeUser = async (userId, audioType, queryUserType, queryPageType, firstDataTime, lastDataTime) => {
   var limit = 10
   var offset = 0
   var orderBy = 'impromptu_audio.create_date'
@@ -179,11 +179,11 @@ var getTaskOfLikeUser = async (userId, queryUserType, audioType, queryPageType, 
   var taskData = []
 
   if (queryPageType == 0) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').innerJoin('user_like', 'user_like.like_user_id', 'impromptu_audio.user_id').where({ 'user_like.user_id': userId, audio_type: audioType }).andWhere('time_duration', '>=', 60).orderBy(orderBy, 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').innerJoin('user_like', 'user_like.like_user_id', 'impromptu_audio.user_id').where({ 'user_like.user_id': userId, audio_type: audioType }).orderBy(orderBy, 'desc').limit(limit).offset(offset)
   }
 
   if (queryPageType == 1) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').innerJoin('user_like', 'user_like.like_user_id', 'impromptu_audio.user_id').where({ 'user_like.user_id': userId, audio_type: audioType }).andWhere('impromptu_audio.create_date', '>', new Date(firstDataTime)).andWhere('time_duration', '>=', 60).orderBy(orderBy, 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').innerJoin('user_like', 'user_like.like_user_id', 'impromptu_audio.user_id').where({ 'user_like.user_id': userId, audio_type: audioType }).andWhere('impromptu_audio.create_date', '>', new Date(firstDataTime)).orderBy(orderBy, 'desc').limit(limit).offset(offset)
   }
 
   if (queryPageType == 2) {
