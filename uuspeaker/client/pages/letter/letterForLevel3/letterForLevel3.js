@@ -40,9 +40,10 @@ Page({
     console.log(allPartners)
     var partnerName = ''
     for (var i = 0; i<allPartners.length; i++){
-      if (partnerName == ''){
+      if (allPartners[i].user_info.nickName == this.data.nickName)continue
+      if (partnerName == '') {
         partnerName = allPartners[i].user_info.nickName
-      }else{
+      } else {
         partnerName = partnerName + '，' + allPartners[i].user_info.nickName
       }
       if(i >= 5)break
