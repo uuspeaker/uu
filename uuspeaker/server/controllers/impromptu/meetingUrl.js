@@ -266,13 +266,16 @@ module.exports = {
   // 小程序请求 websocket 地址
   get: async ctx => {
     const data = await tunnel.getTunnelUrl(ctx.req)
+    console.log('init matchUrl', data)
     const tunnelInfo = data.tunnel
     data.userinfo.rank = ctx.query.rank
     data.userinfo.tunnelId = tunnelInfo.tunnelId
     //清除原先打开的信道
-    if (tunnelMap[data.userinfo.openId] != undefined){
-      delete meetingUserMap[tunnelMap[data.userinfo.openId]]
+    var oldTunnelId = tunnelMap[data.userinfo.openId]
+    if (oldTunnelId){
+      onClose(oldTunnelId)
     }
+    
     meetingUserMap[tunnelInfo.tunnelId] = data.userinfo
     tunnelMap[data.userinfo.openId] = tunnelInfo.tunnelId
     //console.log('meetingUrl meetingUserMap', meetingUserMap)

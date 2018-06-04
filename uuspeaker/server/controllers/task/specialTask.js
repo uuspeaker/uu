@@ -14,7 +14,8 @@ module.exports = {
     var audioText = ctx.request.body.audioText
     var timeDuration = ctx.request.body.timeDuration
     var audioType = ctx.request.body.audioType
-    await userTaskService.saveSpecialTask(taskId, audioName, audioType,audioText,userId, timeDuration)
+    var speechType = ctx.request.body.speechType
+    await userTaskService.saveSpecialTask(taskId, audioName, audioType,speechType,audioText,userId, timeDuration)
 
   },
 

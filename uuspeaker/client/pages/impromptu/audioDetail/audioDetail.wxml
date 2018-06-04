@@ -7,6 +7,7 @@
       <view class="title">
         <view style='padding-left:10px'>
           <text>{{audioData[0].audio_name}}</text>
+          <text class="link"  catchtap='copyAudio'> 复制</text>
         </view>
       </view>
       <view class="small-grey" style='margin-top:10px;'>

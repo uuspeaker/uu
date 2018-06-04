@@ -1,25 +1,60 @@
-<form bindsubmit=''>
-    <view class="weui-flex commentArea">
-      <view class="weui-flex__item">
-        <input class='commentInput' name="audioName"  value='{{audioName}}' placeholder='请输入标题'  bindinput="audioNameInput" ></input>
-      </view>
-    </view>
-  </form>
-
-
-
-
-
-
-<view class='bottom'>
-<view class="weui-flex__item  timeCard" style='{{timeNoticeBackground}}'>
-    {{minute}}:{{second}}
-  </view>
-    <view class='getSpeechName' bindtap='getSpeechName'>出  题</view>
-<button  type='primary' bindtap="startRecord" wx:if="{{isPlay == 0}}">开始演讲</button>
-<button  type='primary' bindtap="stopRecord" wx:if="{{isPlay == 1}}">完成演讲</button>
+<view class="weui-cell write top">
+  <view class=" myReport" style="{{viewStyle[0]}}" data-item='0' data-type='1' bindtap='doSpeech'>即兴</view>
+  <view class=" myReport" style="{{viewStyle[1]}}" data-item='1' data-type='2' bindtap='doSpeech'>备稿</view>
 </view>
 
+<block wx:if='{{speechType == 0}}'>
+<view class="weui-flex commentArea">
+  <view class="weui-flex__item">
+    <input class='commentInput' name="audioName" value='{{audioName}}' placeholder='请出题' bindinput="audioNameInput"></input>
+  </view>
 
+</view>
+<view>
+  <view class='tip' style='font-weight: bold;  padding-top:20px;'>即兴演讲玩法说明：</view>
+  <view class='tip'>1、点击出题，系统自动出题</view>
+  <view class='tip'>2、倒计时结束开始演讲，2分钟</view>
+  <view class='tip'>3、结束</view>
+</view>
 
+<view class='bottom'>
+  <view class="weui-flex__item  timeCard" style='{{timeNoticeBackground}}'>
+    <block wx:if='{{waitSeconds <= 0}}'>
+      <view>{{minute}}:{{second}}</view>
+    </block>
+    <block wx:if='{{waitSeconds > 0 && waitSeconds <= 10}}'>
+      <view class='wait'>{{waitSeconds}}</view>
+    </block>
+    <block wx:if='{{waitSeconds > 10}}'>
+    <view class='waitNotice'>计时结束后开始演讲</view>
+  </block>
+  </view>
+  
+  <view class='getSpeechName' bindtap='getSpeechName'>出 题</view>
 
+  <button type='primary' wx:if="{{waitSeconds > 0}}">准备演讲</button>
+  <button type='primary' bindtap="stopRecord" wx:if="{{waitSeconds <= 0}}">完成演讲</button>
+</view>
+</block>
+
+<block wx:if='{{speechType == 1}}'>
+<view class="weui-flex commentArea">
+  <view class="weui-flex__item">
+    <input class='commentInput' name="audioName" value='{{audioName}}' placeholder='请输入演讲题目' bindinput="audioNameInput"></input>
+  </view>
+  </view>
+  <view>
+  <view class='tip' style='font-weight: bold;  padding-top:20px;'>备稿演讲玩法说明：</view>
+  <view class='tip'>1、输入演讲题目</view>
+  <view class='tip'>2、开始演讲，7分钟</view>
+  <view class='tip'>3、结束</view>
+</view>
+<view class='bottom'>
+  <view class="weui-flex__item  timeCard" style='{{timeNoticeBackground}}'>
+      <view>{{minute}}:{{second}}</view>
+  </view>
+
+  <button type='primary' bindtap="startRecord" wx:if="{{isPlay == 0}}">开始演讲</button>
+  <button type='primary' bindtap="stopRecord" wx:if="{{isPlay == 1}}">完成演讲</button>
+</view>
+</block>

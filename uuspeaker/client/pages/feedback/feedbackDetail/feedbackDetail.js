@@ -10,14 +10,6 @@ var tempFilePath = ''
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext();
 
-const options = {
-  duration: 600000,
-  sampleRate: 44100,
-  numberOfChannels: 1,
-  encodeBitRate: 192000,
-  format: 'mp3'
-}
-
 var startDate
 var endDate
 var timeDuration = 0
@@ -258,7 +250,7 @@ Page({
 
   startRecord: function () {
     console.log(this.data.playNotice)
-    recorderManager.start(options)
+    recorderManager.start(config.options)
     startDate = new Date()
     this.setData({
       pressStyle: 'box-shadow: 0px 0px 0px 0px;',

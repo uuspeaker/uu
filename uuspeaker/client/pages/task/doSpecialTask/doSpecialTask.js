@@ -9,19 +9,13 @@ var tempFilePath = ''
 var coinPlay = 0
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext();
-var timeLimit = 120
-
-const options = {
-  duration: 600000,
-  sampleRate: 44100,
-  numberOfChannels: 1,
-  encodeBitRate: 192000,
-  format: 'mp3'
-}
+var timeLimit = { normal: 120, over: 30, green: 60, yellow: 30, red: 0 }
 
 var timeDuration = 0
 var startDate
 var endDate
+var waitSecondsId
+var isInRoom = 1
 
 Page({
 
@@ -29,6 +23,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    viewStyle: [],
     pressStyle: 'box-shadow: 0 2px 10px rgba(0, 49, 114, .5);',
     isPlay: 0,
     playNotice: 1,
@@ -39,12 +34,64 @@ Page({
     minute: '00',
     second: '00',
     timeNoticeBackground:'',
+    waitSeconds:11,
+    speechType:0
+  },
+
+  waitToBegin: function () {
+    if (isInRoom == 0) {
+      clearInterval(waitSecondsId)
+      return
+    }
+    console.log(this.data.waitSeconds)
+    this.data.waitSeconds = this.data.waitSeconds - 1
+    this.setData({
+      waitSeconds: this.data.waitSeconds
+    })
+    if (this.data.waitSeconds == 0) {
+      clearInterval(waitSecondsId)
+      this.startRecord()
+    }
+  },
+
+  initViewStyle: function () {
+    var initViewStyle = new Array(10)
+    for (var i = 0; i < initViewStyle.length; i++) {
+      initViewStyle[i] = ''
+    }
+    this.setData({
+      viewStyle: initViewStyle
+    })
+  },
+
+  pressView: function (index) {
+    this.initViewStyle()
+    var tmpViewStyle = this.data.viewStyle
+    tmpViewStyle[index] = 'font-weight: bold;color: #576b95;font-size: 16px;'
+    this.setData({
+      viewStyle: tmpViewStyle,
+      speechType: index,
+      minute: '00',
+      second: '00',
+      audioName:''
+    })
+    var that = this
+  },
+
+  doSpeech: function (e) {
+    var index = e.currentTarget.dataset.item
+    if(index == 0){
+      timeLimit = { normal: 120, over: 15, green: 60, yellow: 30, red: 0 }
+    }else{
+      timeLimit = { normal: 420, over: 30, green: 120, yellow: 60, red: 0 }
+    }
+    this.pressView(index) 
   },
 
   //用户按下录音按钮
   startRecord: function () {
     timeDuration = 0 
-    recorderManager.start(options)
+    recorderManager.start(config.options)
     startDate = new Date()
     this.setData({
       isPlay:1
@@ -69,16 +116,20 @@ Page({
       })
     }
 
-    var timeNoticeBackground = ''
-    // if (timeDuration >= timeLimit) {
-    //   timeNoticeBackground = 'color:red'
-    // } else if (timeDuration >= timeLimit - 30) {
-    //   timeNoticeBackground = 'color:orange'
-    // } else if (timeDuration >= timeLimit - 60) {
-    //   timeNoticeBackground = 'color:green'
-    // } else {
+    if (timeDuration >= timeLimit.normal + timeLimit.over) {
+      this.stopRecord()
+    }
 
-    // }
+    var timeNoticeBackground = ''
+    if (timeDuration >= timeLimit.normal) {
+      timeNoticeBackground = 'color:red'
+    } else if (timeDuration >= timeLimit.normal - timeLimit.yellow) {
+      timeNoticeBackground = 'color:orange'
+    } else if (timeDuration >= timeLimit.normal - timeLimit.green) {
+      timeNoticeBackground = 'color:green'
+    } else {
+
+    }
     var minute = dateFormat.getNumberOfFixedWidth(timeDuration / 60)
     var second = dateFormat.getNumberOfFixedWidth(timeDuration % 60)
     this.setData({
@@ -107,8 +158,8 @@ Page({
   stopRecord: function () {
     recorderManager.stop();
     this.setData({
-      pressStyle: 'box-shadow: 0 2px 10px rgba(0, 49, 114, .5);',
-      isPlay: 0
+      isPlay: 0,
+      waitSeconds:11
     })
     endDate = new Date()
     timeDuration = Math.floor((endDate - startDate) / 1000)
@@ -118,24 +169,11 @@ Page({
       return
     }
     var audioId = uuid.v1()
-
-      var that = this
-      wx.showModal({
-        title: '提示',
-        content: '是否保存录音？',
-        success: function (sm) {
-          if (sm.confirm) {
-            setTimeout(that.saveAudio, 100, audioId)
-            
-          } else if (sm.cancel) {
-            console.log('用户点击取消')
-          }
-        }
-      })
+    setTimeout(this.saveAudio, 500, audioId)
   },
 
    saveAudio: function(audioId){
-     util.showBusy('请求中...')
+     util.showBusy('保存中...')
      var that = this
     console.log('tempFilePath', tempFilePath)
     const uploadTask = wx.uploadFile({
@@ -155,7 +193,7 @@ Page({
 
    getSpeechName: function () {
      wx.showLoading({
-       title: '加载中',
+       title: '出题中',
      })
      console.log('saveAudioRecord')
      var that = this
@@ -168,6 +206,7 @@ Page({
          that.setData({
            audioName: result.data.data
          })
+         waitSecondsId = setInterval(that.waitToBegin, 1000)
          
        },
        fail(error) {
@@ -186,16 +225,14 @@ Page({
     qcloud.request({
       url: `${config.service.host}/weapp/task.specialTask`,
       login: true,
-      data: { taskId: audioId, timeDuration: timeDuration, audioName: this.data.audioName, audioText: this.data.audioText,audioType:1 },
+      data: { taskId: audioId, timeDuration: timeDuration, audioName: this.data.audioName, audioText: this.data.audioText,audioType:1,speechType:this.data.speechType },
       method: 'post',
       success(result) {
         wx.showToast({
           title: '完成演讲 +1',
           image: '../../../images/impromptuMeeting/money.png',
         })
-        that.setData({
-          isCompleteTask: 1
-        })
+        
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -218,9 +255,7 @@ Page({
 
    onLoad:function(options){
      this.initAudio()
-     this.setData({
-       showContent: options.showContent
-     })
+     this.pressView(0) 
      //this.queryHotTask()
    },
 
@@ -232,6 +267,15 @@ Page({
     recorderManager.onStop((res) => {
       tempFilePath = res.tempFilePath
     })
+  },
+
+  onUnload: function(){
+    clearInterval(waitSecondsId)
+    isInRoom = 0
+    this.setData({
+      isPlay: 0
+    })
+    recorderManager.stop();
   },
 
 

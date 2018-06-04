@@ -6,7 +6,7 @@
   width: 90%;
   height: 50px;
   align-items: center;
-  margin-top:20px;
+  margin-top:70px;
   margin-left: 4%
 }
 .commentInput {
@@ -20,7 +20,7 @@
 }
 
 .timeCard{
-  padding-bottom:50px;
+  padding-bottom:40px;
   font-size: 60px;
   text-align: center;
   margin: 5px;
@@ -31,4 +31,19 @@
   font-size: 24px;
   font-weight: bold;
   color: grey;
+}
+.myReport {
+  font-size: 15px;
+  padding-left: 10px;
+}
+
+.tip{
+  font-size:15px;
+  text-align: left;
+  padding-left: 20px;
+}
+.waitNotice{
+  font-size:24px;
+  padding-top:30px;
+  color:black;
 }

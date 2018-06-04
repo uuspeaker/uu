@@ -11,14 +11,6 @@ const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext();
 var timeLimit = 120
 
-const options = {
-  duration: 600000,
-  sampleRate: 44100,
-  numberOfChannels: 1,
-  encodeBitRate: 192000,
-  format: 'mp3'
-}
-
 var timeDuration = 0
 var startDate
 var endDate
@@ -44,7 +36,7 @@ Page({
   //用户按下录音按钮
   startRecord: function () {
     timeDuration = 0
-    recorderManager.start(options)
+    recorderManager.start(config.options)
     startDate = new Date()
     this.setData({
       isPlay: 1

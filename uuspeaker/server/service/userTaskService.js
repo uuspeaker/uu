@@ -19,7 +19,7 @@ var saveDailyTask = async (taskId, taskType, userId, timeDuration) => {
     task_status: 2
   })
 
-  await audioService.saveSpeechAudio('',taskId, 1,'',userId, timeDuration)
+  await audioService.saveSpeechAudio('',taskId, 1,0,'',userId, timeDuration)
 }
 
 /**
@@ -99,13 +99,13 @@ var evaluateTask = async (taskAudioId, evaluationAudioId, userId, timeDuration) 
  * 保存用户自定义任务任
  * 返回：
  */
-var saveSpecialTask = async (taskId, taskName, audioType,taskText, userId, timeDuration) => {
+var saveSpecialTask = async (taskId, taskName, audioType,speechType,taskText, userId, timeDuration) => {
   // await mysql('user_special_task').insert({
   //   task_id: taskId,
   //   user_id: userId
   // })
 
-  await audioService.saveSpeechAudio('', taskId, audioType, taskName,userId, timeDuration)
+  await audioService.saveSpeechAudio('', taskId, audioType,speechType, taskName,userId, timeDuration)
 }
 
 /**

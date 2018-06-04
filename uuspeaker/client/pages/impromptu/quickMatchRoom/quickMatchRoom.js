@@ -20,14 +20,6 @@ const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext();
 const statusNotice = ['进入房间', '开始演讲', '完成演讲', '开始听你的演讲', '开始鼓励', '完成鼓励','开始听你的鼓励','离开房间']
 
-const options = {
-  duration: 600000,
-  sampleRate: 44100,
-  numberOfChannels: 1,
-  encodeBitRate: 192000,
-  format: 'mp3'
-}
-
 var timeDuration = 0 //演讲时间
 var timeLimit = 120  //演讲总时间
 
@@ -195,7 +187,7 @@ Page({
       isPlay: 1
     })
     this.stopAllAudio()
-    recorderManager.start(options)
+    recorderManager.start(config.options)
     timeDuration = 0
     audioId = uuid.v1()
     console.log('startTime audioId ', audioId)
@@ -545,7 +537,7 @@ Page({
     this.setData({
       waitSeconds: this.data.waitSeconds
     })
-    if (this.data.waitSeconds == 0){
+    if (this.data.waitSeconds <= 0){
       clearInterval(waitSecondsId)
       this.startSpeech()
     }
