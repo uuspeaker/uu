@@ -1,13 +1,11 @@
 const { mysql } = require('../../qcloud')
-const userInfo = require('../../common/userInfo')
-const uuid = require('../../common/uuid');
-const userInfoService = require('../../service/userInfoService')
+const config = require('../../config')
 
 module.exports = {
 
   get: async ctx => {
-    var data = await mysql('user_control')
-    ctx.state.data = data[0].flag
+    //var data = await mysql('user_control')
+    ctx.state.data = config.userControl
   },
 
 }

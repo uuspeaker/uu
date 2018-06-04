@@ -1,4 +1,6 @@
 const CONF = {
+  userControl:1,
+
   port: '5757',
   rootPathname: '',
 
