@@ -1,5 +1,5 @@
 const CONF = {
-  userControl:1,
+  userControl:0,
 
   port: '5757',
   rootPathname: '',

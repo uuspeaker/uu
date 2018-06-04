@@ -128,7 +128,7 @@ var saveSpeechAudio = async (roomId, audioId, audioType,speechType, audioName, u
     time_duration: timeDuration,
     audio_type: parseInt(audioType),
     audio_status: 2,
-    speech_type: speechType
+    speech_type: parseInt(speechType)
   })
   if (parseInt(audioType) == 1){
     await increaseDuration(userId, 1, timeDuration)

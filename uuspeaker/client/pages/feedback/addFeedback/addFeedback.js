@@ -178,7 +178,7 @@ Page({
     qcloud.request({
       url: `${config.service.host}/weapp/task.specialTask`,
       login: true,
-      data: { taskId: audioId, timeDuration: timeDuration, audioName: this.data.audioName, audioText: this.data.audioText,audioType:3 },
+      data: { taskId: audioId, timeDuration: timeDuration, audioName: this.data.audioName, audioText: this.data.audioText,audioType:3,speechType:1 },
       method: 'post',
       success(result) {
         wx.showToast({

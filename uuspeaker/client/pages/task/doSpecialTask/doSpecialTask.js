@@ -9,13 +9,14 @@ var tempFilePath = ''
 var coinPlay = 0
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext();
-var timeLimit = { normal: 120, over: 30, green: 60, yellow: 30, red: 0 }
+var timeLimit = { normal: 120, over: 15, green: 60, yellow: 30, red: 0 }
 
 var timeDuration = 0
 var startDate
 var endDate
 var waitSecondsId
 var isInRoom = 1
+var audioId
 
 Page({
 
@@ -168,11 +169,11 @@ Page({
       util.showModel('录音太短', '请录制一段超过10秒的语音');
       return
     }
-    var audioId = uuid.v1()
-    setTimeout(this.saveAudio, 500, audioId)
+    audioId = uuid.v1()
+    setTimeout(this.saveAudio, 500)
   },
 
-   saveAudio: function(audioId){
+   saveAudio: function(){
      util.showBusy('保存中...')
      var that = this
     console.log('tempFilePath', tempFilePath)
@@ -254,6 +255,8 @@ Page({
   },
 
    onLoad:function(options){
+     timeLimit = { normal: 120, over: 15, green: 60, yellow: 30, red: 0 }
+     isInRoom = 1
      this.initAudio()
      this.pressView(0) 
      //this.queryHotTask()

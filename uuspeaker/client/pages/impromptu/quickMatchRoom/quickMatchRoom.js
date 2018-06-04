@@ -15,6 +15,7 @@ var isInRoom = 1
 var rank
 var coinPlay = 0
 var speechAudioId= ''
+var tempFilePath
 
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext();
@@ -329,7 +330,7 @@ Page({
   },
 
   //保存录音文件
-  saveAudio: function (tempFilePath) {
+  saveAudio: function () {
     util.showBusy('保存中...')
     var that = this
     console.log('saveAudio.tempFilePath', tempFilePath)
@@ -359,7 +360,7 @@ Page({
 
   saveSpeechData: function () {
     speechAudioId = audioId
-    var requestData = { roomId: roomId, audioName: this.data.speechName, audioId: audioId, timeDuration: timeDuration, audioType: 1 }
+    var requestData = { roomId: roomId, audioName: this.data.speechName, audioId: audioId, timeDuration: timeDuration, audioType: 1,speechType:0 }
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.userAudio`,
@@ -553,7 +554,9 @@ Page({
       this.setData({
         isPlay: 0,
       })
-      this.saveAudio(res.tempFilePath)
+      tempFilePath = res.tempFilePath
+      setTimeout(this.saveAudio, 500)
+      //this.saveAudio(res.tempFilePath)
     })
 
     innerAudioContext.obeyMuteSwitch = false

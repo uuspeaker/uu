@@ -14,6 +14,7 @@ var startDate
 var endDate
 var timeDuration = 0
 var coinPlay = 0
+var speechAudioId
 
 //查询标记(0-查询最新;1-查询前面10条;2-查询后面10条)
 var queryPageType = 0
@@ -299,8 +300,8 @@ Page({
       content: '是否确定提交？',
       success: function (sm) {
         if (sm.confirm) {
-          var evaluationAudioId = uuid.v1()
-          setTimeout(that.saveAudio, 100, evaluationAudioId)
+          speechAudioId = uuid.v1()
+          setTimeout(that.saveAudio, 100)
 
         } else if (sm.cancel) {
           console.log('用户点击取消')
@@ -309,7 +310,7 @@ Page({
     })
   },
 
-  saveAudio: function (audioId) {
+  saveAudio: function () {
     util.showBusy('请求中...')
     var that = this
     console.log('tempFilePath', tempFilePath)
@@ -317,9 +318,9 @@ Page({
       url: `${config.service.host}/weapp/impromptu.impromptuAudio`,
       filePath: tempFilePath,
       name: 'file',
-      formData: { audioId: audioId },
+      formData: { audioId: speechAudioId },
       success: function (res) {
-        that.saveAudioRecord(audioId)
+        that.saveAudioRecord(speechAudioId)
       },
 
       fail: function (e) {
@@ -333,7 +334,7 @@ Page({
     qcloud.request({
       url: `${config.service.host}/weapp/audio.audioComment`,
       login: true,
-      data: { evaluationAudioId: evaluationAudioId, targetAudioId: this.data.audioId, timeDuration: timeDuration, audioType: 2 },
+      data: { evaluationAudioId: evaluationAudioId, targetAudioId: this.data.audioId, timeDuration: timeDuration, audioType: 2,speechType:1 },
       method: 'post',
       success(result) {
         if (that.data.audioData[0].isMine == 1) {
