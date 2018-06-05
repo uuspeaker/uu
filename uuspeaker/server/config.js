@@ -1,5 +1,5 @@
 const CONF = {
-  userControl:0,
+  userControl:1,
 
   port: '5757',
   rootPathname: '',
@@ -61,7 +61,7 @@ const CONF = {
     // Bucket 名称
     fileBucket: 'uuspeaker',
     // 文件夹
-    uploadFolder: 'audio',
+    uploadFolder: 'test',
     maxSize: 20
   },
 

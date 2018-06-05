@@ -34,7 +34,7 @@ var config = {
     duration: 600000,
     sampleRate: 8000,
     numberOfChannels: 1,
-    encodeBitRate: 16000,
+    encodeBitRate: 24000,
     format: 'mp3'
   },
 };

@@ -691,7 +691,8 @@ Page({
         }
         if (speak.data.status == 7) {
           this.setData({
-            matchedUserStatus: 7
+            matchedUserStatus: 7,
+            messageNotice: speak.who.nickName + '离开房间'
           })
           return
         }
