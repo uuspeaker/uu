@@ -639,36 +639,36 @@ Page({
     // 创建信道，需要给定后台服务地址
     
     console.log(this.tunnel)
-    this.tunnel = new qcloud.Tunnel(`${config.service.host}/weapp/impromptu.meetingUrl?rank=` + rank)
+    this.tunnel = new qcloud.Tunnel(`${config.service.host}/weapp/impromptu.meetingUrl?speechStatus=0rank=` + rank)
     console.log(this.tunnel)
     var tunnel = this.tunnel
     console.log('quickMatchRoom 初始化信道服务', tunnel)
 
     // 监听信道内置消息，包括 connect/close/reconnecting/reconnect/error
     tunnel.on('connect', () => {
-      //util.showSuccess('信道已连接')
+      util.showSuccess('连接成功')
       console.log('quickMatchRoom 信道已连接')
       this.setData({ tunnelStatus: 'connected' })
     })
 
     tunnel.on('close', () => {
-      //util.showSuccess('信道已断开')
+      util.showSuccess('连接断开')
       console.log('quickMatchRoom 信道已断开')
       this.setData({ tunnelStatus: 'closed' })
     })
 
     tunnel.on('reconnecting', () => {
       console.log('quickMatchRoom 信道正在重连...')
-      //util.showBusy('正在重连')
+      util.showBusy('正在重连')
     })
 
     tunnel.on('reconnect', () => {
       console.log('quickMatchRoom 信道重连成功')
-      //util.showSuccess('重连成功')
+      util.showSuccess('重连成功')
     })
 
     tunnel.on('error', error => {
-      //util.showModel('信道发生错误', error)
+      util.showModel('连接出错', error)
       console.error('quickMatchRoom 信道发生错误：', error)
     })
 

@@ -292,3 +292,8 @@
   font-weight: bold;
   color: #576b95;
 }
+.surveyStatus {
+  position: fixed;
+  right: 30px;
+  font-weight: bold;
+}

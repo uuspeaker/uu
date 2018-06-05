@@ -132,10 +132,10 @@ Page({
    * 连接到聊天室信道服务
    */
   openTunnel() {
-    //this.amendMessage(createSystemMessage('正在加入学习频道...'));
+    this.amendMessage(createSystemMessage('正在加入学习频道...'));
     console.log('rank', rank)
     // 创建信道
-    var tunnel = this.tunnel = new qcloud.Tunnel(`${config.service.host}/weapp/impromptu.meetingUrl?rank=` + rank)
+    var tunnel = this.tunnel = new qcloud.Tunnel(`${config.service.host}/weapp/impromptu.meetingUrl?speechStatus=0&rank=` + rank)
     console.log('quickMatch 初始化信道服务',tunnel)
     // if (this.tunnel) {
     //   tunnel = this.tunnel
@@ -146,7 +146,7 @@ Page({
     // 连接成功后，去掉「正在加入学习频道」的系统提示
     tunnel.on('connect', () => {
       console.log('quickMatch 信道已连接')
-      //this.popMessage()
+      this.popMessage()
       });
 
     // 连接成功后，去掉「正在加入学习频道」的系统提示
@@ -161,7 +161,7 @@ Page({
 
     // 聊天室有人加入或退出，反馈到 UI 上
     tunnel.on('people', people => {
-      const { total, enter, leave } = people;
+      const { total, enter, leave, updatedPerson } = people;
       console.log('people',people)
       console.log('userList', this.data.userList)
       if(enter){
@@ -173,7 +173,7 @@ Page({
             userAmount: totalAmount
           })
         }
-      }else{
+      }else if(leave){
           var newUserList =  this.data.userList
           delete newUserList[leave.tunnelId]
           var totalAmount = Object.getOwnPropertyNames(newUserList).length
@@ -181,6 +181,12 @@ Page({
             userList: newUserList,
             userAmount: totalAmount
           })
+      } else if (updatedPerson) {
+        var newUserList = this.data.userList
+        newUserList[updatedPerson.tunnelId] = updatedPerson
+        this.setData({
+          userList: newUserList
+        })
       }
       
       // if (enter) {

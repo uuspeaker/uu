@@ -47,6 +47,10 @@ var startMatch = (userInfo) => {
 
   userInfo.startDate = new Date()
   standByList.unshift(userInfo)
+  meetingUserMap[tunnelMap[userInfo.userId]].speechStatus = 1
+  $broadcast('people', {
+    'updatedPerson': meetingUserMap[tunnelMap[userInfo.userId]]
+  })
   log.info('用户开始匹配' + JSON.stringify(userInfo))
   log.info('当前正在等待匹配的所有用户' + JSON.stringify(standByList))
 }
@@ -74,6 +78,10 @@ var stopMatch = (userId) => {
   for (var i = 0; i < standByListLegnth; i++) {
     if (standByList[i].userId == userId) {
       var removedUser = standByList.splice(i, 1)
+      meetingUserMap[tunnelMap[removedUser.userId]].speechStatus = 0
+      $broadcast('people', {
+        'updatedPerson': meetingUserMap[tunnelMap[userInfo.userId]]
+      })
       log.info('用户取消匹配' + JSON.stringify(removedUser))
       log.info('当前正在等待匹配的所有用户' + JSON.stringify(standByList))
       return
@@ -110,8 +118,19 @@ var autoMatchUser = () => {
     $sendMessage(tunnelMap[matchUserA.userId], 'match', {
       'data': { matchedUser: matchUserB, speechName: speechName}
     })
+    
     $sendMessage(tunnelMap[matchUserB.userId], 'match', {
       'data': { matchedUser: matchUserA, speechName: speechName}
+    })
+
+    meetingUserMap[tunnelMap[matchUserA.userId]].speechStatus = 2
+    $broadcast('people', {
+      'updatedPerson': meetingUserMap[tunnelMap[matchUserA.userId]]
+    })
+
+    meetingUserMap[tunnelMap[matchUserB.userId]].speechStatus = 2
+    $broadcast('people', {
+      'updatedPerson': meetingUserMap[tunnelMap[matchUserB.userId]]
     })
   }
 }
@@ -270,6 +289,7 @@ module.exports = {
     const tunnelInfo = data.tunnel
     data.userinfo.rank = ctx.query.rank
     data.userinfo.tunnelId = tunnelInfo.tunnelId
+    data.userinfo.speechStatus = ctx.query.speechStatus
     //清除原先打开的信道
     var oldTunnelId = tunnelMap[data.userinfo.openId]
     if (oldTunnelId){

@@ -61,6 +61,15 @@
   <block wx:for="{{userList}}" wx:key="item">
     <template is="scoreDetailTemplate" data="{{...item}}" />
   </block>
+
+  <view style='height:45px;' class='bottom'>
+        <block wx:if='{{isMatching == 0}}'>
+<button type='primary' catchtap='startMatch' style='height:95%'>开始匹配</button>
+</block>
+<block wx:if='{{isMatching == 1}}'>
+<button  catchtap='stopMatch' style='height:95%'>匹配中 {{waitSeconds}}</button>
+</block>
+</view>
 </view>
 
 
@@ -76,6 +85,11 @@
         </view>
       </view>
       <view class='small-grey'>{{rank}}</view>
+    </view>
+    <view class="surveyStatus" >
+    <text style='color:grey;' wx:if='{{speechStatus == 0}}'>等待中</text>
+    <text style='color:rgb(228, 140, 58);' wx:if='{{speechStatus == 1}}'>匹配中</text>
+    <text style='color:rgb(136, 186, 71);' wx:if='{{speechStatus == 2}}'>演讲中</text>
     </view>
   </view>
 </template>
