@@ -340,15 +340,23 @@ Page({
       name: 'file',
       formData: { audioId: audioId },
       success: function (result) {
-        console.log('saveAudio success')
+        console.log('audioToText', result)
+        var resultData = JSON.parse(result.data)
+        console.log('resultData', resultData.data)
+        if (timeDuration != 0) {
+          that.setData({
+            speed: Math.floor(60 * resultData.data.length / timeDuration)
+          })
+        }
+
         if (that.data.audioType == 1){
-          that.saveSpeechData()
+          that.saveSpeechData(resultData.data)
         }
         if (that.data.audioType == 2){
-          that.saveEvaluationData()
+          that.saveEvaluationData(resultData.data)
         }
         if (that.data.audioType == 3) {
-          that.saveReviewData()
+          that.saveReviewData(resultData.data)
         }
       },
 
@@ -358,9 +366,9 @@ Page({
     })
   },
 
-  saveSpeechData: function () {
+  saveSpeechData: function (audioText) {
     speechAudioId = audioId
-    var requestData = { roomId: roomId, audioName: this.data.speechName, audioId: audioId, timeDuration: timeDuration, audioType: 1,speechType:0 }
+    var requestData = { roomId: roomId, audioName: this.data.speechName, audioText:audioText,audioId: audioId, timeDuration: timeDuration, audioType: 1,speechType:0 }
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.userAudio`,
@@ -387,13 +395,13 @@ Page({
     })
   },
 
-  saveEvaluationData: function () {
+  saveEvaluationData: function (audioText) {
     console.log('saveEvaluationData', audioId)
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/audio.audioComment`,
       login: true,
-      data: { 'roomId': roomId , evaluationAudioId: audioId, targetAudioId: this.data.speechInfo.audioId, timeDuration: timeDuration, audioType: 2 },
+      data: { 'roomId': roomId, evaluationAudioId: audioId, audioText: audioText, targetAudioId: this.data.speechInfo.audioId, timeDuration: timeDuration, audioType: 2 },
       method: 'post',
       success(result) {
         wx.showToast({
@@ -413,12 +421,12 @@ Page({
       }
     })
   },
-  saveReviewData: function () {
+  saveReviewData: function (audioText) {
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/audio.audioComment`,
       login: true,
-      data: { 'roomId': roomId , evaluationAudioId: audioId, targetAudioId: speechAudioId, timeDuration: timeDuration, audioType: 3 },
+      data: { 'roomId': roomId, evaluationAudioId: audioId, audioText: audioText, targetAudioId: speechAudioId, timeDuration: timeDuration, audioType: 3 },
       method: 'post',
       success(result) {
         wx.showToast({

@@ -6,6 +6,7 @@ const fileType = require('file-type')
 const shortid = require('shortid')
 const fs = require('fs')
 const config = require('../config')
+const log = require('../log');
 
 /**
  * 语音识别
@@ -13,27 +14,14 @@ const config = require('../config')
  * 有任何问题可以到 issue 提问
  */
 module.exports = async files => {
+  log.info('audioToText开始')
   // 处理文件上传
   //const { files } = await resolveUploadFileFromRequest(ctx.req)
   const imageFile = files.file[0]
-
+  log.info('audioToText', imageFile)
   // 只能上传 mp3 文件
   const buffer = readChunk.sync(imageFile.path, 0, 262)
   let resultType = fileType(buffer)
-
-  // 如果无法获取文件的 MIME TYPE 就取 headers 里面的 content-type
-  if (resultType === null && imageFile.headers && imageFile.headers['content-type']) {
-    const tmpPathArr = imageFile.path ? imageFile.path.split('.') : []
-    const extName = tmpPathArr.length > 0 ? tmpPathArr[tmpPathArr.length - 1] : ''
-    resultType = {
-      mime: imageFile.headers['content-type'],
-      ext: extName
-    }
-  }
-
-  if (!resultType || !['audio/mpeg', 'audio/mp3'].includes(resultType.mime)) {
-    throw new Error('上传的文件格式不是 mp3')
-  }
 
   const srcPath = imageFile.path
   /**
@@ -48,7 +36,7 @@ module.exports = async files => {
   await convertMp3ToWav(srcPath, newVoicePath)
 
   const voiceBuffer = fs.readFileSync(newVoicePath)
-
+  log.info('audioToText voiceBuffer', voiceBuffer)
   const taskList = []
   let leftBufferSize = 0
   let idx = 0
@@ -56,7 +44,7 @@ module.exports = async files => {
   while (leftBufferSize < voiceBuffer.length) {
     const newBufferSize = leftBufferSize + 9 * 1024
     const chunk = voiceBuffer.slice(leftBufferSize, newBufferSize > voiceBuffer.length ? voiceBuffer.length : newBufferSize)
-
+    log.info('audioToText chunk', chunk)
     taskList.push(
       voice.recognize(chunk, newBufferSize > voiceBuffer.length, voiceId, idx)
     )
@@ -69,7 +57,7 @@ module.exports = async files => {
     const data = await Promise.all(taskList)
     const res = data.map(d => d.data)
     console.log(res)
-    return res
+    return getAudioText(res)
   } catch (e) {
     console.log(e)
     throw e
@@ -104,27 +92,39 @@ function convertMp3ToWav(srcPath, newPath) {
   })
 }
 
-/**
- * 从请求体重解析出文件
- * 并将文件缓存到 /tmp 目录下
- * @param {HTTP INCOMING MESSAGE} req
- * @return {Promise}
- */
-function resolveUploadFileFromRequest(request) {
-  const maxSize = config.cos.maxSize ? config.cos.maxSize : 10
+function getAudioText(data){
 
-  // 初始化 multiparty
-  const form = new multiparty.Form({
-    encoding: 'utf8',
-    maxFilesSize: maxSize * 1024 * 1024,
-    autoFiles: true,
-    uploadDir: '/tmp'
-  })
+  if (typeof data === 'string') {
+    data = JSON.parse(data);
+  }
 
-  return new Promise((resolve, reject) => {
-    // 从 req 读取文件
-    form.parse(request, (err, fields = {}, files = {}) => {
-      err ? reject(err) : resolve({ fields, files })
-    })
-  })
+
+  const result = data.reduce((pre, cur, idx) => {
+    if (pre.hasError) {
+      return pre;
+    }
+
+    if (cur.code !== 0) {
+      pre.hasError = true;
+      pre.errMsg = message;
+    }
+
+    pre.text = cur.text;
+    return pre;
+  }, { text: '', hasError: false, errMsg: '' });
+
+  if (!result.hasError) {
+    // const notes = this.data.notes.map(v => {
+    //   if (v.key === key) {
+    //     v.word = result.text;
+    //     v.isRec = true;
+    //   }
+    //   return v;
+    // });
+    
+    console.log('audio text result', result)
+    return result.text
+  } else {
+    console.error(result, data);
+  }
 }

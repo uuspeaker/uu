@@ -5,6 +5,7 @@ const fileType = require('file-type')
 const CosSdk = require('cos-nodejs-sdk-v5')
 const ERRORS = require('constants').ERRORS
 const config = require('../config')
+const audioToText = require('../upload/audioToText.js')
 
 const regionMap = {
   'ap-beijing-1': 'tj',
@@ -39,6 +40,9 @@ const upload = async (ctx) => {
 
   // 处理文件上传
   const { fields, files } = await resolveUploadFileFromRequest(ctx.req)
+
+  var audioArr = await audioToText(files)
+  ctx.state.data = audioArr
 
   // 从 req 读取文件
 

@@ -116,13 +116,14 @@ var getSpeakingAudio = async (roomId) => {
  * audioId 音频ID
  * 返回：
  */
-var saveSpeechAudio = async (roomId, audioId, audioType,speechType, audioName, userId, timeDuration) => {
+var saveSpeechAudio = async (roomId, audioId, audioType,speechType, audioName,audioText, userId, timeDuration) => {
   if (audioName == null || audioName == undefined || audioName == '') {
     audioName = dateUtil.format(new Date(), 'yyyy-MM-dd hh:mm:ss')
   }
   await mysql('impromptu_audio').insert({
     audio_id: audioId,
     audio_name: audioName,
+    audio_text: audioText,
     user_id: userId,
     room_id: roomId,
     time_duration: timeDuration,
@@ -166,7 +167,7 @@ var evaluateLatestAudio = async (roomId, evaluationAudioId, audioName, userId, t
   if (audioData.length > 0) {
     var speechAudioId = audioData[0].audio_id
     //更新演讲的点评次数
-    evaluateAudio(roomId, evaluationAudioId, userId, timeDuration, speechAudioId)
+    evaluateAudio(roomId, evaluationAudioId, userId, timeDuration, speechAudioId,'')
   }
 }
 
@@ -175,7 +176,7 @@ var evaluateLatestAudio = async (roomId, evaluationAudioId, audioName, userId, t
  * audioId 点评音频ID
  * 返回：
  */
-var evaluateAudio = async (roomId, evaluationAudioId, userId, timeDuration, speechAudioId) => {
+var evaluateAudio = async (roomId, evaluationAudioId, userId, timeDuration, speechAudioId,audioText) => {
   //获取最近完成的演讲
   var audioData = await mysql('impromptu_audio').where({ audio_id: speechAudioId})
 
@@ -188,6 +189,7 @@ var evaluateAudio = async (roomId, evaluationAudioId, userId, timeDuration, spee
     await mysql('impromptu_audio').insert({
       audio_id: evaluationAudioId,
       audio_name: audioData[0].audio_name,
+      audio_text: audioText,
       user_id: userId,
       room_id: roomId,
       time_duration: timeDuration,

@@ -319,8 +319,9 @@ Page({
       filePath: tempFilePath,
       name: 'file',
       formData: { audioId: speechAudioId },
-      success: function (res) {
-        that.saveAudioRecord(speechAudioId)
+      success: function (result) {
+        var resultData = JSON.parse(result.data)
+        that.saveAudioRecord(speechAudioId, resultData.data)
       },
 
       fail: function (e) {
@@ -329,12 +330,12 @@ Page({
     })
   },
 
-  saveAudioRecord: function (evaluationAudioId) {
+  saveAudioRecord: function (evaluationAudioId, audioText) {
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/audio.audioComment`,
       login: true,
-      data: { evaluationAudioId: evaluationAudioId, targetAudioId: this.data.audioId, timeDuration: timeDuration, audioType: 2,speechType:1 },
+      data: { evaluationAudioId: evaluationAudioId, targetAudioId: this.data.audioId, timeDuration: timeDuration, audioType: 2, speechType: 1, audioText: audioText },
       method: 'post',
       success(result) {
         if (that.data.audioData[0].isMine == 1) {

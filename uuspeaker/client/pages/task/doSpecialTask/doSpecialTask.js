@@ -36,7 +36,8 @@ Page({
     second: '00',
     timeNoticeBackground:'',
     waitSeconds:11,
-    speechType:0
+    speechType:'',
+    speed:0
   },
 
   waitToBegin: function () {
@@ -66,6 +67,7 @@ Page({
   },
 
   pressView: function (index) {
+    if (this.data.speechType == index)return
     this.initViewStyle()
     var tmpViewStyle = this.data.viewStyle
     tmpViewStyle[index] = 'font-weight: bold;color: #576b95;font-size: 16px;'
@@ -74,7 +76,8 @@ Page({
       speechType: index,
       minute: '00',
       second: '00',
-      audioName:''
+      audioName:'',
+      speed:0
     })
     var that = this
   },
@@ -182,8 +185,17 @@ Page({
       filePath: tempFilePath,
       name: 'file',
       formData: { audioId: audioId },
-      success: function (res) {
-        that.saveAudioRecord(audioId)
+      success: function (result) {
+        console.log('audioToText', result)
+        var resultData = JSON.parse(result.data)
+        console.log('resultData', resultData.data)
+        if (timeDuration !=0){
+          that.setData({
+            speed: Math.floor(60 * resultData.data.length / timeDuration)
+          })
+        }
+        
+        that.saveAudioRecord(audioId, resultData.data)
       },
 
       fail: function (e) {
@@ -196,7 +208,6 @@ Page({
      wx.showLoading({
        title: '出题中',
      })
-     console.log('saveAudioRecord')
      var that = this
      qcloud.request({
        url: `${config.service.host}/weapp/speech.speechNameRandom`,
@@ -219,14 +230,12 @@ Page({
 
 
   //完成任务
-   saveAudioRecord: function (audioId) {
-     var requestData = { taskId: audioId, timeDuration: timeDuration, audioName: this.data.audioName, audioText: this.data.audioText }
-     console.log(requestData)
+   saveAudioRecord: function (audioId, audioText) {
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/task.specialTask`,
       login: true,
-      data: { taskId: audioId, timeDuration: timeDuration, audioName: this.data.audioName, audioText: this.data.audioText,audioType:1,speechType:this.data.speechType },
+      data: { taskId: audioId, timeDuration: timeDuration, audioName: this.data.audioName, audioText: audioText,audioType:1,speechType:this.data.speechType },
       method: 'post',
       success(result) {
         wx.showToast({

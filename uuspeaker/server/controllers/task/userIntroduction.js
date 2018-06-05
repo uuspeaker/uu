@@ -18,7 +18,7 @@ module.exports = {
     }
     
     await userInfoService.saveIntroduction(audioId, userId)
-    await audioService.saveSpeechAudio('',audioId,1,1,'自我介绍',userId, timeDuration)
+    await audioService.saveSpeechAudio('',audioId,1,1,'自我介绍','',userId, timeDuration)
     
     
   },

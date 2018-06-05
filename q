@@ -1,0 +1,58 @@
+[1mdiff --git a/uuspeaker/client/config.js b/uuspeaker/client/config.js[m
+[1mindex 6f1f4f9..4839c72 100644[m
+[1m--- a/uuspeaker/client/config.js[m
+[1m+++ b/uuspeaker/client/config.js[m
+[36m@@ -34,7 +34,7 @@[m [mvar config = {[m
+     duration: 600000,[m
+     sampleRate: 8000,[m
+     numberOfChannels: 1,[m
+[31m-    encodeBitRate: 24000,[m
+[32m+[m[32m    encodeBitRate: 25600,[m
+     format: 'mp3'[m
+   },[m
+ };[m
+[1mdiff --git a/uuspeaker/server/controllers/impromptu/impromptuAudio.js b/uuspeaker/server/controllers/impromptu/impromptuAudio.js[m
+[1mindex 8d3a71d..0ce151a 100644[m
+[1m--- a/uuspeaker/server/controllers/impromptu/impromptuAudio.js[m
+[1m+++ b/uuspeaker/server/controllers/impromptu/impromptuAudio.js[m
+[36m@@ -15,6 +15,7 @@[m [mvar post = async (ctx) => {[m
+      await uploadAudio.upload(ctx)[m
+       //将音频转化成文字[m
+       // var audioArr = await audioToText(files)[m
+[32m+[m[32m      // console.log('audioToText', audioArr)[m
+       // ctx.state.data = audioArr[m
+ [m
+   }[m
+[1mdiff --git a/uuspeaker/server/upload/audioToText.js b/uuspeaker/server/upload/audioToText.js[m
+[1mindex c328190..49d2bd9 100644[m
+[1m--- a/uuspeaker/server/upload/audioToText.js[m
+[1m+++ b/uuspeaker/server/upload/audioToText.js[m
+[36m@@ -14,27 +14,9 @@[m [mconst config = require('../config')[m
+  */[m
+ module.exports = async files => {[m
+   // 处理文件上传[m
+[31m-  //const { files } = await resolveUploadFileFromRequest(ctx.req)[m
+[32m+[m[32m  const { files } = await resolveUploadFileFromRequest(ctx.req)[m
+   const imageFile = files.file[0][m
+ [m
+[31m-  // 只能上传 mp3 文件[m
+[31m-  const buffer = readChunk.sync(imageFile.path, 0, 262)[m
+[31m-  let resultType = fileType(buffer)[m
+[31m-[m
+[31m-  // 如果无法获取文件的 MIME TYPE 就取 headers 里面的 content-type[m
+[31m-  if (resultType === null && imageFile.headers && imageFile.headers['content-type']) {[m
+[31m-    const tmpPathArr = imageFile.path ? imageFile.path.split('.') : [][m
+[31m-    const extName = tmpPathArr.length > 0 ? tmpPathArr[tmpPathArr.length - 1] : ''[m
+[31m-    resultType = {[m
+[31m-      mime: imageFile.headers['content-type'],[m
+[31m-      ext: extName[m
+[31m-    }[m
+[31m-  }[m
+[31m-[m
+[31m-  if (!resultType || !['audio/mpeg', 'audio/mp3'].includes(resultType.mime)) {[m
+[31m-    throw new Error('上传的文件格式不是 mp3')[m
+[31m-  }[m
+[31m-[m
+   const srcPath = imageFile.path[m
+   /**[m
+    * 语音识别只支持如下编码格式的音频：[m
