@@ -41,8 +41,9 @@ const upload = async (ctx) => {
   // 处理文件上传
   const { fields, files } = await resolveUploadFileFromRequest(ctx.req)
 
-  var audioArr = await audioToText(files)
-  ctx.state.data = audioArr
+  // var audioArr = await audioToText(files)
+  // ctx.state.data = audioArr
+  ctx.state.data = ''
 
   // 从 req 读取文件
 

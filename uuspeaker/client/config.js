@@ -3,12 +3,12 @@
  */
 
 // 此处主机域名修改成腾讯云解决方案分配的域名
-var host = 'https://gytr1z9p.qcloud.la';
-// var host = 'https://734232337.uuspeaker.com';
+// var host = 'https://gytr1z9p.qcloud.la';
+var host = 'https://734232337.uuspeaker.com';
 
 var config = {
-  url: 'https://gytr1z9p.qcloud.la',
-  // url: 'https://734232337.uuspeaker.com',
+  // url: 'https://gytr1z9p.qcloud.la',
+  url: 'https://734232337.uuspeaker.com',
 
   // 下面的地址配合云端 Demo 工作
   service: {
@@ -32,9 +32,9 @@ var config = {
 
   options : {
     duration: 600000,
-    sampleRate: 8000,
+    sampleRate: 16000,
     numberOfChannels: 1,
-    encodeBitRate: 24000,
+    encodeBitRate: 51200,
     format: 'mp3'
   },
 };
