@@ -67,7 +67,7 @@ Page({
   },
 
   pressView: function (index) {
-    if (this.data.speechType == index)return
+    //if (this.data.speechType == index)return
     this.initViewStyle()
     var tmpViewStyle = this.data.viewStyle
     tmpViewStyle[index] = 'font-weight: bold;color: #576b95;font-size: 16px;'
