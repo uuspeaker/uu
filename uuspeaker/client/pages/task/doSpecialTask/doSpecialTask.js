@@ -1,6 +1,7 @@
 var qcloud = require('../../../vendor/wafer2-client-sdk/index')
 var config = require('../../../config')
 var util = require('../../../utils/util.js')
+var base64 = require('../../../utils/base64-arraybuffer.js')
 var dateFormat = require('../../../common/dateFormat.js')
 var uuid = require('../../../common/uuid.js')
 var audioService = require('../../../common/audioService.js')
@@ -284,17 +285,16 @@ Page({
     recorderManager.onFrameRecorded((res) => {
       const { frameBuffer } = res
       console.log('frameBuffer.byteLength', frameBuffer.byteLength)
-      console.log('frameBuffer.toString', frameBuffer.toString())
+      //console.log('frameBuffer.toString', base64.encode(frameBuffer))
       this.translate(frameBuffer)
     })
   },
 
   translate: function(audioBuff){
-    var audioFile = new 
     qcloud.request({
       url: `${config.service.host}/weapp/audio.audioToText`,
       login: true,
-      data: { 'audioBuff': audioBuff,audioType:1},
+      data: { 'audioBuff': base64.encode(audioBuff)},
       method: 'post',
       success(result) {
         console.log('audioToText', result)

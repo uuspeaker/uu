@@ -6,6 +6,7 @@ const fileType = require('file-type')
 const shortid = require('shortid')
 const fs = require('fs')
 const config = require('../../config')
+const base64 = require('../../utils/base64-arraybuffer')
 const log = require('../../log');
 
 /**
@@ -14,17 +15,32 @@ const log = require('../../log');
  * 有任何问题可以到 issue 提问
  */
 module.exports = async ctx => {
-  log.info('audioToText开始', ctx.request.body)
+  log.info('audioToText开始', ctx.request.body.audioBuff)
   log.info('ctx.request.body.audioBuff.byteLength', ctx.request.body.audioBuff.byteLength)
   // 处理文件上传
   const oldVoiceKey = `voice-${Date.now()}-${shortid.generate()}.mp3`
   const oldVoicePath = `/tmp/${oldVoiceKey}`
-  fs.writeFile(oldVoicePath, ctx.request.body.audioBuff, function (err) {
+  var audioBuff = base64.decode(ctx.request.body.audioBuff)
+  fs.existsSync('/tmp/', function (err) {
     if (err) {
-      return console.log(err);
+      return console.error(err);
     }
-    console.log("The oldVoiceFile was saved!");
+    console.log("目录创建成功。");
   });
+
+  var writerStream = fs.createWriteStream(oldVoicePath);
+
+  // 使用 utf8 编码写入数据
+  writerStream.write(audioBuff, 'UTF8');
+
+  // 标记文件末尾
+  writerStream.end();
+  // await fs.writeFile(oldVoicePath, audioBuff, function (err) {
+  //   if (err) {
+  //     return console.log(err);
+  //   }
+  //   console.log("The oldVoiceFile was saved!");
+  // });
   /**
    * 语音识别只支持如下编码格式的音频：
    * pcm、adpcm、feature、speex、amr、silk、wav
