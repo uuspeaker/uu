@@ -20,6 +20,7 @@ const { auth: { authorizationMiddleware, validationMiddleware } } = require('../
 router.get('/login', authorizationMiddleware, controllers.login)
 // 用户信息接口（可以用来验证登录态）
 router.get('/user', validationMiddleware, controllers.user)
+router.post('/audio.audioToText', controllers.audio.audioToText)
 
 // GET  用来响应请求信道地址的
 router.get('/impromptu.meetingUrl', controllers.impromptu.meetingUrl.get)

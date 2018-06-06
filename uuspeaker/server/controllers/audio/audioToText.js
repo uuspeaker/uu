@@ -1,26 +1,30 @@
-const { voice } = require('../qcloud')
+const { voice } = require('../../qcloud')
 const ffmpeg = require('fluent-ffmpeg')
 const multiparty = require('multiparty')
 const readChunk = require('read-chunk')
 const fileType = require('file-type')
 const shortid = require('shortid')
 const fs = require('fs')
-const config = require('../config')
-const log = require('../log');
+const config = require('../../config')
+const log = require('../../log');
 
 /**
  * 语音识别
  * 这里使用流式语音识别
  * 有任何问题可以到 issue 提问
  */
-module.exports = async files => {
-  log.info('audioToText开始')
+module.exports = async ctx => {
+  log.info('audioToText开始', ctx.request.body)
+  log.info('ctx.request.body.audioBuff.byteLength', ctx.request.body.audioBuff.byteLength)
   // 处理文件上传
-  //const { files } = await resolveUploadFileFromRequest(ctx.req)
-  const imageFile = files.file[0]
-  log.info('audioToText', imageFile)
-
-  const srcPath = imageFile.path
+  const oldVoiceKey = `voice-${Date.now()}-${shortid.generate()}.mp3`
+  const oldVoicePath = `/tmp/${oldVoiceKey}`
+  fs.writeFile(oldVoicePath, ctx.request.body.audioBuff, function (err) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log("The oldVoiceFile was saved!");
+  });
   /**
    * 语音识别只支持如下编码格式的音频：
    * pcm、adpcm、feature、speex、amr、silk、wav
@@ -30,7 +34,7 @@ module.exports = async files => {
   const newVoiceKey = `voice-${Date.now()}-${shortid.generate()}.wav`
   const newVoicePath = `/tmp/${newVoiceKey}`
   const voiceId = genRandomString(16)
-  await convertMp3ToWav(srcPath, newVoicePath)
+  await convertMp3ToWav(oldVoicePath, newVoicePath)
 
   const voiceBuffer = fs.readFileSync(newVoicePath)
   log.info('audioToText voiceBuffer', voiceBuffer)
@@ -51,7 +55,7 @@ module.exports = async files => {
 
   try {
     var start = new Date()
-    
+
     const data = await Promise.all(taskList)
     var end = new Date()
     log.info('语音识别耗时', end - start)
@@ -92,7 +96,7 @@ function convertMp3ToWav(srcPath, newPath) {
   })
 }
 
-function getAudioText(data){
+function getAudioText(data) {
 
   if (typeof data === 'string') {
     data = JSON.parse(data);
@@ -121,10 +125,35 @@ function getAudioText(data){
     //   }
     //   return v;
     // });
-    
+
     console.log('audio text result', result)
     return result.text
   } else {
     console.error(result, data);
   }
+}
+
+/**
+ * 从请求体重解析出文件
+ * 并将文件缓存到 /tmp 目录下
+ * @param {HTTP INCOMING MESSAGE} req
+ * @return {Promise}
+ */
+function resolveUploadFileFromRequest(request) {
+  const maxSize = config.cos.maxSize ? config.cos.maxSize : 10
+
+  // 初始化 multiparty
+  const form = new multiparty.Form({
+    encoding: 'utf8',
+    maxFilesSize: maxSize * 1024 * 1024,
+    autoFiles: true,
+    uploadDir: '/audioToText'
+  })
+
+  return new Promise((resolve, reject) => {
+    // 从 req 读取文件
+    form.parse(request, (err, fields = {}, files = {}) => {
+      err ? reject(err) : resolve({ fields, files })
+    })
+  })
 }

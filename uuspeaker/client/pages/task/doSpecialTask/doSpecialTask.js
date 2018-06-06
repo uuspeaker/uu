@@ -37,7 +37,8 @@ Page({
     timeNoticeBackground:'',
     waitSeconds:11,
     speechType:'',
-    speed:0
+    speed:0,
+    audioText:''
   },
 
   waitToBegin: function () {
@@ -278,6 +279,36 @@ Page({
   initAudio: function () {
     recorderManager.onStop((res) => {
       tempFilePath = res.tempFilePath
+    })
+
+    recorderManager.onFrameRecorded((res) => {
+      const { frameBuffer } = res
+      console.log('frameBuffer.byteLength', frameBuffer.byteLength)
+      console.log('frameBuffer.toString', frameBuffer.toString())
+      this.translate(frameBuffer)
+    })
+  },
+
+  translate: function(audioBuff){
+    var audioFile = new 
+    qcloud.request({
+      url: `${config.service.host}/weapp/audio.audioToText`,
+      login: true,
+      data: { 'audioBuff': audioBuff,audioType:1},
+      method: 'post',
+      success(result) {
+        console.log('audioToText', result)
+        var resultData = JSON.parse(result.data)
+        console.log('resultData', resultData.data)
+          that.setData({
+            audioText: this.data.audioText + resultData.data
+          })
+
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
     })
   },
 
