@@ -36,7 +36,7 @@ var config = {
     numberOfChannels: 1,
     encodeBitRate: 51200,
     format: 'mp3',
-    frameSize:50
+    frameSize:25
   },
 };
 

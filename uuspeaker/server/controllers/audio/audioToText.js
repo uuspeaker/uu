@@ -8,6 +8,26 @@ const fs = require('fs')
 const config = require('../../config')
 const base64 = require('../../utils/base64-arraybuffer')
 const log = require('../../log');
+const CosSdk = require('cos-nodejs-sdk-v5')
+
+const regionMap = {
+  'ap-beijing-1': 'tj',
+  'ap-beijing': 'bj',
+  'ap-shanghai': 'sh',
+  'ap-guangzhou': 'gz',
+  'ap-chengdu': 'cd',
+  'ap-singapore': 'sgp',
+  'ap-hongkong': 'hk',
+  'na-toronto': 'ca',
+  'eu-frankfurt': 'ger'
+}
+
+const cos = new CosSdk({
+  AppId: config.qcloudAppId,
+  SecretId: config.qcloudSecretId,
+  SecretKey: config.qcloudSecretKey,
+  Domain: `http://${config.cos.fileBucket}-${config.qcloudAppId}.cos.${config.cos.region}.myqcloud.com/`
+})
 
 /**
  * 语音识别
@@ -15,32 +35,33 @@ const log = require('../../log');
  * 有任何问题可以到 issue 提问
  */
 module.exports = async ctx => {
-  log.info('audioToText开始', ctx.request.body.audioBuff)
-  log.info('ctx.request.body.audioBuff.byteLength', ctx.request.body.audioBuff.byteLength)
+  log.info('audioToText开始')
   // 处理文件上传
   const oldVoiceKey = `voice-${Date.now()}-${shortid.generate()}.mp3`
   const oldVoicePath = `/tmp/${oldVoiceKey}`
-  var audioBuff = base64.decode(ctx.request.body.audioBuff)
-  fs.existsSync('/tmp/', function (err) {
+  // var audioBuff = new Buffer(ctx.request.body.audioBuff)
+  var audioBuff = new Buffer(base64.decode(ctx.request.body.audioBuff))
+
+  await fs.writeFileSync(oldVoicePath, audioBuff,function (err) {
     if (err) {
-      return console.error(err);
+      return console.log(err);
     }
-    console.log("目录创建成功。");
+    console.log("The oldVoiceFile was saved!");
   });
 
-  var writerStream = fs.createWriteStream(oldVoicePath);
-
-  // 使用 utf8 编码写入数据
-  writerStream.write(audioBuff, 'UTF8');
-
-  // 标记文件末尾
-  writerStream.end();
-  // await fs.writeFile(oldVoicePath, audioBuff, function (err) {
-  //   if (err) {
-  //     return console.log(err);
-  //   }
-  //   console.log("The oldVoiceFile was saved!");
+  //生成上传传参数
+  // var uploadFolder = config.cos.uploadFolder ? config.cos.uploadFolder + '/' : ''
+  // console.log('oldVoiceKey', oldVoiceKey)
+  // cos.sliceUploadFile({
+  //   Bucket: config.cos.fileBucket,
+  //   Region: config.cos.region,
+  //   Key: `${uploadFolder}${oldVoiceKey}`,
+  //   FilePath: oldVoicePath
+  // }, function (err, data) {
+  //   console.log(err, data);
+  //   fs.unlink(oldVoicePath, (err) => { console.log(err) })
   // });
+  // return
   /**
    * 语音识别只支持如下编码格式的音频：
    * pcm、adpcm、feature、speex、amr、silk、wav
@@ -51,15 +72,15 @@ module.exports = async ctx => {
   const newVoicePath = `/tmp/${newVoiceKey}`
   const voiceId = genRandomString(16)
   await convertMp3ToWav(oldVoicePath, newVoicePath)
-
+  fs.unlink(oldVoicePath, (err) => { console.log(err) })
   const voiceBuffer = fs.readFileSync(newVoicePath)
-  log.info('audioToText voiceBuffer', voiceBuffer)
+
   const taskList = []
   let leftBufferSize = 0
   let idx = 0
 
   while (leftBufferSize < voiceBuffer.length) {
-    const newBufferSize = leftBufferSize + 8 * 1024
+    const newBufferSize = leftBufferSize + 9 * 1024
     const chunk = voiceBuffer.slice(leftBufferSize, newBufferSize > voiceBuffer.length ? voiceBuffer.length : newBufferSize)
     taskList.push(
       voice.recognize(chunk, newBufferSize > voiceBuffer.length, voiceId, idx)
@@ -77,7 +98,7 @@ module.exports = async ctx => {
     log.info('语音识别耗时', end - start)
     const res = data.map(d => d.data)
     // console.log(res)
-    return getAudioText(res)
+    ctx.state.data = getAudioText(res)
   } catch (e) {
     console.log(e)
     throw e
@@ -149,27 +170,3 @@ function getAudioText(data) {
   }
 }
 
-/**
- * 从请求体重解析出文件
- * 并将文件缓存到 /tmp 目录下
- * @param {HTTP INCOMING MESSAGE} req
- * @return {Promise}
- */
-function resolveUploadFileFromRequest(request) {
-  const maxSize = config.cos.maxSize ? config.cos.maxSize : 10
-
-  // 初始化 multiparty
-  const form = new multiparty.Form({
-    encoding: 'utf8',
-    maxFilesSize: maxSize * 1024 * 1024,
-    autoFiles: true,
-    uploadDir: '/audioToText'
-  })
-
-  return new Promise((resolve, reject) => {
-    // 从 req 读取文件
-    form.parse(request, (err, fields = {}, files = {}) => {
-      err ? reject(err) : resolve({ fields, files })
-    })
-  })
-}

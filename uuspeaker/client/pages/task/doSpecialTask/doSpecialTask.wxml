@@ -16,7 +16,7 @@
   <view class='tip'>2、倒计时结束开始演讲，2分钟</view>
   <view class='tip'>3、结束</view>
 </view>
-
+<view>{{audioText}}</view>
 <view class='bottom'>
   <view class="weui-flex__item  timeCard" style='{{timeNoticeBackground}}'>
     <block wx:if='{{waitSeconds <= 0}}'>
@@ -49,6 +49,7 @@
   <view class='tip'>2、开始演讲，7分钟</view>
   <view class='tip'>3、结束</view>
 </view>
+<view class='tip'>{{audioText}}</view>
 <view class='bottom'>
   <view class="weui-flex__item  timeCard" style='{{timeNoticeBackground}}'>
       <view>{{minute}}:{{second}}</view>

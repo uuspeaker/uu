@@ -39,7 +39,6 @@ Page({
     waitSeconds:11,
     speechType:'',
     speed:0,
-    audioText:''
   },
 
   waitToBegin: function () {
@@ -79,7 +78,8 @@ Page({
       minute: '00',
       second: '00',
       audioName:'',
-      speed:0
+      speed:0,
+      audioText:''
     })
     var that = this
   },
@@ -154,11 +154,6 @@ Page({
     })
   },
 
-  audioTextInput: function (e) {
-    this.setData({
-      audioText: e.detail.value
-    })
-  },
 
   //用户放开录音按钮
   stopRecord: function () {
@@ -188,16 +183,7 @@ Page({
       name: 'file',
       formData: { audioId: audioId },
       success: function (result) {
-        console.log('audioToText', result)
-        var resultData = JSON.parse(result.data)
-        console.log('resultData', resultData.data)
-        if (timeDuration !=0){
-          that.setData({
-            speed: Math.floor(60 * resultData.data.length / timeDuration)
-          })
-        }
-        
-        that.saveAudioRecord(audioId, resultData.data)
+        that.saveAudioRecord(audioId)
       },
 
       fail: function (e) {
@@ -237,7 +223,7 @@ Page({
     qcloud.request({
       url: `${config.service.host}/weapp/task.specialTask`,
       login: true,
-      data: { taskId: audioId, timeDuration: timeDuration, audioName: this.data.audioName, audioText: audioText,audioType:1,speechType:this.data.speechType },
+      data: { taskId: audioId, timeDuration: timeDuration, audioName: this.data.audioName, audioText: this.data.audioText,audioType:1,speechType:this.data.speechType },
       method: 'post',
       success(result) {
         wx.showToast({
@@ -285,24 +271,29 @@ Page({
     recorderManager.onFrameRecorded((res) => {
       const { frameBuffer } = res
       console.log('frameBuffer.byteLength', frameBuffer.byteLength)
-      //console.log('frameBuffer.toString', base64.encode(frameBuffer))
+      console.log('frameBuffer.toString', frameBuffer.toString())
       this.translate(frameBuffer)
     })
   },
 
   translate: function(audioBuff){
+    //console.log('old audioBuff', audioBuff)
+    var audioBuff = base64.encode(audioBuff)
+    //console.log('new audioBuff', audioBuff)
+    var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/audio.audioToText`,
       login: true,
-      data: { 'audioBuff': base64.encode(audioBuff)},
+      data: { 'audioBuff': audioBuff,audioType:1},
       method: 'post',
       success(result) {
         console.log('audioToText', result)
-        var resultData = JSON.parse(result.data)
-        console.log('resultData', resultData.data)
-          that.setData({
-            audioText: this.data.audioText + resultData.data
-          })
+        var resultData = result.data.data
+        console.log('resultData', resultData)
+        that.setData({
+          audioText: that.data.audioText + resultData,
+          speed: Math.floor(60 * (that.data.audioText.length + resultData.length) / timeDuration)
+        })
 
       },
       fail(error) {
