@@ -185,3 +185,8 @@ width:90px;
     border-top:#d7d7d9 1rpx solid;
     display: flex;
 }
+.speed{
+  text-align: center;
+  color: gray;
+  font-size: 15px;
+}

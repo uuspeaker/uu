@@ -8,26 +8,7 @@ const fs = require('fs')
 const config = require('../../config')
 const base64 = require('../../utils/base64-arraybuffer')
 const log = require('../../log');
-const CosSdk = require('cos-nodejs-sdk-v5')
-
-const regionMap = {
-  'ap-beijing-1': 'tj',
-  'ap-beijing': 'bj',
-  'ap-shanghai': 'sh',
-  'ap-guangzhou': 'gz',
-  'ap-chengdu': 'cd',
-  'ap-singapore': 'sgp',
-  'ap-hongkong': 'hk',
-  'na-toronto': 'ca',
-  'eu-frankfurt': 'ger'
-}
-
-const cos = new CosSdk({
-  AppId: config.qcloudAppId,
-  SecretId: config.qcloudSecretId,
-  SecretKey: config.qcloudSecretKey,
-  Domain: `http://${config.cos.fileBucket}-${config.qcloudAppId}.cos.${config.cos.region}.myqcloud.com/`
-})
+const uuid = require('../../common/uuid.js')
 
 /**
  * 语音识别
@@ -37,11 +18,10 @@ const cos = new CosSdk({
 module.exports = async ctx => {
   log.info('audioToText开始')
   // 处理文件上传
-  const oldVoiceKey = `voice-${Date.now()}-${shortid.generate()}.mp3`
-  const oldVoicePath = `/tmp/${oldVoiceKey}`
+  var oldVoicePath = `/tmp/${uuid.v1()}.mp3`
   // var audioBuff = new Buffer(ctx.request.body.audioBuff)
   var audioBuff = new Buffer(base64.decode(ctx.request.body.audioBuff))
-
+  console.log('oldVoicePath', oldVoicePath)
   await fs.writeFileSync(oldVoicePath, audioBuff,function (err) {
     if (err) {
       return console.log(err);
@@ -49,39 +29,26 @@ module.exports = async ctx => {
     console.log("The oldVoiceFile was saved!");
   });
 
-  //生成上传传参数
-  // var uploadFolder = config.cos.uploadFolder ? config.cos.uploadFolder + '/' : ''
-  // console.log('oldVoiceKey', oldVoiceKey)
-  // cos.sliceUploadFile({
-  //   Bucket: config.cos.fileBucket,
-  //   Region: config.cos.region,
-  //   Key: `${uploadFolder}${oldVoiceKey}`,
-  //   FilePath: oldVoicePath
-  // }, function (err, data) {
-  //   console.log(err, data);
-  //   fs.unlink(oldVoicePath, (err) => { console.log(err) })
-  // });
-  // return
   /**
    * 语音识别只支持如下编码格式的音频：
    * pcm、adpcm、feature、speex、amr、silk、wav
    * 所以必须把 mp3 格式的上传文件转换为 wav
    * 这里使用 ffmpeg 对音频进行转换
    */
-  const newVoiceKey = `voice-${Date.now()}-${shortid.generate()}.wav`
-  const newVoicePath = `/tmp/${newVoiceKey}`
-  const voiceId = genRandomString(16)
+  var newVoicePath = `/tmp/${uuid.v1()}.wav`
+  console.log('newVoicePath', newVoicePath)
+  var voiceId = genRandomString(16)
   await convertMp3ToWav(oldVoicePath, newVoicePath)
-  fs.unlink(oldVoicePath, (err) => { console.log(err) })
-  const voiceBuffer = fs.readFileSync(newVoicePath)
+  
+  var voiceBuffer = fs.readFileSync(newVoicePath)
 
-  const taskList = []
+  var taskList = []
   let leftBufferSize = 0
   let idx = 0
 
   while (leftBufferSize < voiceBuffer.length) {
-    const newBufferSize = leftBufferSize + 9 * 1024
-    const chunk = voiceBuffer.slice(leftBufferSize, newBufferSize > voiceBuffer.length ? voiceBuffer.length : newBufferSize)
+    var newBufferSize = leftBufferSize + 9 * 1024
+    var chunk = voiceBuffer.slice(leftBufferSize, newBufferSize > voiceBuffer.length ? voiceBuffer.length : newBufferSize)
     taskList.push(
       voice.recognize(chunk, newBufferSize > voiceBuffer.length, voiceId, idx)
     )
@@ -93,12 +60,15 @@ module.exports = async ctx => {
   try {
     var start = new Date()
 
-    const data = await Promise.all(taskList)
+    var data = await Promise.all(taskList)
     var end = new Date()
-    log.info('语音识别耗时', end - start)
-    const res = data.map(d => d.data)
+    var duration = end - start
+    log.info('语音识别耗时', duration)
+    var res = data.map(d => d.data)
     // console.log(res)
     ctx.state.data = getAudioText(res)
+    fs.unlink(oldVoicePath, (err) => { console.log(err) })
+    fs.unlink(newVoicePath, (err) => { console.log(err) })
   } catch (e) {
     console.log(e)
     throw e

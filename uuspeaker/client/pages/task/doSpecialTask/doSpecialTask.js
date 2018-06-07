@@ -18,6 +18,8 @@ var endDate
 var waitSecondsId
 var isInRoom = 1
 var audioId
+var speedArray = []
+var lastTime = 0
 
 Page({
 
@@ -97,10 +99,13 @@ Page({
   //用户按下录音按钮
   startRecord: function () {
     timeDuration = 0 
+    lastTime = 0
+    speedArray = []
     recorderManager.start(config.options)
     startDate = new Date()
     this.setData({
-      isPlay:1
+      isPlay:1,
+      audioText:''
     })
     this.recordTime()
   },
@@ -170,11 +175,11 @@ Page({
       return
     }
     audioId = uuid.v1()
-    setTimeout(this.saveAudio, 500)
+    util.showBusy('保存中...')
+    setTimeout(this.saveAudio, 2000)
   },
 
    saveAudio: function(){
-     util.showBusy('保存中...')
      var that = this
     console.log('tempFilePath', tempFilePath)
     const uploadTask = wx.uploadFile({
@@ -218,12 +223,16 @@ Page({
 
 
   //完成任务
-   saveAudioRecord: function (audioId, audioText) {
+   saveAudioRecord: function (audioId) {
     var that = this
+    var audioText = ''
+    for (var i = 0; i < speedArray.length; i++) {
+      audioText = audioText + speedArray[i].data
+    }
     qcloud.request({
       url: `${config.service.host}/weapp/task.specialTask`,
       login: true,
-      data: { taskId: audioId, timeDuration: timeDuration, audioName: this.data.audioName, audioText: this.data.audioText,audioType:1,speechType:this.data.speechType },
+      data: { taskId: audioId, timeDuration: timeDuration, audioName: this.data.audioName, audioText: audioText,audioType:1,speechType:this.data.speechType },
       method: 'post',
       success(result) {
         wx.showToast({
@@ -270,13 +279,13 @@ Page({
 
     recorderManager.onFrameRecorded((res) => {
       const { frameBuffer } = res
-      console.log('frameBuffer.byteLength', frameBuffer.byteLength)
-      console.log('frameBuffer.toString', frameBuffer.toString())
       this.translate(frameBuffer)
     })
   },
 
   translate: function(audioBuff){
+    var currentDuration = timeDuration - lastTime
+    lastTime = timeDuration
     //console.log('old audioBuff', audioBuff)
     var audioBuff = base64.encode(audioBuff)
     //console.log('new audioBuff', audioBuff)
@@ -290,16 +299,46 @@ Page({
         console.log('audioToText', result)
         var resultData = result.data.data
         console.log('resultData', resultData)
-        that.setData({
-          audioText: that.data.audioText + resultData,
-          speed: Math.floor(60 * (that.data.audioText.length + resultData.length) / timeDuration)
-        })
+        var chineseReg = /[\u4e00-\u9fa5]/g;
+        var chineseLength = 0;
+        if (resultData.match(chineseReg) != null) {
+          chineseLength = (resultData.match(chineseReg)).length;
+        }
+        speedArray.push({ duration: currentDuration, length: chineseLength, data: resultData})
+        that.updateSpeed()
+        // that.setData({
+        //   audioText: that.data.audioText + resultData,
+        // })
 
       },
       fail(error) {
-        util.showModel('请求失败', error);
-        console.log('request fail', error);
+        console.log('translate fail', error);
       }
+    })
+  },
+
+  updateSpeed:function(){
+    console.log('speedArray', speedArray)
+    var maxSpeech = 0
+    for(var i=0; i<speedArray.length; i++){
+      var currentSpeed = speedArray[i].length / speedArray[i].duration
+      if (currentSpeed > maxSpeech){
+        maxSpeech = currentSpeed
+      }
+    }
+
+    var totalLength = 0
+    var totalDuration = 0
+    for (var i = 0; i < speedArray.length; i++) {
+      var currentSpeed = speedArray[i].length / speedArray[i].duration
+      if (currentSpeed > maxSpeech / 5 ) {
+        totalLength = totalLength + speedArray[i].length
+        totalDuration = totalDuration + speedArray[i].duration
+      }
+    }
+
+    this.setData({
+      speed: Math.floor(60 * totalLength / totalDuration)
     })
   },
 

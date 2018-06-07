@@ -107,6 +107,7 @@
   </view>
 
 <view class='messageNotice'>{{messageNotice}}</view>
+<view class='speed' wx:if='{{speed > 0 }}'>语速：约每分钟{{speed}}字</view>
 <view class="bottom input-panel">
 <view>
 <input style='height:45px;' type="text" value="{{inputContent}}" class="send-input" bindconfirm="sendTextMessage" confirm-type="send" placeholder='输入聊天：'></input>

@@ -6,6 +6,7 @@ var getlogininfo = require('../../../getlogininfo.js')
 var userInfo = require('../../../common/userInfo.js')
 var uuid = require('../../../common/uuid.js')
 var audioService = require('../../../common/audioService.js')
+var base64 = require('../../../utils/base64-arraybuffer.js')
 
 var timeDurationMin = 30
 var userId = ''
@@ -16,6 +17,8 @@ var rank
 var coinPlay = 0
 var speechAudioId= ''
 var tempFilePath
+var speedArray = []
+var lastTime = 0
 
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext();
@@ -48,6 +51,8 @@ Page({
     studyStep:1,
     speechName:'',
     inputContent:'',
+    audioText:'',
+    speed:0,
 
     minute: '00',
     second: '00',
@@ -184,6 +189,8 @@ Page({
   
 
   startTime: function () {
+    speedArray = []
+    lastTime = 0
     this.setData({
       isPlay: 1
     })
@@ -340,23 +347,15 @@ Page({
       name: 'file',
       formData: { audioId: audioId },
       success: function (result) {
-        console.log('audioToText', result)
-        var resultData = JSON.parse(result.data)
-        console.log('resultData', resultData.data)
-        if (timeDuration != 0) {
-          that.setData({
-            speed: Math.floor(60 * resultData.data.length / timeDuration)
-          })
-        }
 
         if (that.data.audioType == 1){
-          that.saveSpeechData(resultData.data)
+          that.saveSpeechData()
         }
         if (that.data.audioType == 2){
-          that.saveEvaluationData(resultData.data)
+          that.saveEvaluationData()
         }
         if (that.data.audioType == 3) {
-          that.saveReviewData(resultData.data)
+          that.saveReviewData()
         }
       },
 
@@ -366,9 +365,9 @@ Page({
     })
   },
 
-  saveSpeechData: function (audioText) {
+  saveSpeechData: function () {
     speechAudioId = audioId
-    var requestData = { roomId: roomId, audioName: this.data.speechName, audioText:audioText,audioId: audioId, timeDuration: timeDuration, audioType: 1,speechType:0 }
+    var requestData = { roomId: roomId, audioName: this.data.speechName, audioText:this.data.audioText,audioId: audioId, timeDuration: timeDuration, audioType: 1,speechType:0 }
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.userAudio`,
@@ -395,13 +394,13 @@ Page({
     })
   },
 
-  saveEvaluationData: function (audioText) {
+  saveEvaluationData: function () {
     console.log('saveEvaluationData', audioId)
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/audio.audioComment`,
       login: true,
-      data: { 'roomId': roomId, evaluationAudioId: audioId, audioText: audioText, targetAudioId: this.data.speechInfo.audioId, timeDuration: timeDuration, audioType: 2 },
+      data: { 'roomId': roomId, evaluationAudioId: audioId, audioText: this.data.audioText, targetAudioId: this.data.speechInfo.audioId, timeDuration: timeDuration, audioType: 2 },
       method: 'post',
       success(result) {
         wx.showToast({
@@ -421,12 +420,12 @@ Page({
       }
     })
   },
-  saveReviewData: function (audioText) {
+  saveReviewData: function () {
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/audio.audioComment`,
       login: true,
-      data: { 'roomId': roomId, evaluationAudioId: audioId, audioText: audioText, targetAudioId: speechAudioId, timeDuration: timeDuration, audioType: 3 },
+      data: { 'roomId': roomId, evaluationAudioId: audioId, audioText: this.data.audioText, targetAudioId: speechAudioId, timeDuration: timeDuration, audioType: 3 },
       method: 'post',
       success(result) {
         wx.showToast({
@@ -554,17 +553,17 @@ Page({
 
   initAudio: function () {
     recorderManager.onStop((res) => {
-      // if (timeDuration < timeDurationMin){
-      //   util.showSuccess('录音太短不做保存')
-      //   return
-      // } 
-      //util.showSuccess('录音结束')
       this.setData({
         isPlay: 0,
       })
       tempFilePath = res.tempFilePath
       setTimeout(this.saveAudio, 500)
       //this.saveAudio(res.tempFilePath)
+    })
+
+    recorderManager.onFrameRecorded((res) => {
+      const { frameBuffer } = res
+      this.translate(frameBuffer)
     })
 
     innerAudioContext.obeyMuteSwitch = false
@@ -634,6 +633,65 @@ Page({
       util.showNotice('音频加载失败')
       console.log(res.errMsg)
       console.log(res.errCode)
+    })
+  },
+
+  translate: function (audioBuff) {
+    var currentDuration = timeDuration - lastTime
+    lastTime = timeDuration
+    //console.log('old audioBuff', audioBuff)
+    var audioBuff = base64.encode(audioBuff)
+    //console.log('new audioBuff', audioBuff)
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/audio.audioToText`,
+      login: true,
+      data: { 'audioBuff': audioBuff, audioType: 1 },
+      method: 'post',
+      success(result) {
+        console.log('audioToText', result)
+        var resultData = result.data.data
+        console.log('resultData', resultData)
+        var chineseReg = /[\u4e00-\u9fa5]/g;
+        var chineseLength = 0;
+        if (resultData.match(chineseReg) != null) {
+          chineseLength = (resultData.match(chineseReg)).length;
+        }
+        speedArray.push({ duration: currentDuration, length: chineseLength, data: resultData })
+        that.updateSpeed()
+        that.setData({
+          audioText: that.data.audioText + resultData,
+        })
+
+      },
+      fail(error) {
+        console.log('translate fail', error);
+      }
+    })
+  },
+
+  updateSpeed: function () {
+    console.log('speedArray', speedArray)
+    var maxSpeech = 0
+    for (var i = 0; i < speedArray.length; i++) {
+      var currentSpeed = speedArray[i].length / speedArray[i].duration
+      if (currentSpeed > maxSpeech) {
+        maxSpeech = currentSpeed
+      }
+    }
+
+    var totalLength = 0
+    var totalDuration = 0
+    for (var i = 0; i < speedArray.length; i++) {
+      var currentSpeed = speedArray[i].length / speedArray[i].duration
+      if (currentSpeed > maxSpeech / 5) {
+        totalLength = totalLength + speedArray[i].length
+        totalDuration = totalDuration + speedArray[i].duration
+      }
+    }
+
+    this.setData({
+      speed: Math.floor(60 * totalLength / totalDuration)
     })
   },
 

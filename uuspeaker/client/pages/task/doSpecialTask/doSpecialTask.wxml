@@ -10,13 +10,13 @@
   </view>
 
 </view>
-<view>
+<view wx:if='{{audioText == ""}}'>
   <view class='tip' style='font-weight: bold;  padding-top:20px;'>即兴演讲玩法说明：</view>
   <view class='tip'>1、点击出题，系统自动出题</view>
   <view class='tip'>2、倒计时结束开始演讲，2分钟</view>
   <view class='tip'>3、结束</view>
 </view>
-<view>{{audioText}}</view>
+<view class='tip' style='padding-top:10px;' wx:if='{{audioText != ""}}'>{{audioText}}</view>
 <view class='bottom'>
   <view class="weui-flex__item  timeCard" style='{{timeNoticeBackground}}'>
     <block wx:if='{{waitSeconds <= 0}}'>
@@ -30,9 +30,8 @@
   </block>
   </view>
   
-  <view class='getSpeechName' bindtap='getSpeechName'>出 题</view>
-  <view class='speed' wx:if='{{speed > 0 }}'>速度：每分钟{{speed}}字</view>
-  <button type='primary' wx:if="{{waitSeconds > 0}}">准备演讲</button>
+  <view class='speed' wx:if='{{speed > 0 }}'>语速：约每分钟{{speed}}字</view>
+  <button type='primary' bindtap='getSpeechName' wx:if="{{waitSeconds > 0}}">开始演讲</button>
   <button type='primary' bindtap="stopRecord" wx:if="{{waitSeconds <= 0}}">完成演讲</button>
 </view>
 </block>
@@ -43,18 +42,18 @@
     <input class='commentInput' name="audioName" value='{{audioName}}' placeholder='请输入演讲题目' bindinput="audioNameInput"></input>
   </view>
   </view>
-  <view>
+  <view wx:if='{{audioText == ""}}'>
   <view class='tip' style='font-weight: bold;  padding-top:20px;'>备稿演讲玩法说明：</view>
   <view class='tip'>1、输入演讲题目</view>
   <view class='tip'>2、开始演讲，7分钟</view>
   <view class='tip'>3、结束</view>
 </view>
-<view class='tip'>{{audioText}}</view>
+<view class='tip' style='padding-top:10px;' wx:if='{{audioText != ""}}'>{{audioText}}</view>
 <view class='bottom'>
   <view class="weui-flex__item  timeCard" style='{{timeNoticeBackground}}'>
       <view>{{minute}}:{{second}}</view>
   </view>
-  <view class='speed' wx:if='{{speed > 0 }}'>速度：每分钟{{speed}}字</view>
+  <view class='speed' wx:if='{{speed > 0 }}'>语速：约每分钟{{speed}}字</view>
   <button type='primary' bindtap="startRecord" wx:if="{{isPlay == 0}}">开始演讲</button>
   <button type='primary' bindtap="stopRecord" wx:if="{{isPlay == 1}}">完成演讲</button>
 </view>
