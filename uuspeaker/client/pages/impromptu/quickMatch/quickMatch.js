@@ -55,6 +55,7 @@ Page({
     inputContent: '',
     lastMessageId: 'none',
     userAmount: '',
+    tunnelStatus:''
   },
 
   startMatch: function () {
@@ -93,7 +94,7 @@ Page({
       method: 'put',
       data: { matchType: 'stopMatch' },
       success(result) {
-
+        console.log('stopMatch success')
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -147,6 +148,7 @@ Page({
     tunnel.on('connect', () => {
       console.log('quickMatch 信道已连接')
       this.popMessage()
+      this.setData({ tunnelStatus: 'connected' })
       });
 
     // 连接成功后，去掉「正在加入学习频道」的系统提示
@@ -217,16 +219,19 @@ Page({
     tunnel.on('reconnecting', () => {
       console.log('quickMatch 信道正在重连...')
       //util.showBusy('正在重连')
+      
     })
 
     tunnel.on('reconnect', () => {
       console.log('quickMatch 信道重连成功')
       //util.showSuccess('重连成功')
+      this.setData({ tunnelStatus: 'connected' })
     })
 
     tunnel.on('error', error => {
-      //util.showModel('信道发生错误', error)
+      util.showModel('连接发生错误')
       console.error('quickMatch 信道发生错误：', error)
+      this.setData({ tunnelStatus: 'error' })
     })
 
     // 打开信道
@@ -289,6 +294,10 @@ Page({
    * 点击「发送」按钮，通过信道推送消息到服务器
    **/
   sendMessage(e) {
+    if (!this.data.tunnelStatus || !this.data.tunnelStatus === 'connected') {
+      util.showSuccess('连接已断开')
+      return
+    }
     // 信道当前不可用
     if (!this.tunnel || !this.tunnel.isActive()) {
       this.pushMessage(createSystemMessage('您还没有加入学习频道，请稍后重试'));

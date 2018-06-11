@@ -19,6 +19,7 @@ var speechAudioId= ''
 var tempFilePath
 var speedArray = []
 var lastTime = 0
+var tryTimes = 0
 
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext();
@@ -60,6 +61,7 @@ Page({
     messageNotice:'',
 
     isLikeUser:1,
+    tunnelStatus:'',
 
     speechInfo: {audioId:'', src: '', timeDuration: 0, currentDuration:0,play: 0, sliderValue: 0, currentTime:'00:00',duration:'00:00',status:0},
     evaluationInfo: { audioId: '', src: '', timeDuration: 0, currentDuration: 0, play: 0, sliderValue: 0, currentTime: '00:00', duration: '00:00', status: 0},
@@ -504,6 +506,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    tryTimes = 0
     rank = options.rank
     this.initData()
     // innerAudioContext.autoplay = true
@@ -705,7 +708,7 @@ Page({
     // 创建信道，需要给定后台服务地址
     
     console.log(this.tunnel)
-    this.tunnel = new qcloud.Tunnel(`${config.service.host}/weapp/impromptu.meetingUrl?speechStatus=0rank=` + rank)
+    this.tunnel = new qcloud.Tunnel(`${config.service.host}/weapp/impromptu.meetingUrl?speechStatus=2&rank=` + rank)
     console.log(this.tunnel)
     var tunnel = this.tunnel
     console.log('quickMatchRoom 初始化信道服务', tunnel)
@@ -731,11 +734,13 @@ Page({
     tunnel.on('reconnect', () => {
       console.log('quickMatchRoom 信道重连成功')
       util.showSuccess('重连成功')
+      this.setData({ tunnelStatus: 'connected' })
     })
 
     tunnel.on('error', error => {
-      util.showModel('连接出错', error)
+      util.showModel('连接出错')
       console.error('quickMatchRoom 信道发生错误：', error)
+      this.setData({ tunnelStatus: 'error' })
     })
 
     // 监听自定义消息（服务器进行推送）
@@ -853,14 +858,21 @@ Page({
    * 点击「发送消息」按钮，测试使用信道发送消息
    */
   sendSpeech(content) {
-    // 信道当前不可用
-    if (!this.tunnel || !this.tunnel.isActive()) {
-      //util.showSuccess('连接失败')
+    if (!this.data.tunnelStatus || !this.data.tunnelStatus === 'connected') {
+      if(tryTimes >= 10){
+        util.showSuccess('连接已断开')
+      }else{
+        setTimeout(this.sendSpeech,1000,content)
+      } 
       return
     }
-    // 使用信道给服务器推送「speak」消息
-    content.targetUserId = this.data.matchedUser.userId
-    this.tunnel.emit('speech', content);
+    // 信道当前不可用
+    if (this.tunnel || this.tunnel.isActive()) {
+      // 使用信道给服务器推送「speak」消息
+      content.targetUserId = this.data.matchedUser.userId
+      this.tunnel.emit('speech', content);
+    }
+    
   },
 
   /**

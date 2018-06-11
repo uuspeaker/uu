@@ -5,13 +5,17 @@ const log = require('../../log');
 const audioService = require('../../service/audioService.js')
 const userInfoService = require('../../service/userInfoService')
 
+const option = {
+  MAX_NUMBER_TUNNEL_RESEND: 5,//每个信道允许出现无效信道时重新发送的次数
+}
+
 /**
  * 这里实现一个简单的聊天室
  * meetingUserMap 为 tunnelId 和 用户信息的映射
  * 实际使用请使用数据库存储
  */
 var meetingUserMap = {}
-var tunnelMap = {}
+var sperkers = {}
 
 // 保存 当前已连接的 WebSocket 信道ID列表
 const meetingConnectedTunnelIds = []
@@ -19,8 +23,8 @@ const meetingConnectedTunnelIds = []
 var waitTime = 99000
 var roomTime = 1200000
 var standByList = []
-var matchedList = []
 var speechNames = []
+var numberTunnelResend = []
 
 var initSpeechNames = async () => {
   speechNames = await mysql("speech_name_info").select('speech_name')
@@ -43,19 +47,18 @@ var startMatch = (userInfo) => {
       return
     }
   }
-  //if (matchedList[userInfo.userId] != undefined) return
 
   userInfo.startDate = new Date()
   standByList.unshift(userInfo)
-  meetingUserMap[tunnelMap[userInfo.userId]].speechStatus = 1
+  meetingUserMap[sperkers[userInfo.userId]].speechStatus = 1
   $broadcast('people', {
-    'updatedPerson': meetingUserMap[tunnelMap[userInfo.userId]]
+    'updatedPerson': meetingUserMap[sperkers[userInfo.userId]]
   })
   log.info('用户开始匹配' + JSON.stringify(userInfo))
   log.info('当前正在等待匹配的所有用户' + JSON.stringify(standByList))
 }
 
-//定期删除超过30秒还未匹配到的用户
+//定期删除超过最大时间还未匹配到的用户
 var removeUnmatchUser = () => {
   var now = new Date()
   var standByListLegnth = standByList.length
@@ -64,7 +67,11 @@ var removeUnmatchUser = () => {
     var lastSeconds = Math.floor(now - standByList[i].startDate)
     if (lastSeconds >= waitTime) {
       var removedUser = standByList.splice(i - removeAmount, 1)
-      log.info('30秒后还未匹配到，将用户从等待列表删除' + JSON.stringify(removedUser))
+      meetingUserMap[sperkers[removedUser.userId]].speechStatus = 0
+      $broadcast('people', {
+        'updatedPerson': meetingUserMap[sperkers[userInfo.userId]]
+      })
+      log.info('等待时间到还未匹配到，将用户从等待列表删除' + JSON.stringify(removedUser))
       log.info('当前正在等待匹配的所有用户' + JSON.stringify(standByList))
       removeAmount++
     }
@@ -73,30 +80,23 @@ var removeUnmatchUser = () => {
 
 //用户停止匹配
 var stopMatch = (userId) => {
+  log.info('用户取消匹配1' + userId)
+  log.info('所有用户2' + JSON.stringify(standByList))
   var standByListLegnth = standByList.length
   var removeAmount = 0
   for (var i = 0; i < standByListLegnth; i++) {
+    log.info('用户取消循环' + i + ':' + JSON.stringify(standByList[i]))
     if (standByList[i].userId == userId) {
       var removedUser = standByList.splice(i, 1)
-      meetingUserMap[tunnelMap[removedUser.userId]].speechStatus = 0
+      log.info('removedUser' + JSON.stringify(removedUser))
+      meetingUserMap[sperkers[userId]].speechStatus = 0
       $broadcast('people', {
-        'updatedPerson': meetingUserMap[tunnelMap[userInfo.userId]]
+        'updatedPerson': meetingUserMap[sperkers[userId]]
       })
+      log.info('stopMatch updatedPerson' + JSON.stringify(meetingUserMap[sperkers[userId]]))
       log.info('用户取消匹配' + JSON.stringify(removedUser))
       log.info('当前正在等待匹配的所有用户' + JSON.stringify(standByList))
       return
-    }
-  }
-}
-
-//定期删除匹配到了但未参加的用户
-var removeMatchUser = () => {
-  var now = new Date()
-  for (var userId in matchedList) {
-    var lastSeconds = Math.floor(now - matchedList[userId].startDate)
-    if (lastSeconds >= waitTime) {
-      log.info('匹配成功后99秒用户未响应，将用户从匹配成功列表删除' + JSON.stringify(matchedList[userId]))
-      delete matchedList[userId]
     }
   }
 }
@@ -110,27 +110,25 @@ var autoMatchUser = () => {
     var matchUserA = standByList.pop()
     var matchUserB = standByList.pop()
     var speechName = getRandomSpeechName()
-    // matchedList[matchUserA.userId] = { userId: matchUserA.userId, matchedUser: matchUserB, roomId: roomId, speechName: speechName, startDate: new Date() }
-    // matchedList[matchUserB.userId] = { userId: matchUserB.userId, matchedUser: matchUserA, roomId: roomId, speechName: speechName, startDate: new Date() }
 
     log.info('匹配成功，将匹配成功的两个用户从等待列表删除，转移到匹配成功列表' + JSON.stringify(matchUserA) + JSON.stringify(matchUserB))
 
-    $sendMessage(tunnelMap[matchUserA.userId], 'match', {
+    $sendMessage(sperkers[matchUserA.userId], 'match', {
       'data': { matchedUser: matchUserB, speechName: speechName}
     })
     
-    $sendMessage(tunnelMap[matchUserB.userId], 'match', {
+    $sendMessage(sperkers[matchUserB.userId], 'match', {
       'data': { matchedUser: matchUserA, speechName: speechName}
     })
 
-    meetingUserMap[tunnelMap[matchUserA.userId]].speechStatus = 2
+    meetingUserMap[sperkers[matchUserA.userId]].speechStatus = 2
     $broadcast('people', {
-      'updatedPerson': meetingUserMap[tunnelMap[matchUserA.userId]]
+      'updatedPerson': meetingUserMap[sperkers[matchUserA.userId]]
     })
 
-    meetingUserMap[tunnelMap[matchUserB.userId]].speechStatus = 2
+    meetingUserMap[sperkers[matchUserB.userId]].speechStatus = 2
     $broadcast('people', {
-      'updatedPerson': meetingUserMap[tunnelMap[matchUserB.userId]]
+      'updatedPerson': meetingUserMap[sperkers[matchUserB.userId]]
     })
   }
 }
@@ -167,6 +165,19 @@ const $sendMessage = (targetTunnelId, type, content) => {
 
       if (invalidTunnelIds.length) {
         console.log('检测到无效的信道 IDs =>', invalidTunnelIds)
+
+        invalidTunnelIds.forEach(tunnelId => {
+          let number = numberTunnelResend[tunnelId] ? numberTunnelResend[tunnelId] : 0
+          if (number < option.MAX_NUMBER_TUNNEL_RESEND) {//当发送次数不大于规定次数时，可以进行重发
+            let timer = setTimeout(() => {
+              numberTunnelResend[tunnelId] = ++number
+              tools.broadcast([tunnelId], type, content)
+              clearTimeout(timer)
+            }, 2000)
+          } else {
+            
+          }
+        })
 
         // 从 meetingUserMap 和 meetingConnectedTunnelIds 中将无效的信道记录移除
         invalidTunnelIds.forEach(tunnelId => {
@@ -235,7 +246,7 @@ function onMessage(tunnelId, type, content) {
       break
     case 'speech':
       if (tunnelId in meetingUserMap) {
-        $sendMessage(tunnelMap[content.targetUserId], 'speech', {
+        $sendMessage(sperkers[content.targetUserId], 'speech', {
           'who': meetingUserMap[tunnelId],
           'data': content
         })
@@ -262,7 +273,7 @@ function onClose(tunnelId) {
     return
   }
 
-  delete tunnelMap[meetingUserMap[tunnelId].openId]
+  delete sperkers[meetingUserMap[tunnelId].openId]
 
   const leaveUser = meetingUserMap[tunnelId]
   delete meetingUserMap[tunnelId]
@@ -281,6 +292,10 @@ function onClose(tunnelId) {
   }
 }
 
+function resetNumberOfResend(){
+  numberTunnelResend = []
+}
+
 module.exports = {
   // 小程序请求 websocket 地址
   get: async ctx => {
@@ -291,13 +306,13 @@ module.exports = {
     data.userinfo.tunnelId = tunnelInfo.tunnelId
     data.userinfo.speechStatus = ctx.query.speechStatus
     //清除原先打开的信道
-    var oldTunnelId = tunnelMap[data.userinfo.openId]
-    if (oldTunnelId){
+    if (data.userinfo.openId in sperkers){
+      var oldTunnelId = sperkers[data.userinfo.openId]
       onClose(oldTunnelId)
     }
     
     meetingUserMap[tunnelInfo.tunnelId] = data.userinfo
-    tunnelMap[data.userinfo.openId] = tunnelInfo.tunnelId
+    sperkers[data.userinfo.openId] = tunnelInfo.tunnelId
     //console.log('meetingUrl meetingUserMap', meetingUserMap)
     ctx.state.data = tunnelInfo
   },
@@ -305,6 +320,7 @@ module.exports = {
   // 小程序请求 websocket 地址
   put: async ctx => {
     var matchType = ctx.request.body.matchType
+    console.log('matchType', matchType)
       if (matchType == 'startMatch'){
         var userInfo = await userInfoService.getUserInfoByKey(ctx)
         startMatch(userInfo)
@@ -340,3 +356,4 @@ module.exports = {
 initSpeechNames()
 setInterval(autoMatchUser, 1 * 1000);
 setInterval(initSpeechNames, 10 * 60 * 1000);
+setInterval(resetNumberOfResend, 10 * 60 * 1000);

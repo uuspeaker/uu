@@ -1,6 +1,5 @@
 const { mysql } = require('../../qcloud')
 const uploadAudio = require('../../upload/uploadAudio.js')
-const audioToText = require('../../upload/audioToText.js')
 const uuid = require('../../common/uuid.js')
 const userInfo = require('../../common/userInfo')
 const multiparty = require('multiparty')
