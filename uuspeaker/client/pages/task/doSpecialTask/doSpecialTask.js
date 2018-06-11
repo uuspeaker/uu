@@ -270,6 +270,9 @@ Page({
 
    onReady: function(){
      wx.setNavigationBarTitle({ title: '自由练习' });
+     wx.setKeepScreenOn({
+       keepScreenOn: true
+     })
    },
 
   initAudio: function () {
