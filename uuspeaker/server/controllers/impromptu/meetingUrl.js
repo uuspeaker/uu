@@ -171,7 +171,7 @@ const $sendMessage = (targetTunnelId, type, content) => {
           if (number < option.MAX_NUMBER_TUNNEL_RESEND) {//当发送次数不大于规定次数时，可以进行重发
             let timer = setTimeout(() => {
               numberTunnelResend[tunnelId] = ++number
-              tools.broadcast([tunnelId], type, content)
+              $sendMessage([tunnelId], type, content)
               clearTimeout(timer)
             }, 2000)
           } else {
@@ -304,7 +304,12 @@ module.exports = {
     const tunnelInfo = data.tunnel
     data.userinfo.rank = ctx.query.rank
     data.userinfo.tunnelId = tunnelInfo.tunnelId
-    data.userinfo.speechStatus = ctx.query.speechStatus
+    if (ctx.query.speechStatus == 0){
+      data.userinfo.speechStatus = ctx.query.speechStatus
+    }else{
+      data.userinfo.speechStatus = 2
+    }
+    
     //清除原先打开的信道
     if (data.userinfo.openId in sperkers){
       var oldTunnelId = sperkers[data.userinfo.openId]

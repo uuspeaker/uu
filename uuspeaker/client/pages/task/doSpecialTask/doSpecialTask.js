@@ -20,6 +20,7 @@ var isInRoom = 1
 var audioId
 var speedArray = []
 var lastTime = 0
+var tmpSpeechName = ''
 
 Page({
 
@@ -162,6 +163,7 @@ Page({
 
   //用户放开录音按钮
   stopRecord: function () {
+    tmpSpeechName = this.data.audioName
     recorderManager.stop();
     this.setData({
       isPlay: 0,
@@ -232,7 +234,7 @@ Page({
     qcloud.request({
       url: `${config.service.host}/weapp/task.specialTask`,
       login: true,
-      data: { taskId: audioId, timeDuration: timeDuration, audioName: this.data.audioName, audioText: audioText,audioType:1,speechType:this.data.speechType },
+      data: { taskId: audioId, timeDuration: timeDuration, audioName: tmpSpeechName, audioText: audioText,audioType:1,speechType:this.data.speechType },
       method: 'post',
       success(result) {
         wx.showToast({
