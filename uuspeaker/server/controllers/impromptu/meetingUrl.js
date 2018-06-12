@@ -121,15 +121,15 @@ var autoMatchUser = () => {
       'data': { matchedUser: matchUserA, speechName: speechName}
     })
 
-    meetingUserMap[sperkers[matchUserA.userId]].speechStatus = 2
-    $broadcast('people', {
-      'updatedPerson': meetingUserMap[sperkers[matchUserA.userId]]
-    })
+    // meetingUserMap[sperkers[matchUserA.userId]].speechStatus = 2
+    // $broadcast('people', {
+    //   'updatedPerson': meetingUserMap[sperkers[matchUserA.userId]]
+    // })
 
-    meetingUserMap[sperkers[matchUserB.userId]].speechStatus = 2
-    $broadcast('people', {
-      'updatedPerson': meetingUserMap[sperkers[matchUserB.userId]]
-    })
+    // meetingUserMap[sperkers[matchUserB.userId]].speechStatus = 2
+    // $broadcast('people', {
+    //   'updatedPerson': meetingUserMap[sperkers[matchUserB.userId]]
+    // })
   }
 }
 

@@ -258,10 +258,10 @@ Page({
   },
 
   recordTime: function () {
-    if (this.data.isPlay == 0) {
-      timeDuration = timeDuration - 1
-      return
-    }
+    // if (this.data.isPlay == 0) {
+    //   timeDuration = timeDuration - 1
+    //   return
+    // }
     if (timeDuration % 2 ==0){
       wx.showToast({
         title: '录音中',
@@ -273,17 +273,7 @@ Page({
         image: '../../../images/audioDetail/voice3.png',
       })
     }
-    if (timeDuration >= timeLimit + 0) {
-      if(this.data.audioType == 1){
-        this.stopSpeech()
-      }
-      if (this.data.audioType == 2){
-        this.stopEvaluation()
-      }
-      if (this.data.audioType == 3) {
-        this.stopReview()
-      }
-    }
+    
     var timeNoticeBackground = ''
     if (timeDuration >= timeLimit - 10) {
       timeNoticeBackground = 'color:red'
@@ -301,6 +291,18 @@ Page({
       second: second,
       timeNoticeBackground: timeNoticeBackground
     })
+    if (timeDuration >= timeLimit) {
+      if (this.data.audioType == 1) {
+        this.stopSpeech()
+      }
+      if (this.data.audioType == 2) {
+        this.stopEvaluation()
+      }
+      if (this.data.audioType == 3) {
+        this.stopReview()
+      }
+      return
+    }
     timeDuration++
     setTimeout(this.recordTime, 1000)
   },

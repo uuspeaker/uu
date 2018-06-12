@@ -10,7 +10,7 @@ var tempFilePath = ''
 var coinPlay = 0
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext();
-var timeLimit = { normal: 120, over: 15, green: 60, yellow: 30, red: 0 }
+var timeLimit = ''
 
 var timeDuration = 0
 var startDate
@@ -130,12 +130,10 @@ Page({
       })
     }
 
-    if (timeDuration >= timeLimit.normal + timeLimit.over) {
-      this.stopRecord()
-    }
+    
 
     var timeNoticeBackground = ''
-    if (timeDuration >= timeLimit.normal) {
+    if (timeDuration >= timeLimit.normal - timeLimit.red) {
       timeNoticeBackground = 'color:red'
     } else if (timeDuration >= timeLimit.normal - timeLimit.yellow) {
       timeNoticeBackground = 'color:orange'
@@ -151,6 +149,10 @@ Page({
       second: second,
       timeNoticeBackground: timeNoticeBackground
     })
+    if (timeDuration >= timeLimit.normal) {
+      this.stopRecord()
+      return
+    }
     timeDuration++
     setTimeout(this.recordTime, 1000)
   },
@@ -265,7 +267,7 @@ Page({
   },
 
    onLoad:function(options){
-     timeLimit = { normal: 120, over: 15, green: 60, yellow: 30, red: 0 }
+     timeLimit = { normal: 120, over: 15, green: 60, yellow: 30, red: 10 }
      isInRoom = 1
      this.initAudio()
      this.pressView(0) 
