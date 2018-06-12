@@ -273,7 +273,7 @@ Page({
         image: '../../../images/audioDetail/voice3.png',
       })
     }
-    if (timeDuration >= timeLimit + 15) {
+    if (timeDuration >= timeLimit + 0) {
       if(this.data.audioType == 1){
         this.stopSpeech()
       }
@@ -285,7 +285,7 @@ Page({
       }
     }
     var timeNoticeBackground = ''
-    if (timeDuration >= timeLimit) {
+    if (timeDuration >= timeLimit - 10) {
       timeNoticeBackground = 'color:red'
     } else if (timeDuration >= timeLimit - 30) {
       timeNoticeBackground = 'color:orange'

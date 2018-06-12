@@ -19,8 +19,9 @@
   margin-top: 20px;
   padding-bottom: 30px;
 }
+
 .letterBackground {
-  background-image: url('https://lg-oztvih8q-1255679565.cos.ap-shanghai.myqcloud.com/letter.png');
+  /**background-image: url('https://lg-oztvih8q-1255679565.cos.ap-shanghai.myqcloud.com/letter.png');**/
   background-repeat: repeat-y;
   padding: 15px;
   width: 100%;

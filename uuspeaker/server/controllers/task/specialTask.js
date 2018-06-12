@@ -34,7 +34,8 @@ module.exports = {
       taskData = await userTaskService.getAllSpecialTask(queryUserType, audioType, queryPageType, firstDataTime, lastDataTime)
     }
     if (queryUserType == 4) {
-      taskData = await userTaskService.getTaskOfLikeUser(userId, audioType, queryUserType, queryPageType, firstDataTime, lastDataTime)
+      //taskData = await userTaskService.getTaskOfLikeUser(userId, audioType, queryUserType, queryPageType, firstDataTime, lastDataTime)
+      taskData = await userTaskService.getUnevaluatedTask(queryUserType, audioType, queryPageType, firstDataTime, lastDataTime)
     }
     for(var i=0; i<taskData.length; i++){
       if(taskData[i].user_id == userId){

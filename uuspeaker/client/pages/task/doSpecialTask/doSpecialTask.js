@@ -90,9 +90,11 @@ Page({
   doSpeech: function (e) {
     var index = e.currentTarget.dataset.item
     if(index == 0){
-      timeLimit = { normal: 120, over: 15, green: 60, yellow: 30, red: 0 }
-    }else{
-      timeLimit = { normal: 420, over: 30, green: 120, yellow: 60, red: 0 }
+      timeLimit = { normal: 120, over: 0, green: 60, yellow: 30, red: 10 }
+    }else if(index == 1){
+      timeLimit = { normal: 420, over: 0, green: 120, yellow: 60, red: 30 }
+    } else if (index == 2) {
+      timeLimit = { normal: 600, over: 0, green: 120, yellow: 60, red: 30 }
     }
     this.pressView(index) 
   },
@@ -238,7 +240,7 @@ Page({
       method: 'post',
       success(result) {
         wx.showToast({
-          title: '完成演讲 +1',
+          title: '完成录音 +1',
           image: '../../../images/impromptuMeeting/money.png',
         })
         
