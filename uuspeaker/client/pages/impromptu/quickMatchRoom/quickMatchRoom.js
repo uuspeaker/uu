@@ -258,10 +258,10 @@ Page({
   },
 
   recordTime: function () {
-    // if (this.data.isPlay == 0) {
-    //   timeDuration = timeDuration - 1
-    //   return
-    // }
+    if (this.data.isPlay == 0) {
+      //timeDuration = timeDuration - 1
+      return
+    }
     if (timeDuration % 2 ==0){
       wx.showToast({
         title: '录音中',
@@ -304,6 +304,9 @@ Page({
       return
     }
     timeDuration++
+    if (timeDuration >= timeLimit.normal) {
+      timeDuration = timeLimit.normal
+    }
     setTimeout(this.recordTime, 1000)
   },
 

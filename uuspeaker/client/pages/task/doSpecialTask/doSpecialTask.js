@@ -115,7 +115,7 @@ Page({
 
   recordTime: function () {
     if (this.data.isPlay == 0) {
-      timeDuration = timeDuration - 1
+      //timeDuration = timeDuration - 1
       return
     }
     if (timeDuration % 2 == 0) {
@@ -149,11 +149,15 @@ Page({
       second: second,
       timeNoticeBackground: timeNoticeBackground
     })
+    
     if (timeDuration >= timeLimit.normal) {
       this.stopRecord()
       return
     }
     timeDuration++
+    if (timeDuration >= timeLimit.normal){
+      timeDuration = timeLimit.normal
+    }
     setTimeout(this.recordTime, 1000)
   },
 
