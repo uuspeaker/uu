@@ -221,6 +221,9 @@ router.delete('/speech.speechNameEvaluate', controllers.speech.speechNameEvaluat
 router.get('/speech.speechNameRandom', controllers.speech.speechNameRandom.get)
 //演讲题目管理
 router.get('/letter.letterForLevel3', controllers.letter.letterForLevel3.get)
+//俱乐部管理
+router.get('/club.clubInfo', controllers.club.clubInfo.get)
+router.post('/club.clubInfo', controllers.club.clubInfo.post)
 
 
 

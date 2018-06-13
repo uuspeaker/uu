@@ -1,7 +1,10 @@
 {
   "pages": [
-    
     "pages/task/taskIndex/taskIndex",
+    "pages/club/myClub/myClub",
+    "pages/club/clubList/clubList",
+    "pages/club/createClub/createClub",
+    
     "pages/letter/letterForLevel3/letterForLevel3",
     "pages/task/taskList/taskList",
     "pages/task/specialTaskList/specialTaskList",

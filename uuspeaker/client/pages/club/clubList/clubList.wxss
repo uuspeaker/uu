@@ -1,0 +1,81 @@
+
+.myReport {
+  font-size: 15px;
+  padding-left: 10px;
+}
+.surveyStatus {
+  float: right;
+  right: 10px;
+  font-weight: bold;
+}
+
+.right {
+  float: right;
+  right:10px;
+}
+
+.write {
+  background-color: white;
+  height: 10px;
+  padding-top: 15px;
+}
+
+.commentImg {
+  width: 16px;
+  height: 16px;
+  position: fixed;
+  right: 15px;
+  top: 10px;
+}
+
+.normal {
+  height: 85px;
+  width: 20%;
+  margin-top: 5px;
+  margin-left: 10px;
+  color: white;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 10px 10px 10px 10px;
+}
+
+.uu-code {
+  width: 35px;
+  height: 35px;
+  margin-top: 10px;
+}
+
+.user-pic {
+  width: 45px;
+  height: 45px;
+  border-radius: 50px;
+  position: relative;
+  top:-50rpx;
+  margin-right:16px;
+}
+
+.date {
+  padding: 5px;
+  font-size: 13px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
+  color: grey;
+}
+
+.delete {
+  color: #576b95;
+  padding-left: 10px;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.article {
+  width: 90%;
+  word-break: keep-all;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
+}

@@ -1,0 +1,97 @@
+.middle2{
+  margin-top:120px;
+  padding-bottom: 110px;
+}
+.host-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+
+.speaker-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+
+.medal {
+  width: 20px;
+  height: 20px;
+  margin-top: 7px;
+}
+
+.link {
+  font-size: 17px;
+  font-weight: bold;
+  color: #576b95;
+}
+
+.host-level {
+  font-size: 13px;
+  color: #888;
+  padding-top: 5px;
+}
+
+.speaker-level {
+  font-size: 12px;
+  color: #888;
+  padding-top: 3px;
+}
+
+.speaker {
+  font-size: 14px;
+}
+
+.medal-view {
+  font-size: 12px;
+  font-weight: bold;
+  position: absolute;
+  right: 25px;
+}
+
+.notice {
+  border: 1px;
+  border-color: yellow;
+  color: orange;
+  font-weight: bold;
+}
+
+.buttonArea {
+  background-color: white;
+  margin-top: 15px;
+  padding: 8px;
+
+  position: fixed;
+  bottom: 0px;
+  width: 96%;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0px 0px 5px 1px gainsboro;
+}
+
+.seperator{
+  border-style: solid;
+  border-width: 0 1px 0 0;
+  border-color: gainsboro;
+}
+.disable{
+  color:grey;
+  font-weight: bold;
+}
+
+.article {
+  width: 90%;
+  word-break: keep-all;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.input{
+  background-color: white;
+  box-shadow: 0px 0px 5px 1px gainsboro;
+  height:40px;
+}
+
+

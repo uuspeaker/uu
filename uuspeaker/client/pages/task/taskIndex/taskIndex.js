@@ -348,6 +348,17 @@ Page({
     })
   },
 
+  toMyClub: function () {
+    if(this.data.isLogin == 0){
+      util.showSuccess('请先登陆')
+      return
+    }
+    if (this.data.showContent != 1)return
+    wx.navigateTo({
+      url: '../../club/myClub/myClub'
+    })
+  },
+
   onShow: function(){
     this.queryNewCommentAmount()
     this.queryUserScore()
