@@ -1,12 +1,12 @@
 
-<view class="weui-cell top">
+<!--view class="weui-cell top">
   <view class=" myReport"  style="{{viewStyle[0]}}" data-item='0' data-type='1' bindtap='queryRoomInfo'>全部</view>
   <view class=" myReport"  style="{{viewStyle[2]}}" data-item='2' data-type='3' bindtap='queryRoomInfo'>我的</view>
-  <!--view class=" myReport"  style="{{viewStyle[3]}}" data-item='3' data-type='4' bindtap='queryRoomInfo'>关注的</view-->
-</view>
+
+</view-->
 <!--报名展示-->
 
-<view class="weui-cells weui-cells_after-title middle" >
+<view class="weui-cells weui-cells_after-title" >
   <block wx:for="{{rooms}}" wx:key="item">
     <template is="scoreDetailTemplate" data="{{...item}}" />
   </block>
@@ -15,25 +15,25 @@
 <view style='height:35px'></view>
 <view class="weui-flex bottom ">
   <view class="weui-flex__item ">
-    <button class='weui-button' type='primary' bindtap='createClub'>创建俱乐部</button>
+   
   </view>
 </view>
 
 <template name="scoreDetailTemplate">
-  <view class="weui-cell" data-room_id="{{room_id}}" data-user_id='{{user_id}}' data-start_date='{{start_date}}' data-start_time='{{start_time}}' data-end_time='{{end_time}}' data-mode='{{mode}}' data-language='{{language}}' data-notice='{{notice}}' data-is_host='{{isHost}}' data-survey_status='{{survey_status}}' bindtap="toImpromptuMeeting">
+  <view class="weui-cell" data-club_id='{{club_id}}' bindtap="toClubShow">
     <view class="user-avatar" >
       <image class="user-pic" src="{{user_info.avatarUrl}}" data-user_id='{{user_id}}' />
     </view>
     <view class="weui-cell__bd" >
     <view class="" >
-        <view  class='article' style='padding-left:15px'>
-        <text >{{club_name}}</text>
+        <view  class='article' >
+        <text >俱乐部：{{club_name}}</text>
         </view>
       </view>
       <view >
         <view class=" date">创始人：{{user_info.nickName}}</view>
+        <view class=" date">会员人数：{{member_amount}}</view>
         <view class=" date">创建时间：{{createDateStr}}</view>
-        <view class=" date">会员人数：{{20}}</view>
       </view>
     </view>
   </view>

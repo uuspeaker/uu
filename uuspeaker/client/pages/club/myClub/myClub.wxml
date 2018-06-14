@@ -1,42 +1,44 @@
+<block wx:if='{{clubInfo.length > 0}}'>
 <view class="page top">
   <view class="weui-cells weui-cells_after-title ">
 
     <view class="weui-cell ">
       <view class="weui-cell__hd">
-        <image class="host-pic" src="{{roomInfo.userInfo.avatarUrl}}" data-user_id='{{roomInfo.user_id}}'  />
+        <image class="host-pic" src="{{clubInfo[0].userInfo.avatarUrl}}" data-user_id='{{roomInfo.user_id}}'  />
       </view>
       <view class="weui-cell__bd">
         <view class="link" bindtap='viewImpromptuRoom' data-room_id="{{roomInfo.room_id}}" data-user_id='{{roomInfo.user_id}}' data-start_date='{{roomInfo.start_date}}' data-end_date='{{roomInfo.end_date}}' data-title='{{roomInfo.title}}' data-max_amount='{{roomInfo.max_amount}}'
-          data-notice='{{roomInfo.notice}}' data-is_host='{{isHost}}'>俱乐部：{{roomInfo.title}}</view>
-        <view class='host-level'>创始人：{{roomInfo.userInfo.nickName}}</view>
+          data-notice='{{roomInfo.notice}}' data-is_host='{{isHost}}'>俱乐部：{{clubInfo[0].club_name}}</view>
+          <view class='host-level'>发起人：{{clubInfo[0].userInfo.nickName}}</view>
       </view>
-      <block wx:if="{{isHost == true}}">
-        <block wx:if="{{roomInfo.survey_status == '1'}}">
-          <view class="weui-cell__ft link " bindtap='toImprmptuSurvey'>
-            <text style='padding-right:15px'></text>
-            <text data-room_id="{{roomInfo.room_id}}" data-user_id='{{roomInfo.user_id}}' data-start_date='{{roomInfo.start_date}}' data-end_date='{{roomInfo.end_date}}' data-title='{{roomInfo.title}}' data-max_amount='{{roomInfo.max_amount}}' data-notice='{{roomInfo.notice}}'
-              data-is_host='{{isHost}}' catchtap='updateImpromptuRoom'>编辑</text>
+          <view class="weui-cell__ft " catchtap='toClubList'>
+            NO: <text class='clubNo'>{{clubInfo[0].club_no}}</text>
           </view>
-        </block>
 
-      </block>
+
     </view>
 
     <view class="weui-cell" style='font-size:13px'>
       <view class="weui-cell__bd">
-        <view class="date">{{roomInfo.startDateStr}}{{roomInfo.amountNotice}}</view>
+        <view class="date">创会日期：{{clubInfo[0].createDateStr}}</view>
       </view>
 
-      <!--text bindtap='toUserAudio' class='link'>听录音</text-->
+      <text bindtap='toUserAudio'>会员数：{{clubInfo[0].member_amount}}</text>
     </view>
   </view>
 
 </view>
 
 <view class="page middle2">
-  <view class="weui-cells__title"></view>
+  <view class="weui-cells__title">官员 <text class='link2' catchtap='toClubStudyRank'>学习排名</text></view>
   <view class="weui-cells weui-cells_after-title ">
-    <block wx:for="{{meetingUser}}" wx:key="item">
+    <block wx:for="{{officeList}}" wx:key="item">
+      <template is="scoreDetailTemplate" data="{{...item}}" />
+    </block>
+  </view>
+  <view class="weui-cells__title">会员</view>
+  <view class="weui-cells weui-cells_after-title ">
+    <block wx:for="{{normalMemberList}}" wx:key="item">
       <template is="scoreDetailTemplate" data="{{...item}}" />
     </block>
   </view>
@@ -44,15 +46,8 @@
 
 <form>
 <view class="weui-flex bottom ">
-  <view class="weui-flex__item ">
-    <block wx:if="{{isJoin == false && roomInfo.people_amount < roomInfo.max_amount}}">
-    <input class='input' name='role' placeholder='请输入角色,默认为演讲者' bindconfirm='applyMeetingWithName'></input>
-      <button class='' type='primary' data-roletype='1' value="演讲者" bindtap='applyMeetingDefault'>报名</button>
-    </block>
-    <block wx:if="{{isJoin == true}}">
-      <!--button class='weui-btn' type='primary' data-mode='{{roomInfo.mode}}' data-room_id="{{roomInfo.room_id}}" bindtap='createAndGoRoom'>加入语音会议</button-->
-      <button bindtap='cancelMeeting'>取消报名</button>
-    </block>
+  <view class="weui-flex__item">
+      <button bindtap='cancelClub'>退出俱乐部</button>
   </view>
 </view>
 </form>
@@ -69,17 +64,17 @@
       <view class='speaker-level'>{{userRank}}</view>
     </view>
 
-    <view class="weui-cell__ft medal-view">
-      <view class="weui-flex ">
-        <view wx:if="{{isBestSpeaker == true}}">
-          <image class="medal" src='../../../images/impromptuMeeting/medal.png'></image>
-          <view>演讲</view>
-        </view>
-        <view wx:if="{{isBestEvaluator == true}}" style='padding-left:15px'>
-          <image class="medal" src='../../../images/impromptuMeeting/medal2.png'></image>
-          <view>点评</view>
-        </view>
-      </view>
-    </view>
   </view>
 </template>
+</block>
+
+<block wx:if='{{clubInfo.length == 0}}'>
+<view class='notice'>还未加入任何俱乐部</view>
+<view class="weui-flex bottom ">
+  <view class="weui-flex__item ">
+    <button class="weui-button" type='primary'  bindtap='createClub'>创建俱乐部</button>
+    <button class="weui-button" bindtap='toClubList'>寻找俱乐部</button>
+  </view>
+</view>
+
+</block>

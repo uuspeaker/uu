@@ -12,13 +12,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-    meetingUser: {},
-    roomId: {},
+    memberList: {},
     userInfo: {},
-    isJoin: '',
-    roomInfo: {},
-    isHost: '',
-    totalScore: 0
+    clubInfo:{},
+    officeList:[],
+    normalMemberList:[]
   },
 
   updateImpromptuRoom: function (e) {
@@ -46,7 +44,7 @@ Page({
   },
 
   //查询用户参会数据
-  queryMeetingUser: function () {
+  queryMyClubInfo: function () {
     //util.showBusy('请求中...')
     wx.showLoading({
       title: '加载中',
@@ -61,14 +59,13 @@ Page({
         wx.hideLoading()
         //util.showSuccess('请求成功完成')
         that.setData({
-          meetingUser: result.data.data.meetingUser,
-          //totalScore: result.data.data.hostTotalScore,
-          //hostRank: userInfo.getRank(result.data.data.hostTotalScore),
-          isJoin: result.data.data.isJoin,
-          roomInfo: result.data.data.roomInfo,
-          isHost: result.data.data.isHost,
+          clubInfo: result.data.data.clubInfo,
+          memberList: result.data.data.memberList,
         })
-        that.formatDate()
+        if (result.data.data.clubInfo.length > 0){
+          that.formatDate()
+        }
+        
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -78,13 +75,27 @@ Page({
   },
 
   formatDate: function () {
-    var data = this.data.meetingUser
+    var clubInfo = this.data.clubInfo
+    clubInfo[0].createDateStr = dateFormat.format(new Date(clubInfo[0].create_date), 'yyyy年M月d日')
+
+    var data = this.data.memberList
+    var officeList = []
+    var normalMemberList = []
     for (var i = 0; i < data.length; i++) {
-      data[i].startDateStr = dateFormat.format(new Date(data[i].create_date),'yyyy年M月d日')
-      data[i].userRank = userInfo.getRank(data[i].totalScore)
+      data[i].createDateStr = dateFormat.format(new Date(data[i].create_date),'yyyy年M月d日')
+      data[i].userRank = userInfo.getRank(data[i].totalDuration)
+      data[i].role = userInfo.getRole(data[i].role_type)
+      if(data[i].role_type == 9){
+        normalMemberList.push(data[i])
+      }else{
+        officeList.push(data[i])
+      }
     }
     this.setData({
-      meetingUser: data,
+      clubInfo: clubInfo,
+      memberList: data,
+      officeList: officeList,
+      normalMemberList: normalMemberList
     })
   },
 
@@ -116,41 +127,6 @@ Page({
     this.applyMeeting(role)
   },
 
-  applyMeeting: function (role) {
-    var that = this
-    qcloud.request({
-      url: `${config.service.host}/weapp/impromptu.impromptuMeeting`,
-      login: true,
-      data: { roomId: this.data.roomId, role: role },
-      method: 'post',
-      success(result) {
-        util.showSuccess('会议申请成功')
-        that.queryMeetingUser()
-      },
-      fail(error) {
-        util.showModel('请求失败', error);
-        console.log('request fail', error);
-      }
-    })
-  },
-
-  cancelMeeting: function () {
-    var that = this
-    qcloud.request({
-      url: `${config.service.host}/weapp/impromptu.impromptuMeeting`,
-      login: true,
-      data: { roomId: this.data.roomId },
-      method: 'delete',
-      success(result) {
-        util.showSuccess('报名已取消')
-        that.queryMeetingUser()
-      },
-      fail(error) {
-        util.showModel('请求失败', error);
-        console.log('request fail', error);
-      }
-    })
-  },
 
   toUserInfo: function (e) {
     wx.navigateTo({
@@ -158,21 +134,35 @@ Page({
     })
   },
 
+  createClub: function () {
+    wx.navigateTo({
+      url: '../../club/createClub/createClub'
+    })
+  },
+
+  toClubList: function () {
+    wx.navigateTo({
+      url: '../../club/clubList/clubList'
+    })
+  },
+
+  toClubStudyRank: function () {
+    wx.navigateTo({
+      url: '../../club/clubRank/clubRank?scoreType=1&clubId=' + this.data.clubInfo[0].club_id,
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options)
-    this.setData({
-      roomId: options.roomId
-    })
-    this.queryMeetingUser()
+    this.queryMyClubInfo()
   },
 
   onShow: function () {
   },
 
   onPullDownRefresh: function () {
-    // this.queryMeetingUser()
+    // this.queryMyClubInfo()
   },
 })

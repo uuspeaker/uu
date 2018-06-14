@@ -26,4 +26,21 @@ var getRank = (studySeconds) => {
   return rank
 }
 
-module.exports = { getRank}
+var getRole = (roleType) => {
+  var role = ''
+  if (roleType == 1) {
+    role = '会长'
+  } else if (roleType == 2) {
+    role = '教育副会长'
+  } else if (roleType == 3) {
+    role = '宣传副会长'
+  } else if (roleType == 4) {
+    role = '会员副会长'
+  } else if (roleType == 9) {
+    role = '会员'
+  } 
+  return role
+}
+
+
+module.exports = { getRank,getRole}

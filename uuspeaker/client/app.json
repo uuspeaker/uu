@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/task/taskIndex/taskIndex",
+    "pages/club/clubShow/clubShow",
+    "pages/club/clubRank/clubRank",
     "pages/club/myClub/myClub",
     "pages/club/clubList/clubList",
     "pages/club/createClub/createClub",

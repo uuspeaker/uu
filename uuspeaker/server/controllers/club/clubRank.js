@@ -5,15 +5,14 @@ const userInfoService = require('../../service/userInfoService')
 module.exports = {
 
   get: async ctx => {
-    var userId = await userInfo.getOpenId(ctx)
+    var clubId = ctx.query.scoreType
     var scoreType = ctx.query.scoreType
     var rankList = []
-    if (scoreType == 1){
-      rankList = await userInfoService.getStudyRankOfLike(userId)
+    if (scoreType == 1) {
+      rankList = await userInfoService.getStudyRankOfClub(clubId)
     }
     if (scoreType == 2) {
-      //rankList = await userInfoService.getInfluenceRank(userId)
-      rankList = await userInfoService.getIncreaseRankOfLike(userId)
+      rankList = await userInfoService.getIncreaseRankOfClub(clubId)
     }
     ctx.state.data = rankList
   },

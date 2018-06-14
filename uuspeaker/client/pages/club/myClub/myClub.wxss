@@ -25,9 +25,14 @@
 .link {
   font-size: 17px;
   font-weight: bold;
-  color: #576b95;
 }
-
+.link2 {
+  font-size: 15px;
+  font-weight: bold;
+  color: #576b95;
+  float: right;
+  right: 10px;
+}
 .host-level {
   font-size: 13px;
   color: #888;
@@ -92,6 +97,20 @@
   background-color: white;
   box-shadow: 0px 0px 5px 1px gainsboro;
   height:40px;
+}
+.notice{
+  text-align: center;
+  margin-top: 80px;
+  font-size: 24px;
+  color: gray;
+}
+.clubNo{
+  padding-right:15px;
+  padding-left: 5px;
+  font-weight: bold;
+  font-size: 40px;
+  color: black;
+
 }
 
 

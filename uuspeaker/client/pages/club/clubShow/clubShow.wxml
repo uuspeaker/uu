@@ -1,0 +1,11 @@
+<view style='height:110px'>
+    <view class='tip' style='font-weight: bold;'>申请步骤：</view>  
+<view class='tip'>1、点击申请加入，录制申请语音</view>
+<view class='tip'>2、等待会长审批</view>
+<view class='tip'>3、审批通过成为正式会员</view>
+</view>
+<view class="weui-flex bottom ">
+  <view class="weui-flex__item ">
+    <button class="weui-button" type='primary'  bindtap='createClub'>申请加入</button>
+  </view>
+</view>

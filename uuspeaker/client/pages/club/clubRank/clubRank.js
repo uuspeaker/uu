@@ -4,6 +4,7 @@ var util = require('../../../utils/util.js')
 var userInfo = require('../../../common/userInfo.js')
 //查询标记(1-查自己;2-查所有;3-查最赞)
 var queryScoreType = ''
+var clubId  = ''
 Page({
 
   /**
@@ -53,11 +54,11 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
-    var queryData = { 'scoreType': scoreType }
+    var queryData = { 'scoreType': scoreType, 'clubId': clubId}
     console.log('queryData', queryData)
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/userInfo.userRank`,
+      url: `${config.service.host}/weapp/club.clubRank`,
       login: true,
       method: 'get',
       data: queryData,
@@ -100,6 +101,7 @@ Page({
   },
 
   onLoad: function (options) {
+    clubId = options.clubId
     if (options.scoreType == 2) {
       queryScoreType = 2
       this.pressView(1)
@@ -111,7 +113,7 @@ Page({
   },
 
   onReady: function () {
-    wx.setNavigationBarTitle({ title: '积分排名' });
+    wx.setNavigationBarTitle({ title: '俱乐部排名' });
   },
 
 

@@ -51,12 +51,12 @@
   height: 45px;
   border-radius: 50px;
   position: relative;
-  top:-50rpx;
+  top:-30rpx;
   margin-right:16px;
 }
 
 .date {
-  padding: 5px;
+
   font-size: 13px;
   white-space: pre-wrap;
   word-wrap: break-word;
@@ -73,6 +73,7 @@
 
 .article {
   width: 90%;
+  padding-bottom: 10px;
   word-break: keep-all;
   white-space: nowrap;
   overflow: hidden;

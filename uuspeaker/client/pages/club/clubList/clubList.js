@@ -179,6 +179,13 @@ Page({
     })
   },
 
+  toClubShow: function (e) {
+    var clubId = e.currentTarget.dataset.club_id
+    wx.navigateTo({
+      url: '../../club/clubShow/clubShow?clubId=' + clubId
+    })
+  },
+
   onLoad: function (options) {
     queryPageType = 0
     queryUserType = 1
