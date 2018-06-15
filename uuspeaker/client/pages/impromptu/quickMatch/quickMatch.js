@@ -218,13 +218,13 @@ Page({
 
     tunnel.on('reconnecting', () => {
       console.log('quickMatch 信道正在重连...')
-      //util.showBusy('正在重连')
+      util.showBusy('正在重新连接')
       
     })
 
     tunnel.on('reconnect', () => {
       console.log('quickMatch 信道重连成功')
-      //util.showSuccess('重连成功')
+      util.showSuccess('重新连接成功')
       this.setData({ tunnelStatus: 'connected' })
     })
 
@@ -363,14 +363,6 @@ Page({
   onLoad: function (options){
     console.log('options',options)
     rank = options.rank
-    qcloud.login({
-      success: function (result) {
-      },
-      fail: function () {
-        util.showSuccess('登陆失效')
-        wx.navigateBack({ delta: 99999 })
-      }
-    })
   },
 
   onHide: function () {

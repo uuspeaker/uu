@@ -19,30 +19,6 @@ Page({
     normalMemberList:[]
   },
 
-  updateImpromptuRoom: function (e) {
-    wx.navigateTo({
-      url: '../impromptuRoom/impromptuRoom?operation=modify'
-      + '&roomId=' + e.currentTarget.dataset.room_id
-      + '&startDate=' + e.currentTarget.dataset.start_date
-      + '&endDate=' + e.currentTarget.dataset.end_date
-      + '&title=' + e.currentTarget.dataset.title
-      + '&maxAmount=' + e.currentTarget.dataset.max_amount
-      + '&notice=' + e.currentTarget.dataset.notice
-    })
-  },
-
-  viewImpromptuRoom: function (e) {
-    wx.navigateTo({
-      url: '../impromptuRoom/impromptuRoom?operation=view'
-      + '&roomId=' + e.currentTarget.dataset.room_id
-      + '&startDate=' + e.currentTarget.dataset.start_date
-      + '&endDate=' + e.currentTarget.dataset.end_date
-      + '&title=' + e.currentTarget.dataset.title
-      + '&maxAmount=' + e.currentTarget.dataset.max_amount
-      + '&notice=' + e.currentTarget.dataset.notice
-    })
-  },
-
   //查询用户参会数据
   queryMyClubInfo: function () {
     //util.showBusy('请求中...')
@@ -53,7 +29,7 @@ Page({
     qcloud.request({
       url: `${config.service.host}/weapp/club.myClub`,
       login: true,
-      data: { roomId: this.data.roomId },
+      data: {},
       method: 'get',
       success(result) {
         wx.hideLoading()
@@ -66,6 +42,49 @@ Page({
           that.formatDate()
         }
         
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
+  cancelClub: function () {
+    var content = '是否确定退出？'
+    if (this.data.clubInfo[0].myRole == 0){
+      content = '是否确定解散俱乐部？'
+    }
+    wx.showModal({
+      title: '提示',
+      content: content,
+      success: (sm) => {
+        if (sm.confirm) {
+          this.doCancelClub()
+        } else if (sm.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+
+  doCancelClub: function () {
+    //util.showBusy('请求中...')
+    wx.showLoading({
+      title: '加载中',
+    })
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/club.myClub`,
+      login: true,
+      data: { roleType: this.data.clubInfo[0].myRole, clubId: this.data.clubInfo[0].club_id},
+      method: 'put',
+      success(result) {
+        wx.hideLoading()
+        util.showSuccess('退出俱乐部') 
+        wx.navigateBack({
+          
+        })
       },
       fail(error) {
         util.showModel('请求失败', error);

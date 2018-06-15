@@ -305,7 +305,7 @@ Page({
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/audio.audioToText`,
-      login: true,
+      login: false,
       data: { 'audioBuff': audioBuff,audioType:1},
       method: 'post',
       success(result) {

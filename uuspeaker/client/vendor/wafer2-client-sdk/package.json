@@ -1,6 +1,6 @@
 {
   "_from": "wafer2-client-sdk",
-  "_id": "wafer2-client-sdk@1.0.0",
+  "_id": "wafer2-client-sdk@1.4.1",
   "_inBundle": false,
   "_integrity": "sha1-4hExQwJ+2YIN3LOn0EtbBd8uTYg=",
   "_location": "/wafer2-client-sdk",
@@ -19,7 +19,7 @@
     "#USER",
     "/"
   ],
-  "_resolved": "http://r.tnpm.oa.com/wafer2-client-sdk/download/wafer2-client-sdk-1.0.0.tgz",
+  "_resolved": "http://r.tnpm.oa.com/wafer2-client-sdk/download/wafer2-client-sdk-1.4.1.tgz",
   "_shasum": "e2113143027ed9820ddcb3a7d04b5b05df2e4d88",
   "_spec": "wafer2-client-sdk",
   "_where": "/Users/Jason/Tencent/ide-test/wafer-client-demo",
@@ -43,5 +43,5 @@
     "type": "git",
     "url": "git+https://github.com/tencentyun/wafer2-client-sdk.git"
   },
-  "version": "1.0.0"
+  "version": "1.4.1"
 }

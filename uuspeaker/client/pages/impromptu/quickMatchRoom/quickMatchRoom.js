@@ -653,7 +653,7 @@ Page({
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/audio.audioToText`,
-      login: true,
+      login: false,
       data: { 'audioBuff': audioBuff, audioType: 1 },
       method: 'post',
       success(result) {
@@ -864,10 +864,10 @@ Page({
    */
   sendSpeech(content) {
     if (!this.data.tunnelStatus || !this.data.tunnelStatus === 'connected') {
-      if(tryTimes >= 10){
+      if(tryTimes >= 5){
         util.showSuccess('连接已断开')
       }else{
-        setTimeout(this.sendSpeech,1000,content)
+        setTimeout(function () { this.sendSpeech(content) },2000)
       } 
       return
     }

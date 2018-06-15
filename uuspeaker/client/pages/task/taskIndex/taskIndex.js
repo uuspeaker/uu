@@ -4,6 +4,7 @@ var util = require('../../../utils/util.js')
 var userInfo = require('../../../common/userInfo.js')
 var dateFormat = require('../../../common/dateFormat.js')
 
+qcloud.setLoginUrl(`${config.service.host}/weapp/login`);
 Page({
 
   /**
@@ -11,7 +12,7 @@ Page({
    */
   data: {
     targetStatus: 0,
-    isLogin: 1,
+    isLogin: '',
     rank: 'Lv1：乞丐演讲君',
     newCommentAmount: 0,
 
@@ -359,49 +360,104 @@ Page({
     })
   },
 
+  // doLogin: function () {
+  //   const session = qcloud.Session.get()
+
+  //   if (session) {
+  //     // 第二次登录
+  //     // 或者本地已经有登录态
+  //     // 可使用本函数更新登录态
+  //     qcloud.loginWithCode({
+  //       success: res => {
+  //         this.setData({ userInfo: res, isLogin: 1 })
+  //         //util.showSuccess('登录成功')
+  //         that.setData({
+  //           isLogin: 1
+  //         })
+  //         console.log('login success')
+  //         this.initIndex()
+  //       },
+  //       fail: err => {
+  //         console.error(err)
+  //         this.setData({isLogin: 0 })
+  //         util.showModel('登录错误', err.message)
+  //       }
+  //     })
+  //   } else {
+  //     // 首次登录
+  //     qcloud.login({
+  //       success: res => {
+  //         this.setData({ userInfo: res, isLogin: 1 })
+  //         util.showSuccess('登录成功')
+  //         that.setData({
+  //           isLogin: 1
+  //         })
+  //         console.log('login success')
+  //         this.initIndex()
+  //       },
+  //       fail: err => {
+  //         console.error(err)
+  //         this.setData({ isLogin: 0 })
+  //         util.showModel('登录错误', err.message)
+  //       }
+  //     })
+  //   }
+  // },
+
   onShow: function(){
+    if (this.data.isLogin == 1) {
     this.queryNewCommentAmount()
     this.queryUserScore()
+    }
   },
 
   onLoad: function () {
-    var that = this
-    
+    //this.doLogin()
     qcloud.login({
-      success: function (result) {
-        console.log('userInfo',result)
-        that.setData({
+      success: result => {
+        console.log('userInfo', result)
+        this.setData({
           isLogin: 1
         })
         console.log('login success')
-        that.initIndex()
+        this.initIndex()
       },
-      fail:function(){
+      fail: () => {
         console.log('login fail')
-        that.setData({
-          isLogin : 0
+        this.setData({
+          isLogin: 0
         })
       }
     })
+    
     // wx.checkSession({
     //   success: function () {
     //     that.setData({
     //       isLogin: 1
     //     })
     //     //session_key 未过期，并且在本生命周期一直有效
-    //     console.log('has login')
-    //     //that.initIndex()
+    //     console.log('has session')
+    //     that.initIndex()
     //   },
     //   fail: function () {
-    //     that.setData({
-    //       isLogin: 0
-    //     })
     //     // session_key 已经失效，需要重新执行登录流程
     //     console.log('has not login')
-    //     wx.login({
-    //       success: function () {
-    //         //that.initIndex()
+    //     qcloud.login({
+    //       success: function (result) {
+    //         console.log('userInfo', result)
+    //         that.setData({
+    //           isLogin: 1,
+    //           userInfo: result
+    //         })
+    //         console.log('login success')
+    //         that.initIndex()
     //       },
+    //       fail: function () {
+    //         console.log('login fail')
+    //         that.setData({
+    //           isLogin: 0
+    //         })
+    //       }
     //     })
     //   }
     // })
@@ -427,6 +483,9 @@ Page({
   },
 
   initIndex: function (options) {
+    this.queryLikeUserTotal()
+    this.queryNewCommentAmount()
+    this.queryUserScore()
     this.initUserInfo()
     var that = this
     qcloud.request({
@@ -438,11 +497,7 @@ Page({
         that.setData({
           showContent: result.data.data
         })
-        if(result.data.data == 1){
-          that.queryLikeUserTotal()
-          
-        }
-        
+  
       },
 
       fail(error) {

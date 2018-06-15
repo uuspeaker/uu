@@ -53,6 +53,11 @@ var getMyClubInfo = async (userId) => {
     var clubId = clubInfo[0].club_id
     var memberList = await getClubMember(clubId)
     clubInfo[0].userInfo = userInfoService.getTailoredUserInfo(clubInfo[0].user_info)
+    if (clubInfo[0].userId == userId){
+      clubInfo[0].myRole = 1
+    }else{
+      clubInfo[0].myRole = 0
+    }
   }
 
   return {
@@ -83,10 +88,27 @@ var getClubMember = async (clubId) => {
     return memberList
 }
 
+//退出俱乐部
+var cancelClub = async (clubId,userId) => {
+  await mysql('club_member').where({club_id: clubId, user_id: userId}).del()
+}
+
+//解散俱乐部
+var dismissClub = async (clubId, userId) => {
+  var clubInfo = await mysql('club_info').select('club_info.*').where({ 'club_info.club_id': clubId })
+  if (clubInfo.length > 0 && clubInfo[0].user_id == userId){
+    await mysql('club_info').where({ club_id: clubId }).del()
+    await mysql('club_member').where({ club_id: clubId }).del()
+  }
+  
+}
+
 module.exports = {
   createClub,
   getClubList,
   getMyClubInfo,
   getClubInfoById,
-  getClubMember
+  getClubMember,
+  cancelClub,
+  dismissClub
 }

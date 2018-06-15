@@ -26,6 +26,11 @@
   font-size: 17px;
   font-weight: bold;
 }
+.link3 {
+  font-size: 15px;
+  font-weight: bold;
+  color: #576b95;
+}
 .link2 {
   font-size: 15px;
   font-weight: bold;
@@ -105,7 +110,7 @@
   color: gray;
 }
 .clubNo{
-  padding-right:15px;
+  padding-right:0px;
   padding-left: 5px;
   font-weight: bold;
   font-size: 40px;

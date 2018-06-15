@@ -226,6 +226,7 @@ router.get('/club.clubInfo', controllers.club.clubInfo.get)
 router.post('/club.clubInfo', controllers.club.clubInfo.post)
 //我的俱乐部
 router.get('/club.myClub', controllers.club.myClub.get)
+router.put('/club.myClub', controllers.club.myClub.put)
 router.get('/club.clubRank', controllers.club.clubRank.get)
 
 

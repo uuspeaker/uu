@@ -12,7 +12,7 @@
 	},
 	"appid": "wx43906d390cba4987",
 	"projectname": "uuspeaker2",
-	"libVersion": "2.0.8",
+	"libVersion": "2.0.9",
 	"compileType": "miniprogram",
 	"condition": {
 		"search": {

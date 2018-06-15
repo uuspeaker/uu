@@ -22,7 +22,7 @@ Page({
         that.setData({
           applyResult: result.data.data
         })
-        that.toClubList()
+        that.toMyClub()
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -34,6 +34,12 @@ Page({
   toClubList: function () {
     wx.navigateTo({
       url: '../../club/clubList/clubList',
+    })
+  },
+
+  toMyClub: function () {
+    wx.redirectTo({
+      url: '../../club/myClub/myClub',
     })
   },
 

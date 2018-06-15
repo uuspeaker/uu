@@ -11,4 +11,15 @@ module.exports = {
     ctx.state.data = data
   },
 
+  put: async ctx => {
+    var userId = await userInfoService.getOpenId(ctx)
+    var roleType = ctx.request.body.roleType
+    var clubId = ctx.request.body.clubId
+    if (roleType == 0){
+      await clubService.cancelClub(clubId,userId)
+    } else if (roleType == 1){
+      await clubService.dismissClub(clubId, userId)
+    }
+  },
+
 }
