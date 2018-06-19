@@ -1,0 +1,29 @@
+
+
+
+<view class="weui-flex commentArea">
+  <view class="weui-flex__item">
+    <input class='commentInput' name="audioName" value='等级说明' ></input>
+  </view>
+
+</view>
+<view >
+<view class='tip'>Lv1：乞丐演讲君 未开始练习</view>
+<view class='tip'>Lv2：布衣演讲君 练习少于1小时</view>
+<view class='tip'>Lv3：灰铁演讲君 练习1小时（60分）</view>
+<view class='tip'>Lv4：青铜演讲君 练习2小时（120分）</view>
+<view class='tip'>Lv5：白银演讲君 练习4小时（240分）</view>
+<view class='tip'>Lv6：黄金演讲君 练习8小时（480分）</view>
+<view class='tip'>Lv7：铂金演讲君 练习16小时（960分）</view>
+<view class='tip'>Lv8：钻石演讲君 练习32小时（1920分）</view>
+<view class='tip'>Lv9：无畏演讲君 练习64小时（3840分）</view>
+<view class='tip'>Lv10：懂你演讲君 练习128小时（7680分）</view>
+</view>
+<view class='tip2' style='padding-top:15px;'>当前等级：{{rank}} </view>
+<view class='tip2'>当前积分：{{studyScore}}分</view>
+<view class='tip2'>升级进度：{{taskPercent}}% </view>
+<view class='tip2'>升级还需：{{taskScore}}分</view>
+<view class='bottom notice'>
+
+<view >注：每练习表达一分钟积一分，每聆听3分钟积一分</view>
+</view>

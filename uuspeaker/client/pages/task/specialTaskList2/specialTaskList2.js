@@ -25,7 +25,8 @@ Page({
     audios: {},
     audioLikeUser: [],
     currentLikeUser: [],
-    totalStudyDuration: 0
+    totalStudyDuration: 0,
+    queryAudioName:''
   },
 
   initViewStyle: function () {
@@ -61,13 +62,42 @@ Page({
     this.doQuerySpecialTask(queryUserType)
   },
 
+  queryAudioWithName: function(e){
+    queryPageType = 0
+    this.doQuerySpecialTask()
+  },
+
+  setAudioName: function(e){
+    this.setData({
+      queryAudioName : e.detail.value
+    })
+    
+  },
+
+  queryAllAudio: function(e){
+    this.setData({
+      queryAudioName: ''
+    })
+    queryPageType = 0
+    this.doQuerySpecialTask()
+  },
+
+  clickAudioName: function(e){
+    this.setData({
+      queryAudioName: e.currentTarget.dataset.audio_name
+    })
+    queryPageType = 0
+    this.doQuerySpecialTask()
+  },
+
+
   //查询自由练习任务信息
-  doQuerySpecialTask: function (queryUserType) {
+  doQuerySpecialTask: function () {
     wx.showLoading({
       title: '加载中',
     })
     //util.showBusy('请求中...')
-    var queryData = { 'queryPageType': queryPageType, 'firstDataTime': firstDataTime, 'lastDataTime': lastDataTime, queryUserType: queryUserType, audioType:1 }
+    var queryData = { 'queryPageType': queryPageType, 'firstDataTime': firstDataTime, 'lastDataTime': lastDataTime, queryUserType: queryUserType, audioType: 1, audioName: this.data.queryAudioName}
     console.log('queryData', queryData)
     var that = this
     qcloud.request({

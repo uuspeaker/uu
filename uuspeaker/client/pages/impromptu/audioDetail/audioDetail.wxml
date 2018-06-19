@@ -6,18 +6,17 @@
     <view class="weui-cell__bd">
       <view class="title">
         <view style='padding-left:10px'>
-          <text>{{audioData[0].audio_name}}</text>
-          <text class="link"  catchtap='copyAudio'> 复制</text>
+          <text catchtap='copyAudio'>{{audioData[0].audio_name}}</text>
         </view>
       </view>
       <view class="small-grey" style='margin-top:10px;'>
         <text>作者：{{audioData[0].user_info.nickName}} </text>
 <block wx:if='{{audioData[0].isMine == 1}}'>
-        <text class="link"  catchtap='editAudio'>备注</text>
+        <text class="link"  catchtap='deleteAudio'>删除</text>
         </block>
-        <block wx:if='{{audioData[0].isMine == 0 && audioData[0].audio_text != null}}'>
+        <!--block wx:if='{{audioData[0].isMine == 0 && audioData[0].audio_text != null}}'>
         <text class="link"  catchtap='editAudio'>备注</text>
-        </block>
+        </block-->
       </view>
       <view class="weui-flex__item date">
         <view>{{audioData[0].createDateStr}} {{audioData[0].timeDurationStr}} </view>

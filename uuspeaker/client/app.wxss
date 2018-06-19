@@ -18,7 +18,6 @@ page {
 }
 .middle{
   margin-top:45px;
-  margin-bottom:40px;
 }
 .bottom{
   position: fixed;

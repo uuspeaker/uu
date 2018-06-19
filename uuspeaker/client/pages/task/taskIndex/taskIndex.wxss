@@ -19,10 +19,9 @@ background:#F6F6F6;
   height: 25px;
   margin-left: 5px;
 }
-.link {
+.nickName {
   font-size: 17px;
   font-weight: bold;
-  color: #576b95;
 }
 .small-grey{
   font-size: 13px;

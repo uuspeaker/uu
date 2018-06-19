@@ -26,16 +26,17 @@ module.exports = {
     var firstDataTime = ctx.query.firstDataTime
     var lastDataTime = ctx.query.lastDataTime
     var audioType = ctx.query.audioType
+    var audioName = ctx.query.audioName
     var taskData = []
     if(queryUserType == 1){
-      taskData = await userTaskService.getMySpecialTask(userId, audioType,queryPageType, firstDataTime, lastDataTime)
+      taskData = await userTaskService.getMySpecialTask(userId, audioType, queryPageType, firstDataTime, lastDataTime, audioName)
     }
     if (queryUserType == 2 || queryUserType == 3) {
-      taskData = await userTaskService.getAllSpecialTask(queryUserType, audioType, queryPageType, firstDataTime, lastDataTime)
+      taskData = await userTaskService.getAllSpecialTask(queryUserType, audioType, queryPageType, firstDataTime, lastDataTime, audioName)
     }
     if (queryUserType == 4) {
       //taskData = await userTaskService.getTaskOfLikeUser(userId, audioType, queryUserType, queryPageType, firstDataTime, lastDataTime)
-      taskData = await userTaskService.getUnevaluatedTask(queryUserType, audioType, queryPageType, firstDataTime, lastDataTime)
+      taskData = await userTaskService.getUnevaluatedTask(queryUserType, audioType, queryPageType, firstDataTime, lastDataTime, audioName)
     }
     for(var i=0; i<taskData.length; i++){
       if(taskData[i].user_id == userId){

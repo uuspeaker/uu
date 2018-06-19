@@ -19,9 +19,9 @@ var getRank = (studySeconds) => {
   } else if (studyHours >= Math.pow(2, 5) && studyHours < Math.pow(2, 6)){
     rank = 'Lv8：钻石演讲君'
   } else if (studyHours >= Math.pow(2, 6) && studyHours < Math.pow(2, 7)){
-    rank = 'Lv9：星耀演讲君'
+    rank = 'Lv9：无畏演讲君'
   } else if (studyHours >= Math.pow(2, 7)){
-    rank = 'Lv10：王者演讲君'
+    rank = 'Lv10：懂你演讲君'
   }
   return rank
 }

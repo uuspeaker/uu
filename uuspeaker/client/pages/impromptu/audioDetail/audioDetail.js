@@ -14,6 +14,7 @@ var startDate
 var endDate
 var timeDuration = 0
 var coinPlay = 0
+var speechTypeArr = ['即兴演讲','备稿演讲','微课']
 
 //查询标记(0-查询最新;1-查询前面10条;2-查询后面10条)
 var queryPageType = 0
@@ -34,6 +35,39 @@ Page({
     audioDataComment:[],
     isPlay:0,
     playNotice:1
+  },
+
+  deleteAudio: function () {
+    var that = this
+    wx.showModal({
+      title: '提示',
+      content: '确定要删除吗？',
+      success: function (sm) {
+        if (sm.confirm) {
+          that.doCancel()
+        } else if (sm.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+
+  doCancel: function () {
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/impromptu.myAudio`,
+      data: { 'audioId': this.data.audioId },
+      login: true,
+      method: 'delete',
+      success(result) {
+        util.showSuccess('已成功删除')
+        wx.navigateBack({ delta: 1 })
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
   },
 
   //查询最新房间信息
@@ -57,6 +91,7 @@ Page({
           likeIt: result.data.data.likeIt,
         })
         that.formatDateAndStatus()
+        wx.setNavigationBarTitle({ title: speechTypeArr[that.data.audioData[0].speech_type] });
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -442,13 +477,14 @@ Page({
     wx.setKeepScreenOn({
       keepScreenOn: true
     })
+   
   },
 
   onReady: function () {
     wx.showShareMenu({
       withShareTicket: true
     })
-    wx.setNavigationBarTitle({ title: '即兴演讲' });
+    //wx.setNavigationBarTitle({ title: speechTypeArr[this.data.audioData[0].speech_type] });
   },
 
   onShareAppMessage: function (res) {
@@ -456,7 +492,7 @@ Page({
       withShareTicket: true
     })
     return {
-      title: '请为我的演讲打call！',
+      title: '请为我的' + speechTypeArr[this.data.audioData[0].speech_type] + '打call！',
     }
   },
 

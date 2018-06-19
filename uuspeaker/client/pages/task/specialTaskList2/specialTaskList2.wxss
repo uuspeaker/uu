@@ -88,3 +88,14 @@ width:90px;
   color: gray;
   margin: 15px 10px 0 0px;
 }
+.search{
+  font-size: 15px;
+  height: 20px;
+  padding-left: 10px;
+  width:  80%
+}
+.queryAll{
+  right: 10px;
+  font-size: 15px;
+  color: grey;
+}

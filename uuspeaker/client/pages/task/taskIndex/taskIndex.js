@@ -360,6 +360,17 @@ Page({
     })
   },
 
+  toScoreLevel: function () {
+    if(this.data.isLogin == 0){
+      util.showSuccess('请先登陆')
+      return
+    }
+    if (this.data.showContent != 1)return
+    wx.navigateTo({
+      url: '../../score/scoreLevel/scoreLevel?totalStudyDuration=' + this.data.totalStudyDuration + '&rank=' + this.data.rank
+    })
+  },
+
   // doLogin: function () {
   //   const session = qcloud.Session.get()
 

@@ -4,6 +4,7 @@ var util = require('../../../utils/util.js')
 var userInfo = require('../../../common/userInfo.js')
 //查询标记(1-查自己;2-查所有;3-查最赞)
 var queryScoreType = ''
+var tmpRankList = []
 Page({
 
   /**
@@ -81,16 +82,32 @@ Page({
   },
 
   formatDateAndStatus: function () {
+    if (queryScoreType == 1){
+      tmpRankList = this.data.rankList
+    }
     var data = this.data.rankList
     for (var i = 0; i < data.length; i++) {
       data[i].score = Math.floor((data[i].totalDuration + 59) / 60)
       data[i].index = i + 1
-      data[i].level = userInfo.getRank(data[i].totalDuration)
+      if (queryScoreType == 1) {
+        data[i].level = userInfo.getRank(data[i].totalDuration)
+      }else{
+        data[i].level = this.getTmpRank(data[i].user_info.userId)
+      }
+      
       data[i].dataType = queryScoreType
     }
     this.setData({
       rankList: data
     })
+  },
+
+  getTmpRank: function(userId){
+    for (var i = 0; i < tmpRankList.length; i++) {
+      if (tmpRankList[i].user_info.userId == userId){
+        return tmpRankList[i].level
+      }
+    }
   },
 
   toUserInfo: function (e) {
