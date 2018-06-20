@@ -121,19 +121,20 @@ var getMySpecialTask = async (userId,audioType, queryPageType, firstDataTime, la
   if (audioName == '') {
     audioName = 1
   } else {
+    audioName = audioName + '%'
     audioNameQuery = 'audio_name'
   }
 
   if (queryPageType == 0) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where({ 'impromptu_audio.user_id': userId, audio_type: audioType }).andWhere(audioNameQuery, '=', audioName).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where({ 'impromptu_audio.user_id': userId, audio_type: audioType }).andWhere(audioNameQuery, 'like', audioName).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
   }
 
   if (queryPageType == 1) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where({ 'impromptu_audio.user_id': userId, audio_type: audioType }).andWhere(audioNameQuery, '=', audioName).andWhere('impromptu_audio.create_date', '>', new Date(firstDataTime)).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where({ 'impromptu_audio.user_id': userId, audio_type: audioType }).andWhere(audioNameQuery, 'like', audioName).andWhere('impromptu_audio.create_date', '>', new Date(firstDataTime)).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
   }
 
   if (queryPageType == 2) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where({ 'impromptu_audio.user_id': userId, audio_type: audioType }).andWhere(audioNameQuery, '=', audioName).andWhere('impromptu_audio.create_date', '<', new Date(lastDataTime)).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where({ 'impromptu_audio.user_id': userId, audio_type: audioType }).andWhere(audioNameQuery, 'like', audioName).andWhere('impromptu_audio.create_date', '<', new Date(lastDataTime)).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
   }
 
 
@@ -156,19 +157,20 @@ var getAllSpecialTask = async (queryUserType, audioType, queryPageType, firstDat
   if (audioName == ''){
     audioName = 1
   }else{
+    audioName = audioName + '%'
     audioNameQuery = 'audio_name'
   }
 
   if (queryPageType == 0) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where({ audio_type: audioType }).andWhere(audioNameQuery, '=', audioName).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where({ audio_type: audioType }).andWhere(audioNameQuery, 'like', audioName).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
   }
 
   if (queryPageType == 1) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where('impromptu_audio.create_date', '>', new Date(firstDataTime)).andWhere({ audio_type: audioType }).andWhere(audioNameQuery, '=', audioName).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where('impromptu_audio.create_date', '>', new Date(firstDataTime)).andWhere({ audio_type: audioType }).andWhere(audioNameQuery, 'like', audioName).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
   }
 
   if (queryPageType == 2) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where('impromptu_audio.create_date', '<', new Date(lastDataTime)).andWhere(audioNameQuery, '=', audioName).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where('impromptu_audio.create_date', '<', new Date(lastDataTime)).andWhere(audioNameQuery, 'like', audioName).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
   }
 
   for (var i = 0; i < taskData.length; i++) {
@@ -190,20 +192,21 @@ var getUnevaluatedTask = async (queryUserType, audioType, queryPageType, firstDa
   if (audioName == '') {
     audioName = 1
   } else {
+    audioName = audioName + '%'
     audioNameQuery = 'audio_name'
   }
 
 
   if (queryPageType == 0) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where({ audio_type: audioType, comment_amount: 0 }).andWhere(audioNameQuery, '=', audioName).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where({ audio_type: audioType, comment_amount: 0 }).andWhere(audioNameQuery, 'like', audioName).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
   }
 
   if (queryPageType == 1) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where('impromptu_audio.create_date', '>', new Date(firstDataTime)).andWhere({ audio_type: audioType, comment_amount: 0 }).andWhere(audioNameQuery, '=', audioName).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where('impromptu_audio.create_date', '>', new Date(firstDataTime)).andWhere({ audio_type: audioType, comment_amount: 0 }).andWhere(audioNameQuery, 'like', audioName).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
   }
 
   if (queryPageType == 2) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where('impromptu_audio.create_date', '<', new Date(lastDataTime)).andWhere({ audio_type: audioType, comment_amount: 0 }).andWhere(audioNameQuery, '=', audioName).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where('impromptu_audio.create_date', '<', new Date(lastDataTime)).andWhere({ audio_type: audioType, comment_amount: 0 }).andWhere(audioNameQuery, 'like', audioName).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
   }
 
   for (var i = 0; i < taskData.length; i++) {

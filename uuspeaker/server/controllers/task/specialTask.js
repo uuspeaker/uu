@@ -27,6 +27,9 @@ module.exports = {
     var lastDataTime = ctx.query.lastDataTime
     var audioType = ctx.query.audioType
     var audioName = ctx.query.audioName
+    if (audioName == undefined){
+      audioName = ''
+    }
     var taskData = []
     if(queryUserType == 1){
       taskData = await userTaskService.getMySpecialTask(userId, audioType, queryPageType, firstDataTime, lastDataTime, audioName)

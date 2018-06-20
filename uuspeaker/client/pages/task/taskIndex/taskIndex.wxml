@@ -103,19 +103,19 @@
         <view class='content'>出题目</view>
       </view>
 
-      <view class="weui-flex__item studyArea"  bindtap='toMyClub'>
+      <!--view class="weui-flex__item studyArea"  bindtap='toMyClub'>
         <view>
           <image class="task-pic"  src="../../../images/taskIndex/star.png" />
         </view>
         <view class='content' >俱乐部</view>
-      </view>
+      </view-->
 
-      <!--view class="weui-flex__item studyArea"  bindtap='toFeedbackList'>
+      <view class="weui-flex__item studyArea"  bindtap='toFeedbackList'>
         <view>
           <image class="task-pic"  src="../../../images/taskIndex/star.png" />
         </view>
         <view class='content' >提建议</view>
-      </view-->
+      </view>
 
     </view>
   </view>
