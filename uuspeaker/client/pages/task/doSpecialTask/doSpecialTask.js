@@ -364,6 +364,10 @@ Page({
     recorderManager.stop();
   },
 
-
+  onShareAppMessage: function (res) {
+    wx.showShareMenu({
+      withShareTicket: true
+    })
+  },
 
 })

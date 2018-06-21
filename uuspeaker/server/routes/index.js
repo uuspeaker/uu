@@ -226,8 +226,15 @@ router.get('/club.clubInfo', controllers.club.clubInfo.get)
 router.post('/club.clubInfo', controllers.club.clubInfo.post)
 //我的俱乐部
 router.get('/club.myClub', controllers.club.myClub.get)
+router.delete('/club.myClub', controllers.club.myClub.del)
 router.put('/club.myClub', controllers.club.myClub.put)
+router.post('/club.myClub', controllers.club.myClub.post)
+//俱乐部会员学习排名
 router.get('/club.clubRank', controllers.club.clubRank.get)
+//俱乐部入会申请
+router.get('/club.clubApply', controllers.club.clubApply.get)
+router.post('/club.clubApply', controllers.club.clubApply.post)
+router.put('/club.clubApply', controllers.club.clubApply.put)
 
 
 

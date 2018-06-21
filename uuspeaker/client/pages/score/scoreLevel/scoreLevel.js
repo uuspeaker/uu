@@ -3,7 +3,7 @@ var config = require('../../../config')
 var util = require('../../../utils/util.js')
 var userInfo = require('../../../common/userInfo.js')
 
-var scoreLevel = [0,1,60,120,240,480,960,1920,3840,7680]
+var scoreLevel = [0, 1, 60, 120, 240, 480, 960, 1920, 3840, 7680, 7680]
 Page({
 
   /**
@@ -35,7 +35,7 @@ Page({
     var nextLevel = currentLevel + 1
     var taskPercent = Math.floor((studyScore - scoreLevel[currentLevel - 1]) * 100 / scoreLevel[nextLevel - 1] - scoreLevel[currentLevel - 1])
     this.setData({
-      taskScore: studyScore - scoreLevel[currentLevel - 1],
+      taskScore: scoreLevel[nextLevel - 1] - studyScore,
       taskPercent: Math.floor((studyScore - scoreLevel[currentLevel - 1]) * 100 / (scoreLevel[nextLevel - 1] - scoreLevel[currentLevel - 1]))
     })
   

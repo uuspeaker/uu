@@ -21,8 +21,10 @@
 </view>
 <view class='tip2' style='padding-top:15px;'>当前等级：{{rank}} </view>
 <view class='tip2'>当前积分：{{studyScore}}分</view>
+<block wx:if='{{studyScore <7680}}'>
 <view class='tip2'>升级进度：{{taskPercent}}% </view>
 <view class='tip2'>升级还需：{{taskScore}}分</view>
+</block>
 <view class='bottom notice'>
 
 <view >注：每练习表达一分钟积一分，每聆听3分钟积一分</view>

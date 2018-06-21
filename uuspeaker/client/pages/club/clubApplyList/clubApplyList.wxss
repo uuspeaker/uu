@@ -1,0 +1,90 @@
+.right {
+  float: right;
+  right: 2px;
+}
+
+.myReport {
+  font-size: 15px;
+  padding-left: 10px;
+}
+.title{
+  font-size: 18px;
+  font-weight: bold;
+  color: #576b95;
+}
+
+.normal {
+  height: 85px;
+  width: 20%;
+  margin-top: 5px;
+  margin-left: 10px;
+  color: white;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 10px 10px 10px 10px;
+}
+
+.uu-code {
+  width: 35px;
+  height: 35px;
+  margin-top: 10px;
+}
+
+.audio {
+  width: 40px;
+  height: 40px;
+  border-radius: 3px;
+  padding-right: 10px;
+}
+
+.like{
+width: 18px; 
+height: 18px; 
+padding-left: 10px;
+
+position: relative;
+  top: 4px;
+}
+
+.user-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+}
+
+.user-like-pic {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+}
+.small-grey{
+  font-size: 13px;
+  color:#888888;
+  font-weight: normal;
+  padding-left:10px;
+  margin-top: 4px;
+}
+.index{
+  color: #576b95;
+  left: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  width:40px;
+}
+.right{
+  color: grey;
+  padding-right: 20px;
+  font-size: 17px;
+  font-weight: bold;
+
+}
+.middle2{
+  margin-top:45px;
+  margin-bottom:80px;
+}
+.up{
+  width: 25px;
+  height: 20px;
+  padding-left: 5px;
+}

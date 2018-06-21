@@ -131,5 +131,11 @@ Page({
     wx.setNavigationBarTitle({ title: '积分排名' });
   },
 
+  onShareAppMessage: function (res) {
+    wx.showShareMenu({
+      withShareTicket: true
+    })
+  },
+
 
 })

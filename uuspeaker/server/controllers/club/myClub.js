@@ -11,7 +11,7 @@ module.exports = {
     ctx.state.data = data
   },
 
-  put: async ctx => {
+  del: async ctx => {
     var userId = await userInfoService.getOpenId(ctx)
     var roleType = ctx.request.body.roleType
     var clubId = ctx.request.body.clubId
@@ -20,6 +20,20 @@ module.exports = {
     } else if (roleType == 1){
       await clubService.dismissClub(clubId, userId)
     }
+  },
+
+  put: async ctx => {
+    var userId = ctx.request.body.userId
+    var updateType = ctx.request.body.updateType
+    var clubId = ctx.request.body.clubId
+    await clubService.updateUserIdentity(clubId, userId, updateType)
+  },
+
+  post: async ctx => {
+    var userId = ctx.request.body.userId
+    var userNotice = ctx.request.body.userNotice
+    var clubId = ctx.request.body.clubId
+    await clubService.updateUserNotice(clubId, userId, userNotice)
   },
 
 }

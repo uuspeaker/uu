@@ -37,6 +37,7 @@
   color: #576b95;
   float: right;
   right: 10px;
+  padding-left: 5px;
 }
 .host-level {
   font-size: 13px;
@@ -112,10 +113,20 @@
 .clubNo{
   padding-right:0px;
   padding-left: 5px;
-  font-weight: bold;
   font-size: 40px;
   color: black;
 
 }
+.surveyStatus {
+  float: right;
+  right: 10px;
+}
+.modalInput{
 
+text-align: center;
+font-size: 20px;
+font-weight: bold;
+color: black;
+height: 40px;
+}
 

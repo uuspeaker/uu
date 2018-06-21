@@ -8,11 +8,11 @@
       </view>
       <view class="weui-cell__bd">
         <view class="link" bindtap='viewImpromptuRoom' data-room_id="{{roomInfo.room_id}}" data-user_id='{{roomInfo.user_id}}' data-start_date='{{roomInfo.start_date}}' data-end_date='{{roomInfo.end_date}}' data-title='{{roomInfo.title}}' data-max_amount='{{roomInfo.max_amount}}'
-          data-notice='{{roomInfo.notice}}' data-is_host='{{isHost}}'>俱乐部：{{clubInfo[0].club_name}}</view>
-          <view class='host-level'>发起人：{{clubInfo[0].userInfo.nickName}} <text class="link3" catchtap='cancelClub'>退出</text></view>
+          data-notice='{{roomInfo.notice}}' data-is_host='{{isHost}}'>{{clubInfo[0].club_name}}</view>
+          <view class='host-level'>创会人：{{clubInfo[0].userInfo.nickName}} <text class="link3" catchtap='cancelClub'>退出</text></view>
       </view>
           <view class="weui-cell__ft " catchtap='toClubList'>
-            NO. <text class='clubNo'>{{clubInfo[0].club_no}}</text>
+             <text class='date'>会员数：</text> <text class='clubNo'>{{clubInfo[0].member_amount}}</text>
           </view>
 
 
@@ -23,20 +23,24 @@
         <view class="date">创会日期：{{clubInfo[0].createDateStr}}</view>
       </view>
 
-      <text bindtap='toUserAudio'>会员数：{{clubInfo[0].member_amount}}</text>
+      <text bindtap='toUserAudio'>编号：NO.{{clubInfo[0].club_no}}</text>
     </view>
   </view>
 
 </view>
 
 <view class="page middle2">
-  <view class="weui-cells__title">官员 <text class='link2' catchtap='toClubStudyRank'>学习排名</text></view>
+  <view class="weui-cells__title">官员 
+  
+  <text class='link2' catchtap='toClubStudyRank'>学习排名</text>
+  </view>
   <view class="weui-cells weui-cells_after-title ">
     <block wx:for="{{officeList}}" wx:key="item">
       <template is="scoreDetailTemplate" data="{{...item}}" />
     </block>
   </view>
-  <view class="weui-cells__title">会员</view>
+  <view class="weui-cells__title">会员
+  <text  style='color:red;padding-left:10px' data-club_id='{{clubInfo[0].club_id}}' catchtap='toApplyList' wx:if='{{applyAmount>0}}'>{{applyAmount}}条申请</text></view>
   <view class="weui-cells weui-cells_after-title ">
     <block wx:for="{{normalMemberList}}" wx:key="item">
       <template is="scoreDetailTemplate" data="{{...item}}" />
@@ -59,21 +63,34 @@
     </view>
     <view class="weui-cell__bd" class='speaker'>
       <view>{{user_info.nickName}}
-        <text>【{{role}}】</text>
+        <text class='link3' data-user_id='{{user_info.userId}}' data-type='9' wx:if='{{myRole == 1 && role_type == 2}}' catchtap='updateUser'>降职</text>
+        <text class='link3' data-user_id='{{user_info.userId}}' data-type='2' wx:if='{{myRole == 1 && role_type == 9}}' catchtap='updateUser'>升职</text>
       </view>
-      <view class='speaker-level'>{{userRank}}</view>
+      <view class='speaker-level'>{{userRank}}
+      <text class='link3' data-user_id='{{user_info.userId}}' wx:if='{{myRole == 1}}' catchtap='showUserNotice'>备注</text></view>
     </view>
-
+    <view class="weui-cell__bd" >
+<text class='surveyStatus'>
+        <text>{{notice}}</text>
+        </text>
+        </view>
   </view>
 </template>
 </block>
+
+<modal hidden="{{hideNotice}}" title="请输入会员备注" confirm-text="保存" cancel-text="取消" bindcancel="hideUserNotce" bindconfirm="saveNotice">
+  <view class="modal">
+    <input class='modalInput' placeholder="会员备注" bindinput="setUserNotice" bindconfirm="saveNotice" value='{{userNotice}}'> </input>
+  </view>
+
+</modal>
 
 <block wx:if='{{clubInfo.length == 0}}'>
 <view class='notice'>还未加入任何俱乐部</view>
 <view class="weui-flex bottom ">
   <view class="weui-flex__item ">
-    <button class="weui-button" type='primary'  bindtap='createClub'>创建俱乐部</button>
-    <button class="weui-button" bindtap='toClubList'>寻找俱乐部</button>
+    <button class="weui-button" type='primary' bindtap='toClubList'>寻找俱乐部</button>
+    <button class="weui-button"   bindtap='createClub'>创建俱乐部</button>
   </view>
 </view>
 

@@ -2,6 +2,7 @@
   "pages": [
     "pages/task/taskIndex/taskIndex",
     "pages/score/scoreLevel/scoreLevel",
+    "pages/club/clubApplyList/clubApplyList",
     "pages/club/clubShow/clubShow",
     "pages/club/clubRank/clubRank",
     "pages/club/myClub/myClub",

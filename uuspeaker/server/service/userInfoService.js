@@ -309,33 +309,6 @@ var getIncreaseRankOfLike = async (userId) => {
   return data
 }
 
-//查询用户学习排名
-var getStudyRankOfClub = async (clubId) => {
-  var limit = 100
-  var offset =0
-  var data = await mysql('club_member').innerJoin('user_study_duration', 'club_member.user_id', 'user_study_duration.user_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'club_member.user_id').where({
-    'club_member.club_id': clubId
-  }).select('cSessionInfo.user_info', mysql.raw('sum(study_duration) as totalDuration')).groupBy('cSessionInfo.user_info').orderBy('totalDuration', 'desc').limit(limit).offset(offset)
-  for (var i = 0; i < data.length; i++) {
-    data[i].user_info = getTailoredUserInfo(data[i].user_info)
-  }
-  return data
-}
-
-//查询用户学习增长排名
-var getIncreaseRankOfClub = async (clubId) => {
-  var today = dateUtil.getToday()
-  var limit = 100
-  var offset =0
-  var data = await mysql('club_member').innerJoin('user_study_duration', 'club_member.user_id', 'user_study_duration.user_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'club_member.user_id').where({
-    'club_member.club_id': clubId, 'user_study_duration.study_date': today
-  }).select('cSessionInfo.user_info', mysql.raw('sum(study_duration) as totalDuration')).groupBy('cSessionInfo.user_info').orderBy('totalDuration', 'desc').limit(limit).offset(offset)
-  for (var i = 0; i < data.length; i++) {
-    data[i].user_info = getTailoredUserInfo(data[i].user_info)
-  }
-  return data
-}
-
 //查询用户影响力排名
 var getInfluenceRank = async (userId) => {
   var limit = 50
@@ -391,8 +364,6 @@ module.exports = {
   getMyInfluenceTotal,
   getStudyRankOfLike,
   getIncreaseRankOfLike,
-  getStudyRankOfClub,
-  getIncreaseRankOfClub,
   getInfluenceRank,
   getStudyReport,
   getStudyReportToday

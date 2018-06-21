@@ -8,7 +8,7 @@ module.exports = {
     var userId = await userInfoService.getOpenId(ctx)
     var clubName = ctx.request.body.clubName
     var clubDescription = ctx.request.body.clubDescription
-    await clubService.createClub(userId, clubName, clubDescription)
+    ctx.state.data = await clubService.createClub(userId, clubName, clubDescription)
   },
 
   get: async ctx => {

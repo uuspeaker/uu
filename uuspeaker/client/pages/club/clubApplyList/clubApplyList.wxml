@@ -1,0 +1,23 @@
+<view class="weui-cells weui-cells_after-title" >
+  <block wx:for="{{applyList}}" wx:key="item">
+    <template is="scoreDetailTemplate" data="{{...item}}" />
+  </block>
+</view>
+
+  <template name="scoreDetailTemplate">
+  <view class="weui-cell" bindtap='toUserInfo' data-user_id='{{user_info.userId}}' data-avatar_url='{{user_info.avatarUrl}}' data-nick_name='{{user_info.nickName}}' >
+    <view class="user-avatar">
+      <image class="user-pic" src="{{userInfo.avatarUrl}}"  />
+    </view>
+    <view class="weui-cell__bd">
+      <view class="title">
+        <view style='padding-left:10px;'>
+          <text>{{userInfo.nickName}}</text>
+        </view>
+      </view>
+      <view class='small-grey'>{{level}}</view>
+      <view class='small-grey'>入会申请：{{notice}}</view>
+    </view>
+    <view class='right'><text style='margin-right:15px;color: #576b95;' data-user_id='{{userInfo.userId}}' catchtap='pass'>通过</text><text data-user_id='{{userInfo.userId}}' catchtap='deny'>拒绝</text></view>
+  </view>
+</template>

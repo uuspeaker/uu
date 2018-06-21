@@ -18,11 +18,14 @@ Page({
       login: true,
       method: 'post',
       success(result) {
-        util.showSuccess('俱乐部创建成功')
-        that.setData({
-          applyResult: result.data.data
-        })
-        that.toMyClub()
+        if (result.data.data == 1){
+          util.showSuccess('俱乐部创建成功')
+          that.toMyClub()
+        }
+        if (result.data.data == 9) {
+          util.showSuccess('已经拥有俱乐部')
+        }
+        
       },
       fail(error) {
         util.showModel('请求失败', error);

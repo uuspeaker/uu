@@ -1,8 +1,16 @@
 .tip{
   font-size:15px;
   text-align: left;
-  padding-left: 10px;
-  font-family: Arial, Helvetica, sans-serif;
-  animation:tipChange 1s;
-	-webkit-animation:tipChange 1s; 
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.applyTitle{
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 60px;
+}
+.applyNotice{
+  margin-top:10px;
 }

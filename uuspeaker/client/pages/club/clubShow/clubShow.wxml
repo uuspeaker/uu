@@ -1,11 +1,24 @@
-<view style='height:110px'>
+<form bindsubmit='applyClub'>
+<view class='applyTitle'>入会申请</view>
+<view >
     <view class='tip' style='font-weight: bold;'>申请步骤：</view>  
-<view class='tip'>1、点击申请加入，录制申请语音</view>
+<view class='tip'>1、填写入会申请</view>
 <view class='tip'>2、等待会长审批</view>
 <view class='tip'>3、审批通过成为正式会员</view>
+<view class='tip'>注：每人只能加入一家俱乐部，只保存最近的入会申请</view>
 </view>
+
+<view class="weui-cells weui-cells_after-title applyNotice" >
+      <view class="weui-cell weui-cell_switch">
+        <view class="weui-cell__bd" >
+          <textarea name='applyNotice' placeholder='入会申请'></textarea>
+        </view>
+      </view>
+    </view>
+
 <view class="weui-flex bottom ">
   <view class="weui-flex__item ">
-    <button class="weui-button" type='primary'  bindtap='createClub'>申请加入</button>
+    <button class="weui-button" type='primary' formType="submit">申请加入</button>
   </view>
 </view>
+</form>
