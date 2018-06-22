@@ -61,7 +61,7 @@ const CONF = {
     // Bucket 名称
     fileBucket: 'uuspeaker',
     // 文件夹
-    uploadFolder: 'test',
+    uploadFolder: 'audio',
     maxSize: 20
   },
 

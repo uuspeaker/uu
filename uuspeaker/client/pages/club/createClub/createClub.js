@@ -76,7 +76,7 @@ Page({
 
   onLoad: function (options) {
     console.log(options)
-    if (options.operationType = 2){
+    if (options.operationType == 2){
       method = 'put'
       this.setData({
         clubId: options.clubId,

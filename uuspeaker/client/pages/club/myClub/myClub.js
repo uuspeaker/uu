@@ -16,12 +16,13 @@ Page({
   data: {
     memberList: {},
     userInfo: {},
-    clubInfo:null,
+    clubInfo:[],
     officeList:[],
     normalMemberList:[],
     hideNotice:true,
     applyAmount:0,
-    userNotice:''
+    userNotice:'',
+    isInClub:''
   },
 
   //查询用户参会数据
@@ -40,11 +41,16 @@ Page({
           that.setData({
             clubInfo: result.data.data.clubInfo,
             memberList: result.data.data.memberList,
+            isInClub:1
           })
           that.formatDate()
           clubId = result.data.data.clubInfo[0].club_id
           if (result.data.data.clubInfo[0].myRole == 1){
             that.queryClubApplyAmount()
+          }else{
+            that.setData({
+              isInClub: 0
+            })
           }
           
         }

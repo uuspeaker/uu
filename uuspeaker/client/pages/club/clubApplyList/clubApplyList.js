@@ -18,9 +18,9 @@ Page({
 
   //查询排名信息
   queryApplyList: function () {
-    wx.showLoading({
-      title: '加载中',
-    })
+    // wx.showLoading({
+    //   title: '加载中',
+    // })
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/club.clubApply`,

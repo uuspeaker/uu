@@ -1,4 +1,4 @@
-<block wx:if='{{clubInfo.length > 0}}'>
+<block wx:if='{{isInClub == 1}}'>
   <view class="page top">
     <view class="weui-cells weui-cells_after-title ">
 
@@ -94,7 +94,7 @@
 
 </modal>
 
-<block wx:if='{{clubInfo.length == 0}}'>
+<block wx:if='{{isInClub == 0}}'>
   <view class='notice'>还未加入任何俱乐部</view>
   <view class="weui-flex bottom ">
     <view class="weui-flex__item ">

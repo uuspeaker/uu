@@ -31,13 +31,13 @@
       </view>
       <view>
         <view class=" date">创始人：{{user_info.nickName}}</view>
-        <view class=" date">编号：NO.{{club_no}}</view>
+        <view class=" date">会员数：{{member_amount}} 人</view>
         <view class=" date">创建时间：{{createDateStr}}</view>
       </view>
     </view>
     <view class="weui-cell__ft ">
           <text class='date'></text>
-          <text class='clubNo'>{{member_amount}}</text> 人
+          <text class='clubNo'></text>
         </view>
   </view>
 </template>

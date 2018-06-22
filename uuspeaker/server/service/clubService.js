@@ -113,6 +113,7 @@ var getClubMember = async (clubId) => {
 //退出俱乐部
 var cancelClub = async (clubId,userId) => {
   await mysql('club_member').where({club_id: clubId, user_id: userId}).del()
+  await updateMemberAmount(clubId)
 }
 
 //解散俱乐部
@@ -254,14 +255,14 @@ var denyApply = async (clubId,userId) => {
 
 //更新会员人数
 var updateMemberAmount = async (clubId) => {
-  var totalAmount = await mysql('club_member').where({
+  var member = await mysql('club_member').where({
     club_id: clubId,
-  }).count('user_id as totalAmount')
+  })
 
   await mysql('club_info').where({
     club_id: clubId,
   }).update({
-    member_amount: totalAmount
+    member_amount: member.length
   })
 }
 
