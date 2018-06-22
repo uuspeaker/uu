@@ -1,5 +1,5 @@
 <form bindsubmit='applyClub'>
-<view class='applyTitle'>入会申请</view>
+<view class='applyTitle'>{{clubName}}</view>
 <view >
     <view class='tip' style='font-weight: bold;'>申请步骤：</view>  
 <view class='tip'>1、填写入会申请</view>

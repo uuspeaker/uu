@@ -32,6 +32,16 @@ var createClub = async (userId, clubName, clubDescription) => {
   return 1
 }
 
+//修改俱乐部
+var updateClub = async (clubId, clubName, clubDescription) => {
+  await mysql('club_info').update({
+    club_name: clubName,
+    club_description: clubDescription
+  }).where({
+    club_id: clubId
+  })
+}
+
 //查询俱乐部列表
 var getClubList = async (userId, queryPageType, firstDataTime, lastDataTime) => {
   var limit = 10
@@ -257,6 +267,7 @@ var updateMemberAmount = async (clubId) => {
 
 module.exports = {
   createClub,
+  updateClub,
   getClubList,
   getMyClubInfo,
   getClubInfoById,

@@ -25,6 +25,7 @@
 .link {
   font-size: 17px;
   font-weight: bold;
+  color: #576b95;
 }
 .link3 {
   font-size: 15px;

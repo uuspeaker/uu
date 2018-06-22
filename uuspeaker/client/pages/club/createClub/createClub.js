@@ -3,23 +3,32 @@ var config = require('../../../config')
 var util = require('../../../utils/util.js')
 var dateFormat = require('../../../common/dateFormat.js')
 
+var method = 'post'
 Page({
   data: {
     userInfo: {},
+    clubId: '',
+    clubName: '',
+    clubDescription: '',
   },
 
   createClub: function (e) {
     util.showBusy('请求中...')
     var requestData = e.detail.value
+    requestData.clubId = this.data.clubId
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/club.clubInfo`,
       data: requestData,
       login: true,
-      method: 'post',
+      method: method,
       success(result) {
         if (result.data.data == 1){
           util.showSuccess('俱乐部创建成功')
+          that.toMyClub()
+        }
+        if (result.data.data == 2){
+          util.showSuccess('俱乐部修改成功')
           that.toMyClub()
         }
         if (result.data.data == 9) {
@@ -67,6 +76,14 @@ Page({
 
   onLoad: function (options) {
     console.log(options)
+    if (options.operationType = 2){
+      method = 'put'
+      this.setData({
+        clubId: options.clubId,
+        clubName: options.clubName,
+        clubDescription: options.clubDescription,
+      })
+    }
     this.initUserInfo()
   },
 

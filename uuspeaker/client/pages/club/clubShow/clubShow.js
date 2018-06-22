@@ -9,7 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    
+    clubName: ''
   },
 
   applyClub: function(e){
@@ -44,6 +44,22 @@ Page({
    */
   onLoad: function (options) {
     clubId = options.clubId
+    this.setData({
+      clubName : options.clubName
+    })
+    
+  },
+
+  onShareAppMessage: function (res) {
+    wx.showShareMenu({
+      withShareTicket: true
+    })
+  },
+
+  onReady: function(){
+    wx.setNavigationBarTitle({
+      title: '入会申请',
+    })
   },
 
   

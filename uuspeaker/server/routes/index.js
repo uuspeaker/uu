@@ -224,6 +224,7 @@ router.get('/letter.letterForLevel3', controllers.letter.letterForLevel3.get)
 //俱乐部管理
 router.get('/club.clubInfo', controllers.club.clubInfo.get)
 router.post('/club.clubInfo', controllers.club.clubInfo.post)
+router.put('/club.clubInfo', controllers.club.clubInfo.put)
 //我的俱乐部
 router.get('/club.myClub', controllers.club.myClub.get)
 router.delete('/club.myClub', controllers.club.myClub.del)

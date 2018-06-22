@@ -16,7 +16,7 @@ Page({
   data: {
     memberList: {},
     userInfo: {},
-    clubInfo:[],
+    clubInfo:null,
     officeList:[],
     normalMemberList:[],
     hideNotice:true,
@@ -36,11 +36,11 @@ Page({
       success(result) {
         wx.hideLoading()
         //util.showSuccess('请求成功完成')
-        that.setData({
-          clubInfo: result.data.data.clubInfo,
-          memberList: result.data.data.memberList,
-        })
         if (result.data.data.clubInfo.length > 0){
+          that.setData({
+            clubInfo: result.data.data.clubInfo,
+            memberList: result.data.data.memberList,
+          })
           that.formatDate()
           clubId = result.data.data.clubInfo[0].club_id
           if (result.data.data.clubInfo[0].myRole == 1){
@@ -275,7 +275,7 @@ Page({
 
   createClub: function () {
     wx.navigateTo({
-      url: '../../club/createClub/createClub'
+      url: '../../club/createClub/createClub?operationType=1'
     })
   },
 
@@ -294,6 +294,24 @@ Page({
   toApplyList: function () {
     wx.navigateTo({
       url: '../../club/clubApplyList/clubApplyList?clubId=' + this.data.clubInfo[0].club_id,
+    })
+  },
+
+  toClubDetail: function () {
+    wx.navigateTo({
+      url: '../../club/clubDetail/clubDetail?clubId=' 
+      + this.data.clubInfo[0].club_id 
+      + '&clubName=' + this.data.clubInfo[0].club_name
+      + '&clubDescription=' + this.data.clubInfo[0].club_description,
+    })
+  },
+
+  toModifyClub: function () {
+    wx.navigateTo({
+      url: '../../club/createClub/createClub?operationType=2&clubId=' 
+      + this.data.clubInfo[0].club_id 
+      + '&clubName=' + this.data.clubInfo[0].club_name
+      + '&clubDescription=' + this.data.clubInfo[0].club_description,
     })
   },
 

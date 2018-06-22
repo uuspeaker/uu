@@ -11,6 +11,14 @@ module.exports = {
     ctx.state.data = await clubService.createClub(userId, clubName, clubDescription)
   },
 
+  put: async ctx => {
+    var clubId = ctx.request.body.clubId
+    var clubName = ctx.request.body.clubName
+    var clubDescription = ctx.request.body.clubDescription
+    await clubService.updateClub(clubId, clubName, clubDescription)
+    ctx.state.data = 2
+  },
+
   get: async ctx => {
     var userId = await userInfoService.getOpenId(ctx)
     var queryPageType = ctx.query.queryPageType

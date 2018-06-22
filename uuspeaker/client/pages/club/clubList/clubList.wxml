@@ -1,4 +1,3 @@
-
 <!--view class="weui-cell top">
   <view class=" myReport"  style="{{viewStyle[0]}}" data-item='0' data-type='1' bindtap='queryRoomInfo'>全部</view>
   <view class=" myReport"  style="{{viewStyle[2]}}" data-item='2' data-type='3' bindtap='queryRoomInfo'>我的</view>
@@ -6,7 +5,7 @@
 </view-->
 <!--报名展示-->
 
-<view class="weui-cells weui-cells_after-title" >
+<view class="weui-cells weui-cells_after-title">
   <block wx:for="{{rooms}}" wx:key="item">
     <template is="scoreDetailTemplate" data="{{...item}}" />
   </block>
@@ -15,27 +14,30 @@
 <view style='height:35px'></view>
 <view class="weui-flex bottom ">
   <view class="weui-flex__item ">
-   
+
   </view>
 </view>
 
 <template name="scoreDetailTemplate">
-  <view class="weui-cell" data-club_id='{{club_id}}' bindtap="toClubShow">
-    <view class="user-avatar" >
+  <view class="weui-cell" data-club_id='{{club_id}}' data-club_name='{{club_name}}' bindtap="toClubShow">
+    <view class="user-avatar">
       <image class="user-pic" src="{{user_info.avatarUrl}}" data-user_id='{{user_id}}' />
     </view>
-    <view class="weui-cell__bd" >
-    <view class="" >
-        <view  class='article' >
-        <text >俱乐部：{{club_name}}</text>
+    <view class="weui-cell__bd">
+      <view class="">
+        <view class='article'>
+          <text>俱乐部：{{club_name}}</text>
         </view>
       </view>
-      <view >
+      <view>
         <view class=" date">创始人：{{user_info.nickName}}</view>
-        <view class=" date">会员人数：{{member_amount}}</view>
+        <view class=" date">编号：NO.{{club_no}}</view>
         <view class=" date">创建时间：{{createDateStr}}</view>
       </view>
     </view>
+    <view class="weui-cell__ft ">
+          <text class='date'></text>
+          <text class='clubNo'>{{member_amount}}</text> 人
+        </view>
   </view>
 </template>
-

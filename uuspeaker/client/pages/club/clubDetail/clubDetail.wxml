@@ -1,0 +1,5 @@
+<view class='applyTitle'>{{clubName}}</view>
+<view class='content'>{{clubDescription}}</view>
+
+
+

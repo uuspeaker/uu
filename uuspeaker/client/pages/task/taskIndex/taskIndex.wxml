@@ -105,7 +105,7 @@
 
       <view class="weui-flex__item studyArea"  bindtap='toMyClub'>
         <view>
-          <image class="task-pic"  src="../../../images/taskIndex/star.png" />
+          <image class="task-pic"  src="../../../images/taskIndex/club.png" />
         </view>
         <view class='content' >俱乐部</view>
       </view>

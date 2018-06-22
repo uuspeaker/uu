@@ -181,8 +181,9 @@ Page({
 
   toClubShow: function (e) {
     var clubId = e.currentTarget.dataset.club_id
+    var clubName = e.currentTarget.dataset.club_name
     wx.navigateTo({
-      url: '../../club/clubShow/clubShow?clubId=' + clubId
+      url: '../../club/clubShow/clubShow?clubId=' + clubId + '&clubName=' + clubName
     })
   },
 

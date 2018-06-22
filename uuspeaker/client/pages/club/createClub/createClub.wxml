@@ -7,12 +7,12 @@
           <view class="weui-label">俱乐部名称</view>
         </view>
         <view class="weui-cell__bd">
-          <input name="clubName" class="weui-input" placeholder='' value='{{title}}' />
+          <input name="clubName" class="weui-input" placeholder='' value='{{clubName}}' />
         </view>
       </view>
       <view class="weui-cell weui-cell_input">
         <view class="weui-cell__bd">
-          <textarea name="clubDescription" value='{{notice}}' placeholder-class="textarea" class="weui-textarea" placeholder="请输入俱乐部描述" style="height: 10em" maxlength='2000'/>
+          <textarea name="clubDescription" value='{{clubDescription}}'  placeholder="请输入俱乐部描述" style="height: 20em" maxlength='2000'></textarea>
         </view>
       </view>
     </view>
