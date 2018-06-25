@@ -2,10 +2,10 @@ const { mysql } = require('../qcloud')
 const dateUtil = require('../common/dateUtil.js')
 const uuid = require('../common/uuid.js')
 const userInfoService = require('../service/userInfoService')
-
+const audioService = require('../service/audioService.js')
 
 //创建俱乐部
-var createClub = async (userId, clubName, clubDescription) => {
+var createClub = async (userId, clubName, clubDescription, audioId, timeDuration) => {
   var clubData = await mysql('club_info').where({
     'user_id': userId
   })
@@ -22,7 +22,9 @@ var createClub = async (userId, clubName, clubDescription) => {
     club_id: clubId,
     club_name: clubName,
     member_amount: 1,
-    club_description: clubDescription
+    club_description: clubDescription,
+    audio_id: audioId,
+    time_duration: timeDuration
   })
   await mysql('club_member').insert({
     user_id: userId,
@@ -33,10 +35,12 @@ var createClub = async (userId, clubName, clubDescription) => {
 }
 
 //修改俱乐部
-var updateClub = async (clubId, clubName, clubDescription) => {
+var updateClub = async (clubId, clubName, clubDescription, audioId, timeDuration) => {
   await mysql('club_info').update({
     club_name: clubName,
-    club_description: clubDescription
+    club_description: clubDescription,
+    audio_id: audioId,
+    time_duration: timeDuration
   }).where({
     club_id: clubId
   })
@@ -75,6 +79,7 @@ var getMyClubInfo = async (userId) => {
     var clubId = clubInfo[0].club_id
     var memberList = await getClubMember(clubId)
     clubInfo[0].userInfo = userInfoService.getTailoredUserInfo(clubInfo[0].user_info)
+    clubInfo[0].src = audioService.getSrc(clubInfo[0].audio_id)
     if (clubInfo[0].userInfo.userId == userId){
       clubInfo[0].myRole = 1
     }else{
@@ -186,7 +191,7 @@ var isInClub = async (userId) => {
 }
 
 //申请加入俱乐部
-var applyClub = async (userId, clubId, applyNotice) => {
+var applyClub = async (userId, clubId, audioId) => {
   await mysql('club_apply').where({
     user_id: userId,
     apply_status: 1
@@ -195,7 +200,7 @@ var applyClub = async (userId, clubId, applyNotice) => {
   await mysql('club_apply').insert({
     user_id: userId,
     club_id: clubId,
-    notice: applyNotice,
+    notice: audioId,
     apply_status: 1
   })
 }

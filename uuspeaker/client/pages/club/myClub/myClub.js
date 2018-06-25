@@ -22,12 +22,15 @@ Page({
     hideNotice:true,
     applyAmount:0,
     userNotice:'',
-    isInClub:''
+    isInClub:'9'
   },
 
   //查询用户参会数据
   queryMyClubInfo: function () {
     //util.showBusy('请求中...')
+    wx.showLoading({
+      title: '加载中',
+    })
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/club.myClub`,
@@ -47,12 +50,11 @@ Page({
           clubId = result.data.data.clubInfo[0].club_id
           if (result.data.data.clubInfo[0].myRole == 1){
             that.queryClubApplyAmount()
-          }else{
-            that.setData({
-              isInClub: 0
-            })
           }
-          
+        }else{
+          that.setData({
+            isInClub: 0
+          })
         }
         
       },
@@ -308,7 +310,9 @@ Page({
       url: '../../club/clubDetail/clubDetail?clubId=' 
       + this.data.clubInfo[0].club_id 
       + '&clubName=' + this.data.clubInfo[0].club_name
-      + '&clubDescription=' + this.data.clubInfo[0].club_description,
+      + '&clubDescription=' + this.data.clubInfo[0].club_description
+      + '&src=' + this.data.clubInfo[0].src
+      + '&timeDuration=' + this.data.clubInfo[0].time_duration,
     })
   },
 

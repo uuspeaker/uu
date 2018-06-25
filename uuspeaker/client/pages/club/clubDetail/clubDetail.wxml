@@ -1,5 +1,14 @@
 <view class='applyTitle'>{{clubName}}</view>
+<view class="weui-flex audioArea" catchtap='doNothing'>
+  <view class="weui-flex__item">
+    <image class="audio" src="../../../images/userAudio/play.png" data-index='{{audioIndex}}' catchtap='playAudio' wx:if='{{isPlay==0}}' />
+    <image class="audio" src="../../../images/userAudio/hold.png" data-index='{{audioIndex}}' catchtap='stopAudio' wx:if='{{isPlay==1}}' />
+  </view>
+  <view class=" timeNotice">{{audios[0].currentTime}}</view>
+  <view>
+    <slider class='sliderAudio' block-size='12' block-color='#1296db' value='{{audios[0].sliderValue}}' selected-color='#1296db' bindchange='changeSlider'></slider>
+  </view>
+  <view class=" timeNotice2">{{audios[0].duration}}</view>
+
+</view>
 <view class='content'>{{clubDescription}}</view>
-
-
-

@@ -1,4 +1,4 @@
-<form bindsubmit="createClub">
+
   <view>
     <view class="weui-cells__title">俱乐部</view>
     <view class="weui-cells weui-cells_after-title">
@@ -7,12 +7,12 @@
           <view class="weui-label">俱乐部名称</view>
         </view>
         <view class="weui-cell__bd">
-          <input name="clubName" class="weui-input" placeholder='' value='{{clubName}}' />
+          <input name="clubName" class="weui-input" bindinput='setClubName' value='{{clubName}}' />
         </view>
       </view>
       <view class="weui-cell weui-cell_input">
         <view class="weui-cell__bd">
-          <textarea name="clubDescription" value='{{clubDescription}}'  placeholder="请输入俱乐部描述" style="height: 20em" maxlength='2000'></textarea>
+          <textarea name="clubDescription" bindinput='setClubDescription' value='{{clubDescription}}'  placeholder="请输入俱乐部描述" style="height: 20em" maxlength='2000'></textarea>
         </view>
       </view>
     </view>
@@ -23,13 +23,9 @@
   <view class="weui-flex bottom">
 
     <view class="weui-flex__item">
-    <block wx:if="{{operation != 'view'}}">
-      <button class="weui-btn" type="primary" formType="submit">保存</button>
-      </block>
-      <block wx:if="{{operation == 'modify'}}">
-        <button bindtap='cancelImpromptuRoom'>取消</button>
-      </block>
+
+     <button class="weui-button" type='primary' bindtap="startRecord"  wx:if="{{isPlay == 0}}">语音介绍</button>
+    <button class="weui-button" type='primary' bindtap="stopRecord"  wx:if="{{isPlay == 1}}">完成录制</button>
     </view>
 
   </view>
-</form>

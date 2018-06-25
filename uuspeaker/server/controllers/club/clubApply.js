@@ -6,12 +6,13 @@ module.exports = {
   post: async ctx => {
     var userId = await userInfoService.getOpenId(ctx)
     var clubId = ctx.request.body.clubId
+    var audioId = ctx.request.body.audioId
     var applyNotice = ctx.request.body.applyNotice
     var isInClub = await clubService.isInClub(userId)
     if (isInClub){
       ctx.state.data = 9
     }else{
-      await clubService.applyClub(userId, clubId, applyNotice)
+      await clubService.applyClub(userId, clubId, audioId)
       ctx.state.data = 1
     }
   },

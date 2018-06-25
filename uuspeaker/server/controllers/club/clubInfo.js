@@ -8,14 +8,18 @@ module.exports = {
     var userId = await userInfoService.getOpenId(ctx)
     var clubName = ctx.request.body.clubName
     var clubDescription = ctx.request.body.clubDescription
-    ctx.state.data = await clubService.createClub(userId, clubName, clubDescription)
+    var audioId = ctx.request.body.audioId
+    var timeDuration = ctx.request.body.timeDuration
+    ctx.state.data = await clubService.createClub(userId, clubName, clubDescription, audioId, timeDuration)
   },
 
   put: async ctx => {
     var clubId = ctx.request.body.clubId
     var clubName = ctx.request.body.clubName
     var clubDescription = ctx.request.body.clubDescription
-    await clubService.updateClub(clubId, clubName, clubDescription)
+    var audioId = ctx.request.body.audioId
+    var timeDuration = ctx.request.body.timeDuration
+    await clubService.updateClub(clubId, clubName, clubDescription, audioId, timeDuration)
     ctx.state.data = 2
   },
 
