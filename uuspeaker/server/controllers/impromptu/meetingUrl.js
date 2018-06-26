@@ -15,12 +15,13 @@ const option = {
  * 实际使用请使用数据库存储
  */
 var meetingUserMap = {}
-var sperkers = {}
+//var sperkers = {}
 
 // 保存 当前已连接的 WebSocket 信道ID列表
 const meetingConnectedTunnelIds = []
 
 var waitTime = 99000
+var unactiveTime = 10 * 60 * 1000
 var standByList = []
 var speechNames = []
 var numberTunnelResend = []
@@ -49,12 +50,39 @@ var startMatch = (userInfo) => {
 
   userInfo.startDate = new Date()
   standByList.unshift(userInfo)
-  meetingUserMap[sperkers[userInfo.userId]].speechStatus = 1
+  setUserStatus(userInfo.userId,1)
+  //meetingUserMap[sperkers[userInfo.userId][tunnelId]].speechStatus = 1
   $broadcast('people', {
-    'updatedPerson': meetingUserMap[sperkers[userInfo.userId]]
+    'updatedPerson': getUserInfo(userInfo.userId)
   })
   log.info('用户开始匹配' + JSON.stringify(userInfo))
   log.info('当前正在等待匹配的所有用户' + JSON.stringify(standByList))
+}
+
+var setUserStatus = (userId, status) => {
+  for (i in meetingUserMap){
+    if (meetingUserMap[i].openId == userId){
+      meetingUserMap[i].speechStatus = status
+    }
+  }
+}
+
+var getUserInfo = (userId) => {
+  for (i in meetingUserMap) {
+    if (meetingUserMap[i].openId == userId) {
+      return meetingUserMap[i]
+    }
+  }
+  return {}
+}
+
+var getTunnelId = (userId) => {
+  for (i in meetingUserMap) {
+    if (meetingUserMap[i].openId == userId) {
+      return meetingUserMap[i].tunnelId
+    }
+  }
+  return ''
 }
 
 //定期删除超过最大时间还未匹配到的用户
@@ -65,19 +93,36 @@ var removeUnmatchUser = () => {
   for (var i = 0; i < standByListLegnth; i++) {
     var lastSeconds = Math.floor(now - standByList[i].startDate)
     if (lastSeconds >= waitTime) {
-      var removedUser = standByList.splice(i - removeAmount, 1)
-      if (sperkers[removedUser.userId] && meetingUserMap[sperkers[removedUser.userId]]){
-        meetingUserMap[sperkers[removedUser.userId]].speechStatus = 0
+      var removedUser = standByList.splice(i - removeAmount, 1)[0]
+
+      setUserStatus( removedUser.userId, 0)
+      log.info('当前用户' +JSON.stringify(meetingUserMap))
         $broadcast('people', {
-          'updatedPerson': meetingUserMap[sperkers[userInfo.userId]]
+          'updatedPerson': getUserInfo(removedUser.userId)
         })
-      }  
+      
       log.info('等待时间到还未匹配到，将用户从等待列表删除' + JSON.stringify(removedUser))
       log.info('当前正在等待匹配的所有用户' + JSON.stringify(standByList))
       removeAmount++
     }
   }
 }
+
+//定期删除超过最大时间还未匹配到的用户
+var clearUnactiveUser = () => {
+  var now = new Date()
+  var legnth = meetingUserMap.length
+  var removeAmount = 0
+  for (var i in meetingUserMap) {
+    var lastSeconds = Math.floor(now - meetingUserMap[i].updateTime)
+    if (lastSeconds >= unactiveTime) {
+      log.info('清除不活动用户' + JSON.stringify(meetingUserMap[i]))
+      onClose(meetingUserMap[i].tunnelId)
+    }
+  }
+}
+
+
 
 //用户停止匹配
 var stopMatch = (userId) => {
@@ -87,12 +132,11 @@ var stopMatch = (userId) => {
     log.info('用户取消循环' + i + ':' + JSON.stringify(standByList[i]))
     if (standByList[i].userId == userId) {
       var removedUser = standByList.splice(i, 1)
-      if (sperkers[userId] && meetingUserMap[sperkers[userId]]){
-        meetingUserMap[sperkers[userId]].speechStatus = 0
+        setUserStatus(userId, 0)
         $broadcast('people', {
-          'updatedPerson': meetingUserMap[sperkers[userId]]
+          'updatedPerson': getUserInfo(userId)
         })
-      }
+      
       log.info('用户取消匹配' + JSON.stringify(removedUser))
       log.info('当前正在等待匹配的所有用户' + JSON.stringify(standByList))
       return
@@ -112,11 +156,11 @@ var autoMatchUser = () => {
 
     log.info('匹配成功，将匹配成功的两个用户从等待列表删除，转移到匹配成功列表' + JSON.stringify(matchUserA) + JSON.stringify(matchUserB))
 
-    $sendMessage(sperkers[matchUserA.userId], 'match', {
+    $sendMessage(getTunnelId(matchUserA.userId), 'match', {
       'data': { matchedUser: matchUserB, speechName: speechName}
     })
     
-    $sendMessage(sperkers[matchUserB.userId], 'match', {
+    $sendMessage(getTunnelId(matchUserB.userId), 'match', {
       'data': { matchedUser: matchUserA, speechName: speechName}
     })
 
@@ -146,7 +190,7 @@ const doSendMessage = (tunnelIds,type, content) => {
               clearTimeout(timer)
             }, 3000)
           } else {
-            onClose(tunnelId)
+            //onClose(tunnelId)
           }
         })
       }
@@ -204,6 +248,7 @@ function onMessage(tunnelId, type, content) {
   switch (type) {
     case 'speak':
       if (tunnelId in meetingUserMap) {
+        meetingUserMap[tunnelId].updateTime = new Date()
         $broadcast('speak', {
           'who': meetingUserMap[tunnelId],
           'word': content.word
@@ -214,7 +259,8 @@ function onMessage(tunnelId, type, content) {
       break
     case 'speech':
       if (tunnelId in meetingUserMap) {
-        $sendMessage(sperkers[content.targetUserId], 'speech', {
+        meetingUserMap[tunnelId].updateTime = new Date()
+        $sendMessage(getTunnelId(content.targetUserId), 'speech', {
           'who': meetingUserMap[tunnelId],
           'data': content
         })
@@ -241,7 +287,7 @@ function onClose(tunnelId) {
     return
   }
 
-  delete sperkers[meetingUserMap[tunnelId].openId]
+  //delete sperkers[meetingUserMap[tunnelId].openId]
 
   const leaveUser = meetingUserMap[tunnelId]
   delete meetingUserMap[tunnelId]
@@ -273,15 +319,21 @@ module.exports = {
     data.userinfo.rank = ctx.query.rank
     data.userinfo.tunnelId = tunnelInfo.tunnelId
     data.userinfo.speechStatus = ctx.query.speechStatus
+    data.userinfo.updateTime = new Date()
     
     //清除原先打开的信道
-    if (data.userinfo.openId in sperkers){
-      var oldTunnelId = sperkers[data.userinfo.openId]
-      onClose(oldTunnelId)
+    // if (data.userinfo.openId in sperkers){
+    //   var oldTunnelId = sperkers[data.userinfo.openId][tunnelId]
+    //   onClose(oldTunnelId)
+    // }
+    for (i in meetingUserMap){
+      if (meetingUserMap[i].openId == data.userinfo.openId) {
+        onClose(meetingUserMap[i].tunnelId)
+      }
     }
     
     meetingUserMap[tunnelInfo.tunnelId] = data.userinfo
-    sperkers[data.userinfo.openId] = tunnelInfo.tunnelId
+    //sperkers[data.userinfo.openId] = { 'tunnelId': tunnelInfo.tunnelId,'updateTime':new Date()}
     //console.log('meetingUrl meetingUserMap', meetingUserMap)
     ctx.state.data = tunnelInfo
   },
@@ -326,3 +378,4 @@ initSpeechNames()
 setInterval(autoMatchUser, 1 * 1000);
 setInterval(initSpeechNames, 10 * 60 * 1000);
 setInterval(resetNumberOfResend, 10 * 60 * 1000);
+setInterval(clearUnactiveUser, 60 * 1000);
