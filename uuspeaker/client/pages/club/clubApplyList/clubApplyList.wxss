@@ -51,6 +51,8 @@ position: relative;
   width: 50px;
   height: 50px;
   border-radius: 50px;
+  position: relative;
+  top:-70rpx;
 }
 
 .user-like-pic {
@@ -87,4 +89,33 @@ position: relative;
   width: 25px;
   height: 20px;
   padding-left: 5px;
+}
+.audioArea{
+  margin-top:10px;
+  border:0.5px solid lightgray;
+  width: 270px;
+  height: 50px;
+  background-color: #ffffff;
+  margin-left:10px;
+}
+.sliderAudio{
+margin-top:15px;
+margin-right: 10px;
+width:90px;
+}
+.timeNotice{
+  font-size:13px;
+  color: gray;
+  margin: 15px 0px 0 0px;
+}
+.timeNotice2{
+  font-size:13px;
+  color: gray;
+  margin: 15px 10px 0 0px;
+}
+.audio{
+  width: 40px;
+  height: 40px;
+  margin-top:5px;
+  margin-left:10px;
 }

@@ -6,7 +6,7 @@
 <!--报名展示-->
 
 <view class="weui-cells weui-cells_after-title">
-  <block wx:for="{{rooms}}" wx:key="item">
+  <block wx:for="{{clubs}}" wx:key="item">
     <template is="scoreDetailTemplate" data="{{...item}}" />
   </block>
 </view>
@@ -33,6 +33,19 @@
         <view class=" date">创始人：{{user_info.nickName}}</view>
         <view class=" date">会员数：{{member_amount}} 人</view>
         <view class=" date">创建时间：{{createDateStr}}</view>
+      </view>
+      <view class="weui-flex audioArea" catchtap='doNothing' >
+      
+        <view class="weui-flex__item">
+          <image class="audio" src="../../../images/userAudio/play.png"  data-index='{{audioIndex}}' catchtap='playAudio' wx:if='{{isPlay==0}}'/>
+          <image class="audio" src="../../../images/userAudio/hold.png"  data-index='{{audioIndex}}' catchtap='stopAudio' wx:if='{{isPlay==1}}'/>
+        </view>
+        <view class=" timeNotice">{{currentTime}}</view>
+        <view>
+          <slider class='sliderAudio' block-size='12' block-color='#1296db' value='{{sliderValue}}' selected-color='#1296db' bindchange='changeSlider'></slider>
+        </view>
+        <view class=" timeNotice2">{{duration}}</view>
+
       </view>
     </view>
     <view class="weui-cell__ft ">

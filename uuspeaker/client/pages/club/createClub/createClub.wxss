@@ -1,1 +1,7 @@
-/* pages/club/createClub/createClub.wxss */
+.save{
+  position: fixed;
+  right: 17px;
+  color: #576b95;
+  font-weight: bold;
+  font-size: 15px;
+}

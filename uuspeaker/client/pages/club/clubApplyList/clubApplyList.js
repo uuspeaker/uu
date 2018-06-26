@@ -1,9 +1,13 @@
 var qcloud = require('../../../vendor/wafer2-client-sdk/index')
 var config = require('../../../config')
 var util = require('../../../utils/util.js')
+var dateFormat = require('../../../common/dateFormat.js')
+var audioService = require('../../../common/audioService.js')
 var userInfo = require('../../../common/userInfo.js')
 //查询标记(1-查自己;2-查所有;3-查最赞)
 var clubId = ''
+const innerAudioContext = wx.createInnerAudioContext()
+var currentAudioIndex = ''
 
 Page({
 
@@ -11,7 +15,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    applyList: {}
+    applyList: {},
+    myRole: 0
   },
 
 
@@ -33,6 +38,7 @@ Page({
           applyList: result.data.data
         })
         that.formatDateAndStatus()
+        that.initDateAndStatus()
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -46,6 +52,65 @@ Page({
     for (var i = 0; i < data.length; i++) {
       data[i].score = Math.floor((data[i].totalDuration + 59) / 60)
       data[i].level = userInfo.getRank(data[i].totalDuration)
+    }
+    this.setData({
+      applyList: data
+    })
+  },
+
+  playAudio: function (e) {
+    var data = this.data.applyList
+    //播放音频时将前一个播放的音频置为暂停
+    if (currentAudioIndex != '') {
+      this.data.applyList[currentAudioIndex].isPlay = 0
+    }
+
+    currentAudioIndex = e.currentTarget.dataset.index
+    if (!(data[currentAudioIndex].time_duration > 0)) return
+    var src = data[currentAudioIndex].src
+    var audioId = data[currentAudioIndex].audio_id
+    var currentDuration = data[currentAudioIndex].current_duration
+    innerAudioContext.src = src
+    innerAudioContext.seek(currentDuration)
+    innerAudioContext.play()
+
+    data[currentAudioIndex].isPlay = 1
+    this.setData({
+      applyList: data
+    })
+
+  },
+
+  stopAudio: function (e) {
+    var src = e.currentTarget.dataset.src
+    innerAudioContext.pause()
+    this.data.applyList[currentAudioIndex].isPlay = 0
+    this.setData({
+      applyList: this.data.applyList
+    })
+  },
+
+  changeSlider: function (e) {
+    if (e.currentTarget.dataset.play == 0) return
+    innerAudioContext.seek(innerAudioContext.duration * e.detail.value / 100)
+  },
+
+  initDateAndStatus: function () {
+    var data = this.data.applyList
+    console.log('initDateAndStatus', data)
+    for (var i = 0; i < data.length; i++) {
+      console.log(i)
+      var now = new Date()
+      data[i].createDateStr = dateFormat.getSimpleFormatDate(data[i].create_date)
+      data[i].timeDurationStr = dateFormat.getFormatDuration(data[i].time_duration)
+      data[i].isPlay = 0
+      data[i].timeDuration = data[i].time_duration
+      data[i].currentDuration = 0
+      data[i].sliderValue = 0
+      data[i].currentTime = '00:00'
+      data[i].duration = dateFormat.getFormatTimeForAudio(Math.floor(data[i].time_duration))
+      data[i].audioIndex = i
+      data[i].myRole = this.data.myRole
     }
     this.setData({
       applyList: data
@@ -101,7 +166,57 @@ Page({
 
   onLoad: function (options) {
     clubId = options.clubId
+    this.setData({
+      myRole: options.myRole
+    })
     this.queryApplyList()
+
+    innerAudioContext.obeyMuteSwitch = false
+    innerAudioContext.onPlay(() => {
+      wx.hideLoading()
+    })
+    innerAudioContext.onWaiting(() => {
+      // if (innerAudioContext.duration < 5) return
+      // if (innerAudioContext.src == audioService.getSrc()) return
+      wx.showLoading({
+        title: '音频加载中',
+      })
+    })
+    innerAudioContext.onError((res) => {
+      wx.hideLoading()
+      util.showNotice('音频加载失败')
+      console.log(res.errMsg)
+      console.log(res.errCode)
+    })
+    innerAudioContext.onStop((res) => {
+      this.setData({
+        currentLikeUser: []
+      })
+    })
+
+    innerAudioContext.onTimeUpdate(() => {
+      var data = this.data.applyList
+      if (innerAudioContext.src == audioService.getSrc()) return
+      data[currentAudioIndex].sliderValue = (100 * innerAudioContext.currentTime / innerAudioContext.duration)
+      data[currentAudioIndex].currentTime = dateFormat.getFormatTimeForAudio(Math.floor(innerAudioContext.currentTime))
+      data[currentAudioIndex].currentDuration = Math.floor(innerAudioContext.currentTime)
+      this.setData({
+        applyList: data
+      })
+    })
+
+    innerAudioContext.onEnded((res) => {
+      var data = this.data.applyList
+      //audioService.updatePlayDuration(innerAudioContext.duration, innerAudioContext)
+      data[currentAudioIndex].sliderValue = 0
+      data[currentAudioIndex].currentTime = '00:00'
+      data[currentAudioIndex].currentDuration = 0
+      data[currentAudioIndex].isPlay = 0
+      this.setData({
+        applyList: data
+      })
+
+    })
   },
 
   onReady: function () {

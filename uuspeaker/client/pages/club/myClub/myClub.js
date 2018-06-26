@@ -301,7 +301,7 @@ Page({
 
   toApplyList: function () {
     wx.navigateTo({
-      url: '../../club/clubApplyList/clubApplyList?clubId=' + this.data.clubInfo[0].club_id,
+      url: '../../club/clubApplyList/clubApplyList?clubId=' + this.data.clubInfo[0].club_id + '&myRole=' + this.data.clubInfo[0].myRole,
     })
   },
 

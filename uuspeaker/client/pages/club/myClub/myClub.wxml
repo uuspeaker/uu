@@ -66,7 +66,7 @@
 
   <template name="scoreDetailTemplate">
     <view class="weui-cell">
-      <view class='weui-cell__hd'>
+      <view class='weui-cell__hd' bindtap='toUserInfo' data-user_id='{{user_info.userId}}' data-avatar_url='{{user_info.avatarUrl}}' data-nick_name='{{user_info.nickName}}' >
         <image class="speaker-pic" src="{{user_info.avatarUrl}}" data-user_id='{{user_id}}' />
       </view>
       <view class="weui-cell__bd" class='speaker'>

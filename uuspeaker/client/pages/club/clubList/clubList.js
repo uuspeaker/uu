@@ -2,6 +2,7 @@ var qcloud = require('../../../vendor/wafer2-client-sdk/index')
 var config = require('../../../config')
 var util = require('../../../utils/util.js')
 var dateFormat = require('../../../common/dateFormat.js')
+var audioService = require('../../../common/audioService.js')
 
 //1查询最近的 2查询自己的 3查询自己参与的 4查询自己关注的
 var queryUserType = ''
@@ -10,6 +11,9 @@ var queryPageType = 0
 var firstDataTime = ''
 var lastDataTime = ''
 
+const innerAudioContext = wx.createInnerAudioContext()
+var currentAudioIndex = ''
+
 Page({
 
   /**
@@ -17,7 +21,7 @@ Page({
    */
   data: {
     viewStyle: [],
-    rooms: [],
+    clubs: [],
     userName: '',
     tapTime: ''
   },
@@ -52,7 +56,7 @@ Page({
     firstDataTime = ''
     lastDataTime = ''
     this.setData({
-      rooms: []
+      clubs: []
     })
     this.queryImpromptuRooms(queryUserType)
   },
@@ -62,7 +66,7 @@ Page({
     queryUserType = 1
     queryPageType = 0
     this.setData({
-      rooms: []
+      clubs: []
     })
     this.queryImpromptuRooms(queryUserType)
   },
@@ -72,7 +76,7 @@ Page({
     queryUserType = 2
     queryPageType = 0
     this.setData({
-      rooms: []
+      clubs: []
     })
     this.queryImpromptuRooms(queryUserType)
   },
@@ -82,7 +86,7 @@ Page({
     queryUserType = 3
     queryPageType = 0
     this.setData({
-      rooms: []
+      clubs: []
     })
     this.queryImpromptuRooms(queryUserType)
   },
@@ -92,7 +96,7 @@ Page({
     queryUserType = 4
     queryPageType = 0
     this.setData({
-      rooms: []
+      clubs: []
     })
     this.queryImpromptuRooms(queryUserType)
   },
@@ -122,14 +126,14 @@ Page({
         if (queryPageType == 0) {
           resultData = result.data.data
         } else if (queryPageType == 1) {
-          resultData = [].concat(result.data.data, that.data.rooms)
+          resultData = [].concat(result.data.data, that.data.clubs)
         } else if (queryPageType == 2) {
-          resultData = [].concat(that.data.rooms, result.data.data)
+          resultData = [].concat(that.data.clubs, result.data.data)
         }
         that.setData({
-          rooms: resultData
+          clubs: resultData
         })
-        that.formatDate()
+        that.initDateAndStatus()
         //保存第一条和最后一条数据的id,上拉和下拉的时候查询用
         that.refreshDataId()
       },
@@ -142,19 +146,77 @@ Page({
 
   //保存第一条和最后一条数据的id,上拉和下拉的时候查询用
   refreshDataId: function () {
-    var length = this.data.rooms.length
-    firstDataTime = this.data.rooms[0].start_date
-    lastDataTime = this.data.rooms[length - 1].end_date
+    var length = this.data.clubs.length
+    firstDataTime = this.data.clubs[0].start_date
+    lastDataTime = this.data.clubs[length - 1].end_date
   },
 
   formatDate: function () {
-    var data = this.data.rooms
+    var data = this.data.clubs
     for (var i = 0; i < data.length; i++) {
       data[i].createDateStr = dateFormat.format(new Date(data[i].create_date),'yyyy年M月d日')
     }
     console.log(data)
     this.setData({
-      rooms: data
+      clubs: data
+    })
+  },
+
+  playAudio: function (e) {
+    var data = this.data.clubs
+    //播放音频时将前一个播放的音频置为暂停
+    if (currentAudioIndex != '') {
+      this.data.clubs[currentAudioIndex].isPlay = 0
+    }
+
+    currentAudioIndex = e.currentTarget.dataset.index
+    if (!(data[currentAudioIndex].time_duration > 0))return
+    var src = data[currentAudioIndex].src
+    var audioId = data[currentAudioIndex].audio_id
+    var currentDuration = data[currentAudioIndex].current_duration
+    innerAudioContext.src = src
+    innerAudioContext.seek(currentDuration)
+    innerAudioContext.play()
+
+    data[currentAudioIndex].isPlay = 1
+    this.setData({
+      clubs: data
+    })
+
+  },
+
+  stopAudio: function (e) {
+    var src = e.currentTarget.dataset.src
+    innerAudioContext.pause()
+    this.data.clubs[currentAudioIndex].isPlay = 0
+    this.setData({
+      clubs: this.data.clubs
+    })
+  },
+
+  changeSlider: function (e) {
+    if (e.currentTarget.dataset.play == 0) return
+    innerAudioContext.seek(innerAudioContext.duration * e.detail.value / 100)
+  },
+
+  initDateAndStatus: function () {
+    var data = this.data.clubs
+    console.log('initDateAndStatus',data)
+    for (var i = 0; i < data.length; i++) {
+      console.log(i)
+      var now = new Date()
+      data[i].createDateStr = dateFormat.format(new Date(data[i].create_date), 'yyyy年M月d日')
+      data[i].timeDurationStr = dateFormat.getFormatDuration(data[i].time_duration)
+      data[i].isPlay = 0
+      data[i].timeDuration = data[i].time_duration
+      data[i].currentDuration = 0
+      data[i].sliderValue = 0
+      data[i].currentTime = '00:00'
+      data[i].duration = dateFormat.getFormatTimeForAudio(Math.floor(data[i].time_duration))
+      data[i].audioIndex = i
+    }
+    this.setData({
+      clubs: data
     })
   },
 
@@ -192,6 +254,54 @@ Page({
     queryUserType = 1
     this.queryImpromptuRooms(queryUserType)
     this.pressView(0)
+    //this.initDateAndStatus()
+
+    innerAudioContext.obeyMuteSwitch = false
+    innerAudioContext.onPlay(() => {
+      wx.hideLoading()
+    })
+    innerAudioContext.onWaiting(() => {
+      // if (innerAudioContext.duration < 5) return
+      // if (innerAudioContext.src == audioService.getSrc()) return
+      wx.showLoading({
+        title: '音频加载中',
+      })
+    })
+    innerAudioContext.onError((res) => {
+      wx.hideLoading()
+      util.showNotice('音频加载失败')
+      console.log(res.errMsg)
+      console.log(res.errCode)
+    })
+    innerAudioContext.onStop((res) => {
+      this.setData({
+        currentLikeUser: []
+      })
+    })
+
+    innerAudioContext.onTimeUpdate(() => {
+      var data = this.data.clubs
+      if (innerAudioContext.src == audioService.getSrc()) return
+      data[currentAudioIndex].sliderValue = (100 * innerAudioContext.currentTime / innerAudioContext.duration)
+      data[currentAudioIndex].currentTime = dateFormat.getFormatTimeForAudio(Math.floor(innerAudioContext.currentTime))
+      data[currentAudioIndex].currentDuration = Math.floor(innerAudioContext.currentTime)
+      this.setData({
+        clubs: data
+      })
+    })
+
+    innerAudioContext.onEnded((res) => {
+      var data = this.data.clubs
+      audioService.updatePlayDuration(innerAudioContext.duration, innerAudioContext)
+      data[currentAudioIndex].sliderValue = 0
+      data[currentAudioIndex].currentTime = '00:00'
+      data[currentAudioIndex].currentDuration = 0
+      data[currentAudioIndex].isPlay = 0
+      this.setData({
+        clubs: data
+      })
+
+    })
   },
 
   onPullDownRefresh: function () {
@@ -207,6 +317,12 @@ Page({
 
   onReady: function () {
     wx.setNavigationBarTitle({ title: '俱乐部列表' });
+  },
+
+  onShow: function () {
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    })
   },
 
 })

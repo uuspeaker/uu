@@ -29,7 +29,8 @@ Page({
 
     this.data.audios[currentAudioIndex].isPlay = 1
     this.setData({
-      audios: this.data.audios
+      audios: this.data.audios,
+      isPlay:1
     })
   },
 
@@ -38,7 +39,8 @@ Page({
     innerAudioContext.pause()
     this.data.audios[currentAudioIndex].isPlay = 0
     this.setData({
-      audios: this.data.audios
+      audios: this.data.audios,
+      isPlay:0
     })
   },
 

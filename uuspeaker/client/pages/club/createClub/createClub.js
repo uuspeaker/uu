@@ -11,6 +11,7 @@ var startDate
 var endDate
 var audioId = ''
 var tempFilePath = ''
+var updateAudio = 0
 
 var method = 'post'
 Page({
@@ -23,7 +24,9 @@ Page({
   },
 
   createClub: function () {
-    util.showBusy('保存中...')
+    wx.showLoading({
+      title: '保存中...',
+    })
     var clubName = this.data.clubName
     clubName = clubName.replace(/^\s+|\s+$/g, "");
     if (clubName == ''){
@@ -39,15 +42,17 @@ Page({
       method: method,
       success(result) {
         if (result.data.data == 1){
-          that.saveAudio(1)
+            util.showSuccess('俱乐部创建成功')
         }
         if (result.data.data == 2){
-          that.saveAudio(2)
+            util.showSuccess('俱乐部修改成功')
         }
         if (result.data.data == 9) {
           util.showSuccess('已经拥有俱乐部')
         }
-        
+        if (updateAudio == 1) {
+          that.saveAudio()
+        }
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -84,6 +89,11 @@ Page({
     recorderManager.start(config.options)
   },
 
+  saveInfo: function(){
+    this.createClub()
+    
+  },
+
   //用户放开录音按钮
   stopRecord: function () {
     recorderManager.stop();
@@ -97,21 +107,23 @@ Page({
       util.showModel('录音太短', '请录制一段超过10秒的语音');
       return
     }
-    audioId = uuid.v1()
+    
     wx.showModal({
       title: '提示',
-      content: '是否保存？',
+      content: '是否保存录音？',
       success: (sm) => {
         if (sm.confirm) {
-          this.createClub()
+          updateAudio = 1
+          audioId = uuid.v1()
         } else if (sm.cancel) {
+          updateAudio = 0
           console.log('用户点击取消')
         }
       }
     })
   },
 
-  saveAudio: function (notice) {
+  saveAudio: function () {
     var that = this
     console.log('tempFilePath', tempFilePath)
     const uploadTask = wx.uploadFile({
@@ -120,13 +132,7 @@ Page({
       name: 'file',
       formData: { audioId: audioId },
       success: function (result) {
-        if(notice ==1){
-        util.showSuccess('俱乐部创建成功')
-        }
-        if(notice ==2){
-        util.showSuccess('俱乐部修改成功')
-        }
-        that.toMyClub()
+        
       },
 
       fail: function (e) {

@@ -8,11 +8,12 @@ module.exports = {
     var clubId = ctx.request.body.clubId
     var audioId = ctx.request.body.audioId
     var applyNotice = ctx.request.body.applyNotice
+    var timeDuration = ctx.request.body.timeDuration
     var isInClub = await clubService.isInClub(userId)
     if (isInClub){
       ctx.state.data = 9
     }else{
-      await clubService.applyClub(userId, clubId, audioId)
+      await clubService.applyClub(userId, clubId, audioId, timeDuration)
       ctx.state.data = 1
     }
   },
