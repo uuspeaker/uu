@@ -570,8 +570,8 @@ Page({
     })
 
     recorderManager.onFrameRecorded((res) => {
-      const { frameBuffer } = res
-      this.translate(frameBuffer)
+      // const { frameBuffer } = res
+      // this.translate(frameBuffer)
     })
 
     innerAudioContext.obeyMuteSwitch = false

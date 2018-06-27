@@ -292,7 +292,7 @@ Page({
 
     innerAudioContext.onEnded((res) => {
       var data = this.data.clubs
-      audioService.updatePlayDuration(innerAudioContext.duration, innerAudioContext)
+      //audioService.updatePlayDuration(innerAudioContext.duration, innerAudioContext)
       data[currentAudioIndex].sliderValue = 0
       data[currentAudioIndex].currentTime = '00:00'
       data[currentAudioIndex].currentDuration = 0

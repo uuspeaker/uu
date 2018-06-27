@@ -30,7 +30,7 @@ Page({
       url: `${config.service.host}/weapp/club.clubApply`,
       login: true,
       method: 'post',
-      data: { clubId: clubId, audioId: audioId},
+      data: { clubId: clubId, audioId: audioId, timeDuration: timeDuration},
       success(result) {
         var applyResult = result.data.data
         wx.hideLoading()
