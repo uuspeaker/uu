@@ -236,6 +236,10 @@ router.get('/club.clubRank', controllers.club.clubRank.get)
 router.get('/club.clubApply', controllers.club.clubApply.get)
 router.post('/club.clubApply', controllers.club.clubApply.post)
 router.put('/club.clubApply', controllers.club.clubApply.put)
+//专辑管理
+router.get('/album.albumInfo', controllers.album.albumInfo.get)
+router.post('/album.albumInfo', controllers.album.albumInfo.post)
+
 
 
 

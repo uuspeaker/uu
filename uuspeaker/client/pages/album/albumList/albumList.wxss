@@ -1,0 +1,107 @@
+.right {
+  float: right;
+  right: 10px;
+}
+
+.myReport {
+  font-size: 15px;
+  padding-left: 10px;
+}
+.title{
+  font-size: 18px;
+  font-weight: bold;
+  color: #576b95;
+  
+}
+
+.normal {
+  height: 85px;
+  width: 20%;
+  margin-top: 5px;
+  margin-left: 10px;
+  color: white;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 10px 10px 10px 10px;
+}
+
+.uu-code {
+  width: 35px;
+  height: 35px;
+  margin-top: 10px;
+}
+.uu-code2 {
+  width: 25px;
+  height: 25px;
+}
+.audio {
+  width: 40px;
+  height: 40px;
+  border-radius: 3px;
+  padding-right: 10px;
+}
+
+.like{
+width: 18px; 
+height: 18px; 
+padding-left: 10px;
+
+position: relative;
+  top: 4px;
+}
+
+.user-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 3px;
+}
+
+.user-like-pic {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+}
+.small-grey{
+  font-size: 13px;
+  color:#888888;
+  font-weight: normal;
+  padding-left:10px;
+  margin-top: 8px;
+}
+.right{
+  
+  right: 10px;
+}
+.middle2{
+  margin-top:45px;
+  margin-bottom:80px;
+}
+.search{
+  font-size: 15px;
+  height: 20px;
+  padding-left: 10px;
+  width:  80%
+}
+.queryAll{
+  right: 10px;
+  font-size: 15px;
+  color: grey;
+}
+.audioAlbum{
+  position: fixed;
+  right:18px;
+  font-size: 15px;
+  font-weight: bold;
+}
+.modalInput{
+text-align: center;
+font-size: 20px;
+font-weight: bold;
+color: black;
+height: 40px;
+}
+.right2{
+  padding-right: 30px;
+  font-size: 24px;
+}

@@ -99,3 +99,9 @@ width:90px;
   font-size: 15px;
   color: grey;
 }
+.audioAlbum{
+  position: fixed;
+  right:18px;
+  font-size: 15px;
+  font-weight: bold;
+}

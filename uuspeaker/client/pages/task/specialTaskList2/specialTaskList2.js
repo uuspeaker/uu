@@ -350,7 +350,14 @@ Page({
   toDoSpecialTask: function (e) {
     innerAudioContext.stop();
     wx.navigateTo({
-      url: '../doSpecialTask/doSpecialTask?'
+      url: '../doSpecialTask/doSpecialTask'
+    })
+  },
+
+  toAudioAlbum: function (e) {
+    innerAudioContext.stop();
+    wx.navigateTo({
+      url: '../../album/albumList/albumList'
     })
   },
 

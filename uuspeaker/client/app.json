@@ -9,13 +9,13 @@
     "pages/club/myClub/myClub",
     "pages/club/clubList/clubList",
     "pages/club/createClub/createClub",
+
+    "pages/album/albumList/albumList",
     
     "pages/letter/letterForLevel3/letterForLevel3",
     "pages/task/taskList/taskList",
     "pages/task/specialTaskList/specialTaskList",
-    "pages/task/doDailyTask/doDailyTask", 
-
-    
+    "pages/task/doDailyTask/doDailyTask",   
     
     "pages/feedback/feedbackList/feedbackList",
     "pages/feedback/addFeedback/addFeedback",
