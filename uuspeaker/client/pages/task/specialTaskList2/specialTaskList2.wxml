@@ -1,7 +1,7 @@
 <view class="weui-cell write top">
   <view class=" myReport" style="{{viewStyle[0]}}" data-item='0' data-type='1' bindtap='queryTaskInfo'>我的</view>
-  <view class=" myReport" style="{{viewStyle[1]}}" data-item='1' data-type='2' bindtap='queryTaskInfo'>最新的</view>
-  <view class=" myReport" style="{{viewStyle[3]}}" data-item='3' data-type='4' bindtap='queryTaskInfo'>待鼓励</view>
+  <view class=" myReport" style="{{viewStyle[1]}}" data-item='1' data-type='2' bindtap='queryTaskInfo'>全部</view>
+  <!--view class=" myReport" style="{{viewStyle[3]}}" data-item='3' data-type='4' bindtap='queryTaskInfo'>待鼓励</view-->
 <view class=" audioAlbum"   bindtap='toAudioAlbum'>专辑</view>
 </view>
   
