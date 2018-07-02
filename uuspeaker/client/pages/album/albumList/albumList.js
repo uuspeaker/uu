@@ -284,7 +284,9 @@ Page({
   },
 
   onShow: function () {
-
+    wx.showShareMenu({
+      withShareTicket: true
+    })
   },
 
   onPullDownRefresh: function () {

@@ -9,6 +9,7 @@
       <view class="weui-flex">
         <view class="weui-flex__item title" >
           <text data-audio_name='{{audio_name}}' catchtap='clickAudioName'>{{audio_name}}</text>
+          <text wx:if='{{isMine == 1}}' class='delete' data-audio_id='{{audio_id}}' catchtap='deleteAlbumContent'>删除</text>
         </view>
         <view class="small-grey">
           <image class="like" data-audio_id='{{audio_id}}' src="../../../images/studyIndex/like.png" /> {{like_amount}}
@@ -17,7 +18,7 @@
       </view>
       <view class="small-grey" style='margin-top:10px;margin-left:5px'>
         <text wx:if='{{speech_type == 0}}'>【即兴】</text><text wx:if='{{speech_type == 1}}'>【备稿】</text><text wx:if='{{speech_type == 2}}'>【微课】</text><text>【{{user_info.nickName}}】【{{createDateStr}}】</text>
-        <text wx:if='{{isMine == 1}}' class='delete' data-audio_id='{{audio_id}}' catchtap='deleteAlbumContent'>删除</text>
+        
       </view>
       <view class="weui-flex audioArea" catchtap='doNothing'>
       
