@@ -236,9 +236,14 @@ router.get('/club.clubRank', controllers.club.clubRank.get)
 router.get('/club.clubApply', controllers.club.clubApply.get)
 router.post('/club.clubApply', controllers.club.clubApply.post)
 router.put('/club.clubApply', controllers.club.clubApply.put)
-//专辑管理
+//专辑标题管理
 router.get('/album.albumInfo', controllers.album.albumInfo.get)
 router.post('/album.albumInfo', controllers.album.albumInfo.post)
+router.delete('/album.albumInfo', controllers.album.albumInfo.del)
+//专辑内容管理
+router.get('/album.albumContent', controllers.album.albumContent.get)
+router.post('/album.albumContent', controllers.album.albumContent.post)
+router.delete('/album.albumContent', controllers.album.albumContent.del)
 
 
 

@@ -26,7 +26,10 @@ Page({
     audioLikeUser: [],
     currentLikeUser: [],
     totalStudyDuration: 0,
-    queryAudioName:''
+    queryAudioName: '',
+    albumId:'',
+    userId:'',
+    userInfo:{}
   },
 
   initViewStyle: function () {
@@ -62,19 +65,19 @@ Page({
     this.doQuerySpecialTask(queryUserType)
   },
 
-  queryAudioWithName: function(e){
+  queryAudioWithName: function (e) {
     queryPageType = 0
     this.doQuerySpecialTask()
   },
 
-  setAudioName: function(e){
+  setAudioName: function (e) {
     this.setData({
-      queryAudioName : e.detail.value
+      queryAudioName: e.detail.value
     })
-    
+
   },
 
-  queryAllAudio: function(e){
+  queryAllAudio: function (e) {
     this.setData({
       queryAudioName: ''
     })
@@ -82,7 +85,7 @@ Page({
     this.doQuerySpecialTask()
   },
 
-  clickAudioName: function(e){
+  clickAudioName: function (e) {
     this.setData({
       queryAudioName: e.currentTarget.dataset.audio_name
     })
@@ -97,11 +100,11 @@ Page({
       title: '加载中',
     })
     //util.showBusy('请求中...')
-    var queryData = { 'queryPageType': queryPageType, 'firstDataTime': firstDataTime, 'lastDataTime': lastDataTime, queryUserType: queryUserType, audioType: 1, audioName: this.data.queryAudioName}
+    var queryData = { 'queryPageType': queryPageType, 'firstDataTime': firstDataTime, 'lastDataTime': lastDataTime,albumId: this.data.albumId }
     console.log('queryData', queryData)
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/task.specialTask`,
+      url: `${config.service.host}/weapp/album.albumContent`,
       login: true,
       method: 'get',
       data: queryData,
@@ -177,6 +180,10 @@ Page({
       data[i].currentTime = '00:00'
       data[i].duration = dateFormat.getFormatTimeForAudio(Math.floor(data[i].time_duration))
       data[i].audioIndex = i
+      data[i].isMine = 0
+      if(this.data.userInfo.openId == this.data.userId){
+        data[i].isMine = 1
+      }
     }
     console.log(data)
     this.setData({
@@ -203,10 +210,10 @@ Page({
 
   playAudio: function (e) {
     //播放音频时将前一个播放的音频置为暂停
-    if (currentAudioIndex != ''){
+    if (currentAudioIndex != '') {
       this.data.audios[currentAudioIndex].isPlay = 0
     }
-    
+
     currentAudioIndex = e.currentTarget.dataset.index
     var src = this.data.audios[currentAudioIndex].src
     var audioId = this.data.audios[currentAudioIndex].audio_id
@@ -219,7 +226,7 @@ Page({
     this.setData({
       audios: this.data.audios
     })
-    
+
     audioService.updateViewAmount(audioId)
   },
 
@@ -247,9 +254,10 @@ Page({
   },
 
   onLoad: function (options) {
-    console.log(options)
+    this.initUserInfo()
     this.setData({
-      totalStudyDuration: options.totalStudyDuration
+      albumId: options.albumId,
+      userId: options.userId
     })
     queryPageType = 0
     queryUserType = 1
@@ -283,9 +291,9 @@ Page({
       this.data.audios[currentAudioIndex].sliderValue = (100 * innerAudioContext.currentTime / innerAudioContext.duration)
       this.data.audios[currentAudioIndex].currentTime = dateFormat.getFormatTimeForAudio(Math.floor(innerAudioContext.currentTime))
       this.data.audios[currentAudioIndex].currentDuration = Math.floor(innerAudioContext.currentTime)
-        this.setData({
-          audios: this.data.audios
-        })
+      this.setData({
+        audios: this.data.audios
+      })
     })
 
     innerAudioContext.onEnded((res) => {
@@ -297,7 +305,7 @@ Page({
       this.setData({
         audios: this.data.audios
       })
-      
+
     })
   },
 
@@ -357,9 +365,73 @@ Page({
   toAudioAlbum: function (e) {
     innerAudioContext.stop();
     wx.navigateTo({
-      url: '../../album/albumList/albumList?operationType=2'
+      url: '../../album/albumList/albumList'
     })
   },
+
+  deleteAlbumContent: function (e) {
+    var content = '是否确定删除？'
+    wx.showModal({
+      title: '提示',
+      content: content,
+      success: (sm) => {
+        if (sm.confirm) {
+          this.doDeleteAlbumContent(e)
+        } else if (sm.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+
+  doDeleteAlbumContent: function (e) {
+    var audioId = e.currentTarget.dataset.audio_id
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/album.albumContent`,
+      login: true,
+      data: { 'albumId': this.data.albumId, 'audioId': audioId },
+      method: 'delete',
+      success(result) {
+        wx.hideLoading()
+        util.showSuccess('操作成功')
+        var data = that.data.audios
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].audio_id == audioId) {
+            data.splice(i, 1)
+          }
+        }
+        that.setData({
+          audios: data
+        })
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
+  initUserInfo: function () {
+    var that = this
+    qcloud.request({
+      url: config.service.requestUrl,
+      login: true,
+      success(result) {
+        that.setData({
+          userInfo: result.data.data,
+        })
+      },
+
+      fail(error) {
+        util.showModel('请求失败', error)
+        console.log('request fail', error)
+      }
+    })
+
+  },
+
+  
 
   onReady: function () {
     wx.setNavigationBarTitle({ title: '听演讲' });

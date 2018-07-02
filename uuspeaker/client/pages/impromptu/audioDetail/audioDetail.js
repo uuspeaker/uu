@@ -514,4 +514,10 @@ Page({
     })
   },
 
+  toAlbumList: function (e) {
+    wx.navigateTo({
+      url: '../../album/albumList/albumList?operationType=1&audioId=' + this.data.audioData[0].audio_id
+    })
+  },
+
 })

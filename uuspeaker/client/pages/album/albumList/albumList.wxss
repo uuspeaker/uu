@@ -8,10 +8,15 @@
   padding-left: 10px;
 }
 .title{
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
-  color: #576b95;
-  
+  padding-left: 10px;
+}
+
+.delete{
+  font-size: 15px;
+  font-weight: bold;
+  color: #576b95; 
 }
 
 .normal {
@@ -52,9 +57,11 @@ position: relative;
 }
 
 .user-pic {
-  width: 50px;
-  height: 50px;
-  border-radius: 3px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50px;
+  position: relative;
+  top: -8px;
 }
 
 .user-like-pic {
@@ -104,4 +111,14 @@ height: 40px;
 .right2{
   padding-right: 30px;
   font-size: 24px;
+}
+.likeYou{
+  border:0.5px solid grey;
+  font-size: 11px;
+  width: 60px;
+  height: 18px;
+  text-align: center;
+  padding-top: 3px;
+  position:fixed;
+  right:10px
 }

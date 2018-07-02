@@ -1,7 +1,9 @@
 <view class="weui-cells weui-cells_after-title">
   <view class="weui-cell">
     <view class="user-avatar">
-      <image class="user-pic" src="{{audioData[0].user_info.avatarUrl}}" data-user_id='{{audioData[0].user_id}}' bindtap='toUserInfo'/>
+      <view><image class="user-pic" src="{{audioData[0].user_info.avatarUrl}}" data-user_id='{{audioData[0].user_id}}' bindtap='toUserInfo'/>
+      </view>
+      <view class='likeYou' bindtap='toAlbumList'>收录专辑</view>
     </view>
     <view class="weui-cell__bd">
       <view class="title">

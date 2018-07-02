@@ -20,8 +20,10 @@ Page({
     viewStyle: [],
     albumList: {},
     queryAlbumName: '',
-    AlbumName:'',
+    albumName:'',
     hideNotice: true,
+    audioId:'',
+    operationType:''
   },
 
   initViewStyle: function () {
@@ -63,7 +65,7 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
-    var queryData = {'queryPageType': queryPageType, 'firstDataTime': firstDataTime, 'lastDataTime': lastDataTime, queryUserType: queryUserType }
+    var queryData = { 'queryPageType': queryPageType, 'firstDataTime': firstDataTime, 'lastDataTime': lastDataTime, queryUserType: queryUserType, albumName: this.data.queryAlbumName }
     console.log('queryData', queryData)
     var that = this
     qcloud.request({
@@ -112,9 +114,73 @@ Page({
     for (var i = 0; i < data.length; i++) {
       var now = new Date()
       data[i].createDateStr = dateFormat.getSimpleFormatDate(data[i].create_date)
+      data[i].userType = queryUserType
+      data[i].operationType = this.data.operationType
     }
     this.setData({
       albumList: data
+    })
+  },
+
+  deleteAlbum: function (e) {
+    var content = '是否确定删除？'
+    wx.showModal({
+      title: '提示',
+      content: content,
+      success: (sm) => {
+        if (sm.confirm) {
+          this.doDeleteAlbum(e)
+        } else if (sm.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+
+  doDeleteAlbum: function(e){
+    var albumId = e.currentTarget.dataset.album_id
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/album.albumInfo`,
+      login: true,
+      data: { albumId: albumId },
+      method: 'delete',
+      success(result) {
+        wx.hideLoading()
+        util.showSuccess('操作成功')
+        var data = that.data.albumList
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].album_id == albumId){
+            data.splice(i,1)
+          }
+        }
+        that.setData({
+          albumList: data
+        })
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
+  saveAlbumContent: function(e){
+    var albumId = e.currentTarget.dataset.album_id
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/album.albumContent`,
+      login: true,
+      data: { albumId: albumId,audioId: this.data.audioId },
+      method: 'post',
+      success(result) {
+        wx.hideLoading()
+        util.showSuccess('收录成功')
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
     })
   },
 
@@ -125,9 +191,14 @@ Page({
 
   setAlbumName: function (e) {
     this.setData({
+      albumName: e.detail.value
+    })
+  },
+
+  setQueryAlbumName: function (e) {
+    this.setData({
       queryAlbumName: e.detail.value
     })
-
   },
 
   queryAllAlbum: function (e) {
@@ -145,12 +216,6 @@ Page({
     })
   },
 
-  setAlbumName: function (e) {
-    this.setData({
-      AlbumName: e.detail.value,
-    })
-  },
-
   showAlbumName: function (e) {
     this.setData({
       hideNotice: false,
@@ -158,11 +223,15 @@ Page({
   },
 
   saveAlbumName: function () {
+    console.log('this.data.albumName', this.data.albumName)
+    if (this.data.albumName == ''){
+      return
+    }
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/album.albumInfo`,
       login: true,
-      data: { albumName: this.data.AlbumName},
+      data: { albumName: this.data.albumName},
       method: 'post',
       success(result) {
         wx.hideLoading()
@@ -172,7 +241,7 @@ Page({
         that.doQueryAlbumList()
         that.setData({
           hideNotice: true,
-          AlbumName: ''
+          albumName: ''
         })
       },
       fail(error) {
@@ -188,14 +257,30 @@ Page({
     })
   },
 
+  toAlbumContent: function (e) {
+    wx.navigateTo({
+      url: '../../album/albumContent/albumContent?albumId=' + e.currentTarget.dataset.album_id + '&userId=' + e.currentTarget.dataset.user_id,
+    })
+  },
+
   toFirstPage: function () {
     wx.navigateBack({ delta: 99999 })
   },
 
   onLoad: function (options) {
+    console.log(options)
+    //operationType 1表示收录专辑 2表示查询
+    this.setData({
+      operationType: options.operationType
+    })
+    if (options.operationType == '1'){
+      this.setData({
+        audioId : options.audioId
+      })
+    }
       queryUserType = 1
       this.pressView(0)
-    this.doQueryAlbumList(queryUserType)
+    this.doQueryAlbumList()
   },
 
   onShow: function () {
@@ -204,13 +289,13 @@ Page({
 
   onPullDownRefresh: function () {
     queryPageType = 1
-    this.doQueryAlbumList(queryUserType)
+    this.doQueryAlbumList()
   },
 
   onReachBottom: function () {
     console.log('onReachBottom')
     queryPageType = 2
-    this.doQueryAlbumList(queryUserType)
+    this.doQueryAlbumList()
   },
 
 

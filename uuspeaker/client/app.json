@@ -11,6 +11,7 @@
     "pages/club/createClub/createClub",
 
     "pages/album/albumList/albumList",
+    "pages/album/albumContent/albumContent",
     
     "pages/letter/letterForLevel3/letterForLevel3",
     "pages/task/taskList/taskList",

@@ -1,0 +1,67 @@
+
+<template name="scoreDetailTemplate">
+  <view class="weui-cell" data-audio_id='{{audio_id}}' bindtap='toAudioDetail'>
+    <view class="weui-cell__hd userAvatar">
+      <view><image class="user-pic" src="{{user_info.avatarUrl}}" data-user_id='{{user_id}}' catchtap='toUserInfo' /></view>
+      
+    </view>
+    <view class="weui-cell__bd">
+      <view class="weui-flex">
+        <view class="weui-flex__item title" >
+          <text data-audio_name='{{audio_name}}' catchtap='clickAudioName'>{{audio_name}}</text>
+        </view>
+        <view class="small-grey">
+          <image class="like" data-audio_id='{{audio_id}}' src="../../../images/studyIndex/like.png" /> {{like_amount}}
+          <image class="like" src="../../../images/studyIndex/comment.png" /> {{comment_amount}}
+        </view>
+      </view>
+      <view class="small-grey" style='margin-top:10px;margin-left:5px'>
+        <text wx:if='{{speech_type == 0}}'>【即兴】</text><text wx:if='{{speech_type == 1}}'>【备稿】</text><text wx:if='{{speech_type == 2}}'>【微课】</text><text>【{{user_info.nickName}}】【{{createDateStr}}】</text>
+        <text wx:if='{{isMine == 1}}' class='delete' data-audio_id='{{audio_id}}' catchtap='deleteAlbumContent'>删除</text>
+      </view>
+      <view class="weui-flex audioArea" catchtap='doNothing'>
+      
+        <view class="weui-flex__item">
+          <image class="audio" src="../../../images/userAudio/play.png" data-index='{{audioIndex}}' catchtap='playAudio' wx:if='{{isPlay==0}}'/>
+          <image class="audio" src="../../../images/userAudio/hold.png" data-index='{{audioIndex}}' catchtap='stopAudio' wx:if='{{isPlay==1}}'/>
+        </view>
+        <view class=" timeNotice">{{currentTime}}</view>
+        <view>
+          <slider class='sliderAudio' block-size='12' block-color='#1296db' value='{{sliderValue}}' selected-color='#1296db' bindchange='changeSlider'></slider>
+        </view>
+        <view class=" timeNotice2">{{duration}}</view>
+
+      </view>
+    </view>
+
+  </view>
+
+</template>
+
+<template name="likeUserTemplate">
+  <view class="weui-cell__bd">
+    <view class="user-avatar">
+      <image class="user-like-pic" src="{{user_info.avatarUrl}}" />
+      <image class="like" data-audio_id='{{audio_id}}' src="../../../images/userAudio/like.png" />
+    </view>
+  </view>
+</template>
+
+
+<view class="weui-cells weui-cells_after-title" >
+
+  <block wx:for="{{audios}}" wx:key="item">
+    <template is="scoreDetailTemplate" data="{{...item}}" />
+  </block>
+</view>
+<view class="weui-cells weui-cells_after-title">
+  <block wx:for="{{currentLikeUser}}" wx:key="item">
+    <template is="likeUserTemplate" data="{{...item}}" />
+  </block>
+</view>
+
+<!--view class="weui-flex bottom">
+    <view class="weui-flex__item">
+      <button class="weui-btn" type="primary" bindtap='toDoSpecialTask'>练习</button>
+    </view>
+  </view>
