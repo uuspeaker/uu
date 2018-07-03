@@ -1,13 +1,13 @@
 <block wx:if='{{isInClub == 1}}'>
-  <view class="page top">
+  <view class="page">
     <view class="weui-cells weui-cells_after-title ">
 
       <view class="weui-cell ">
         <view class="weui-cell__hd">
           <image class="host-pic" src="{{clubInfo[0].userInfo.avatarUrl}}" data-user_id='{{roomInfo.user_id}}' />
         </view>
-        <view class="weui-cell__bd title">
-          <view catchtap='toClubDetail' data-club_id="{{clubInfo[0].club_id}}" data-club_name='{{clubInfo[0].club_name}}' data-notice='{{clubInfo[0].notice}}'  data-is_host='{{isHost}}' data-src='{{src}}'>{{clubInfo[0].club_name}} </view>
+        <view class="weui-cell__bd">
+          <view class='title' catchtap='toClubDetail' data-club_id="{{clubInfo[0].club_id}}" data-club_name='{{clubInfo[0].club_name}}' data-notice='{{clubInfo[0].notice}}'  data-is_host='{{isHost}}' data-src='{{src}}'>{{clubInfo[0].club_name}} </view>
           <view class='host-level'>创会人：{{clubInfo[0].userInfo.nickName}}
             <text class='link3' wx:if='{{clubInfo[0].myRole == 1}}' catchtap='toModifyClub'>修改</text>
           </view>
@@ -31,10 +31,10 @@
 
   </view>
 
-  <view class="page middle2">
+  <view class="page">
     <view class="weui-cells__title">官员
 
-      <text class='link2' catchtap='toClubStudyRank'>学习排名</text>
+      <text class='link2' style='font-weight:bold' catchtap='toClubStudyRank'>学习排名</text>
     </view>
     <view class="weui-cells weui-cells_after-title ">
       <block wx:for="{{officeList}}" wx:key="item">

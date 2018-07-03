@@ -2,6 +2,9 @@
   font-size: 18px;
   font-weight: bold;
   color: #576b95;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 .middle2{
   margin-top:120px;
@@ -33,13 +36,11 @@
   color: #576b95;
 }
 .link3 {
-  font-size: 15px;
-  font-weight: bold;
+  font-size: 13px;
   color: #576b95;
 }
 .link2 {
-  font-size: 15px;
-  font-weight: bold;
+  font-size: 13px;
   color: #576b95;
   float: right;
   right: 10px;

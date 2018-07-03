@@ -133,7 +133,7 @@ position: relative;
   padding-top: 9px; 
 }
 .link {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: bold;
   color: #576b95;
   padding-left: 5px;
