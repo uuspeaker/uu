@@ -27,14 +27,20 @@
 
         <text bindtap='toUserAudio'>编号：NO.{{clubInfo[0].club_no}}</text>
       </view>
+
+      <view class="weui-cell">
+<text class='link2' style='font-weight:bold' catchtap='toClubStudyRank'>学习排名</text>
+<text class='gap'> | </text>
+      <text class='link2' style='font-weight:bold' catchtap='toClubStudySystem'> 学习课程</text>
     </view>
+    </view>
+
+    
 
   </view>
 
   <view class="page">
     <view class="weui-cells__title">官员
-
-      <text class='link2' style='font-weight:bold' catchtap='toClubStudyRank'>学习排名</text>
     </view>
     <view class="weui-cells weui-cells_after-title ">
       <block wx:for="{{officeList}}" wx:key="item">
@@ -58,6 +64,7 @@
       </view>
     </view>
   </form>
+  <view style='margin-bottom:40px'></view>
   <view class="weui-flex bottom ">
     <view class="weui-flex__item ">
       <button class="weui-button" bindtap='toClubList'>浏览俱乐部</button>

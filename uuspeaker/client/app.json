@@ -9,6 +9,7 @@
     "pages/club/myClub/myClub",
     "pages/club/clubList/clubList",
     "pages/club/createClub/createClub",
+    "pages/club/studySystem/studySystem",
 
     "pages/album/albumList/albumList",
     "pages/album/albumContent/albumContent",

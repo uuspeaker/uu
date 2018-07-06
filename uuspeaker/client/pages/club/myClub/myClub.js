@@ -299,6 +299,12 @@ Page({
     })
   },
 
+  toClubStudySystem: function () {
+    wx.navigateTo({
+      url: '../../club/studySystem/studySystem?scoreType=1&clubId=' + this.data.clubInfo[0].club_id,
+    })
+  },
+
   toApplyList: function () {
     wx.navigateTo({
       url: '../../club/clubApplyList/clubApplyList?clubId=' + this.data.clubInfo[0].club_id + '&myRole=' + this.data.clubInfo[0].myRole,

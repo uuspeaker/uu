@@ -31,6 +31,12 @@ module.exports = {
     await albumService.createAlbum(userId, albumName)
   },
 
+  put: async ctx => {
+    var albumId = ctx.request.body.albumId 
+    var albumType = ctx.request.body.albumType 
+    await albumService.changeAlbumType(albumId, albumType)
+  },
+
   del: async ctx => {
     var albumId = ctx.request.body.albumId
     await albumService.deleteAlbum(albumId)

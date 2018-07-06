@@ -255,6 +255,18 @@ var getRandomSpeechName = async (createDate) => {
   return speechNames[index]
 }
 
+var hasDoneSpeech = async (userId, speechName) => {
+  var speechNames = await mysql("impromptu_audio").where({'user_id':userId, audio_name: speechName}).count('audio_name as amount')
+  console.log('speechName', speechName)
+  console.log('speechNames', speechNames)
+  console.log('speechNames[0].amount', parseInt(speechNames[0].amount))
+  if (speechNames[0].amount == 0){
+    return false
+  }else{
+    return true
+  }
+}
+
 module.exports = { 
   saveSpeechSubject, 
   deleteSpeechSubject, 
@@ -268,4 +280,5 @@ module.exports = {
   getUnevaluatedSpeechNames,
   evaluateSpeechName,
   getRandomSpeechName,
+  hasDoneSpeech
    }

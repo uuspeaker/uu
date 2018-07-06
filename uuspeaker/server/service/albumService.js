@@ -15,6 +15,13 @@ var createAlbum = async (userId, albumName) => {
   })
 }
 
+//修改专辑类型
+var changeAlbumType = async (albumId, albumType) => {
+  await mysql('album_info').update({
+    album_type: albumType
+  }).where({ album_id: albumId})
+}
+
 //修改专辑
 var modifyAlbum = async (albumId, albumName) => {
   await mysql('album_info').update({
@@ -154,8 +161,67 @@ var getAlbumContent = async (queryPageType, firstDataTime, lastDataTime, albumId
   return taskData
 }
 
+//查询我的专辑
+var getStudySystem = async (clubId, queryPageType, firstDataTime, lastDataTime, albumName) => {
+  var limit = 10
+  var offset = 0
+  var albumData = []
+
+  var albumNameQuery = 1
+  if (albumName == '') {
+    albumName = 1
+  } else {
+    albumName = albumName + '%'
+    albumNameQuery = 'album_name'
+  }
+
+  if (queryPageType == 0) {
+    albumData = await mysql('club_member')
+    .select('cSessionInfo.user_info', 'album_info.*')
+    .join('album_info', function () {
+        this.on('album_info.user_id', '=', 'club_member.user_id').onIn('album_info.album_type', [2])
+      })
+    .innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'club_member.user_id')
+    .where({ 'club_member.club_id': clubId})
+    .andWhere(albumNameQuery, 'like', albumName)
+    .orderBy('album_info.create_date', 'desc').limit(limit).offset(offset)
+  }
+
+  if (queryPageType == 1) {
+    albumData = await mysql('club_member').select('cSessionInfo.user_info', 'album_info.*')
+      .join('album_info', function () {
+        this.on('album_info.user_id', '=', 'club_member.user_id').onIn('album_info.album_type', [2])
+      })
+    .innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'club_member.user_id')
+    .where({ 'club_member.club_id': clubId})
+    .andWhere(albumNameQuery, 'like', albumName)
+    .andWhere('album_info.create_date', '>', new Date(firstDataTime))
+    .orderBy('album_info.create_date', 'desc').limit(limit).offset(offset)
+  }
+
+  if (queryPageType == 2) {
+    albumData = await mysql('club_member')
+    .select('cSessionInfo.user_info', 'album_info.*')
+      .join('album_info', function () {
+        this.on('album_info.user_id', '=', 'club_member.user_id').onIn('album_info.album_type', [2])
+      })
+    .innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'club_member.user_id')
+    .where({ 'club_member.club_id': clubId})
+    .andWhere(albumNameQuery, 'like', albumName)
+    .andWhere('album_info.create_date', '<', new Date(lastDataTime))
+    .orderBy('album_info.create_date', 'desc').limit(limit).offset(offset)
+  }
+
+
+  for (var i = 0; i < albumData.length; i++) {
+    albumData[i].user_info = userInfoService.getTailoredUserInfo(albumData[i].user_info)
+  }
+  return albumData
+}
+
 module.exports = {
   createAlbum,
+  changeAlbumType,
   modifyAlbum,
   deleteAlbum,
   getMyAlbum,
@@ -163,4 +229,5 @@ module.exports = {
   saveAlbumContent,
   deleteAlbumContent,
   getAlbumContent,
+  getStudySystem
 }

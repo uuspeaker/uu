@@ -240,11 +240,13 @@ router.put('/club.clubApply', controllers.club.clubApply.put)
 router.get('/album.albumInfo', controllers.album.albumInfo.get)
 router.post('/album.albumInfo', controllers.album.albumInfo.post)
 router.delete('/album.albumInfo', controllers.album.albumInfo.del)
+router.put('/album.albumInfo', controllers.album.albumInfo.put)
 //专辑内容管理
 router.get('/album.albumContent', controllers.album.albumContent.get)
 router.post('/album.albumContent', controllers.album.albumContent.post)
 router.delete('/album.albumContent', controllers.album.albumContent.del)
-
+//俱乐部教学体系管理
+router.get('/album.studySystem', controllers.album.studySystem.get)
 
 
 
