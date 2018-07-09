@@ -108,7 +108,7 @@ var getClubInfoById = async (clubId) => {
 //查询俱乐部成员信息
 var getClubMember = async (clubId) => {
 
-  var memberList = await mysql('club_member').innerJoin('user_study_duration', 'club_member.user_id', 'user_study_duration.user_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'club_member.user_id').where({ 'club_member.club_id': clubId }).select('cSessionInfo.user_info', 'club_member.role_type', 'club_member.notice', mysql.raw('sum(study_duration) as totalDuration')).groupBy('cSessionInfo.user_info', 'club_member.role_type', 'club_member.notice').orderBy('club_member.role_type', 'asc', 'club_member.notice', 'desc nulls last')
+  var memberList = await mysql('club_member').innerJoin('user_study_duration', 'club_member.user_id', 'user_study_duration.user_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'club_member.user_id').where({ 'club_member.club_id': clubId }).select('cSessionInfo.user_info', 'club_member.role_type', 'club_member.notice', mysql.raw('sum(study_duration) as totalDuration')).groupBy('cSessionInfo.user_info', 'club_member.role_type', 'club_member.notice').orderByRaw('club_member.role_type asc, club_member.notice desc')
   for (var i = 0; i < memberList.length; i++) {
     memberList[i].user_info = userInfoService.getTailoredUserInfo(memberList[i].user_info)
   }
