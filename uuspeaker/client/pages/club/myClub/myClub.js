@@ -48,7 +48,7 @@ Page({
           })
           that.formatDate()
           clubId = result.data.data.clubInfo[0].club_id
-          if (result.data.data.clubInfo[0].myRole == 1){
+          if (result.data.data.clubInfo[0].myRole == 1 || result.data.data.clubInfo[0].myRole == 2){
             that.queryClubApplyAmount()
           }
         }else{

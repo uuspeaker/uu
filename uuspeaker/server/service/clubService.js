@@ -108,7 +108,7 @@ var getClubInfoById = async (clubId) => {
 //查询俱乐部成员信息
 var getClubMember = async (clubId) => {
 
-  var memberList = await mysql('club_member').innerJoin('user_study_duration', 'club_member.user_id', 'user_study_duration.user_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'club_member.user_id').where({ 'club_member.club_id': clubId }).select('cSessionInfo.user_info', 'club_member.role_type', 'club_member.notice', mysql.raw('sum(study_duration) as totalDuration')).groupBy('cSessionInfo.user_info', 'club_member.role_type', 'club_member.notice').orderBy('club_member.role_type','asc','totalDuration', 'desc')
+  var memberList = await mysql('club_member').innerJoin('user_study_duration', 'club_member.user_id', 'user_study_duration.user_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'club_member.user_id').where({ 'club_member.club_id': clubId }).select('cSessionInfo.user_info', 'club_member.role_type', 'club_member.notice', mysql.raw('sum(study_duration) as totalDuration')).groupBy('cSessionInfo.user_info', 'club_member.role_type', 'club_member.notice').orderBy('club_member.role_type', 'asc', 'club_member.notice', 'desc nulls last')
   for (var i = 0; i < memberList.length; i++) {
     memberList[i].user_info = userInfoService.getTailoredUserInfo(memberList[i].user_info)
   }
@@ -219,8 +219,7 @@ var getApplyUserAmount = async (clubId) => {
 var getApplyUserList = async (clubId) => {
   var data = await mysql('club_apply').leftJoin('user_study_duration', 'club_apply.user_id', 'user_study_duration.user_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'club_apply.user_id').where({
     'club_apply.club_id': clubId,
-    'club_apply.apply_status': 1,
-  }).groupBy('cSessionInfo.user_info', 'club_apply.audio_id', 'club_apply.time_duration').select('cSessionInfo.user_info', 'club_apply.audio_id',  'club_apply.time_duration',mysql.raw('sum(user_study_duration.study_duration) as totalDuration'))
+  }).groupBy('cSessionInfo.user_info', 'club_apply.audio_id', 'club_apply.apply_status', 'club_apply.time_duration').select('cSessionInfo.user_info', 'club_apply.audio_id', 'club_apply.apply_status',  'club_apply.time_duration',mysql.raw('sum(user_study_duration.study_duration) as totalDuration'))
   for (var i = 0; i < data.length; i++) {
     data[i].user_info = userInfoService.getTailoredUserInfo(data[i].user_info)
     data[i].src = audioService.getSrc(data[i].audio_id)

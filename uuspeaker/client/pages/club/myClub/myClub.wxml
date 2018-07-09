@@ -9,7 +9,7 @@
         <view class="weui-cell__bd">
           <view class='title' catchtap='toClubDetail' data-club_id="{{clubInfo[0].club_id}}" data-club_name='{{clubInfo[0].club_name}}' data-notice='{{clubInfo[0].notice}}'  data-is_host='{{isHost}}' data-src='{{src}}'>{{clubInfo[0].club_name}} </view>
           <view class='host-level'>创会人：{{clubInfo[0].userInfo.nickName}}
-            <text class='link3' wx:if='{{clubInfo[0].myRole == 1}}' catchtap='toModifyClub'>修改</text>
+            <text class='link3' wx:if='{{clubInfo[0].myRole == 1 || clubInfo[0].myRole == 2}}' catchtap='toModifyClub'>修改</text>
           </view>
         </view>
         <view class="weui-cell__ft " catchtap='toClubList'>
@@ -48,7 +48,10 @@
       </block>
     </view>
     <view class="weui-cells__title">会员
+    <block wx:if='{{clubInfo[0].myRole == 1 || clubInfo[0].myRole == 2}}'>
       <text style='color:red;padding-left:10px' data-club_id='{{clubInfo[0].club_id}}' catchtap='toApplyList' wx:if='{{applyAmount>0}}'>{{applyAmount}}条申请</text>
+      <text style='color:black;padding-left:10px' data-club_id='{{clubInfo[0].club_id}}' catchtap='toApplyList' wx:if='{{applyAmount==0}}'>入会申请</text>
+      </block>
     </view>
     <view class="weui-cells weui-cells_after-title ">
       <block wx:for="{{normalMemberList}}" wx:key="item">
