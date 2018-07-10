@@ -23,21 +23,21 @@ const meetingConnectedTunnelIds = []
 var waitTime = 99000
 var unactiveTime = 10 * 60 * 1000
 var standByList = []
-var speechNames = []
+// var speechNames = []
 var numberTunnelResend = []
 
-var initSpeechNames = async () => {
-  speechNames = await mysql("speech_name_info").select('speech_name')
-}
+// var initSpeechNames = async () => {
+//   speechNames = await mysql("speech_name_info").select('speech_name')
+// }
 
-var getRandomSpeechName = () => {
-  var index = Math.floor(Math.random() * speechNames.length)
-  if (index - 1 >= 0 && index < speechNames.length) {
-    return speechNames[index - 1].speech_name
-  } else {
-    return '第一次'
-  }
-}
+// var getRandomSpeechName = () => {
+//   var index = Math.floor(Math.random() * speechNames.length)
+//   if (index - 1 >= 0 && index < speechNames.length) {
+//     return speechNames[index - 1].speech_name
+//   } else {
+//     return '第一次'
+//   }
+// }
 
 var startMatch = (userInfo) => {
   var standByListLegnth = standByList.length
@@ -152,7 +152,7 @@ var autoMatchUser = () => {
     var roomId = uuid.v1()
     var matchUserA = standByList.pop()
     var matchUserB = standByList.pop()
-    var speechName = getRandomSpeechName()
+    var speechName = speechService.getRandomSpeechName()
 
     log.info('匹配成功，将匹配成功的两个用户从等待列表删除，转移到匹配成功列表' + JSON.stringify(matchUserA) + JSON.stringify(matchUserB))
 
@@ -374,8 +374,8 @@ module.exports = {
 
 }
 
-initSpeechNames()
+// initSpeechNames()
 setInterval(autoMatchUser, 1 * 1000);
-setInterval(initSpeechNames, 10 * 60 * 1000);
+// setInterval(initSpeechNames, 10 * 60 * 1000);
 setInterval(resetNumberOfResend, 10 * 60 * 1000);
 setInterval(clearUnactiveUser, 60 * 1000);

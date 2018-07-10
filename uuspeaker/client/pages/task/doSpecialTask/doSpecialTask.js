@@ -42,6 +42,7 @@ Page({
     waitSeconds:11,
     speechType:'',
     speed:0,
+    speechAnswer:''
   },
 
   waitToBegin: function () {
@@ -81,6 +82,7 @@ Page({
       minute: '00',
       second: '00',
       audioName:'',
+      speechAnswe:'',
       speed:0,
       audioText:''
     })
@@ -101,6 +103,11 @@ Page({
 
   //用户按下录音按钮
   startRecord: function () {
+    var speechName = this.data.audioName.replace(/^\s+|\s+$/g, "");
+    if (speechName == '') {
+      util.showSuccess('请输入题目')
+      return
+    }
     timeDuration = 0 
     lastTime = 0
     speedArray = []
@@ -220,6 +227,32 @@ Page({
          wx.hideLoading()
          that.setData({
            audioName: result.data.data
+         })
+         waitSecondsId = setInterval(that.waitToBegin, 1000)
+         
+       },
+       fail(error) {
+         util.showModel('请求失败', error);
+         console.log('request fail', error);
+       }
+     })
+   },
+
+   getSpeechAnswer: function () {
+     var speechName = this.data.audioName.replace(/^\s+|\s+$/g, "");
+     if (speechName == '') {
+       util.showSuccess('请写下你的问题')
+       return
+     }
+     var that = this
+     qcloud.request({
+       url: `${config.service.host}/weapp/speech.speechAnswerRandom`,
+       login: true,
+       method: 'get',
+       success(result) {
+         wx.hideLoading()
+         that.setData({
+           speechAnswer: result.data.data
          })
          waitSecondsId = setInterval(that.waitToBegin, 1000)
          

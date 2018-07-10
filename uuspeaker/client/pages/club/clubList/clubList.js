@@ -325,4 +325,8 @@ Page({
     })
   },
 
+  onUnload: function () {
+    innerAudioContext.stop();
+  },
+
 })

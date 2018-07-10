@@ -2,6 +2,7 @@
   <view class=" myReport" style="{{viewStyle[0]}}" data-item='0' data-type='1' bindtap='doSpeech'>即兴</view>
   <view class=" myReport" style="{{viewStyle[1]}}" data-item='1' data-type='2' bindtap='doSpeech'>备稿</view>
   <view class=" myReport" style="{{viewStyle[2]}}" data-item='2' data-type='3' bindtap='doSpeech'>微课</view>
+  <view class=" myReport" style="{{viewStyle[3]}}" data-item='3' data-type='4' bindtap='doSpeech'>问题</view>
 </view>
 
 <block wx:if='{{speechType == 0}}'>
@@ -80,5 +81,45 @@
   <view class='speed' wx:if='{{speed > 0 }}'>语速：约每分钟{{speed}}字</view>
   <button type='primary' bindtap="startRecord" wx:if="{{isPlay == 0}}">开始录制</button>
   <button type='primary' bindtap="stopRecord" wx:if="{{isPlay == 1}}">完成录制</button>
+</view>
+</block>
+
+
+<block wx:if='{{speechType == 3}}'>
+<view class="weui-flex commentArea">
+  <view class="weui-flex__item">
+    <input class='commentInput' name="audioName" value='{{audioName}}' placeholder='请写下你的问题' bindinput="audioNameInput"></input>
+  </view>
+
+</view>
+<view wx:if='{{audioText == ""}}'>
+  <view class='tip' style='font-weight: bold;  padding-top:20px;'>问题模式玩法说明：</view>
+  <view class='tip'>1、请写下你的问题</view>
+  <view class='tip'>2、点击“请教小懂演讲君”</view>
+  <view class='tip'>3、小懂演讲君给出答案后，思考10秒钟</view>
+  <view class='tip'>4、谈一谈你对这个答案的理解，2分钟</view>
+  <view class='tip'>5、结束</view>
+</view>
+<block wx:if='{{speechAnswer != ""}}'>
+<view class='tip2'>小懂演讲君说：</view>
+<view class='answer' >{{speechAnswer}}</view>
+</block>
+<view class='tip' style='padding-top:10px;' wx:if='{{audioText != ""}}'>{{audioText}}</view>
+<view class='bottom'>
+  <view class="weui-flex__item  timeCard" style='{{timeNoticeBackground}}'>
+    <block wx:if='{{waitSeconds <= 0}}'>
+      <view>{{minute}}:{{second}}</view>
+    </block>
+    <block wx:if='{{waitSeconds > 0 && waitSeconds <= 10}}'>
+      <view class='wait'>{{waitSeconds}}</view>
+    </block>
+    <block wx:if='{{waitSeconds > 10}}'>
+    <view class='waitNotice'>计时结束后开始演讲</view>
+  </block>
+  </view>
+  
+  <view class='speed' wx:if='{{speed > 0 }}'>语速：约每分钟{{speed}}字</view>
+  <button type='primary' bindtap='getSpeechAnswer' wx:if="{{waitSeconds > 0}}">请教小懂演讲君</button>
+  <button type='primary' bindtap="stopRecord" wx:if="{{waitSeconds <= 0}}">完成演讲</button>
 </view>
 </block>

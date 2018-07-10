@@ -219,6 +219,7 @@ router.post('/speech.speechNameEvaluate', controllers.speech.speechNameEvaluate.
 router.delete('/speech.speechNameEvaluate', controllers.speech.speechNameEvaluate.del)
 //演讲题目管理
 router.get('/speech.speechNameRandom', controllers.speech.speechNameRandom.get)
+router.get('/speech.speechAnswerRandom', controllers.speech.speechAnswerRandom.get)
 //演讲题目管理
 router.get('/letter.letterForLevel3', controllers.letter.letterForLevel3.get)
 //俱乐部管理

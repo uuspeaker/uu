@@ -4,6 +4,9 @@ const userInfoService = require('../service/userInfoService.js')
 const dateUtil = require('../common/dateUtil')
 const uuid = require('../common/uuid.js')
 
+var speechNames = []
+var speechAnswers = []
+
 //保存演讲题目
 var saveSpeechSubject = async (userId, subjectName, speechNames) => {
   await mysql('speech_subject').insert({
@@ -235,26 +238,6 @@ var calculateAverageLevel = async (speechName) => {
   })
 }
 
-var getRandomSpeechName = async (createDate) => {
-  var limit = 10
-  var offset = 0
-  if (createDate == ''){
-    createDate = new Date()
-  }else{
-    createDate = new Date(createDate)
-  }
-  var speechNames = await mysql("speech_name_info").where('create_date', '<', createDate).orderBy('create_date','desc').limit(limit).offset(offset)
-  if (speechNames.length == 0){
-    speechNames = await mysql("speech_name_info").where('create_date', '<', new Date()).orderBy('create_date', 'desc').limit(limit).offset(offset)
-  } 
-  if (speechNames.length == 0)return[]
-  var index = Math.floor(Math.random() * 10)
-  if (speechNames.length <= index){
-    index = speechNames.length - 1
-  }
-  return speechNames[index]
-}
-
 var hasDoneSpeech = async (userId, speechName) => {
   var speechNames = await mysql("impromptu_audio").where({'user_id':userId, audio_name: speechName}).count('audio_name as amount')
   console.log('speechName', speechName)
@@ -266,6 +249,37 @@ var hasDoneSpeech = async (userId, speechName) => {
     return true
   }
 }
+
+var initSpeechNames = async () => {
+  speechNames = await mysql("speech_name_info").select('speech_name')
+}
+
+var getRandomSpeechName = () => {
+  var index = Math.floor(Math.random() * speechNames.length)
+  if (index - 1 >= 0 && index < speechNames.length) {
+    return speechNames[index - 1].speech_name
+  } else {
+    return '第一次'
+  }
+}
+
+var initSpeechAnswers = async () => {
+  speechAnswers = await mysql("uuspeaker_dictionary").select('dic_value').where({'dic_type':'speechAnswer'})
+}
+
+var getRandomSpeechAnswer = async () => {
+  var index = Math.floor(Math.random() * speechAnswers.length)
+  if (index - 1 >= 0 && index < speechAnswers.length) {
+    return speechAnswers[index - 1].dic_value
+  } else {
+    return '一切都是最好的安排'
+  }
+}
+
+initSpeechNames()
+setInterval(initSpeechNames, 10 * 60 * 1000);
+initSpeechAnswers()
+setInterval(initSpeechAnswers, 10 * 60 * 1000);
 
 module.exports = { 
   saveSpeechSubject, 
@@ -280,5 +294,6 @@ module.exports = {
   getUnevaluatedSpeechNames,
   evaluateSpeechName,
   getRandomSpeechName,
-  hasDoneSpeech
+  hasDoneSpeech,
+  getRandomSpeechAnswer
    }

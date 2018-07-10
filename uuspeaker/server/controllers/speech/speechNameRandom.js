@@ -1,6 +1,5 @@
 const { mysql } = require('../../qcloud')
 const userInfo = require('../../common/userInfo')
-const quickMatchService = require('../../service/quickMatchService')
 const speechService = require('../../service/speechService')
 
 module.exports = {
@@ -9,7 +8,7 @@ module.exports = {
     var userId = await userInfo.getOpenId(ctx)
     var speechName = ''
     var amount = 0
-    speechName = await quickMatchService.getRandomSpeechName()
+    speechName = await speechService.getRandomSpeechName()
     while (amount < 3){
       var hasDone = await speechService.hasDoneSpeech(userId, speechName)
       console.log('hasDone',hasDone)
@@ -17,7 +16,7 @@ module.exports = {
         ctx.state.data = speechName
         return
       }
-      speechName = await quickMatchService.getRandomSpeechName()
+      speechName = await speechService.getRandomSpeechName()
       amount++ 
     }
     ctx.state.data = speechName

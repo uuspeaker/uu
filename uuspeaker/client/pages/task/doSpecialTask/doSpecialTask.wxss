@@ -51,3 +51,15 @@
   text-align: center;
   padding-bottom: 10px;
 }
+.tip2{
+  padding-top:20px;
+  font-size:15px;
+  text-align: center;
+}
+.answer{
+  padding-top:5px;
+  color: orangered;
+  font-size:24px;
+  font-weight: bold;
+  text-align: center;
+}
