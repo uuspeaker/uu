@@ -239,6 +239,9 @@ Page({
 
   onReady: function () {
     wx.setNavigationBarTitle({ title: '演讲题目' });
+    wx.showShareMenu({
+      withShareTicket: true
+    })
   },
 
 })

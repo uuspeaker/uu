@@ -346,6 +346,9 @@ Page({
     wx.setNavigationBarTitle({
       title: '俱乐部',
     })
+    wx.showShareMenu({
+      withShareTicket: true
+    })
   },
 
   onPullDownRefresh: function () {
