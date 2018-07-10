@@ -255,7 +255,7 @@ Page({
     queryUserType = 1
     this.doQuerySpecialTask(queryUserType)
     this.pressView(0)
-    innerAudioContext.obeyMuteSwitch = false
+    //innerAudioContext.obeyMuteSwitch = false
     innerAudioContext.onPlay(() => {
       wx.hideLoading()
     })

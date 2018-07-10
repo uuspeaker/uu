@@ -52,6 +52,7 @@ Page({
     for (var i = 0; i < data.length; i++) {
       data[i].score = Math.floor((data[i].totalDuration + 59) / 60)
       data[i].level = userInfo.getRank(data[i].totalDuration)
+      data[i].createDateStr = dateFormat.getSimpleFormatDate(data[i].create_date)
     }
     this.setData({
       applyList: data

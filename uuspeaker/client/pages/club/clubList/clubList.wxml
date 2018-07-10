@@ -22,6 +22,7 @@
   <view class="weui-cell" data-club_id='{{club_id}}' data-club_name='{{club_name}}' bindtap="toClubShow">
     <view class="user-avatar">
       <image class="user-pic" src="{{user_info.avatarUrl}}" data-user_id='{{user_id}}' />
+      <view class='likeYou' >申请入会</view>
     </view>
     <view class="weui-cell__bd">
       <view class="">

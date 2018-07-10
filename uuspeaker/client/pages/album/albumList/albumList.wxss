@@ -120,13 +120,13 @@ height: 40px;
   height: 18px;
   text-align: center;
   padding-top: 3px;
-  position:fixed;
-  right:10px;
+  float:right;
+  margin-right:5px;
   margin-bottom:10px;
 }
 .changeCourse{
-  position: fixed;
-  right:10px;
+  float:right;
+  margin-right:5px;
   color:#576b95;
   font-size: 13px;
   font-weight: normal;

@@ -119,3 +119,7 @@ width:90px;
   margin-top:5px;
   margin-left:10px;
 }
+.checkNotice{
+  float: right;
+  margin-right:20px;
+}

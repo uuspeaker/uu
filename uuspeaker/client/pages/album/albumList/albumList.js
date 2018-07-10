@@ -309,6 +309,7 @@ Page({
       })
     }
       queryUserType = 1
+      queryPageType = 0
       this.pressView(0)
     this.doQueryAlbumList()
   },

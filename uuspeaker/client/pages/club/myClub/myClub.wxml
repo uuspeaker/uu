@@ -48,7 +48,7 @@
       </block>
     </view>
     <view class="weui-cells__title">会员
-    <block wx:if='{{clubInfo[0].myRole == 1 || clubInfo[0].myRole == 2}}'>
+    <block wx:if='{{clubInfo[0].myRole == 1 || clubInfo[0].myRole == 0}}'>
       <text style='color:red;padding-left:10px' data-club_id='{{clubInfo[0].club_id}}' catchtap='toApplyList' wx:if='{{applyAmount>0}}'>{{applyAmount}}条申请</text>
       <text style='color:black;padding-left:10px' data-club_id='{{clubInfo[0].club_id}}' catchtap='toApplyList' wx:if='{{applyAmount==0}}'>入会申请</text>
       </block>
@@ -60,14 +60,7 @@
     </view>
   </view>
 
-  <form>
-    <view class="weui-flex bottom ">
-      <view class="weui-flex__item">
-
-      </view>
-    </view>
-  </form>
-  <view style='margin-bottom:40px'></view>
+  <view style='padding-bottom:45px'>       </view>
   <view class="weui-flex bottom ">
     <view class="weui-flex__item ">
       <button class="weui-button" bindtap='toClubList'>浏览俱乐部</button>
