@@ -27,7 +27,8 @@ var config = {
     chatUrl: `${host}/weapp/impromptu.chatUrl`,
 
     // 上传图片接口
-    voiceUrl: `${host}/weapp/recognize`
+    voiceUrl: `${host}/weapp/recognize`,
+
   },
 
   options : {

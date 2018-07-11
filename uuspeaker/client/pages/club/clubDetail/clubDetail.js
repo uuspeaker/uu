@@ -18,7 +18,18 @@ Page({
     clubDescription:'',
     audios:[],
     isPlay:0,
-    audioIndex:''
+    audioIndex:'',
+    wxNo:'',
+    wxGroupImg:''
+    
+  },
+
+  // 预览图片
+  previewImg: function () {
+    wx.previewImage({
+      current: this.data.wxGroupImg,
+      urls: [this.data.wxGroupImg]
+    })
   },
 
   playAudio: function (e) {
@@ -79,6 +90,8 @@ Page({
     this.setData({
       clubName: options.clubName,
       clubFee: options.clubFee,
+      wxNo: options.wxNo,
+      wxGroupImg: options.wxGroupImg,
       clubDescription: options.clubDescription
     })
     this.initDateAndStatus(options.src,options.timeDuration)

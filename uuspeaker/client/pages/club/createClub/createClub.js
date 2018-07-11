@@ -22,7 +22,9 @@ Page({
     clubName: '',
     clubFee: '' ,
     clubDescription: '',
-    isPlay:0
+    isPlay:0,
+    wxGroupImg:'',
+    wxNo:''
   },
 
   createClub: function () {
@@ -39,7 +41,7 @@ Page({
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/club.clubInfo`,
-      data: { clubId: this.data.clubId, clubName: this.data.clubName, clubFee: this.data.clubFee, clubDescription: this.data.clubDescription, audioId: audioId, timeDuration: timeDuration},
+      data: { clubId: this.data.clubId, clubName: this.data.clubName, clubFee: this.data.clubFee, wxGroupImg: this.data.wxGroupImg,wxNo:this.data.wxNo, clubDescription: this.data.clubDescription, audioId: audioId, timeDuration: timeDuration},
       login: true,
       method: method,
       success(result) {
@@ -76,6 +78,13 @@ Page({
     clubFee = clubFee.replace(/^\s+|\s+$/g, "");
     this.setData({
       clubFee: clubFee
+    })
+  },
+
+  setWxNo: function(e){
+    var wxNo = e.detail.value
+    this.setData({
+      wxNo: wxNo
     })
   },
 
@@ -155,6 +164,55 @@ Page({
     })
   },
 
+  // 上传图片接口
+  doUpload: function () {
+    var that = this
+
+    // 选择图片
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera'],
+      success: function (res) {
+        util.showBusy('正在上传')
+        var filePath = res.tempFilePaths[0]
+
+        // 上传图片
+        wx.uploadFile({
+          url: `${config.service.host}/weapp/common.upload`,
+          filePath: filePath,
+          name: 'file',
+
+          success: function (res) {
+            util.showSuccess('上传图片成功')
+            console.log(res)
+            res = JSON.parse(res.data)
+            console.log(res)
+            that.setData({
+              wxGroupImg: res.data.imgUrl
+            })
+          },
+
+          fail: function (e) {
+            util.showModel('上传图片失败')
+          }
+        })
+
+      },
+      fail: function (e) {
+        console.error(e)
+      }
+    })
+  },
+
+  // 预览图片
+  previewImg: function () {
+    wx.previewImage({
+      current: this.data.wxGroupImg,
+      urls: [this.data.wxGroupImg]
+    })
+  },
+
   toClubList: function () {
     wx.navigateTo({
       url: '../../club/clubList/clubList',
@@ -194,6 +252,8 @@ Page({
         clubId: options.clubId,
         clubName: options.clubName,
         clubFee: options.clubFee,
+        wxNo: options.wxNo,
+        wxGroupImg: options.wxGroupImg,
         clubDescription: options.clubDescription,
       })
     }

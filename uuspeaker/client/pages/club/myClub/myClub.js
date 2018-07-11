@@ -317,6 +317,8 @@ Page({
       + this.data.clubInfo[0].club_id 
       + '&clubName=' + this.data.clubInfo[0].club_name
       + '&clubFee=' + this.data.clubInfo[0].club_fee
+      + '&wxNo=' + this.data.clubInfo[0].wx_no
+      + '&wxGroupImg=' + this.data.clubInfo[0].wx_group_img
       + '&clubDescription=' + this.data.clubInfo[0].club_description
       + '&src=' + this.data.clubInfo[0].src
       + '&timeDuration=' + this.data.clubInfo[0].time_duration,
@@ -329,6 +331,8 @@ Page({
       + this.data.clubInfo[0].club_id 
       + '&clubName=' + this.data.clubInfo[0].club_name
       + '&clubFee=' + this.data.clubInfo[0].club_fee
+      + '&wxNo=' + this.data.clubInfo[0].wx_no
+      + '&wxGroupImg=' + this.data.clubInfo[0].wx_group_img
       + '&clubDescription=' + this.data.clubInfo[0].club_description,
     })
   },

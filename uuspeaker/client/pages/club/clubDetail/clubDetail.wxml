@@ -8,10 +8,46 @@
   <view>
     <slider class='sliderAudio' block-size='12' block-color='#1296db' value='{{audios[0].sliderValue}}' selected-color='#1296db' bindchange='changeSlider'></slider>
   </view>
-  
+
   <view class=" timeNotice2">{{audios[0].duration}}</view>
 
 </view>
-<view class="content" wx:if='{{clubFee > 0}}'>会费：{{clubFee}} 元/月</view>
-  <view class="content" wx:if='{{clubFee == 0}}'>会费：免费</view>
-<view class='content'>{{clubDescription}}</view>
+<view class="weui-cell">
+  <view class="weui-cell__hd">
+    <view class="weui-label">会费</view>
+  </view>
+  <view class="weui-cell__bd">
+    <text  wx:if='{{clubFee > 0}}'>{{clubFee}} 元/月</text>
+    <text  wx:if='{{clubFee == 0}}'>免费</text>
+  </view>
+</view>
+<view class="weui-cell">
+  <view class="weui-cell__hd">
+    <view class="weui-label">微信号</view>
+  </view>
+  <view class="weui-cell__bd">
+    <text >{{wxNo}}</text>
+  </view>
+</view>
+<view class="weui-cell">
+  <view class="weui-cell__hd">
+    <view class="weui-label">微信群</view>
+  </view>
+  <view class="uploader-container" wx:if="{{wxGroupImg}}">
+            <image
+                class="uploader-image"
+                src="{{wxGroupImg}}"
+                mode="aspectFit"
+                bindtap="previewImg"
+            ></image>
+        </view>
+</view>
+
+<view class="weui-cell">
+  <view class="weui-cell__hd">
+    <view class="weui-label">俱乐部描述</view>
+  </view>
+  <view class="weui-cell__bd">
+    <text >{{clubDescription}}</text>
+  </view>
+</view>
