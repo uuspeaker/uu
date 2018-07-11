@@ -5,7 +5,7 @@ const userInfoService = require('../service/userInfoService')
 const audioService = require('../service/audioService.js')
 
 //创建俱乐部
-var createClub = async (userId, clubName, clubDescription, audioId, timeDuration) => {
+var createClub = async (userId, clubName, clubFee,clubDescription, audioId, timeDuration) => {
   var clubData = await mysql('club_info').where({
     'user_id': userId
   })
@@ -21,6 +21,7 @@ var createClub = async (userId, clubName, clubDescription, audioId, timeDuration
     user_id: userId,
     club_id: clubId,
     club_name: clubName,
+    club_fee: clubFee,
     member_amount: 1,
     club_description: clubDescription,
     audio_id: audioId,
@@ -35,9 +36,10 @@ var createClub = async (userId, clubName, clubDescription, audioId, timeDuration
 }
 
 //修改俱乐部
-var updateClub = async (clubId, clubName, clubDescription, audioId, timeDuration) => {
+var updateClub = async (clubId, clubName, clubFee, clubDescription, audioId, timeDuration) => {
   await mysql('club_info').update({
     club_name: clubName,
+    club_fee: clubFee,
     club_description: clubDescription,
     audio_id: audioId,
     time_duration: timeDuration

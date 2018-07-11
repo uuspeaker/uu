@@ -10,6 +10,14 @@
           <input name="clubName" class="weui-input" bindinput='setClubName' value='{{clubName}}' />
         </view>
       </view>
+      <view class="weui-cell weui-cell_input weui-cell_warn">
+        <view class="weui-cell__hd">
+          <view class="weui-label">会费</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input name="clubFee" class="weui-input" bindinput='setClubFee' value='{{clubFee}}' placeholder="元/月"/>
+        </view>
+      </view>
       <view class="weui-cell weui-cell_input">
         <view class="weui-cell__bd">
           <textarea name="clubDescription" bindinput='setClubDescription' value='{{clubDescription}}'  placeholder="请输入俱乐部描述" style="height: 20em" maxlength='2000'></textarea>

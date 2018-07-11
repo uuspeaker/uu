@@ -3,6 +3,7 @@ var config = require('../../../config')
 var util = require('../../../utils/util.js')
 var dateFormat = require('../../../common/dateFormat.js')
 var audioService = require('../../../common/audioService.js')
+var dataCheck = require('../../../common/dataCheck.js')
 const uuid = require('../../../common/uuid');
 
 const recorderManager = wx.getRecorderManager()
@@ -19,6 +20,7 @@ Page({
     userInfo: {},
     clubId: '',
     clubName: '',
+    clubFee: '' ,
     clubDescription: '',
     isPlay:0
   },
@@ -37,7 +39,7 @@ Page({
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/club.clubInfo`,
-      data: { clubId: this.data.clubId, clubName: this.data.clubName, clubDescription: this.data.clubDescription, audioId: audioId, timeDuration: timeDuration},
+      data: { clubId: this.data.clubId, clubName: this.data.clubName, clubFee: this.data.clubFee, clubDescription: this.data.clubDescription, audioId: audioId, timeDuration: timeDuration},
       login: true,
       method: method,
       success(result) {
@@ -69,6 +71,14 @@ Page({
     })
   },
 
+  setClubFee: function(e){
+    var clubFee = e.detail.value
+    clubFee = clubFee.replace(/^\s+|\s+$/g, "");
+    this.setData({
+      clubFee: clubFee
+    })
+  },
+
   setClubDescription: function(e){
     this.setData({
       clubDescription: e.detail.value
@@ -77,9 +87,13 @@ Page({
 
   startRecord: function () {
     var clubName = this.data.clubName
-    clubName = clubName.replace(/^\s+|\s+$/g, "");
     if (clubName == '') {
       util.showSuccess('请输入俱乐部名称')
+      return
+    }
+    var clubFee = this.data.clubFee
+    if (!dataCheck.isInt(clubFee)) {
+      util.showSuccess('请输入会费')
       return
     }
     this.setData({
@@ -179,6 +193,7 @@ Page({
       this.setData({
         clubId: options.clubId,
         clubName: options.clubName,
+        clubFee: options.clubFee,
         clubDescription: options.clubDescription,
       })
     }

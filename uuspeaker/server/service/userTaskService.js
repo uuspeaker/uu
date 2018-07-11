@@ -170,7 +170,7 @@ var getAllSpecialTask = async (queryUserType, audioType, queryPageType, firstDat
   }
 
   if (queryPageType == 2) {
-    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where('impromptu_audio.create_date', '<', new Date(lastDataTime)).andWhere(audioNameQuery, 'like', audioName).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
+    taskData = await mysql('impromptu_audio').select('cSessionInfo.user_info', 'impromptu_audio.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id').where('impromptu_audio.create_date', '<', new Date(lastDataTime)).andWhere({ audio_type: audioType }).andWhere(audioNameQuery, 'like', audioName).orderBy('impromptu_audio.create_date', 'desc').limit(limit).offset(offset)
   }
 
   for (var i = 0; i < taskData.length; i++) {

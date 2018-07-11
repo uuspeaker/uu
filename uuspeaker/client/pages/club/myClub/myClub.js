@@ -316,6 +316,7 @@ Page({
       url: '../../club/clubDetail/clubDetail?clubId=' 
       + this.data.clubInfo[0].club_id 
       + '&clubName=' + this.data.clubInfo[0].club_name
+      + '&clubFee=' + this.data.clubInfo[0].club_fee
       + '&clubDescription=' + this.data.clubInfo[0].club_description
       + '&src=' + this.data.clubInfo[0].src
       + '&timeDuration=' + this.data.clubInfo[0].time_duration,
@@ -327,6 +328,7 @@ Page({
       url: '../../club/createClub/createClub?operationType=2&clubId=' 
       + this.data.clubInfo[0].club_id 
       + '&clubName=' + this.data.clubInfo[0].club_name
+      + '&clubFee=' + this.data.clubInfo[0].club_fee
       + '&clubDescription=' + this.data.clubInfo[0].club_description,
     })
   },

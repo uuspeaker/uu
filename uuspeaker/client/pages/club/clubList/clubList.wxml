@@ -23,6 +23,7 @@
     <view class="user-avatar">
       <image class="user-pic" src="{{user_info.avatarUrl}}" data-user_id='{{user_id}}' />
       <view class='likeYou' >申请入会</view>
+      
     </view>
     <view class="weui-cell__bd">
       <view class="">
@@ -33,7 +34,9 @@
       <view>
         <view class=" date">创始人：{{user_info.nickName}}</view>
         <view class=" date">会员数：{{member_amount}} 人</view>
-        <view class=" date">创建时间：{{createDateStr}}</view>
+        <!--view class=" date">创建时间：{{createDateStr}}</view-->
+        <view class="date" wx:if='{{club_fee > 0}}'>会   费：{{club_fee}} 元/月</view>
+  <view class="date" wx:if='{{club_fee == 0}}'>会   费：免费</view>
       </view>
       <view class="weui-flex audioArea" catchtap='doNothing' >
       

@@ -14,6 +14,7 @@ Page({
    */
   data: {
     clubName:'',
+    clubFee:'',
     clubDescription:'',
     audios:[],
     isPlay:0,
@@ -77,6 +78,7 @@ Page({
   onLoad: function (options) {
     this.setData({
       clubName: options.clubName,
+      clubFee: options.clubFee,
       clubDescription: options.clubDescription
     })
     this.initDateAndStatus(options.src,options.timeDuration)
