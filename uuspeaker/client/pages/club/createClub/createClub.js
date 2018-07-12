@@ -41,7 +41,7 @@ Page({
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/club.clubInfo`,
-      data: { clubId: this.data.clubId, clubName: this.data.clubName, clubFee: this.data.clubFee, wxGroupImg: this.data.wxGroupImg,wxNo:this.data.wxNo, clubDescription: this.data.clubDescription, audioId: audioId, timeDuration: timeDuration},
+      data: { clubId: this.data.clubId, clubName: this.data.clubName, clubFee: this.data.clubFee, wxNo:this.data.wxNo, clubDescription: this.data.clubDescription, audioId: audioId, timeDuration: timeDuration},
       login: true,
       method: method,
       success(result) {

@@ -7,8 +7,9 @@ module.exports = {
   get: async ctx => {
     var userId = await userInfo.getOpenId(ctx)
     var amount = 0
-    var speechName = await speechService.getRandomSpeechAnswer()
-    ctx.state.data = speechName
+    var speechAnswer = await speechService.getRandomSpeechAnswer()
+    console.log('speechAnswer', speechAnswer)
+    ctx.state.data = speechAnswer
   },
 
 }

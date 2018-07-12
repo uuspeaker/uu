@@ -14,7 +14,7 @@ var startDate
 var endDate
 var timeDuration = 0
 var coinPlay = 0
-var speechTypeArr = ['即兴演讲','备稿演讲','微课']
+var speechTypeArr = ['即兴演讲', '备稿演讲', '微课','娱乐演讲']
 
 //查询标记(0-查询最新;1-查询前面10条;2-查询后面10条)
 var queryPageType = 0

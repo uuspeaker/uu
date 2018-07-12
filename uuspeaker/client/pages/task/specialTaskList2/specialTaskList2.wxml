@@ -21,7 +21,7 @@
         </view>
       </view>
       <view class="small-grey" style='margin-top:10px;margin-left:5px'>
-        <text wx:if='{{speech_type == 0}}'>【即兴】</text><text wx:if='{{speech_type == 1}}'>【备稿】</text><text wx:if='{{speech_type == 2}}'>【微课】</text><text wx:if='{{speech_type == 3}}'>【问题】</text><text>【{{user_info.nickName}}】【{{createDateStr}}】</text>
+        <text wx:if='{{speech_type == 0}}'>【即兴】</text><text wx:if='{{speech_type == 1}}'>【备稿】</text><text wx:if='{{speech_type == 2}}'>【微课】</text><text wx:if='{{speech_type == 3}}'>【娱乐】</text><text>【{{user_info.nickName}}】【{{createDateStr}}】</text>
       </view>
       <view class="weui-flex audioArea" catchtap='doNothing'>
       

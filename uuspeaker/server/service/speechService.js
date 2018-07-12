@@ -6,6 +6,7 @@ const uuid = require('../common/uuid.js')
 
 var speechNames = []
 var speechAnswers = []
+var emoticons = []
 
 //保存演讲题目
 var saveSpeechSubject = async (userId, subjectName, speechNames) => {
@@ -240,9 +241,6 @@ var calculateAverageLevel = async (speechName) => {
 
 var hasDoneSpeech = async (userId, speechName) => {
   var speechNames = await mysql("impromptu_audio").where({'user_id':userId, audio_name: speechName}).count('audio_name as amount')
-  console.log('speechName', speechName)
-  console.log('speechNames', speechNames)
-  console.log('speechNames[0].amount', parseInt(speechNames[0].amount))
   if (speechNames[0].amount == 0){
     return false
   }else{
@@ -265,14 +263,22 @@ var getRandomSpeechName = () => {
 
 var initSpeechAnswers = async () => {
   speechAnswers = await mysql("uuspeaker_dictionary").select('dic_value').where({'dic_type':'speechAnswer'})
+  emoticons = await mysql("uuspeaker_dictionary").select('dic_value').where({ 'dic_type':'emoticon'})
+  console.log('emoticons', emoticons)
 }
 
 var getRandomSpeechAnswer = async () => {
+  var emoticonsIndex = Math.floor(Math.random() * emoticons.length)
+  var emoticon = ''
+  if (emoticonsIndex - 1 >= 0 && emoticonsIndex < emoticons.length) {
+    emoticon = emoticons[emoticonsIndex - 1].dic_value
+  }
+
   var index = Math.floor(Math.random() * speechAnswers.length)
   if (index - 1 >= 0 && index < speechAnswers.length) {
-    return speechAnswers[index - 1].dic_value
+    return speechAnswers[index - 1].dic_value + emoticon
   } else {
-    return '一切都是最好的安排'
+    return '一切都是最好的安排' + emoticon
   }
 }
 

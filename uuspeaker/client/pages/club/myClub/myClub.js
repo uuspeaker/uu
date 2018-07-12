@@ -48,7 +48,7 @@ Page({
           })
           that.formatDate()
           clubId = result.data.data.clubInfo[0].club_id
-          if (result.data.data.clubInfo[0].myRole == 1 || result.data.data.clubInfo[0].myRole == 2){
+          if (result.data.data.clubInfo[0].role_type == 1 || result.data.data.clubInfo[0].role_type == 2){
             that.queryClubApplyAmount()
           }
         }else{
@@ -88,7 +88,7 @@ Page({
 
   cancelClub: function () {
     var content = '是否确定退出？'
-    if (this.data.clubInfo[0].myRole == 1){
+    if (this.data.clubInfo[0].role_type == 1){
       content = '是否确定解散俱乐部？'
     }
     wx.showModal({
@@ -113,7 +113,7 @@ Page({
     qcloud.request({
       url: `${config.service.host}/weapp/club.myClub`,
       login: true,
-      data: { roleType: this.data.clubInfo[0].myRole, clubId: this.data.clubInfo[0].club_id},
+      data: { roleType: this.data.clubInfo[0].role_type, clubId: this.data.clubInfo[0].club_id},
       method: 'delete',
       success(result) {
         wx.hideLoading()
@@ -188,7 +188,7 @@ Page({
       data[i].createDateStr = dateFormat.format(new Date(data[i].create_date),'yyyy年M月d日')
       data[i].userRank = userInfo.getRank(data[i].totalDuration)
       data[i].role = userInfo.getRole(data[i].role_type)
-      data[i].myRole = clubInfo[0].myRole
+      data[i].myRole = clubInfo[0].role_type
       if(data[i].role_type == 9){
         normalMemberList.push(data[i])
       }else{
@@ -307,7 +307,7 @@ Page({
 
   toApplyList: function () {
     wx.navigateTo({
-      url: '../../club/clubApplyList/clubApplyList?clubId=' + this.data.clubInfo[0].club_id + '&myRole=' + this.data.clubInfo[0].myRole,
+      url: '../../club/clubApplyList/clubApplyList?clubId=' + this.data.clubInfo[0].club_id + '&myRole=' + this.data.clubInfo[0].role_type,
     })
   },
 

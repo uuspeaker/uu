@@ -16,7 +16,8 @@
   width: 80%;
   height: 50px;
   background-color: #ffffff;
-  margin-left: 8%
+  margin-left: 8%;
+  margin-bottom: 10px;
 }
 .audio{
   width: 40px;

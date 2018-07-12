@@ -26,10 +26,10 @@
     <view class="weui-label">微信号</view>
   </view>
   <view class="weui-cell__bd">
-    <text >{{wxNo}}</text>
+    <text catchtap='copyWxNo'>{{wxNo}}</text>
   </view>
 </view>
-<view class="weui-cell">
+<!--view class="weui-cell">
   <view class="weui-cell__hd">
     <view class="weui-label">微信群</view>
   </view>
@@ -41,12 +41,9 @@
                 bindtap="previewImg"
             ></image>
         </view>
-</view>
+</view-->
 
 <view class="weui-cell">
-  <view class="weui-cell__hd">
-    <view class="weui-label">俱乐部描述</view>
-  </view>
   <view class="weui-cell__bd">
     <text >{{clubDescription}}</text>
   </view>

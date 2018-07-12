@@ -142,6 +142,12 @@ Page({
     })
   },
 
+  copyWxNo: function(e){
+      wx.setClipboardData({
+        data: this.data.wxNo,
+      })
+  },
+
   onShow: function () {
     wx.setKeepScreenOn({
       keepScreenOn: true

@@ -51,7 +51,13 @@
   </view>
 </view>
 
-
+<!--小懂回复页面-->
+ 
+  <view class="weui-cells weui-cells_after-title" wx:if='{{audioData[0].speech_type == 3}}'>
+  <view class="weui-cell speechType" >
+小懂演讲君说：{{audioData[0].audio_text}}
+      </view>
+  </view>
 <!--点赞展示页面-->
  
   <view class='likeUser'></view>

@@ -5,7 +5,7 @@ const userInfoService = require('../service/userInfoService')
 const audioService = require('../service/audioService.js')
 
 //创建俱乐部
-var createClub = async (userId, clubName, clubFee,clubDescription, audioId, timeDuration) => {
+var createClub = async (userId, clubName, clubFee,wxNo,clubDescription, audioId, timeDuration) => {
   var clubData = await mysql('club_info').where({
     'user_id': userId
   })
@@ -22,6 +22,7 @@ var createClub = async (userId, clubName, clubFee,clubDescription, audioId, time
     club_id: clubId,
     club_name: clubName,
     club_fee: clubFee,
+    wx_no: wxNo,
     member_amount: 1,
     club_description: clubDescription,
     audio_id: audioId,
@@ -36,12 +37,13 @@ var createClub = async (userId, clubName, clubFee,clubDescription, audioId, time
 }
 
 //修改俱乐部
-var updateClub = async (clubId, clubName, clubFee, clubDescription, audioId, timeDuration) => {
+var updateClub = async (clubId, clubName, clubFee, wxNo, clubDescription, audioId, timeDuration) => {
   await mysql('club_info').update({
     club_name: clubName,
     club_fee: clubFee,
     club_description: clubDescription,
     audio_id: audioId,
+    wx_no: wxNo,
     time_duration: timeDuration
   }).where({
     club_id: clubId
@@ -75,18 +77,18 @@ var getClubList = async (userId, queryPageType, firstDataTime, lastDataTime) => 
 
 //查询自己的俱乐部信息
 var getMyClubInfo = async (userId) => {
-  var clubInfo = await mysql('club_info').select('cSessionInfo.user_info','club_info.*').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'club_info.user_id').innerJoin('club_member', 'club_member.club_id', 'club_info.club_id').where({ 'club_member.user_id': userId })
+  var clubInfo = await mysql('club_info').select('cSessionInfo.user_info','club_info.*','club_member.role_type').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'club_info.user_id').innerJoin('club_member', 'club_member.club_id', 'club_info.club_id').where({ 'club_member.user_id': userId })
 
   if (clubInfo.length > 0){
     var clubId = clubInfo[0].club_id
     var memberList = await getClubMember(clubId)
     clubInfo[0].userInfo = userInfoService.getTailoredUserInfo(clubInfo[0].user_info)
     clubInfo[0].src = audioService.getSrc(clubInfo[0].audio_id)
-    if (clubInfo[0].userInfo.userId == userId){
-      clubInfo[0].myRole = 1
-    }else{
-      clubInfo[0].myRole = 0
-    }
+    // if (clubInfo[0].userInfo.userId == userId){
+    //   clubInfo[0].myRole = 1
+    // }else{
+    //   clubInfo[0].myRole = 0
+    // }
   }
 
   return {

@@ -26,7 +26,7 @@
           <input name="wxNo" class="weui-input" bindinput='setWxNo' value='{{wxNo}}' placeholder="入会负责人微信号"/>
         </view>
       </view>
-      <view class="weui-cell weui-cell_input ">
+      <!--view class="weui-cell weui-cell_input ">
         <view class="weui-cell__hd">
           <view class="weui-label">微信群</view>
         </view>
@@ -41,12 +41,12 @@
                 mode="aspectFit"
                 bindtap="previewImg"
             ></image>
-        </view>
-      <!--view class="weui-cell weui-cell_input">
+        </view-->
+      <view class="weui-cell weui-cell_input">
         <view class="weui-cell__bd">
           <textarea name="clubDescription" bindinput='setClubDescription' value='{{clubDescription}}'  placeholder="请输入俱乐部描述" style="height: 20em" maxlength='2000'></textarea>
         </view>
-      </view-->
+      </view>
     </view>
 
         

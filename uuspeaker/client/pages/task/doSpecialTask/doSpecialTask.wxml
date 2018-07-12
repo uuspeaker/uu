@@ -2,7 +2,7 @@
   <view class=" myReport" style="{{viewStyle[0]}}" data-item='0' data-type='1' bindtap='doSpeech'>即兴</view>
   <view class=" myReport" style="{{viewStyle[1]}}" data-item='1' data-type='2' bindtap='doSpeech'>备稿</view>
   <view class=" myReport" style="{{viewStyle[2]}}" data-item='2' data-type='3' bindtap='doSpeech'>微课</view>
-  <view class=" myReport" style="{{viewStyle[3]}}" data-item='3' data-type='4' bindtap='doSpeech'>问题</view>
+  <view class=" myReport" style="{{viewStyle[3]}}" data-item='3' data-type='4' bindtap='doSpeech'>娱乐</view>
 </view>
 
 <block wx:if='{{speechType == 0}}'>
