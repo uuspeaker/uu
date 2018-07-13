@@ -9,9 +9,8 @@ module.exports = {
     var rankList = []
     if (scoreType == 1) {
       rankList = await clubService.getStudyRank(clubId)
-    }
-    if (scoreType == 2) {
-      rankList = await clubService.getIncreaseRank(clubId)
+    }else{
+      rankList = await clubService.getIncreaseRank(clubId, scoreType)
     }
     ctx.state.data = rankList
   },

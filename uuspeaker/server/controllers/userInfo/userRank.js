@@ -10,10 +10,9 @@ module.exports = {
     var rankList = []
     if (scoreType == 1){
       rankList = await userInfoService.getStudyRankOfLike(userId)
-    }
-    if (scoreType == 2) {
+    }else{
       //rankList = await userInfoService.getInfluenceRank(userId)
-      rankList = await userInfoService.getIncreaseRankOfLike(userId)
+      rankList = await userInfoService.getIncreaseRankOfLike(userId, scoreType)
     }
     ctx.state.data = rankList
   },

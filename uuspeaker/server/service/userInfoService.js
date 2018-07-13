@@ -296,13 +296,22 @@ var getStudyRankOfLike = async (userId) => {
 }
 
 //查询用户学习增长排名
-var getIncreaseRankOfLike = async (userId) => {
-  var today = dateUtil.getToday()
+var getIncreaseRankOfLike = async (userId, scoreType) => {
+  var beginDate = ''
   var limit = 100
-  var offset =0
+  var offset = 0
+  if (scoreType == 2){
+    beginDate = dateUtil.getToday()
+  }else if(scoreType == 3){
+    beginDate = dateUtil.getFirstDayOfWeek()
+  } else if (scoreType == 4) {
+    beginDate = dateUtil.getFirstDayOfMonth()
+  }
+  console.log('scoreType',scoreType)
+  console.log('beginDate', beginDate)
   var data = await mysql('user_like').innerJoin('user_study_duration', 'user_like.like_user_id', 'user_study_duration.user_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_like.like_user_id').where({
-    'user_like.user_id': userId, 'user_study_duration.study_date': today
-  }).select('cSessionInfo.user_info', mysql.raw('sum(study_duration) as totalDuration')).groupBy('cSessionInfo.user_info').orderBy('totalDuration', 'desc').limit(limit).offset(offset)
+    'user_like.user_id': userId
+  }).andWhere('user_study_duration.study_date', '>=', beginDate).select('cSessionInfo.user_info', mysql.raw('sum(study_duration) as totalDuration')).groupBy('cSessionInfo.user_info').orderBy('totalDuration', 'desc').limit(limit).offset(offset)
   for (var i = 0; i < data.length; i++) {
     data[i].user_info = getTailoredUserInfo(data[i].user_info)
   }

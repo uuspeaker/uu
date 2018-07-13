@@ -1,10 +1,8 @@
 <view class="weui-cell write top">
-  <view class=" myReport" style="{{viewStyle[0]}}" data-item='0' data-type='1' bindtap='queryStudyRank'>
-  积分榜
-  </view>
-  <view class=" myReport" style="{{viewStyle[1]}}" data-item='1' data-type='2' bindtap='queryStudyRank'>
-  增长榜
-  </view>
+  <view class=" myReport" style="{{viewStyle[0]}}" data-item='0' data-type='1' bindtap='queryStudyRank'>积分榜</view>
+  <view class=" myReport" style="{{viewStyle[1]}}" data-item='1' data-type='2' bindtap='queryStudyRank'>日增长</view>
+  <view class=" myReport" style="{{viewStyle[2]}}" data-item='2' data-type='3' bindtap='queryStudyRank'>周增长</view>
+  <view class=" myReport" style="{{viewStyle[3]}}" data-item='3' data-type='4' bindtap='queryStudyRank'>月增长</view>
 </view>
 <view class="weui-cells weui-cells_after-title middle" >
   <block wx:for="{{rankList}}" wx:key="item">
@@ -27,6 +25,6 @@
       </view>
       <view class='small-grey'>{{level}}</view>
     </view>
-    <view class='right'>{{score}} 分<block wx:if="{{dataType == 2}}"><image class='up' src="../../../images/taskIndex/up.png" /></block></view>
+    <view class='right'>{{score}} 分<block wx:if="{{dataType >= 2}}"><image class='up' src="../../../images/taskIndex/up.png" /></block></view>
   </view>
 </template>

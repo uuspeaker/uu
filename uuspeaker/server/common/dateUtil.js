@@ -20,5 +20,25 @@ const format = (date, fmt) => {
 const getToday = () => {
   return format(new Date(),'yyyyMMdd')
 }
+const getFirstDayOfWeek = () => {
+  var today = new Date()
+  if (today.getDay() == 0){
+    today.setDate(today.getDate() - 6);
+  }else{
+    today.setDate(today.getDate() - today.getDay() + 1);
+  }
+  
+  return format(today,'yyyyMMdd')
+}
+const getFirstDayOfMonth = () => {
+  var today = new Date()
+  today.setDate(1);
+  return format(today, 'yyyyMMdd')
+}
 
-module.exports = { format,getToday }
+module.exports = { 
+  format,
+  getToday,
+  getFirstDayOfWeek,
+  getFirstDayOfMonth
+}

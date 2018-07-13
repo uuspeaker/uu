@@ -149,13 +149,19 @@ var getStudyRank = async (clubId) => {
 }
 
 //查询用户学习增长排名
-var getIncreaseRank = async (clubId) => {
-  var today = dateUtil.getToday()
+var getIncreaseRank = async (clubId, scoreType) => {
+  var beginDate = ''
   var limit = 100
   var offset = 0
-  var data = await mysql('club_member').innerJoin('user_study_duration', 'club_member.user_id', 'user_study_duration.user_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'club_member.user_id').where({
-    'club_member.club_id': clubId, 'user_study_duration.study_date': today
-  }).select('cSessionInfo.user_info', mysql.raw('sum(study_duration) as totalDuration')).groupBy('cSessionInfo.user_info').orderBy('totalDuration', 'desc').limit(limit).offset(offset)
+  if (scoreType == 2) {
+    beginDate = dateUtil.getToday()
+  } else if (scoreType == 3) {
+    beginDate = dateUtil.getFirstDayOfWeek()
+  } else if (scoreType == 4) {
+    beginDate = dateUtil.getFirstDayOfMonth()
+  }
+  var data = await mysql('club_member').innerJoin('user_study_duration', 'club_member.user_id', 'user_study_duration.user_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'club_member.user_id').where({'club_member.club_id': clubId
+  }).andWhere('user_study_duration.study_date', '>=', beginDate).select('cSessionInfo.user_info', mysql.raw('sum(study_duration) as totalDuration')).groupBy('cSessionInfo.user_info').orderBy('totalDuration', 'desc').limit(limit).offset(offset)
   for (var i = 0; i < data.length; i++) {
     data[i].user_info = userInfoService.getTailoredUserInfo(data[i].user_info)
   }
