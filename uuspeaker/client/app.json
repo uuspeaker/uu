@@ -1,5 +1,7 @@
 {
   "pages": [
+    "pages/target/myTarget/myTarget",
+    "pages/target/createTarget/createTarget",
     "pages/task/taskIndex/taskIndex",
     "pages/score/scoreLevel/scoreLevel",
     "pages/club/clubDetail/clubDetail",
@@ -10,6 +12,10 @@
     "pages/club/clubList/clubList",
     "pages/club/createClub/createClub",
     "pages/club/studySystem/studySystem",
+
+    
+    
+    "pages/target/targetHistory/targetHistory",
 
     "pages/album/albumList/albumList",
     "pages/album/albumContent/albumContent",

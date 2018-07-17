@@ -79,7 +79,7 @@ var viewAudio = async (userId,audioId) => {
   //如果察看别人评论自己的信息，这把评论提醒消息删除
   if (audioView[0].audio_type == 2){
     var speechAudio = await mysql('impromptu_audio').select('impromptu_audio.*').where({ audio_id: audioView[0].relate_audio })
-    if (speechAudio[0].user_id == userId){
+    if (speechAudio.length == 0 || speechAudio[0].user_id == userId){
       await mysql('new_comment').where({
         audio_id: audioId
       }).del()

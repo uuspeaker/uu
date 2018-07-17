@@ -13,10 +13,10 @@
 </block>
 <block wx:if='{{standardStudyAmount==0}}'>
 <view class='studyNotice' style='padding-top:30px;'>加油哦！</view>
-<view class='studyNotice' style='padding-top:0px;'>争取完成一次达标学习</view>
+<view class='studyNotice' style='padding-top:0px;'>争取拿到一颗星</view>
 </block>
 <view class="container">
     <canvas canvas-id="pieCanvas" class="canvas" style="height:300px" bindtouchstart="touchHandler"></canvas>
 </view>
-<view class='studyTip'>1次达标学习 = 1次演讲 + 1次复盘 + 1次聆听 + 1次鼓励</view>
+<view class='studyTip'>1颗星 = 1次演讲 + 1次复盘 + 1次聆听 + 1次鼓励</view>
 

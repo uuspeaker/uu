@@ -205,6 +205,9 @@ router.put('/target.myTarget', controllers.target.myTarget.put)
 router.post('/target.myTarget', controllers.target.myTarget.post)
 //所有用户目标查询
 router.get('/target.allTarget', controllers.target.allTarget.get)
+//用户目标管理
+router.post('/target.userTarget', controllers.target.userTarget.post)
+router.get('/target.userTarget', controllers.target.userTarget.get)
 //演讲题目管理
 router.get('/speech.allSpeechSubject', controllers.speech.allSpeechSubject.get)
 //演讲题目管理

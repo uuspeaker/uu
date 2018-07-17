@@ -1,0 +1,37 @@
+<form bindsubmit="addUserTarget">
+  <view class=" ">
+
+    <view class="weui-cells__title center">
+      <view style='padding-top:20px;font-size:17px;font-weight:bold'>你想每天得到几颗星？</view>
+      <view class='center' >
+<image class="star-pic" src='../../../images/speechName/star{{starAmount>=1?2:1}}.png'  data-star='1' catchtap='evaluate'/>
+<image class="star-pic" src='../../../images/speechName/star{{starAmount>=2?2:1}}.png'  data-star='2' catchtap='evaluate'/>
+<image class="star-pic" src='../../../images/speechName/star{{starAmount>=3?2:1}}.png'  data-star='3' catchtap='evaluate'/>
+<image class="star-pic" src='../../../images/speechName/star{{starAmount>=4?2:1}}.png'  data-star='4' catchtap='evaluate'/>
+<image class="star-pic" src='../../../images/speechName/star{{starAmount>=5?2:1}}.png'  data-star='5' catchtap='evaluate'/>
+</view>
+
+<view class='studyTip'>1颗星 = 1次演讲 + 1次复盘 + 1次聆听 + 1次鼓励</view>
+    </view>
+
+
+    <view class="weui-cells__title center" style='padding-top:20px;padding-bottom:20px;font-size:17px;font-weight:bold'>你计划坚持多久？</view>
+
+  <view class="weui-cells weui-cells_after-title center">
+  <radio-group bindchange="radioChange">
+                <label class="weui-cell " wx:for="{{userItems}}" wx:key="value">
+                    <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+                    <view class="weui-cell__bd" style='color:orangered;font-weight:bold;font-size:20px' wx:if='{{item.checked}}'>{{item.name}}</view>
+                    <view class="weui-cell__bd"  wx:if='{{!item.checked}}'>{{item.name}}</view>
+                </label>
+            </radio-group>
+  </view>
+
+  </view>
+
+  <view class="weui-flex bottom">
+    <view class="weui-flex__item">
+      <button class="weui-btn" type="primary" catchtap='saveTarget'>制定目标</button>
+    </view>
+  </view>
+</form>
