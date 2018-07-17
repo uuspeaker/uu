@@ -58,11 +58,11 @@
 小懂演讲君说：{{audioData[0].audio_text}}
       </view>
   </view>
+
 <!--点赞展示页面-->
- 
   <view class='likeUser'></view>
   <view class="weui-cells weui-cells_after-title">
-  <view class="weui-cell" >
+  <view class="weui-cell likeContent" >
   <block wx:if="{{likeIt == 0}}">
       <image  class="audio-pic" style="margin-right:10px" src="../../../images/studyIndex/like.png" catchtap='likeAudio'></image>
       </block>
@@ -71,7 +71,9 @@
       <image  class="audio-pic" style="margin-right:10px" src="../../../images/userAudio/like.png" catchtap='cancelLike'></image>
       </block>
       <block wx:for="{{audioDataLike}}" wx:key="item">
+      
         <image class="user-like-pic" src="{{item.user_info.avatarUrl}}" data-user_id='{{item.user_id}}' catchtap='toUserInfo'></image>
+        
       </block>
       </view>
     </view>

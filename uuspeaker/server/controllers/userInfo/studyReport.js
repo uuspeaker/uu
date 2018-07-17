@@ -6,7 +6,10 @@ const userInfoService = require('../../service/userInfoService')
 module.exports = {
 
   get: async ctx => {
-    var userId = await userInfo.getOpenId(ctx)
+    var userId = ctx.query.userId
+    if (userId == '') {
+      userId = await userInfo.getOpenId(ctx)
+    }
     var studyReport = await userInfoService.getStudyReport(userId)
     ctx.state.data = studyReport
   },

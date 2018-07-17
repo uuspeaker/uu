@@ -2,6 +2,7 @@ var qcloud = require('../../../vendor/wafer2-client-sdk/index')
 var config = require('../../../config')
 var util = require('../../../utils/util.js')
 var dateFormat = require('../../../common/dateFormat.js')
+var audioService = require('../../../common/audioService.js')
 
 const innerAudioContext = wx.createInnerAudioContext()
 var showTimes = 0
@@ -248,6 +249,7 @@ Page({
       })
     })
     innerAudioContext.onEnded((res) => {
+      audioService.updatePlayDuration(innerAudioContext.duration, innerAudioContext)
       this.formatDateAndStatus()
       this.setData({
         currentLikeUser: []

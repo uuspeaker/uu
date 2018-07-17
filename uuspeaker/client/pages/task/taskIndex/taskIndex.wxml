@@ -5,7 +5,10 @@
       <image class="user-pic" src="{{userInfo.avatarUrl}}" />
     </view>
     <view class="weui-cell__bd" >
-      <view class='nickName' >{{userInfo.nickName}}<image class='card-pic' src="../../../images/studyManage/checkIn.png" catchtap='toStudyShow' wx:if='{{showContent == 1}}'></image><image class='card-pic' src="../../../images/studyManage/letter.png" catchtap='toLetter' wx:if='{{showContent == 1 && totalStudyDuration >= 120}}'></image></view>
+      <view class='nickName' >{{userInfo.nickName}}
+      <!--image class='card-pic' src="../../../images/studyManage/checkIn.png" catchtap='toStudyShow' wx:if='{{showContent == 1}}'></image-->
+      <image class='card-pic' src="../../../images/studyManage/letter.png" catchtap='toLetter' wx:if='{{showContent == 1 && totalStudyDuration >= 120}}'></image>
+      </view>
       <view style="font-size: 13px;color: #888888;padding-top:5px" catchtap='toScoreLevel'>{{rank}}
       </view>
     </view>

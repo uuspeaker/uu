@@ -49,6 +49,7 @@ Page({
       url: `${config.service.host}/weapp/userInfo.userScore`,
       login: true,
       method: 'get',
+      data:{'userId':''},
       success(result) {
         //wx.hideLoading()
         that.setData({

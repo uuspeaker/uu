@@ -67,7 +67,12 @@
   position: relative;
   top: 4px;
 }
-
+.likeContent{
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
+  page-break-after: auto;
+}
 .user-pic {
   width: 60px;
   height: 60px;

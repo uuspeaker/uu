@@ -374,7 +374,7 @@ Page({
 
   saveSpeechData: function () {
     speechAudioId = audioId
-    var requestData = { roomId: roomId, audioName: this.data.speechName, audioText:this.data.audioText,audioId: audioId, timeDuration: timeDuration, audioType: 1,speechType:0 }
+    var requestData = { roomId: roomId, audioName: this.data.speechName, audioText:this.data.audioText,audioId: audioId, timeDuration: timeDuration, audioType: 1,speechType:4 }
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.userAudio`,

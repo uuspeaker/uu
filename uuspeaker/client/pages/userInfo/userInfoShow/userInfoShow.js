@@ -151,6 +151,23 @@ Page({
     })
   },
 
+  toStudyReportToday: function () {
+    wx.navigateTo({
+      url: '../../userInfo/studyReportToday/studyReportToday?userId=' + this.data.userInfo.userId + '&nickName=' + this.data.userInfo.nickName,
+    })
+  },
+
+  toStudyReport: function () {
+    wx.navigateTo({
+      url: '../../userInfo/studyReport/studyReport?userId=' + this.data.userInfo.userId 
+        + '&nickName=' + this.data.userInfo.nickName 
+        + 'speechScoreTotal=' + this.data.speechScoreTotal
+        + '&reviewScoreTotal=' + this.data.reviewScoreTotal
+        + '&listenScoreTotal=' + this.data.listenScoreTotal
+        + '&evaluateScoreTotal=' + this.data.evaluateScoreTotal,
+    })
+  },
+
   onLoad: function (options) {
     console.log(options)
     this.setData({

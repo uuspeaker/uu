@@ -11,7 +11,9 @@ Page({
     studyData: [], 
     standardStudyAmount: 'none',
     userInfo:{},
-    tandardStudyArr:[]
+    tandardStudyArr:[],
+    userId: '',
+    nickName: ''
   },
 
   //查询排名信息
@@ -24,6 +26,7 @@ Page({
       url: `${config.service.host}/weapp/userInfo.studyReportToday`,
       login: true,
       method: 'get',
+      data:{'userId': this.data.userId},
       success(result) {
         wx.hideLoading()
         that.formatStudyData(result.data.data)
@@ -97,6 +100,14 @@ Page({
   },
 
   onLoad: function (options) {
+    if (options.userId == undefined) {
+
+    } else {
+      this.setData({
+        userId: options.userId,
+        nickName: options.nickName
+      })
+    }
     this.initUserInfo()
     this.queryStudyReportToday()
   },
