@@ -10,8 +10,14 @@ module.exports = {
     if (userId == '') {
       userId = await userInfoService.getOpenId(ctx)
     }
-    var studyReport = await reportService.getStudyReport(userId)
-    ctx.state.data = studyReport
+    var todayStudyInfo = await reportService.getTodayStudyInfo(userId)
+    var totalStudyInfo = await reportService.getTotalStudyInfo(userId)
+    var totalStarAmount = await reportService.getStarAmount(userId)
+    ctx.state.data = {
+      todayStudyInfo: todayStudyInfo,
+      totalStudyInfo: totalStudyInfo,
+      totalStarAmount: totalStarAmount
+    }
   },
 
 }

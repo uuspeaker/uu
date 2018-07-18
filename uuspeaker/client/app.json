@@ -1,8 +1,9 @@
 {
   "pages": [
+    "pages/task/taskIndex/taskIndex",
     "pages/target/myTarget/myTarget",
     "pages/target/createTarget/createTarget",
-    "pages/task/taskIndex/taskIndex",
+    
     "pages/score/scoreLevel/scoreLevel",
     "pages/club/clubDetail/clubDetail",
     "pages/club/clubApplyList/clubApplyList",
@@ -49,9 +50,11 @@
     "pages/userInfo/likeUserList/likeUserList",
     "pages/userInfo/myInfluence/myInfluence",
     "pages/userInfo/newCommentList/newCommentList",
-    "pages/userInfo/scoreRank/scoreRank",
-    "pages/userInfo/studyReport/studyReport",
-    "pages/userInfo/studyReportToday/studyReportToday",
+
+    "pages/report/scoreRank/scoreRank",
+    "pages/report/studyReport/studyReport",
+    "pages/report/studyReportToday/studyReportToday",
+    "pages/report/starList/starList",
 
     "pages/impromptu/impromptuIndex/impromptuIndex",
     "pages/impromptu/cameraview/cameraview",

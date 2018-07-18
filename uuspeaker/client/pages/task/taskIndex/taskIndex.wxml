@@ -19,24 +19,21 @@
 
   <view class='line'></view>
 
-  <view wx:if='{{showContent == 1}}' bindtap='toStudyReport'>
+  <view wx:if='{{showContent == 1}}' >
     <view class="weui-flex"  style='padding-left:25px;padding-bottom:5px' >
-      <view class="weui-flex__item" >
-        <view class='small-grey'>演讲</view>
-        <view class="weui-flex" style='font-size:15px'>{{speechScoreTotal}}<text class='small-grey2'>次</text></view>
+      <view class="weui-flex__item" bindtap='toStudyReport'>
+        <view class='small-grey'>学习积分</view>
+        <view class="weui-flex" style='font-size:15px'>{{totalStudyDuration}}<text class='small-grey2'>分</text></view>
       </view>
-      <view class="weui-flex__item" >
-        <view class='small-grey'>复盘</view>
-        <view class="weui-flex" style='font-size:15px'>{{reviewScoreTotal}}<text class='small-grey2'>次</text></view>
+      <view class="weui-flex__item" catchtap='toStarList'>
+        <view class='small-grey'>优质学习</view>
+        <view class="weui-flex" style='font-size:15px'>{{totalStarAmount}}<text class='small-grey2'>次</text></view>
       </view>
-      <view class="weui-flex__item" >
-        <view class='small-grey'>聆听</view>
-        <view class="weui-flex" style='font-size:15px'>{{listenScoreTotal}}<text class='small-grey2'>次</text></view>
+      <view class="weui-flex__item" catchtap='toMyTarget'>
+        <view class='small-grey'>学习目标</view>
+        <view class="weui-flex" style='font-size:15px'>{{}}<text class='small-grey2'></text></view>
       </view>
-      <view class="weui-flex__item" >
-        <view class='small-grey'>鼓励</view>
-        <view class="weui-flex" style='font-size:15px'>{{evaluateScoreTotal}}<text class='small-grey2'>次</text></view>
-      </view>
+
      
       <view class="weui-flex__item" data-type='2' catchtap='toLikeUserList' >
         <view class='small-grey'>粉丝</view>

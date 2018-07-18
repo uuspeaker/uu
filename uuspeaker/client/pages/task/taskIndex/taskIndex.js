@@ -30,6 +30,7 @@ Page({
     evaluateScoreToday: 0,
     todayStudyDuration: 0,
     showContent:'',
+    totalStarAmount:0,
 
     myFansTotal: '',
     likeUserTotal: '',
@@ -46,13 +47,14 @@ Page({
     // })
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/userInfo.userScore`,
+      url: `${config.service.host}/weapp/report.userScore`,
       login: true,
       method: 'get',
       data:{'userId':''},
       success(result) {
-        //wx.hideLoading()
+        console.log(result.data.data)
         that.setData({
+          totalStarAmount: result.data.data.totalStarAmount,
           rank: userInfo.getRank(Math.floor(that.getDuration(result.data.data.totalStudyInfo))),
           totalStudyInfo: result.data.data.totalStudyInfo,
           speechScoreTotal: that.getScore(result.data.data.totalStudyInfo,1),
@@ -213,7 +215,7 @@ Page({
       return
     }
     wx.navigateTo({
-      url: '../../userInfo/scoreRank/scoreRank?scoreType=' + e.currentTarget.dataset.type,
+      url: '../../report/scoreRank/scoreRank?scoreType=' + e.currentTarget.dataset.type,
     })
   },
 
@@ -310,7 +312,7 @@ Page({
       return
     }
     wx.navigateTo({
-      url: '../../userInfo/studyReport/studyReport?speechScoreTotal=' + this.data.speechScoreTotal
+      url: '../../report/studyReport/studyReport?speechScoreTotal=' + this.data.speechScoreTotal
       + '&reviewScoreTotal=' + this.data.reviewScoreTotal
       + '&listenScoreTotal=' + this.data.listenScoreTotal
       + '&evaluateScoreTotal=' + this.data.evaluateScoreTotal,
@@ -335,7 +337,7 @@ Page({
     }
     if (this.data.showContent != 1)return
     wx.navigateTo({
-      url: '../../userInfo/studyReportToday/studyReportToday'
+      url: '../../report/studyReportToday/studyReportToday'
     })
   },
 
@@ -372,49 +374,27 @@ Page({
     })
   },
 
-  // doLogin: function () {
-  //   const session = qcloud.Session.get()
+  toStarList: function () {
+    if(this.data.isLogin == 0){
+      util.showSuccess('请先登陆')
+      return
+    }
+    if (this.data.showContent != 1)return
+    wx.navigateTo({
+      url: '../../report/starList/starList?totalStudyDuration=' + this.data.totalStudyDuration + '&rank=' + this.data.rank
+    })
+  },
 
-  //   if (session) {
-  //     // 第二次登录
-  //     // 或者本地已经有登录态
-  //     // 可使用本函数更新登录态
-  //     qcloud.loginWithCode({
-  //       success: res => {
-  //         this.setData({ userInfo: res, isLogin: 1 })
-  //         //util.showSuccess('登录成功')
-  //         that.setData({
-  //           isLogin: 1
-  //         })
-  //         console.log('login success')
-  //         this.initIndex()
-  //       },
-  //       fail: err => {
-  //         console.error(err)
-  //         this.setData({isLogin: 0 })
-  //         util.showModel('登录错误', err.message)
-  //       }
-  //     })
-  //   } else {
-  //     // 首次登录
-  //     qcloud.login({
-  //       success: res => {
-  //         this.setData({ userInfo: res, isLogin: 1 })
-  //         util.showSuccess('登录成功')
-  //         that.setData({
-  //           isLogin: 1
-  //         })
-  //         console.log('login success')
-  //         this.initIndex()
-  //       },
-  //       fail: err => {
-  //         console.error(err)
-  //         this.setData({ isLogin: 0 })
-  //         util.showModel('登录错误', err.message)
-  //       }
-  //     })
-  //   }
-  // },
+  toMyTarget: function () {
+    if(this.data.isLogin == 0){
+      util.showSuccess('请先登陆')
+      return
+    }
+    if (this.data.showContent != 1)return
+    wx.navigateTo({
+      url: '../../target/myTarget/myTarget?totalStudyDuration=' + this.data.totalStudyDuration + '&rank=' + this.data.rank
+    })
+  },
 
   onShow: function(){
     if (this.data.isLogin == 1) {

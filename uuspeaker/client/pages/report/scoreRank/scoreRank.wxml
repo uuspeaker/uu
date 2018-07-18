@@ -3,6 +3,7 @@
   <view class=" myReport" style="{{viewStyle[1]}}" data-item='1' data-type='2' bindtap='queryStudyRank'>日增长</view>
   <view class=" myReport" style="{{viewStyle[2]}}" data-item='2' data-type='3' bindtap='queryStudyRank'>周增长</view>
   <view class=" myReport" style="{{viewStyle[3]}}" data-item='3' data-type='4' bindtap='queryStudyRank'>月增长</view>
+  <view class=" myReport" style="{{viewStyle[4]}}" data-item='4' data-type='5' bindtap='queryStudyRank'>星星榜</view>
 </view>
 <view class="weui-cells weui-cells_after-title middle" >
   <block wx:for="{{rankList}}" wx:key="item">
@@ -25,6 +26,12 @@
       </view>
       <view class='small-grey'>{{level}}</view>
     </view>
+    <block wx:if="{{dataType != 5}}">
     <view class='right'>{{score}} 分<block wx:if="{{dataType >= 2}}"><image class='up' src="../../../images/taskIndex/up.png" /></block></view>
+    </block>
+    <block wx:if="{{dataType == 5}}">
+    <view class='right'>{{totalStarAmount}} <image class="star-pic" src='../../../images/speechName/star2.png'  /></view>
+    </block>
+    
   </view>
 </template>

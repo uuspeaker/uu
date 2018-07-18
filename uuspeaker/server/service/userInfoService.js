@@ -113,132 +113,6 @@ var deleteIntroduction = async (userId) => {
   }).del()
 }
 
-//关注用户
-var likeUser = async (userId,likeUserId) => {
-  await cancelLikeUser(userId, likeUserId)
-  var data = await mysql('user_like').insert({
-    user_id: userId,
-    like_user_id: likeUserId
-  })
-}
-
-//取消关注用户
-var cancelLikeUser = async (userId, likeUserId) => {
-  var data = await mysql('user_like').where({
-    user_id: userId,
-    like_user_id: likeUserId
-  }).del()
-}
-
-//查询是否关注用户
-var isLikeUser = async (userId, likeUserId) => {
-  var data = await mysql('user_like').where({
-    user_id: userId,
-    like_user_id: likeUserId
-  })
-  if(data.length == 0){
-    return 0
-  }else{
-    return 1
-  }
-}
-
-//查询我关注的用户数量
-var getLikeUserTotal = async (userId) => {
-  var data = await mysql('user_like').where({
-    user_id: userId
-  }).select(mysql.raw('count(1) as totalAmount'))
-  if (data[0].totalAmount == null){
-    return 0
-  }else{
-    return data[0].totalAmount
-  }
-}
-
-//查询关注我的用户数量
-var getMyFansTotal = async (userId) => {
-  var data = await mysql('user_like').where({
-    like_user_id: userId
-  }).select(mysql.raw('count(1) as totalAmount'))
-  if (data[0].totalAmount == null) {
-    return 0
-  } else {
-    return data[0].totalAmount
-  }
-}
-
-//查询我关注的用户
-var getLikeUserList = async (userId, queryPageType, firstDataTime, lastDataTime) => {
-  var limit = 10
-  var offset = 0
-  var data = []
-  if (queryPageType == 0){
-    data = await mysql('user_like').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_like.like_user_id')
-      .where({ 'user_like.user_id': userId }).select('cSessionInfo.user_info', 'user_like.create_date').orderBy('user_like.create_date', 'asc').limit(limit).offset(offset)
-  }
-  if (queryPageType == 1) {
-    data = await mysql('user_like').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_like.like_user_id')
-      .where({ 'user_like.user_id': userId }).andWhere('user_like.create_date', '>', new Date(firstDataTime)).select('cSessionInfo.user_info', 'user_like.create_date').orderBy('user_like.create_date', 'asc').limit(limit).offset(offset)
-  }
-  if (queryPageType == 2) {
-    data = await mysql('user_like').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_like.like_user_id')
-      .where({ 'user_like.user_id': userId }).andWhere('user_like.create_date', '<', new Date(lastDataTime)).select('cSessionInfo.user_info', 'user_like.create_date').orderBy('user_like.create_date', 'asc').limit(limit).offset(offset)
-  }
-
-  for (var i = 0; i < data.length; i++) {
-    data[i].user_info = getTailoredUserInfo(data[i].user_info)
-  }
-  return data
-}
-
-//查询我的粉丝
-var getMyFansList = async (userId, queryPageType, firstDataTime, lastDataTime) => {
-  var limit = 10
-  var offset = 0
-  var data = []
-  if (queryPageType == 0) {
-    data = await mysql('user_like').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_like.user_id')
-      .where({ 'user_like.like_user_id': userId }).select('cSessionInfo.user_info', 'user_like.create_date').orderBy('user_like.create_date', 'desc').limit(limit).offset(offset)
-  }
-  if (queryPageType == 1) {
-    data = await mysql('user_like').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_like.user_id')
-      .where({ 'user_like.like_user_id': userId }).andWhere('user_like.create_date', '>', new Date(firstDataTime)).select('cSessionInfo.user_info', 'user_like.create_date').orderBy('user_like.create_date', 'desc').limit(limit).offset(offset)
-  }
-  if (queryPageType == 2) {
-    data = await mysql('user_like').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_like.user_id')
-      .where({ 'user_like.like_user_id': userId }).andWhere('user_like.create_date', '<', new Date(lastDataTime)).select('cSessionInfo.user_info', 'user_like.create_date').orderBy('user_like.create_date', 'desc').limit(limit).offset(offset)
-  }
-
-  for (var i = 0; i < data.length; i++) {
-    data[i].user_info = getTailoredUserInfo(data[i].user_info)
-  }
-  return data
-}
-
-//查询我的影响
-var getMyInfluenceList = async (userId) => {
-  var limit = 100
-  var offset = 0
-  var data = []
-    data = await mysql('impromptu_room').innerJoin('impromptu_audio', 'impromptu_room.room_id', 'impromptu_audio.room_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'impromptu_audio.user_id')
-      .where({ 'impromptu_room.user_id': userId }).andWhere('impromptu_audio.user_id', '!=', userId).select('cSessionInfo.user_info', mysql.raw("sum(impromptu_audio.time_duration) as totalDuration")).groupBy('cSessionInfo.user_info').orderBy('totalDuration', 'desc').limit(limit).offset(offset)
-
-  for (var i = 0; i < data.length; i++) {
-    data[i].user_info = getTailoredUserInfo(data[i].user_info)
-  }
-  return data
-}
-
-//查询我的影响
-var getMyInfluenceTotal = async (userId) => {
-  var data = await mysql('impromptu_room').innerJoin('impromptu_audio', 'impromptu_room.room_id', 'impromptu_audio.room_id')
-    .where({ 'impromptu_room.user_id': userId }).andWhere('impromptu_audio.user_id', '!=', userId).select(mysql.raw("sum(impromptu_audio.time_duration) as totalAmount"))
-  if (data[0].totalAmount == null) {
-    return 0
-  } else {
-    return data[0].totalAmount
-  }
-}
 
 //查询用户学习总时间
 var getTotalStudyDuration = async (userId) => {
@@ -282,54 +156,7 @@ var getTodayStudyInfo = async (userId) => {
   return data
 }
 
-//查询用户学习排名
-var getStudyRankOfLike = async (userId) => {
-  var limit = 100
-  var offset =0
-  var data = await mysql('user_like').innerJoin('user_study_duration', 'user_like.like_user_id', 'user_study_duration.user_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_like.like_user_id').where({
-    'user_like.user_id': userId
-  }).select('cSessionInfo.user_info', mysql.raw('sum(study_duration) as totalDuration')).groupBy('cSessionInfo.user_info').orderBy('totalDuration', 'desc').limit(limit).offset(offset)
-  for (var i = 0; i < data.length; i++) {
-    data[i].user_info = getTailoredUserInfo(data[i].user_info)
-  }
-  return data
-}
 
-//查询用户学习增长排名
-var getIncreaseRankOfLike = async (userId, scoreType) => {
-  var beginDate = ''
-  var limit = 100
-  var offset = 0
-  if (scoreType == 2){
-    beginDate = dateUtil.getToday()
-  }else if(scoreType == 3){
-    beginDate = dateUtil.getFirstDayOfWeek()
-  } else if (scoreType == 4) {
-    beginDate = dateUtil.getFirstDayOfMonth()
-  }
-  console.log('scoreType',scoreType)
-  console.log('beginDate', beginDate)
-  var data = await mysql('user_like').innerJoin('user_study_duration', 'user_like.like_user_id', 'user_study_duration.user_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_like.like_user_id').where({
-    'user_like.user_id': userId
-  }).andWhere('user_study_duration.study_date', '>=', beginDate).select('cSessionInfo.user_info', mysql.raw('sum(study_duration) as totalDuration')).groupBy('cSessionInfo.user_info').orderBy('totalDuration', 'desc').limit(limit).offset(offset)
-  for (var i = 0; i < data.length; i++) {
-    data[i].user_info = getTailoredUserInfo(data[i].user_info)
-  }
-  return data
-}
-
-//查询用户影响力排名
-var getInfluenceRank = async (userId) => {
-  var limit = 50
-  var offset =0
-  var data = await mysql('user_like').innerJoin('impromptu_room', 'user_like.like_user_id', 'impromptu_room.user_id').innerJoin('impromptu_audio', 'impromptu_room.room_id', 'impromptu_audio.room_id').innerJoin('cSessionInfo', 'cSessionInfo.open_id', 'user_like.like_user_id').where({
-    'user_like.user_id': userId
-  }).select('cSessionInfo.user_info', mysql.raw('sum(impromptu_audio.time_duration) as totalDuration')).groupBy('cSessionInfo.user_info').orderBy('totalDuration', 'desc').limit(limit).offset(offset)
-  for (var i = 0; i < data.length; i++) {
-    data[i].user_info = getTailoredUserInfo(data[i].user_info)
-  }
-  return data
-}
 //查询用户积分数据
 var getStudyReport = async (userId) => {
   var limit = 7
@@ -358,22 +185,10 @@ module.exports = {
   saveIntroduction,
   getIntroduction,
   deleteIntroduction,
-  likeUser,
-  cancelLikeUser,
-  isLikeUser,
-  getLikeUserTotal,
-  getMyFansTotal,
-  getLikeUserList,
-  getMyFansList,
   getTotalStudyDuration,
   getTodayStudyDuration,
   getTotalStudyInfo,
   getTodayStudyInfo,
-  getMyInfluenceList,
-  getMyInfluenceTotal,
-  getStudyRankOfLike,
-  getIncreaseRankOfLike,
-  getInfluenceRank,
   getStudyReport,
   getStudyReportToday
   }

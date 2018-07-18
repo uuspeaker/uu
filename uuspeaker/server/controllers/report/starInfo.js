@@ -6,12 +6,9 @@ const reportService = require('../../service/reportService')
 module.exports = {
 
   get: async ctx => {
-    var userId = ctx.query.userId
-    if (userId == '') {
-      userId = await userInfoService.getOpenId(ctx)
-    }
-    var studyReport = await reportService.getStudyReport(userId)
-    ctx.state.data = studyReport
+    var userId = await userInfoService.getOpenId(ctx)
+    var starInfo = await reportService.getStarList(userId)
+    ctx.state.data = starInfo
   },
 
 }

@@ -87,3 +87,7 @@ position: relative;
   height: 20px;
   padding-left: 5px;
 }
+.star-pic{
+  width:20px;
+  height: 20px;
+}

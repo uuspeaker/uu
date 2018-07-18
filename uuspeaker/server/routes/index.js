@@ -64,7 +64,9 @@ router.get('/studyDuration', controllers.study.studyDuration.get)
 router.get('/userInfo.studyReport', controllers.userInfo.studyReport.get)
 router.get('/userInfo.studyReportToday', controllers.userInfo.studyReportToday.get)
 //查询学习时长
-router.get('/userInfo.userScore', controllers.userInfo.userScore.get)
+router.get('/report.userScore', controllers.report.userScore.get)
+//查询优质学习信息
+router.get('/report.starInfo', controllers.report.starInfo.get)
 //查询学习时长
 router.get('/userInfo.userRank', controllers.userInfo.userRank.get)
 router.get('/userInfo.userControl', controllers.userInfo.userControl.get)

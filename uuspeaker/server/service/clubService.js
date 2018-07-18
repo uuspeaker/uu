@@ -168,6 +168,19 @@ var getIncreaseRank = async (clubId, scoreType) => {
   return data
 }
 
+//查询用户学习排名
+var getStudyStarRank = async (clubId) => {
+  var limit = 100
+  var offset = 0
+  var data = await mysql.raw('select user_info,sum(star_amount) as totalStarAmount from (SELECT user_study_duration.user_id,study_date,min(study_amount) as star_amount FROM user_study_duration,club_member WHERE club_member.club_id = ? and user_study_duration.user_id = club_member.user_id group by user_id,study_date HAVING count(study_type) =4) user_star,cSessionInfo where user_id = open_id group by user_info order by totalStarAmount desc', clubId)
+  console.log('getStudyStarOfLike', data)
+  var starData = data[0]
+  for (var i = 0; i < starData.length; i++) {
+    starData[i].user_info = userInfoService.getTailoredUserInfo(starData[i].user_info)
+  }
+  return starData
+}
+
 //更新用户角色
 var updateUserIdentity = async (clubId, userId, updateType) => {
   var data = await mysql('club_member').where({
@@ -293,6 +306,7 @@ module.exports = {
   dismissClub,
   getStudyRank,
   getIncreaseRank,
+  getStudyStarRank,
   updateUserIdentity,
   updateUserNotice,
   isInClub,

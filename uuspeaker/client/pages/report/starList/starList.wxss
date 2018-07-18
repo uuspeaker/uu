@@ -9,8 +9,6 @@
 }
 .title{
   font-size: 18px;
-  font-weight: bold;
-  color: #576b95;
 }
 
 .normal {
@@ -83,7 +81,7 @@ position: relative;
   margin-bottom:80px;
 }
 .up{
-  width: 20px;
+  width: 25px;
   height: 20px;
   padding-left: 5px;
 }
