@@ -109,6 +109,27 @@ var getStarList = async (userId) => {
   return starData
 }
 
+//查询今天得星数量
+var getStarAmountOfToday = async (userId) => {
+  var today = dateUtil.format(new Date(), 'yyyyMMdd')
+  var data = await mysql.raw('SELECT user_id,min(study_amount) as star_amount FROM user_study_duration WHERE user_id = ? and study_date = ?  group by user_id HAVING count(study_type) =4', [userId, today])
+  console.log('getStarList', data)
+  var starData = data[0]
+  if (starData.length == 0){
+    return 0
+  }else{
+    return starData[0].star_amount
+  }
+}
+
+//查询持续得星天数
+var getStarLastDays = async (userId, startDate, targetStarAmount) => {
+  var data = await mysql.raw('SELECT user_id,study_date,min(study_amount) as star_amount FROM user_study_duration WHERE user_id = ? and study_date >=?  group by user_id,study_date HAVING count(study_type) =4 and min(study_amount) >= ?', [userId, startDate, targetStarAmount])
+  console.log('getStarLastDays', data)
+  var starData = data[0]
+  return starData.length
+}
+
 module.exports = {
   getFirstStudyDate,
   getFirstSpeechDate,
@@ -121,5 +142,7 @@ module.exports = {
   getStudyReportTotal,
   getStudyReportToday,
   getStarAmount,
-  getStarList
+  getStarList,
+  getStarAmountOfToday,
+  getStarLastDays
 }

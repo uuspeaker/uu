@@ -1,3 +1,10 @@
+.save{
+  position: fixed;
+  right: 17px;
+  color: #576b95;
+  font-weight: bold;
+  font-size: 15px;
+}
 .container {
     height: 100%;
     display: flex;

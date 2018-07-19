@@ -4,6 +4,7 @@ var util = require('../../../utils/util.js')
 var dateFormat = require('../../../common/dateFormat.js')
 
 var roomId = ''
+var lastDays= [7,30,90,365]
 Page({
   data: {
     todayStarAmount: 0,
@@ -12,6 +13,7 @@ Page({
 
     studyDuration: '',
     starAmount: '',
+    leftDays: '',
     userItems: [
       { 'name': '一个星期', 'value': '0' },
       { 'name': '一个月', 'value': '1' },
@@ -44,6 +46,38 @@ Page({
               studyDurationStr: userItems[i].name
             });
           }
+        }
+        
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
+  getCurrentTargetProgress: function (e) {
+    wx.showLoading({
+      title: '加载中',
+    })
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/target.currentTargetProgress`,
+      login: true,
+      method: 'get',
+      success(result) {
+        wx.hideLoading()
+        that.setData({
+          userTarget: result.data.data
+        })
+
+        if (result.data.data.hasTarget == 1){
+          var userItems = that.data.userItems;
+            that.setData({
+              studyDurationStr: userItems[result.data.data.targetStarDuration].name,
+              leftDays: parseInt(lastDays[result.data.data.targetStarDuration], 10) - parseInt(result.data.data.currentLastDays)
+            });
+          
         }
         
       },
@@ -98,7 +132,8 @@ Page({
   },
 
   onLoad: function () {
-    this.getMyTarget()
+    this.getCurrentTargetProgress()
+    //this.getMyTarget()
   },
 
 

@@ -35,6 +35,7 @@ Page({
 
     myFansTotal: '',
     likeUserTotal: '',
+    myTargetProgress:'',
 
     speechScore: 0,
     commentScore: 0,
@@ -113,6 +114,25 @@ Page({
         that.setData({
           likeUserTotal: result.data.data.likeUserTotal,
           myFansTotal: result.data.data.myFansTotal,
+        })
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
+  //查询用户目标数据
+  queryTargetProgress: function () {
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/target.todayTargetProgress`,
+      login: true,
+      method: 'get',
+      success(result) {
+        that.setData({
+          myTargetProgress: result.data.data,
         })
       },
       fail(error) {
@@ -401,6 +421,7 @@ Page({
     if (this.data.isLogin == 1) {
     this.queryNewCommentAmount()
     this.queryUserScore()
+    this.queryTargetProgress()
     }
   },
 
@@ -447,6 +468,7 @@ Page({
 
   initIndex: function (options) {
     this.queryLikeUserTotal()
+    this.queryTargetProgress()
     this.queryNewCommentAmount()
     this.queryUserScore()
     this.initUserInfo()
