@@ -1,0 +1,101 @@
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    -webkit-text-size-adjust:none;
+    -webkit-user-select: none;
+    font-size: 35rpx;
+    color: #333;
+    font-family: Helvetica,Arial,"Helvetica Neue","Droid Sans","Microsoft YaHei",sans-serif;
+}
+.canvas {
+    width: 100%;
+    height: 200px;
+    margin-top:0px;
+}
+.title {
+	text-align: center;
+	position: relative;
+	margin-top: 20rpx;
+	margin-bottom: 20rpx;
+}
+.back-btn {
+	position: absolute;
+	left: 20rpx;
+	top: 0;
+}
+.studyNotice{
+  text-align: center;
+  font-size: 20px;
+  margin-top: 10px;
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+.studyNotice2{
+  text-align: center;
+  font-size: 17px;
+  margin-top: 5px;
+}
+.studyNotice3{
+  text-align: center;
+  font-size: 13px;
+  margin-top: 0px;
+  color: gray;
+}
+.star-pic{
+  width:40px;
+  height: 40px;
+ margin: 6px;
+ margin-top: 10px;
+}
+.starContent{
+  text-align: center;
+}
+.studyTip{
+  text-align: center;
+  font-size: 11px;
+  margin-top: 10px;
+  color: grey;
+}
+.content {
+  width: 80%;
+  font-weight: bold;
+  padding: 10px;
+  font-size: 15px;
+  background-color: white;
+  border-radius:10px;
+  opacity:0.8;
+  margin-top: 20px;
+  height: 80px;
+  margin-left:30px;
+  padding-left:15px;
+}
+.uu-code {
+  width: 75px;
+  height: 75px;
+}
+.code-notice{
+  background-color:grey;
+  border-radius: 20px;
+  font-size: 12px;
+  padding-left: 10px;
+  margin-top: 5px;
+  width: 110px;
+  color: white;
+}
+.arrow-right {  
+    font-size: 0;  
+    border-left-style: solid;  
+    border-top: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid transparent; 
+    border-left: 7px solid white; 
+    margin: 3px;
+} 
+.smile {
+  background-image: url('https://lg-oztvih8q-1255679565.cos.ap-shanghai.myqcloud.com/studyShow1.jpg');
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 573px;
+}

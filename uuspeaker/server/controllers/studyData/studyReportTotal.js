@@ -1,7 +1,7 @@
 const { mysql } = require('../../qcloud')
 const uuid = require('../../common/uuid');
 const userInfoService = require('../../service/userInfoService')
-const reportService = require('../../service/reportService')
+const studyDataService = require('../../service/studyDataService')
 
 module.exports = {
 
@@ -10,7 +10,7 @@ module.exports = {
     if (userId == '') {
       userId = await userInfoService.getOpenId(ctx)
     }
-    var studyReport = await reportService.getStudyReport(userId)
+    var studyReport = await studyDataService.getStudyReportTotal(userId)
     ctx.state.data = studyReport
   },
 

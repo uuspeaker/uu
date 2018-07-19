@@ -22,7 +22,7 @@ Page({
     })
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/report.starInfo`,
+      url: `${config.service.host}/weapp/studyData.starInfo`,
       login: true,
       method: 'get',
       success(result) {
@@ -49,7 +49,7 @@ Page({
     for (var i = 0; i < data.length; i++) {
       var formatDateStr = data[i].study_date.substr(0, 4) + '/' + data[i].study_date.substr(4, 2) + '/' + data[i].study_date.substr(6, 2) + ' 00:00:00'
       console.log(formatDateStr)
-      data[i].studyDateStr = dateFormat.format(new Date(formatDateStr),'yyyy年M月d日')
+      data[i].studyDateStr = dateFormat.format(new Date(formatDateStr),'yyyy年MM月dd日')
     }
     this.setData({
       starList: data

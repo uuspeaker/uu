@@ -295,7 +295,7 @@ Page({
 
   toClubStudyRank: function () {
     wx.navigateTo({
-      url: '../../club/clubRank/clubRank?scoreType=1&clubId=' + this.data.clubInfo[0].club_id,
+      url: '../../club/clubStudyRank/clubStudyRank?scoreType=1&clubId=' + this.data.clubInfo[0].club_id,
     })
   },
 

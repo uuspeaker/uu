@@ -61,14 +61,14 @@ router.post('/checkin', controllers.checkin.post)
 router.post('/studyDuration', controllers.study.studyDuration.post)
 router.get('/studyDuration', controllers.study.studyDuration.get)
 //查询用户积分
-router.get('/userInfo.studyReport', controllers.userInfo.studyReport.get)
-router.get('/userInfo.studyReportToday', controllers.userInfo.studyReportToday.get)
+router.get('/studyData.studyReportTotal', controllers.studyData.studyReportTotal.get)
+router.get('/studyData.studyReportToday', controllers.studyData.studyReportToday.get)
 //查询学习时长
-router.get('/report.userScore', controllers.report.userScore.get)
+router.get('/studyData.userScore', controllers.studyData.userScore.get)
 //查询优质学习信息
-router.get('/report.starInfo', controllers.report.starInfo.get)
+router.get('/studyData.starInfo', controllers.studyData.starInfo.get)
 //查询学习时长
-router.get('/userInfo.userRank', controllers.userInfo.userRank.get)
+router.get('/studyData.userRank', controllers.studyData.userRank.get)
 router.get('/userInfo.userControl', controllers.userInfo.userControl.get)
 //当天打卡展示
 router.get('/studyManage', controllers.study.studyManage)
@@ -239,7 +239,7 @@ router.delete('/club.myClub', controllers.club.myClub.del)
 router.put('/club.myClub', controllers.club.myClub.put)
 router.post('/club.myClub', controllers.club.myClub.post)
 //俱乐部会员学习排名
-router.get('/club.clubRank', controllers.club.clubRank.get)
+router.get('/club.clubStudyRank', controllers.club.clubStudyRank.get)
 //俱乐部入会申请
 router.get('/club.clubApply', controllers.club.clubApply.get)
 router.post('/club.clubApply', controllers.club.clubApply.post)

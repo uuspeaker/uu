@@ -4,6 +4,7 @@ var util = require('../../../utils/util.js')
 var userInfo = require('../../../common/userInfo.js')
 var dateFormat = require('../../../common/dateFormat.js')
 
+const updateManager = wx.getUpdateManager()
 qcloud.setLoginUrl(`${config.service.host}/weapp/login`);
 Page({
 
@@ -47,7 +48,7 @@ Page({
     // })
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/report.userScore`,
+      url: `${config.service.host}/weapp/studyData.userScore`,
       login: true,
       method: 'get',
       data:{'userId':''},
@@ -215,7 +216,7 @@ Page({
       return
     }
     wx.navigateTo({
-      url: '../../report/scoreRank/scoreRank?scoreType=' + e.currentTarget.dataset.type,
+      url: '../../studyData/scoreRank/scoreRank?scoreType=' + e.currentTarget.dataset.type,
     })
   },
 
@@ -306,13 +307,13 @@ Page({
     })
   },
 
-  toStudyReport: function () {
+  toStudyReportTotal: function () {
     if(this.data.isLogin == 0){
       util.showSuccess('请先登陆')
       return
     }
     wx.navigateTo({
-      url: '../../report/studyReport/studyReport?speechScoreTotal=' + this.data.speechScoreTotal
+      url: '../../studyData/studyReportTotal/studyReportTotal?speechScoreTotal=' + this.data.speechScoreTotal
       + '&reviewScoreTotal=' + this.data.reviewScoreTotal
       + '&listenScoreTotal=' + this.data.listenScoreTotal
       + '&evaluateScoreTotal=' + this.data.evaluateScoreTotal,
@@ -337,7 +338,7 @@ Page({
     }
     if (this.data.showContent != 1)return
     wx.navigateTo({
-      url: '../../report/studyReportToday/studyReportToday'
+      url: '../../studyData/studyReportToday/studyReportToday'
     })
   },
 
@@ -381,7 +382,7 @@ Page({
     }
     if (this.data.showContent != 1)return
     wx.navigateTo({
-      url: '../../report/starList/starList?totalStudyDuration=' + this.data.totalStudyDuration + '&rank=' + this.data.rank
+      url: '../../studyData/starList/starList?totalStudyDuration=' + this.data.totalStudyDuration + '&rank=' + this.data.rank
     })
   },
 
@@ -422,37 +423,7 @@ Page({
       }
     })
     
-    // wx.checkSession({
-    //   success: function () {
-    //     that.setData({
-    //       isLogin: 1
-    //     })
-    //     //session_key 未过期，并且在本生命周期一直有效
-    //     console.log('has session')
-    //     that.initIndex()
-    //   },
-    //   fail: function () {
-    //     // session_key 已经失效，需要重新执行登录流程
-    //     console.log('has not login')
-    //     qcloud.login({
-    //       success: function (result) {
-    //         console.log('userInfo', result)
-    //         that.setData({
-    //           isLogin: 1,
-    //           userInfo: result
-    //         })
-    //         console.log('login success')
-    //         that.initIndex()
-    //       },
-    //       fail: function () {
-    //         console.log('login fail')
-    //         that.setData({
-    //           isLogin: 0
-    //         })
-    //       }
-    //     })
-    //   }
-    // })
+    
   },
 
   initUserInfo: function () {
@@ -503,6 +474,20 @@ Page({
   onReady: function () {
     wx.showShareMenu({
       withShareTicket: true
+    })
+
+    updateManager.onUpdateReady(function () {
+      wx.showModal({
+        title: '更新提示',
+        content: '新版本已经准备好，是否重启应用？',
+        success: function (res) {
+          if (res.confirm) {
+            // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+            updateManager.applyUpdate()
+          }
+        }
+      })
+
     })
   },
 

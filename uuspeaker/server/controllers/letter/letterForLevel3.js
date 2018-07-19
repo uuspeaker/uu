@@ -1,5 +1,6 @@
 const { mysql } = require('../../qcloud')
 const userInfoService = require('../../service/userInfoService')
+const likeUserService = require('../../service/likeUserService')
 const studyDataService = require('../../service/studyDataService')
 
 module.exports = {
@@ -11,7 +12,7 @@ module.exports = {
     var firstSpeechDate = await studyDataService.getFirstSpeechDate(userId)
     var studyDays = await studyDataService.getStudyDays(userId)
     var studyAmount = await studyDataService.getStudyAmount(userId)
-    var studyPartner = await userInfoService.getLikeUserList(userId,0,'','')
+    var studyPartner = await likeUserService.getLikeUserList(userId,0,'','')
     
 
     ctx.state.data = {

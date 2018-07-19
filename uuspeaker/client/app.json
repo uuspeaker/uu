@@ -8,7 +8,7 @@
     "pages/club/clubDetail/clubDetail",
     "pages/club/clubApplyList/clubApplyList",
     "pages/club/clubShow/clubShow",
-    "pages/club/clubRank/clubRank",
+    "pages/club/clubStudyRank/clubStudyRank",
     "pages/club/myClub/myClub",
     "pages/club/clubList/clubList",
     "pages/club/createClub/createClub",
@@ -51,10 +51,10 @@
     "pages/userInfo/myInfluence/myInfluence",
     "pages/userInfo/newCommentList/newCommentList",
 
-    "pages/report/scoreRank/scoreRank",
-    "pages/report/studyReport/studyReport",
-    "pages/report/studyReportToday/studyReportToday",
-    "pages/report/starList/starList",
+    "pages/studyData/scoreRank/scoreRank",
+    "pages/studyData/studyReportTotal/studyReportTotal",
+    "pages/studyData/studyReportToday/studyReportToday",
+    "pages/studyData/starList/starList",
 
     "pages/impromptu/impromptuIndex/impromptuIndex",
     "pages/impromptu/cameraview/cameraview",

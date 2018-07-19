@@ -44,6 +44,8 @@ Page({
   },
 
   queryLikeUserInfo: function (e) {
+    firstDataTime = ''
+    lastDataTime = ''
     var index = e.currentTarget.dataset.item
     this.pressView(index)
     var thisQueryUserType = e.currentTarget.dataset.type
@@ -128,6 +130,8 @@ Page({
   },
 
   onLoad: function (options) {
+    firstDataTime = ''
+    lastDataTime = ''
     queryUserType = options.queryUserType
     if(options.userId == undefined){
 

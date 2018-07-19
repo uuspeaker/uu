@@ -23,7 +23,7 @@ Page({
     })
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/userInfo.studyReportToday`,
+      url: `${config.service.host}/weapp/studyData.studyReportToday`,
       login: true,
       method: 'get',
       data:{'userId': this.data.userId},

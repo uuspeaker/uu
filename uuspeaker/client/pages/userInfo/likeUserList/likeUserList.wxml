@@ -1,5 +1,13 @@
 
 <view class="weui-cell write top">
+<view class=" myReport" style="{{viewStyle[1]}}" data-item='1' data-type='2' bindtap='queryLikeUserInfo'>
+  <block wx:if="{{userId == ''}}">
+  我的粉丝
+  </block>
+  <block wx:else>
+  {{nickName}}的粉丝
+  </block></view>
+  
   <view class=" myReport" style="{{viewStyle[0]}}" data-item='0' data-type='1' bindtap='queryLikeUserInfo'>
   <block wx:if="{{userId == ''}}">
   我关注的
@@ -9,13 +17,7 @@
   </block>
 
   </view>
-  <view class=" myReport" style="{{viewStyle[1]}}" data-item='1' data-type='2' bindtap='queryLikeUserInfo'>
-  <block wx:if="{{userId == ''}}">
-  我的粉丝
-  </block>
-  <block wx:else>
-  {{nickName}}的粉丝
-  </block></view>
+  
 </view>
 <template name="scoreDetailTemplate">
   <view class="weui-cell" bindtap='toUserInfo' data-user_id='{{user_info.userId}}' data-avatar_url='{{user_info.avatarUrl}}' data-nick_name='{{user_info.nickName}}' >
@@ -43,7 +45,7 @@
     <template is="scoreDetailTemplate" data="{{...item}}" />
   </block>
 </view>
-<view style='height:5px'></view>
+<view style='height:45px'></view>
 <view class="weui-flex bottom">
     <view class="weui-flex__item">
       <button class="weui-btn"  bindtap='toFirstPage'>返回首页</button>

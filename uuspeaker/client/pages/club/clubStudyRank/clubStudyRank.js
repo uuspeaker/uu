@@ -4,6 +4,7 @@ var util = require('../../../utils/util.js')
 var userInfo = require('../../../common/userInfo.js')
 //查询标记(1-查自己;2-查所有;3-查最赞)
 var queryScoreType = ''
+var clubId  = ''
 var tmpRankList = []
 Page({
 
@@ -54,11 +55,11 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
-    var queryData = { 'scoreType': scoreType }
+    var queryData = { 'scoreType': scoreType, 'clubId': clubId}
     console.log('queryData', queryData)
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/userInfo.userRank`,
+      url: `${config.service.host}/weapp/club.clubStudyRank`,
       login: true,
       method: 'get',
       data: queryData,
@@ -82,7 +83,7 @@ Page({
   },
 
   formatDateAndStatus: function () {
-    if (queryScoreType == 1){
+    if (queryScoreType == 1) {
       tmpRankList = this.data.rankList
     }
     var data = this.data.rankList
@@ -91,10 +92,10 @@ Page({
       data[i].index = i + 1
       if (queryScoreType == 1) {
         data[i].level = userInfo.getRank(data[i].totalDuration)
-      }else{
+      } else {
         data[i].level = this.getTmpRank(data[i].user_info.userId)
       }
-      
+
       data[i].dataType = queryScoreType
     }
     this.setData({
@@ -102,9 +103,9 @@ Page({
     })
   },
 
-  getTmpRank: function(userId){
+  getTmpRank: function (userId) {
     for (var i = 0; i < tmpRankList.length; i++) {
-      if (tmpRankList[i].user_info.userId == userId){
+      if (tmpRankList[i].user_info.userId == userId) {
         return tmpRankList[i].level
       }
     }
@@ -117,6 +118,7 @@ Page({
   },
 
   onLoad: function (options) {
+    clubId = options.clubId
     if (options.scoreType == 2) {
       queryScoreType = 2
       this.pressView(1)
@@ -128,13 +130,7 @@ Page({
   },
 
   onReady: function () {
-    wx.setNavigationBarTitle({ title: '积分排名' });
-  },
-
-  onShareAppMessage: function (res) {
-    wx.showShareMenu({
-      withShareTicket: true
-    })
+    wx.setNavigationBarTitle({ title: '俱乐部排名' });
   },
 
 

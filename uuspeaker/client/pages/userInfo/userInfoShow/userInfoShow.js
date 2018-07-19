@@ -153,13 +153,13 @@ Page({
 
   toStudyReportToday: function () {
     wx.navigateTo({
-      url: '../../userInfo/studyReportToday/studyReportToday?userId=' + this.data.userInfo.userId + '&nickName=' + this.data.userInfo.nickName,
+      url: '../../studyData/studyReportToday/studyReportToday?userId=' + this.data.userInfo.userId + '&nickName=' + this.data.userInfo.nickName,
     })
   },
 
   toStudyReport: function () {
     wx.navigateTo({
-      url: '../../userInfo/studyReport/studyReport?userId=' + this.data.userInfo.userId 
+      url: '../../studyData/studyReportTotal/studyReportTotal?userId=' + this.data.userInfo.userId 
         + '&nickName=' + this.data.userInfo.nickName 
         + 'speechScoreTotal=' + this.data.speechScoreTotal
         + '&reviewScoreTotal=' + this.data.reviewScoreTotal
