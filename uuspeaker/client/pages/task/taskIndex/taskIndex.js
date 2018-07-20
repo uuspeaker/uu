@@ -417,6 +417,17 @@ Page({
     })
   },
 
+  toCreateTarget: function () {
+    if(this.data.isLogin == 0){
+      util.showSuccess('请先登陆')
+      return
+    }
+    if (this.data.showContent != 1)return
+    wx.navigateTo({
+      url: '../../target/createTarget/createTarget?totalStudyDuration=' + this.data.totalStudyDuration + '&rank=' + this.data.rank
+    })
+  },
+
   onShow: function(){
     if (this.data.isLogin == 1) {
     this.queryNewCommentAmount()

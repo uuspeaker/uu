@@ -36,9 +36,23 @@ const getFirstDayOfMonth = () => {
   return format(today, 'yyyyMMdd')
 }
 
+const getBetweenDays = (start, end) => {
+  start.setHours(0)
+  start.setMinutes(0)
+  start.setSeconds(0)
+  start.setMilliseconds(0)
+  end.setHours(0)
+  end.setMinutes(0)
+  end.setSeconds(0)
+  end.setMilliseconds(0)
+  var betweenDays = (end - start) / (24 * 60 * 60 * 1000)
+  return betweenDays
+}
+
 module.exports = { 
   format,
   getToday,
   getFirstDayOfWeek,
-  getFirstDayOfMonth
+  getFirstDayOfMonth,
+  getBetweenDays
 }

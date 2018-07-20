@@ -2,42 +2,29 @@ var qcloud = require('../../../vendor/wafer2-client-sdk/index')
 var config = require('../../../config')
 var util = require('../../../utils/util.js')
 var dateFormat = require('../../../common/dateFormat.js')
+const uuid = require('../../../common/uuid');
 
 var roomId = ''
+var lastDays = [7, 30, 100, 365]
+const recorderManager = wx.getRecorderManager()
+var timeDuration = 0
+var startDate
+var endDate
+var audioId
+var tempFilePath
 Page({
   data: {
-    todayStarAmount: 0,
-    userTarget: [],
-
+    isPlay: 0,
     studyDuration: '',
     starAmount: '',
     userItems: [
-      {'name':'一个星期','value':'0'},
-      {'name':'一个月','value':'1'},
-      {'name':'三个月','value':'2'},
-      {'name':'一年','value':'3'},
-      ]
-    
+      { 'name': '7天', 'value': '0' },
+      { 'name': '30天', 'value': '1' },
+      { 'name': '100天', 'value': '2' }
+    ]
+
   },
 
-  getMyTarget: function (e) {
-    util.showBusy('请求中...')
-    var that = this
-    qcloud.request({
-      url: `${config.service.host}/weapp/target.userTarget`,
-      login: true,
-      method: 'get',
-      success(result) {
-        that.setData({
-          userTarget: result.data.data
-        })
-      },
-      fail(error) {
-        util.showModel('请求失败', error);
-        console.log('request fail', error);
-      }
-    })
-  },
 
   radioChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value);
@@ -55,24 +42,75 @@ Page({
     });
   },
 
-  evaluate: function (e) {
+  chooseStarAmount: function (e) {
     this.setData({
       starAmount: e.currentTarget.dataset.star
     })
   },
 
-  saveTarget: function (e) {
+  startRecord: function () {
+    this.setData({
+      isPlay: 1
+    })
+    startDate = new Date()
+    recorderManager.start(config.options)
+  },
+
+
+  //用户放开录音按钮
+  stopRecord: function () {
+    recorderManager.stop();
+    this.setData({
+      isPlay: 0
+    })
+    endDate = new Date()
+    timeDuration = Math.floor((endDate - startDate) / 1000)
+    console.log('timeDuration', timeDuration)
+  },
+
+  saveTarget: function () {
+    if (this.data.starAmount == '') {
+      util.showSuccess('请选择每天高效学习次数')
+      return
+    }
+    if (this.data.studyDuration == '') {
+      util.showSuccess('请选择计划坚持时间')
+      return
+    }
+    if (timeDuration == 0) {
+      util.showSuccess('请录制目标宣言')
+      return
+    }
+    audioId = uuid.v1()
+    var that = this
+    console.log('tempFilePath', tempFilePath)
+    const uploadTask = wx.uploadFile({
+      url: `${config.service.host}/weapp/impromptu.impromptuAudio`,
+      filePath: tempFilePath,
+      name: 'file',
+      formData: { audioId: audioId },
+      success: function (result) {
+        that.saveTargetData()
+      },
+
+      fail: function (e) {
+        console.error(e)
+      }
+    })
+  },
+
+  saveTargetData: function () {
     util.showBusy('请求中...')
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/target.userTarget`,
-      data: { 'studyDuration': this.data.studyDuration, 'starAmount': this.data.starAmount},
+      data: { 'studyDuration': this.data.studyDuration, 'starAmount': this.data.starAmount, 'audioId': audioId, timeDuration: timeDuration },
       login: true,
       method: 'post',
       success(result) {
-        util.showSuccess('目标制定成功')      
-        wx.navigateBack({
-
+        util.showSuccess('目标制定成功')
+        wx.redirectTo({
+          url: '../../target/myTarget/myTarget'
         })
       },
       fail(error) {
@@ -82,8 +120,16 @@ Page({
     })
   },
 
+  
+
   onLoad: function () {
-    this.getMyTarget()
+    this.initAudio()
+  },
+
+  initAudio: function () {
+    recorderManager.onStop((res) => {
+      tempFilePath = res.tempFilePath
+    })
   },
 
 

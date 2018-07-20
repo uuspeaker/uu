@@ -210,6 +210,7 @@ router.get('/target.allTarget', controllers.target.allTarget.get)
 //用户目标管理
 router.post('/target.userTarget', controllers.target.userTarget.post)
 router.get('/target.userTarget', controllers.target.userTarget.get)
+router.delete('/target.userTarget', controllers.target.userTarget.del)
 //用户目标进度
 router.get('/target.todayTargetProgress', controllers.target.todayTargetProgress.get)
 router.get('/target.currentTargetProgress', controllers.target.currentTargetProgress.get)

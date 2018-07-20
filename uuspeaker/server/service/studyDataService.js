@@ -123,8 +123,8 @@ var getStarAmountOfToday = async (userId) => {
 }
 
 //查询持续得星天数
-var getStarLastDays = async (userId, startDate, targetStarAmount) => {
-  var data = await mysql.raw('SELECT user_id,study_date,min(study_amount) as star_amount FROM user_study_duration WHERE user_id = ? and study_date >=?  group by user_id,study_date HAVING count(study_type) =4 and min(study_amount) >= ?', [userId, startDate, targetStarAmount])
+var getStarLastDays = async (userId, startDate, endDate,targetStarAmount) => {
+  var data = await mysql.raw('SELECT user_id,study_date,min(study_amount) as star_amount FROM user_study_duration WHERE user_id = ? and study_date >=? and study_date <= ?  group by user_id,study_date HAVING count(study_type) =4 and min(study_amount) >= ?', [userId, startDate, endDate,targetStarAmount])
   console.log('getStarLastDays', data)
   var starData = data[0]
   return starData.length
