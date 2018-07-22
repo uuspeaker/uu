@@ -3,8 +3,8 @@
  */
 
 // 此处主机域名修改成腾讯云解决方案分配的域名
-var host = 'https://gytr1z9p.qcloud.la';
-// var host = 'https://734232337.uuspeaker.com';
+// var host = 'https://gytr1z9p.qcloud.la';
+var host = 'https://734232337.uuspeaker.com';
 
 var config = {
 

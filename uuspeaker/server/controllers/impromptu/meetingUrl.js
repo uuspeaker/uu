@@ -4,6 +4,7 @@ const uuid = require('../../common/uuid.js')
 const log = require('../../log');
 const audioService = require('../../service/audioService.js')
 const userInfoService = require('../../service/userInfoService')
+const speechService = require('../../service/speechService')
 
 const option = {
   MAX_NUMBER_TUNNEL_RESEND: 3,//每个信道允许出现无效信道时重新发送的次数
