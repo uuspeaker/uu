@@ -55,11 +55,11 @@ Page({
     this.setData({
       likeUsers: []
     })
-    this.doQueryLikeUser(queryUserType)
+    this.doQueryLikeUser()
   },
 
   //查询自由练习任务信息
-  doQueryLikeUser: function (queryUserType) {
+  doQueryLikeUser: function () {
     //util.showBusy('请求中...')
     wx.showLoading({
       title: '加载中',
@@ -150,7 +150,7 @@ Page({
       queryUserType = 1
       this.pressView(0)
     }
-    this.doQueryLikeUser(queryUserType)
+    this.doQueryLikeUser()
   },
 
   onShow: function () {
@@ -159,13 +159,13 @@ Page({
 
   onPullDownRefresh: function () {
     queryPageType = 1
-    this.doQueryLikeUser(queryUserType)
+    this.doQueryLikeUser()
   },
 
   onReachBottom: function () {
     console.log('onReachBottom')
     queryPageType = 2
-    this.doQueryLikeUser(queryUserType)
+    this.doQueryLikeUser()
   },
 
   

@@ -263,6 +263,7 @@ var queryAudioById = async (audioId) => {
  */
 var deleteAudio = async (audioId) => {
  await mysql('impromptu_audio').where({ audio_id: audioId }).del()
+ await mysql('new_comment').where({ audio_id: audioId }).del()
 }
 
 // 查询当天演讲练习时间

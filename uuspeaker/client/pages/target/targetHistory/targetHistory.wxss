@@ -1,1 +1,125 @@
-/* pages/target/targetHistory/targetHistory.wxss */
+
+.myReport {
+  font-size: 15px;
+  padding-left: 10px;
+}
+.surveyStatus {
+  float: right;
+  right: 10px;
+  font-weight: bold;
+}
+
+.right {
+  float: right;
+  right:10px;
+}
+
+.write {
+  background-color: white;
+  height: 10px;
+  padding-top: 15px;
+}
+
+.commentImg {
+  width: 16px;
+  height: 16px;
+  position: fixed;
+  right: 15px;
+  top: 10px;
+}
+
+.normal {
+  height: 85px;
+  width: 20%;
+  margin-top: 5px;
+  margin-left: 10px;
+  color: white;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 10px 10px 10px 10px;
+}
+
+.uu-code {
+  width: 35px;
+  height: 35px;
+  margin-top: 10px;
+}
+
+.user-pic {
+  width: 45px;
+  height: 45px;
+  border-radius: 25px;
+  position: relative;
+  top:-80rpx;
+  margin-right:16px;
+}
+
+.date {
+margin:2px;
+  font-size: 13px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
+  color: grey;
+}
+
+.delete {
+  color: #576b95;
+  padding-left: 10px;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.article {
+  width: 90%;
+  padding-bottom: 10px;
+  word-break: keep-all;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
+}
+.clubNo{
+  padding-right:0px;
+  padding-left: 5px;
+  font-size: 40px;
+  color: black;
+
+}
+.audioArea{
+  margin-top:10px;
+  border:0.5px solid lightgray;
+  width: 270px;
+  height: 50px;
+  background-color: #ffffff;
+}
+.sliderAudio{
+margin-top:15px;
+margin-right: 10px;
+width:90px;
+}
+.timeNotice{
+  font-size:13px;
+  color: gray;
+  margin: 15px 0px 0 0px;
+}
+.timeNotice2{
+  font-size:13px;
+  color: gray;
+  margin: 15px 10px 0 0px;
+}
+.audio{
+  width: 40px;
+  height: 40px;
+  margin-top:5px;
+  margin-left:10px;
+}
+.checkNotice{
+  float: right;
+  margin-right:15px;
+}
+.star-pic{
+  width:16px;
+  height: 16px;
+}

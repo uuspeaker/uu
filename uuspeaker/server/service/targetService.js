@@ -6,12 +6,13 @@ const dateUtil = require('../common/dateUtil.js')
 const uuid = require('../common/uuid.js')
 
 //保存用户目标
-var saveTarget = async (userId, studyDuration, starAmount, audioId, timeDuration) => {
+var saveTarget = async (userId,targetName, studyDuration, starAmount, audioId, timeDuration) => {
   var targetId = uuid.v1()
   await mysql('user_target').insert(
     {
       target_id: targetId,
       user_id: userId,
+      target_name: targetName,
       target_status: 1,
       study_duration: studyDuration,
       star_amount: starAmount,
@@ -29,11 +30,19 @@ var getMyTarget = async (userId) => {
     return data
 }
 
-//查询用户目标
+//作废用户目标
 var disposeTarget = async (targetId) => {
+  console.log('disposeTarget', targetId)
  var data = await mysql('user_target').where({
    target_id: targetId,
     }).update({'target_status':3})
+    return data
+}
+
+var completeTarget = async (targetId) => {
+ var data = await mysql('user_target').where({
+   target_id: targetId,
+    }).update({'target_status':2})
     return data
 }
 
@@ -59,7 +68,6 @@ var getTodayTargetProgress = async (userId) => {
 //查询用户目标进展
 var getCurrentTargetProgress = async (userId) => {
   var hasTarget = 0
-  var lastDays = [7, 30, 90, 365]
   var data = await getMyTarget(userId)
   if (data.length == 0){
     return {'hasTarget' : 0}
@@ -73,7 +81,7 @@ var getCurrentTargetProgress = async (userId) => {
     endDate.setMinutes(0)
     endDate.setSeconds(0)
     endDate.setMilliseconds(0)
-    endDate.setDate(endDate.getDate() + lastDays[data[0].study_duration] -1)
+    endDate.setDate(endDate.getDate() + data[0].study_duration -1)
     var endDateStr = dateUtil.format(endDate, 'yyyyMMdd')
 
     data[0].currentLastDays = await studyDataService.getStarLastDays(userId, startDateStr, endDateStr,data[0].star_amount)
@@ -83,10 +91,31 @@ var getCurrentTargetProgress = async (userId) => {
   }
 }
 
+var getTargetHistory = async (userId, queryPageType, firstDataTime, lastDataTime) => {
+  var limit = 10
+  var offset = 0
+  var taskData = []
+
+  if (queryPageType == 0) {
+    taskData = await mysql('user_target').select('user_target.*').where({ 'user_target.user_id': userId }).orderBy('user_target.create_date', 'desc').limit(limit).offset(offset)
+  }
+
+  if (queryPageType == 1) {
+    taskData = await mysql('user_target').select('user_target.*').where({ 'user_target.user_id': userId }).andWhere('user_target.create_date', '<', new Date(lastDataTime)).orderBy('user_target.create_date', 'desc').limit(limit).offset(offset)
+  }
+
+  if (queryPageType == 2) {
+    taskData = await mysql('user_target').select('user_target.*').where({ 'user_target.user_id': userId }).andWhere('user_target.create_date', '>', new Date(firstDataTime)).orderBy('user_target.create_date', 'desc').limit(limit).offset(offset)
+  }
+  return taskData
+}
+
 module.exports = {
   saveTarget,
   getMyTarget,
   disposeTarget,
+  completeTarget,
   getTodayTargetProgress,
-  getCurrentTargetProgress
+  getCurrentTargetProgress,
+  getTargetHistory
 }

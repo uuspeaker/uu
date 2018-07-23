@@ -33,10 +33,12 @@
       </view>
       <view>
         <view class=" date">创始人：{{user_info.nickName}}</view>
+        <view class=" date" data-wx_no='{{wx_no}}' catchtap='copyWxNo'>微信号：{{wx_no}} <text style='color: #576b95;' wx:if='{{wx_no != "null" && wx_no != "" && wx_no != " "}}'>复制</text></view>
         <view class=" date">会员数：{{member_amount}} 人</view>
         <!--view class=" date">创建时间：{{createDateStr}}</view-->
         <view class="date" wx:if='{{club_fee > 0}}'>会   费：{{club_fee}} 元/月</view>
   <view class="date" wx:if='{{club_fee == 0}}'>会   费：免费</view>
+  <view class=" date">介  绍：{{club_description}}</view>
       </view>
       <view class="weui-flex audioArea" catchtap='doNothing' >
       

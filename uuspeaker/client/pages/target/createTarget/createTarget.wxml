@@ -1,5 +1,17 @@
-<view class="weui-cells__title">制定目标<text class='save' catchtap='saveTarget'>保存</text></view>
-  <form bindsubmit="addUserTarget">
+<view class="weui-cells__title">制定目标
+  <text class='save' catchtap='saveTarget'>保存</text>
+</view>
+<form bindsubmit="addUserTarget">
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input ">
+      <view class="weui-cell__hd">
+        <view class="weui-label">目标名称</view>
+      </view>
+      <view class="weui-cell__bd">
+        <input name="targetName" class="weui-input" bindinput='setTargetName' value='{{targetName}}' />
+      </view>
+    </view>
+    </view>
     <view class=" ">
 
       <view class="weui-cells__title center">
@@ -30,11 +42,13 @@
 
     </view>
 
-    <view class="weui-flex bottom">
-    <view class="weui-flex__item">
-     <button class="weui-button" type='primary' bindtap="startRecord"  wx:if="{{isPlay == 0}}">发表目标宣言</button>
-    <button class="weui-button" type='primary' bindtap="stopRecord"  wx:if="{{isPlay == 1}}">完成宣言</button>
-    </view>
+    <view class='studyTip'>注：只有每天坚持才能完成目标，一旦中断将无法完成</view>
 
-  </view>
-  </form>
+    <view class="weui-flex bottom">
+      <view class="weui-flex__item">
+        <button class="weui-button" type='primary' bindtap="startRecord" wx:if="{{isPlay == 0}}">发表目标宣言</button>
+        <button class="weui-button" type='primary' bindtap="stopRecord" wx:if="{{isPlay == 1}}">完成宣言</button>
+      </view>
+
+    </view>
+</form>

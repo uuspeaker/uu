@@ -19,7 +19,7 @@ module.exports = {
       userList = await likeUserService.getLikeUserList(userId, queryPageType, firstDataTime, lastDataTime)
     }
     if (queryUserType == 2) {
-      userList = await likeUserService.getLikeUserList(userId, queryPageType, firstDataTime, lastDataTime)
+      userList = await likeUserService.getMyFansList(userId, queryPageType, firstDataTime, lastDataTime)
     }
     ctx.state.data = userList
   },

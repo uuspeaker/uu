@@ -87,9 +87,29 @@ Page({
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/target.userTarget`,
-      data: { targetId: this.data.userTarget.targetId},
+      data: { targetId: this.data.userTarget.target_id},
       login: true,
       method: 'delete',
+      success(result) {
+        wx.redirectTo({
+          url: '../../target/createTarget/createTarget'
+        })
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
+  completeTarget: function(){
+    util.showBusy('请求中...')
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/target.userTarget`,
+      data: { targetId: this.data.userTarget.targetId},
+      login: true,
+      method: 'put',
       success(result) {
         wx.redirectTo({
           url: '../../target/createTarget/createTarget'
@@ -200,6 +220,19 @@ Page({
         audios: this.data.audios
       })
 
+    })
+  },
+
+  toHistoryTarget: function(){
+    wx.navigateTo({
+      url: '../../target/targetHistory/targetHistory',
+    })
+  },
+
+  onReady: function () {
+    wx.setNavigationBarTitle({ title: '演讲学习目标' });
+    wx.showShareMenu({
+      withShareTicket: true
     })
   },
 

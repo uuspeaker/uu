@@ -304,6 +304,12 @@ Page({
     })
   },
 
+  copyWxNo: function (e) {
+    wx.setClipboardData({
+      data: e.currentTarget.dataset.wx_no
+    })
+  },
+
   onPullDownRefresh: function () {
     queryPageType = 1
     this.queryImpromptuRooms(queryUserType)

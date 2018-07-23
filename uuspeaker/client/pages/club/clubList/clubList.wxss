@@ -51,7 +51,7 @@
   height: 45px;
   border-radius: 25px;
   position: relative;
-  top:-80rpx;
+  top:-110rpx;
   margin-right:16px;
 }
 
@@ -117,7 +117,7 @@ width:90px;
 }
 .likeYou{
   position: relative;
-  top:-60rpx;
+  top:-90rpx;
   left:-5px;
   border:0.5px solid #576b95;
   font-size: 11px;

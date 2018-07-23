@@ -55,7 +55,7 @@ Page({
   doCancel: function () {
     var that = this
     qcloud.request({
-      url: `${config.service.host}/weapp/impromptu.myAudio`,
+      url: `${config.service.host}/weapp/impromptu.userAudio`,
       data: { 'audioId': this.data.audioId },
       login: true,
       method: 'delete',

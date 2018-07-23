@@ -68,10 +68,9 @@
   top: 4px;
 }
 .likeContent{
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  word-break: break-all;
-  page-break-after: auto;
+  background-color:white;
+  padding-left:15px;
+  padding-top:5px;
 }
 .user-pic {
   width: 60px;
@@ -85,12 +84,17 @@
   width: 35px;
   height: 35px;
 }
-
+.like-item{
+  display: inline-block;
+  text-align: center;
+  margin: 1.5px;
+  vertical-align: top;
+}
 .user-like-pic {
   width: 35px;
   height: 35px;
   border-radius: 3px;
-  margin-left: 5px;
+  margin: 2px;
 }
 
 .small-grey {
@@ -142,7 +146,7 @@
 
 .likeUser {
   background-color: gainsboro;
-  padding-top: 9px;
+  padding-top: 2px;
 }
 
 .link {

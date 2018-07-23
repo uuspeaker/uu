@@ -1,2 +1,36 @@
-<!--pages/target/targetHistory/targetHistory.wxml-->
-<text>pages/target/targetHistory/targetHistory.wxml</text>
+
+<!--报名展示-->
+
+<view class="weui-cells weui-cells_after-title">
+  <block wx:for="{{targetList}}" wx:key="item">
+    <template is="scoreDetailTemplate" data="{{...item}}" />
+  </block>
+</view>
+
+<template name="scoreDetailTemplate">
+  <view class="weui-cell" >
+    <view class="weui-cell__bd">
+      <view class="">
+        <view class='article'>
+          <text>{{target_name}}</text>
+          <div class='checkNotice' wx:if='{{target_status == 1}}'><text style='color:rgb(228, 140, 58);'>进行中</text></div>
+          <div class='checkNotice' wx:if='{{target_status == 2}}'><text style='color:rgb(136, 186, 71);'>已完成</text></div>
+          <div class='checkNotice' wx:if='{{target_status == 3}}'><text style='color: grey;'>已作废</text></div>
+        </view>
+      </view>
+      <view>
+        <view class=" date">学习强度：<image class="star-pic" src='../../../images/speechName/star2.png' wx:if='{{star_amount >=1}}'/>
+        <image class="star-pic" src='../../../images/speechName/star2.png' wx:if='{{star_amount >=2}}'/>
+        <image class="star-pic" src='../../../images/speechName/star2.png' wx:if='{{star_amount >=3}}'/>
+        <image class="star-pic" src='../../../images/speechName/star2.png' wx:if='{{star_amount >=4}}'/>
+        <image class="star-pic" src='../../../images/speechName/star2.png' wx:if='{{star_amount >=5}}'/>
+        <image class="star-pic" src='../../../images/speechName/star2.png' wx:if='{{star_amount >=6}}'/>
+        <image class="star-pic" src='../../../images/speechName/star2.png' wx:if='{{star_amount >=7}}'/> 
+        </view>
+        <view class=" date">持续时间：{{study_duration}} 天</view>
+        <view class=" date">创建时间：{{createDateStr}}</view>
+      </view>
+    </view>
+   
+  </view>
+</template>

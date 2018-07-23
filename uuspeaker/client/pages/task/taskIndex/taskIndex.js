@@ -417,6 +417,14 @@ Page({
     })
   },
 
+  toTargePage: function(){
+    if (this.data.myTargetProgress.hasTarget == 0){
+      this.toCreateTarget()
+    }else{
+      this.toMyTarget()
+    }
+  },
+
   toCreateTarget: function () {
     if(this.data.isLogin == 0){
       util.showSuccess('请先登陆')

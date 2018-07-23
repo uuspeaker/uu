@@ -17,10 +17,11 @@ Page({
     isPlay: 0,
     studyDuration: '',
     starAmount: '',
+    targetName:'',
     userItems: [
-      { 'name': '7天', 'value': '0' },
-      { 'name': '30天', 'value': '1' },
-      { 'name': '100天', 'value': '2' }
+      { 'name': '7天', 'value': '7' },
+      { 'name': '30天', 'value': '30' },
+      { 'name': '100天', 'value': '100' }
     ]
 
   },
@@ -70,6 +71,10 @@ Page({
 
   saveTarget: function () {
     if (this.data.starAmount == '') {
+      util.showSuccess('请输入目标')
+      return
+    }
+    if (this.data.starAmount == '') {
       util.showSuccess('请选择每天高效学习次数')
       return
     }
@@ -104,7 +109,7 @@ Page({
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/target.userTarget`,
-      data: { 'studyDuration': this.data.studyDuration, 'starAmount': this.data.starAmount, 'audioId': audioId, timeDuration: timeDuration },
+      data: { 'targetName': this.data.targetName, 'studyDuration': this.data.studyDuration, 'starAmount': this.data.starAmount, 'audioId': audioId, timeDuration: timeDuration },
       login: true,
       method: 'post',
       success(result) {
@@ -120,7 +125,13 @@ Page({
     })
   },
 
-  
+  setTargetName: function (e) {
+    var targetName = e.detail.value
+    targetName = targetName.replace(/^\s+|\s+$/g, "");
+    this.setData({
+      targetName: targetName
+    })
+  },
 
   onLoad: function () {
     this.initAudio()

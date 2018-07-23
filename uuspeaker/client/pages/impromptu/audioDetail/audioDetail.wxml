@@ -1,3 +1,4 @@
+
 <view class="weui-cells weui-cells_after-title">
   <view class="weui-cell">
     <view class="user-avatar">
@@ -51,31 +52,24 @@
   </view>
 </view>
 
+
 <!--小懂回复页面-->
  
-  <view class="weui-cells weui-cells_after-title" wx:if='{{audioData[0].speech_type == 3}}'>
-  <view class="weui-cell speechType" >
-小懂演讲君说：{{audioData[0].audio_text}}
-      </view>
-  </view>
+
 
 <!--点赞展示页面-->
   <view class='likeUser'></view>
-  <view class="weui-cells weui-cells_after-title">
-  <view class="weui-cell likeContent" >
+  <view class='likeContent'>
   <block wx:if="{{likeIt == 0}}">
-      <image  class="audio-pic" style="margin-right:10px" src="../../../images/studyIndex/like.png" catchtap='likeAudio'></image>
+      <image  class="user-like-pic"  src="../../../images/studyIndex/like.png" catchtap='likeAudio'></image>
       </block>
       
       <block wx:if="{{likeIt == 1}}">
-      <image  class="audio-pic" style="margin-right:10px" src="../../../images/userAudio/like.png" catchtap='cancelLike'></image>
+      <image  class="user-like-pic"  src="../../../images/userAudio/like.png" catchtap='cancelLike'></image>
       </block>
-      <block wx:for="{{audioDataLike}}" wx:key="item">
-      
+      <block wx:for="{{audioDataLike}}" wx:key="item" class='like-item'>
         <image class="user-like-pic" src="{{item.user_info.avatarUrl}}" data-user_id='{{item.user_id}}' catchtap='toUserInfo'></image>
-        
-      </block>
-      </view>
+       </block> 
     </view>
   
   
