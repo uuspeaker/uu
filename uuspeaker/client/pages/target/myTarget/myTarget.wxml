@@ -84,8 +84,10 @@
     天</view>
 
 
-  
-<view class='studyTip' style='margin-top:40rpx;'>目标制定时间：{{createDateStr}}</view>
+<view class='studyTip' style='margin-top:40rpx;'><text wx:if='{{userId != ""}}'  style='margin-top:10rpx;'>制定人：{{nickName}} | </text>  制定时间：{{createDateStr}}</view>
+ 
+
+<block wx:if='{{userId == ""}}'>
 <view class="weui-cells__title  bottom"style='padding-bottom:20rpx;padding-left:33%;font-size:30rpx'><text style='color: #576b95;padding-right:20rpx' bindtap="resetTarget">重新制定</text><text style='color: #576b95;'  catchtap='toHistoryTarget'>历史目标</text></view>
 
 <view class="weui-flex bottom" wx:if="{{userTarget.star_amount == userTarget.todayStarAmount}}">
@@ -93,3 +95,4 @@
      <button class="weui-button" type='primary' bindtap="completeTarget"  >完成目标</button>
     </view>
     </view>
+</block>

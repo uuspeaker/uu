@@ -11,7 +11,8 @@ Page({
   data: {
     isLikeUser: '',
     userInfo: {},
-    userIntroduction:[]
+    userIntroduction:[],
+    myTargetProgress:{'hasTarge':0}
     // nickName: '',
     // avatarurl:''
   },
@@ -133,6 +134,12 @@ Page({
     this.formatDateAndStatus()
   },
 
+  toLikeUserTarget: function (e) {
+    wx.navigateTo({
+      url: '../../target/myTarget/myTarget?userId=' + this.data.userInfo.userId + '&nickName=' + this.data.userInfo.nickName,
+    })
+  },
+
   toLikeUserList: function (e) {
     wx.navigateTo({
       url: '../../userInfo/likeUserList/likeUserList?userId=' + this.data.userInfo.userId + '&nickName=' + this.data.userInfo.nickName,
@@ -168,11 +175,29 @@ Page({
     })
   },
 
-  onLoad: function (options) {
-    console.log(options)
-    this.setData({
-      roomId: options.roomId
+  //查询用户目标数据
+  queryTargetProgress: function () {
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/target.todayTargetProgress`,
+      login: true,
+      method: 'get',
+      data: { 'userId': likeUserId},
+      success(result) {
+        that.setData({
+          myTargetProgress: result.data.data,
+        })
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
     })
+  },
+
+  initAudio: function (options) {
+    
+    console.log(options)
 
     innerAudioContext.obeyMuteSwitch = false
     innerAudioContext.onPlay(() => {
@@ -206,12 +231,14 @@ Page({
   onLoad: function (options) {
     console.log(options)
     likeUserId = options.userId
+    this.queryTargetProgress()
     // this.setData({
     //   nickName: options.nickName,
     //   userAvatar: options.avatarUrl
     // })
     this.isLikeUser()
     this.getUserInfo(options.userId)
+    this.initAudio()
   },
 
   onUnload: function () {

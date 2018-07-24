@@ -12,5 +12,10 @@ var post = async (ctx) => {
   await uploadAudio.upload(ctx)
 }
 
+var del = async (ctx) => {
+  var audioId = ctx.request.body.audioId
+  await uploadAudio.deleteObject(audioId)
+}
 
-module.exports = { post }
+
+module.exports = { post,del }

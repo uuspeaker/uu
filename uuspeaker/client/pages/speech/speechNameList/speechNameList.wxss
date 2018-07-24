@@ -1,66 +1,40 @@
 .evaluateSpeechName{
   position:fixed;
-  right:20px;
-  font-size:15px;
+  right:40rpx;
+  font-size:30rpx;
   color: #576b95;
   font-weight: bold;
 }
 .myReport {
-  font-size: 15px;
-  padding-left: 10px;
+  font-size: 30rpx;
+  padding-left: 20rpx;
 }
 .surveyStatus {
   float: right;
-  right: 10px;
+  right: 20rpx;
   font-weight: bold;
 }
 
 .right {
   float: right;
-  right:10px;
+  right:20rpx;
 }
 
 .write {
   background-color: white;
-  height: 10px;
-  padding-top: 15px;
-}
-
-.commentImg {
-  width: 16px;
-  height: 16px;
-  position: fixed;
-  right: 15px;
-  top: 10px;
-}
-
-.normal {
-  height: 85px;
-  width: 20%;
-  margin-top: 5px;
-  margin-left: 10px;
-  color: white;
-  text-align: center;
-  font-size: 15px;
-  font-weight: bold;
-  border-radius: 10px 10px 10px 10px;
-}
-
-.uu-code {
-  width: 35px;
-  height: 35px;
-  margin-top: 10px;
+  height: 20rpx;
+  padding-top: 30rpx;
 }
 
 .user-pic {
-  width: 50px;
-  height: 50px;
-  border-radius: 3px;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 6rpx;
 }
 
 .date {
-  padding: 5px;
-  font-size: 13px;
+  padding: 10rpx;
+  font-size: 26rpx;
   white-space: pre-wrap;
   word-wrap: break-word;
   word-break: break-all;
@@ -69,9 +43,9 @@
 
 .delete {
   color: #576b95;
-  padding-left: 10px;
+  padding-left: 20rpx;
   font-weight: bold;
-  font-size: 13px;
+  font-size: 26rpx;
 }
 
 .article {
@@ -82,12 +56,12 @@
 }
 .delete{
   color: #576b95;
-  padding-left: 10px;
+  padding-left: 20rpx;
   font-weight: bold;
-  font-size: 13px;
+  font-size: 26rpx;
 }
 .star-pic{
-  width:18px;
-  height: 18px;
- margin: 1px;
+  width:36rpx;
+  height: 36rpx;
+ margin: 2rpx;
 }

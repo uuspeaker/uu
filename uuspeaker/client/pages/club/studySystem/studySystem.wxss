@@ -1,133 +1,92 @@
 .right {
   float: right;
-  right: 10px;
+  right: 20rpx;
 }
 
 .myReport {
-  font-size: 15px;
-  padding-left: 10px;
+  font-size: 30rpx;
+  padding-left: 20rpx;
 }
 .title{
-  font-size: 16px;
+  font-size: 32rpx;
   font-weight: bold;
-  padding-left: 10px;
+  padding-left: 20rpx;
 }
 
 .delete{
-  font-size: 13px;
+  font-size: 26rpx;
   color: #576b95; 
   font-weight: normal;
 }
 
-.normal {
-  height: 85px;
-  width: 20%;
-  margin-top: 5px;
-  margin-left: 10px;
-  color: white;
-  text-align: center;
-  font-size: 15px;
-  font-weight: bold;
-  border-radius: 10px 10px 10px 10px;
-}
-
-.uu-code {
-  width: 35px;
-  height: 35px;
-  margin-top: 10px;
-}
-.uu-code2 {
-  width: 25px;
-  height: 25px;
-}
-.audio {
-  width: 40px;
-  height: 40px;
-  border-radius: 3px;
-  padding-right: 10px;
-}
-
-.like{
-width: 18px; 
-height: 18px; 
-padding-left: 10px;
-
-position: relative;
-  top: 4px;
-}
 
 .user-pic {
-  width: 45px;
-  height: 45px;
-  border-radius: 50px;
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 100rpx;
   position: relative;
-  top: -8px;
+  top: -16rpx;
 }
 
-.user-like-pic {
-  width: 30px;
-  height: 30px;
-  border-radius: 10px;
-}
 .small-grey{
-  font-size: 13px;
+  font-size: 26rpx;
   color:#888888;
   font-weight: normal;
-  padding-left:10px;
-  margin-top: 8px;
+  padding-left:20rpx;
+  margin-top: 16rpx;
 }
 .right{
   
-  right: 10px;
+  right: 20rpx;
 }
 .middle2{
-  margin-top:45px;
-  margin-bottom:80px;
+  margin-top:90rpx;
+  margin-bottom:160rpx;
 }
 .search{
-  font-size: 15px;
-  height: 20px;
-  padding-left: 10px;
+  font-size: 30rpx;
+  height: 40rpx;
+  padding-left: 20rpx;
   width:  80%
 }
 .queryAll{
-  right: 10px;
-  font-size: 15px;
+  right: 20rpx;
+  font-size: 30rpx;
   color: grey;
 }
 .audioAlbum{
   position: fixed;
-  right:18px;
-  font-size: 15px;
+  right:36rpx;
+  font-size: 30rpx;
   font-weight: bold;
 }
 .modalInput{
 text-align: center;
-font-size: 20px;
+font-size: 40rpx;
 font-weight: bold;
 color: black;
-height: 40px;
+height: 80rpx;
 }
 .right2{
-  padding-right: 30px;
-  font-size: 24px;
+  padding-right: 60rpx;
+  font-size: 48rpx;
 }
 .likeYou{
-  border:0.5px solid #576b95;
+  border:1rpx solid #576b95;
   color:#576b95;
-  font-size: 11px;
-  width: 60px;
-  height: 18px;
+  font-size: 22rpx;
+  width: 120rpx;
+  height: 36rpx;
   text-align: center;
-  padding-top: 3px;
+  padding-top: 6rpx;
   position:fixed;
-  right:10px;
-  margin-bottom:10px;
+  right:20rpx;
+  margin-bottom:20rpx;
 }
 .changeCourse{
   position: fixed;
-  right:10px;
+  right:20rpx;
   color:#576b95;
-  font-size: 13px;
+  font-size: 26rpx;
   font-weight: normal;
 }

@@ -44,7 +44,8 @@ Page({
       content: '确定要删除吗？',
       success: function (sm) {
         if (sm.confirm) {
-          that.doCancel()
+          that.doCancelItem()
+          //that.doCancelAudio()
         } else if (sm.cancel) {
           console.log('用户点击取消')
         }
@@ -52,7 +53,7 @@ Page({
     })
   },
 
-  doCancel: function () {
+  doCancelItem: function () {
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/impromptu.userAudio`,
@@ -61,7 +62,26 @@ Page({
       method: 'delete',
       success(result) {
         util.showSuccess('已成功删除')
-        wx.navigateBack({ delta: 1 })
+        wx.redirectTo({
+          url: '../../task/specialTaskList2/specialTaskList2',
+        })
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    })
+  },
+
+  doCancelAudio: function () {
+    var that = this
+    qcloud.request({
+      url: `${config.service.host}/weapp/impromptu.impromptuAudio`,
+      data: { 'audioId': this.data.audioId },
+      login: true,
+      method: 'delete',
+      success(result) {
+        util.showSuccess('已成功删除音频')
       },
       fail(error) {
         util.showModel('请求失败', error);

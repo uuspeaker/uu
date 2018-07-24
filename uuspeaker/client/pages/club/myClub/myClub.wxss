@@ -1,77 +1,77 @@
 .title{
-  font-size: 18px;
+  font-size: 36rpx;
   font-weight: bold;
   white-space: pre-wrap;
   word-wrap: break-word;
   word-break: break-all;
 }
 .middle2{
-  margin-top:120px;
-  padding-bottom: 110px;
+  margin-top:240rpx;
+  padding-bottom: 220rpx;
 }
 .host-pic {
-  width: 50px;
-  height: 50px;
-  border-radius: 6px;
-  margin-right: 10px;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 12rpx;
+  margin-right: 20rpx;
 }
 
 .speaker-pic {
-  width: 40px;
-  height: 40px;
-  border-radius: 6px;
-  margin-right: 10px;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 12rpx;
+  margin-right: 20rpx;
 }
 
 .medal {
-  width: 20px;
-  height: 20px;
-  margin-top: 7px;
+  width: 40rpx;
+  height: 40rpx;
+  margin-top: 14rpx;
 }
 
 .link {
-  font-size: 17px;
+  font-size: 34rpx;
   font-weight: bold;
   color: #576b95;
 }
 .link3 {
-  font-size: 13px;
+  font-size: 26rpx;
   color: #576b95;
 }
 .link2 {
-  font-size: 15px;
+  font-size: 30rpx;
   color:orangered;
 }
 .gap{
   color: lightgray;
-  padding-left: 5px;
-  padding-right: 5px;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
 }
 .host-level {
-  font-size: 13px;
+  font-size: 26rpx;
   color: #888;
-  padding-top: 5px;
+  padding-top: 10rpx;
 }
 
 .speaker-level {
-  font-size: 12px;
+  font-size: 24rpx;
   color: #888;
-  padding-top: 3px;
+  padding-top: 6rpx;
 }
 
 .speaker {
-  font-size: 14px;
+  font-size: 28rpx;
 }
 
 .medal-view {
-  font-size: 12px;
+  font-size: 24rpx;
   font-weight: bold;
   position: absolute;
-  right: 25px;
+  right: 50rpx;
 }
 
 .notice {
-  border: 1px;
+  border: 2rpx;
   border-color: yellow;
   color: orange;
   font-weight: bold;
@@ -79,20 +79,20 @@
 
 .buttonArea {
   background-color: white;
-  margin-top: 15px;
-  padding: 8px;
+  margin-top: 30rpx;
+  padding: 16rpx;
 
   position: fixed;
-  bottom: 0px;
+  bottom: 0rpx;
   width: 96%;
   font-weight: bold;
   text-align: center;
-  box-shadow: 0px 0px 5px 1px gainsboro;
+  box-shadow: 0rpx 0rpx 10rpx 2rpx gainsboro;
 }
 
 .seperator{
   border-style: solid;
-  border-width: 0 1px 0 0;
+  border-width: 0 2rpx 0 0;
   border-color: gainsboro;
 }
 .disable{
@@ -109,32 +109,32 @@
 }
 .input{
   background-color: white;
-  box-shadow: 0px 0px 5px 1px gainsboro;
-  height:40px;
+  box-shadow: 0rpx 0rpx 10rpx 2rpx gainsboro;
+  height:80rpx;
 }
 .notice{
   text-align: center;
-  margin-top: 80px;
-  font-size: 24px;
+  margin-top: 160rpx;
+  font-size: 48rpx;
   color: gray;
 }
 .clubNo{
-  padding-right:0px;
-  padding-left: 5px;
-  font-size: 40px;
+  padding-right:0rpx;
+  padding-left: 10rpx;
+  font-size: 80rpx;
   color: black;
 
 }
 .surveyStatus {
   float: right;
-  right: 10px;
+  right: 20rpx;
 }
 .modalInput{
 
 text-align: center;
-font-size: 20px;
+font-size: 40rpx;
 font-weight: bold;
 color: black;
-height: 40px;
+height: 80rpx;
 }
 

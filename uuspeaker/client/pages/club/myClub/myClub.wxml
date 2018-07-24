@@ -20,7 +20,7 @@
 
       </view>
 
-      <view class="weui-cell" style='font-size:13px'>
+      <view class="weui-cell" style='font-size:26rpx'>
         <view class="weui-cell__bd">
           <view class="date">创会日期：{{clubInfo[0].createDateStr}} <text class="link3" catchtap='cancelClub'>退出</text></view>
         </view>
@@ -29,6 +29,8 @@
       </view>
 
       <view class="weui-cell">
+      <!--text class='link2' style='font-weight:bold' catchtap='toClubStudyTarget'>学习目标</text>
+<text class='gap'> | </text-->
 <text class='link2' style='font-weight:bold' catchtap='toClubStudyRank'>学习排名</text>
 <text class='gap'> | </text>
       <text class='link2' style='font-weight:bold' catchtap='toClubStudySystem'> 学习课程</text>
@@ -49,8 +51,8 @@
     </view>
     <view class="weui-cells__title">会员
     
-      <text style='color:red;padding-left:10px' data-club_id='{{clubInfo[0].club_id}}' catchtap='toApplyList' wx:if='{{applyAmount>0}}'>{{applyAmount}}条申请</text>
-      <text style='color:black;padding-left:10px' data-club_id='{{clubInfo[0].club_id}}' catchtap='toApplyList' wx:if='{{applyAmount==0}}'>入会申请</text>
+      <text style='color:red;padding-left:20rpx' data-club_id='{{clubInfo[0].club_id}}' catchtap='toApplyList' wx:if='{{applyAmount>0}}'>{{applyAmount}}条申请</text>
+      <text style='color:black;padding-left:20rpx' data-club_id='{{clubInfo[0].club_id}}' catchtap='toApplyList' wx:if='{{applyAmount==0}}'>入会申请</text>
      
     </view>
     <view class="weui-cells weui-cells_after-title ">
@@ -60,7 +62,7 @@
     </view>
   </view>
 
-  <view style='padding-bottom:45px'>       </view>
+  <view style='padding-bottom:90rpx'>       </view>
   <view class="weui-flex bottom ">
     <view class="weui-flex__item ">
       <button class="weui-button" bindtap='toClubList'>浏览俱乐部</button>
@@ -78,7 +80,7 @@
           <text class='link3' data-user_id='{{user_info.userId}}' data-type='2' wx:if='{{myRole == 1 && role_type == 9}}' catchtap='updateUser'>升职</text>
         </view>
         <view class='speaker-level'>{{userRank}}
-          <text class='link3' data-user_id='{{user_info.userId}}' wx:if='{{myRole == 1}}' catchtap='showUserNotice'>备注</text>
+          <text class='link3' data-user_id='{{user_info.userId}}' data-notice='{{notice}}' wx:if='{{myRole == 1}}' catchtap='showUserNotice'>备注</text>
         </view>
       </view>
       <view class="weui-cell__bd">

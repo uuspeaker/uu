@@ -10,7 +10,7 @@
   </block>
 </view>
 
-<view style='height:45px'></view>
+<view style='height:90rpx'></view>
 <view class="weui-flex bottom ">
   <view class="weui-flex__item ">
     <button class='' type='primary' bindtap='toAddSpeechName'>我要出题</button>
@@ -29,7 +29,7 @@
     <view class="weui-cell__bd">
 
       <view class="">
-        <view class='article' style='padding-left:15px'>
+        <view class='article' style='padding-left:30rpx'>
           <text>{{speech_name}}</text>
 
           

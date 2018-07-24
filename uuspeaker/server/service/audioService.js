@@ -131,9 +131,9 @@ var saveSpeechAudio = async (roomId, audioId, audioType,speechType, audioName,au
     audio_status: 2,
     speech_type: parseInt(speechType)
   })
-  if (parseInt(audioType) == 1){
-    await increaseDuration(userId, 1, timeDuration)
-  }
+
+  await increaseDuration(userId, 1, timeDuration)
+
   
 }
 
@@ -198,15 +198,12 @@ var evaluateAudio = async (roomId, evaluationAudioId, userId, timeDuration, spee
       relate_audio: speechAudioId
     })
 
-
-  //如果是对演讲进行回复,才更新积分
-  if (audioData[0].audio_type ==1){
     if (audioData[0].user_id == userId) {
       await increaseDuration(userId, 2, timeDuration)
     } else {
       await increaseDuration(userId, 4, timeDuration)
     }
-  } 
+
 
   //如果不是在直播房间发起的点评且不是点评自己，则新增一条点评通知消息
   if (roomId == '' && audioData[0].user_id != userId){

@@ -20,11 +20,11 @@
   </view>
 </template>
 
-<view class="weui-cell top" style='height:30px'>
+<view class="weui-cell top" style='height:60rpx'>
     <input class='search' name='queryAlbumName' value='{{queryAlbumName}}' bindinput='setQueryAlbumName' bindconfirm="queryAlbumWithName" confirm-type="search" placeholder='搜索：课程名称'></input>
     <text class='queryAll' catchtap='queryAllAlbum'>全部</text>
   </view>
-  <view style='margin-top:50px;'></view>
+  <view style='margin-top:100rpx;'></view>
 <view class="weui-cells weui-cells_after-title">
   
   <block wx:for="{{albumList}}" wx:key="item">

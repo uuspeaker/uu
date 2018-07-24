@@ -1,30 +1,30 @@
 
 .commentArea {
-  margin-top:100px;
+  margin-top:200rpx;
   background-color: gainsboro;
-  padding: 8px;
-  border-radius: 10px 10px 10px 10px; 
+  padding: 16rpx;
+  border-radius: 20rpx 20rpx 20rpx 20rpx; 
   width: 96%;
-  height: 70px;
+  height: 140rpx;
   align-items: center;
   
 }
 .commentInput {
   background-color: white;
-  height: 50px;
+  height: 100rpx;
   width: 90%;
   font-weight: bold;
   text-align: center;
   margin-left: 5%;
-  font-size: 24px;
+  font-size: 48rpx;
 
 }
 .pastSpeechName{
   
   text-align: center;
   color: grey;
-  margin-top:20px ;
+  margin-top:40rpx ;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 48rpx;
 }
 

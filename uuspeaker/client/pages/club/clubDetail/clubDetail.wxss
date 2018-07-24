@@ -1,42 +1,42 @@
 .applyTitle{
   text-align: center;
-  font-size: 30px;
+  font-size: 60rpx;
   font-weight: bold;
-  margin-top: 20px;
-  margin-bottom: 40px;
+  margin-top: 40rpx;
+  margin-bottom: 80rpx;
 }
 .content{
-  margin-left: 30px;
-  margin-right: 30px;
-  margin-top:20px;
+  margin-left: 60rpx;
+  margin-right: 60rpx;
+  margin-top:40rpx;
 }
 .audioArea{
-  margin-top:10px;
-  border:0.5px solid lightgray;
+  margin-top:20rpx;
+  border:1rpx solid lightgray;
   width: 80%;
-  height: 50px;
+  height: 100rpx;
   background-color: #ffffff;
   margin-left: 8%;
-  margin-bottom: 10px;
+  margin-bottom: 20rpx;
 }
 .audio{
-  width: 40px;
-  height: 40px;
-  margin-top:5px;
-  margin-left:10px;
+  width: 80rpx;
+  height: 80rpx;
+  margin-top:10rpx;
+  margin-left:20rpx;
 }
 .sliderAudio{
-margin-top:15px;
-margin-right: 10px;
-width:110px;
+margin-top:30rpx;
+margin-right: 20rpx;
+width:220rpx;
 }
 .timeNotice{
-  font-size:13px;
+  font-size:26rpx;
   color: gray;
-  margin: 15px 0px 0 0px;
+  margin: 30rpx 0rpx 0 0rpx;
 }
 .timeNotice2{
-  font-size:13px;
+  font-size:26rpx;
   color: gray;
-  margin: 15px 10px 0 0px;
+  margin: 30rpx 20rpx 0 0rpx;
 }

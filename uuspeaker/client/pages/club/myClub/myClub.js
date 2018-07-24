@@ -247,6 +247,7 @@ Page({
   showUserNotice: function(e){
     this.setData({
       hideNotice: false,
+      userNotice: e.currentTarget.dataset.notice,
     })
     noticeUserId = e.currentTarget.dataset.user_id
   },
@@ -293,6 +294,12 @@ Page({
     })
   },
 
+  toClubStudyTarget: function () {
+    wx.navigateTo({
+      url: '../../club/clubStudyTarget/clubStudyTarget?scoreType=1&clubId=' + this.data.clubInfo[0].club_id,
+    })
+  },
+
   toClubStudyRank: function () {
     wx.navigateTo({
       url: '../../club/clubStudyRank/clubStudyRank?scoreType=1&clubId=' + this.data.clubInfo[0].club_id,
@@ -332,7 +339,8 @@ Page({
       + '&clubName=' + this.data.clubInfo[0].club_name
       + '&clubFee=' + this.data.clubInfo[0].club_fee
       + '&wxNo=' + this.data.clubInfo[0].wx_no
-      + '&wxGroupImg=' + this.data.clubInfo[0].wx_group_img
+      + '&audioId=' + this.data.clubInfo[0].audio_id
+      + '&timeDuration=' + this.data.clubInfo[0].time_duration
       + '&clubDescription=' + this.data.clubInfo[0].club_description,
     })
   },

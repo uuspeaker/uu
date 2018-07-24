@@ -13,12 +13,12 @@
 
 </view>
 <view wx:if='{{audioText == ""}}'>
-  <view class='tip' style='font-weight: bold;  padding-top:20px;'>即兴演讲说明：</view>
+  <view class='tip' style='font-weight: bold;  padding-top:40rpx;'>即兴演讲说明：</view>
   <view class='tip'>1、点击开始演讲，系统自动出题</view>
   <view class='tip'>2、10秒倒计时结束开始演讲，2分钟</view>
   <view class='tip'>3、结束</view>
 </view>
-<view class='tip' style='padding-top:10px;' wx:if='{{audioText != ""}}'>{{audioText}}</view>
+<view class='tip' style='padding-top:20rpx;' wx:if='{{audioText != ""}}'>{{audioText}}</view>
 <view class='bottom'>
   <view class="weui-flex__item  timeCard" style='{{timeNoticeBackground}}'>
     <block wx:if='{{waitSeconds <= 0}}'>
@@ -45,12 +45,12 @@
   </view>
   </view>
   <view wx:if='{{audioText == ""}}'>
-  <view class='tip' style='font-weight: bold;  padding-top:20px;'>备稿演讲说明：</view>
+  <view class='tip' style='font-weight: bold;  padding-top:40rpx;'>备稿演讲说明：</view>
   <view class='tip'>1、输入演讲题目</view>
   <view class='tip'>2、开始演讲，7分钟</view>
   <view class='tip'>3、结束</view>
 </view>
-<view class='tip' style='padding-top:10px;' wx:if='{{audioText != ""}}'>{{audioText}}</view>
+<view class='tip' style='padding-top:20rpx;' wx:if='{{audioText != ""}}'>{{audioText}}</view>
 <view class='bottom'>
   <view class="weui-flex__item  timeCard" style='{{timeNoticeBackground}}'>
       <view>{{minute}}:{{second}}</view>
@@ -68,12 +68,12 @@
   </view>
   </view>
   <view wx:if='{{audioText == ""}}'>
-  <view class='tip' style='font-weight: bold;  padding-top:20px;'>微课录制说明：</view>
+  <view class='tip' style='font-weight: bold;  padding-top:40rpx;'>微课录制说明：</view>
   <view class='tip'>1、输入微课题目</view>
   <view class='tip'>2、开始录制微课，10分钟</view>
   <view class='tip'>3、结束</view>
 </view>
-<view class='tip' style='padding-top:10px;' wx:if='{{audioText != ""}}'>{{audioText}}</view>
+<view class='tip' style='padding-top:20rpx;' wx:if='{{audioText != ""}}'>{{audioText}}</view>
 <view class='bottom'>
   <view class="weui-flex__item  timeCard" style='{{timeNoticeBackground}}'>
       <view>{{minute}}:{{second}}</view>
@@ -93,7 +93,7 @@
 
 </view>
 <view wx:if='{{audioText == ""}}'>
-  <view class='tip' style='font-weight: bold;  padding-top:20px;'>问题模式玩法说明：</view>
+  <view class='tip' style='font-weight: bold;  padding-top:40rpx;'>问题模式玩法说明：</view>
   <view class='tip'>1、请写下你的问题</view>
   <view class='tip'>2、点击“请教小懂演讲君”</view>
   <view class='tip'>3、小懂演讲君给出答案后，思考10秒钟</view>
@@ -104,7 +104,7 @@
 <view class='tip2'>小懂演讲君说：</view>
 <view class='answer' >{{speechAnswer}}</view>
 </block>
-<view class='tip' style='padding-top:10px;' wx:if='{{audioText != ""}}'>{{audioText}}</view>
+<view class='tip' style='padding-top:20rpx;' wx:if='{{audioText != ""}}'>{{audioText}}</view>
 <view class='bottom'>
   <view class="weui-flex__item  timeCard" style='{{timeNoticeBackground}}'>
     <block wx:if='{{waitSeconds <= 0}}'>

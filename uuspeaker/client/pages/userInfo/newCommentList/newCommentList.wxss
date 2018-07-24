@@ -1,64 +1,64 @@
 .right {
   float: right;
-  right: 10px;
+  right: 20rpx;
 }
 
 .myReport {
-  font-size: 15px;
-  padding-left: 10px;
+  font-size: 30rpx;
+  padding-left: 20rpx;
 }
 .title{
-  font-size: 18px;
+  font-size: 36rpx;
   font-weight: bold;
   color: #576b95;
   
 }
 
 .audio {
-  width: 50px;
-  height: 50px;
-  border-radius: 3px;
-  padding-right: 10px;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 6rpx;
+  padding-right: 20rpx;
 }
 
 .like{
-width: 18px; 
-height: 18px; 
-padding-left: 10px;
+width: 36rpx; 
+height: 36rpx; 
+padding-left: 20rpx;
 position: relative;
-top: 4px;
+top: 8rpx;
 }
 
 .user-pic {
-  width: 90px;
-  height: 90px;
-  border-radius: 5px;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 100rpx;
 }
 
 .user-like-pic {
-  width: 30px;
-  height: 30px;
-  border-radius: 10px;
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 20rpx;
 }
 .small-grey{
-  font-size: 13px;
+  font-size: 26rpx;
   color:#888888;
   font-weight: normal;
-  padding-left:10px;
+  padding-left:20rpx;
 
 }
 .right{
-  right: 10px;
+  right: 20rpx;
 }
 .date {
-  padding-top: 3px;
-  font-size: 13px;
+  padding-top: 6rpx;
+  font-size: 26rpx;
   color: grey;
-  padding-left: 10px; 
+  padding-left: 20rpx; 
 }
 .link {
-  font-size: 15px;
+  font-size: 30rpx;
   font-weight: bold;
   color: #576b95;
-  padding-left: 5px;
+  padding-left: 10rpx;
 }

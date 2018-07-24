@@ -7,7 +7,10 @@ var targetService = require('../../service/targetService');
 module.exports = {
 
   get: async ctx => {
-    var userId = await userInfo.getOpenId(ctx)
+    var userId = ctx.query.userId
+    if (userId == undefined || userId == '') {
+      userId = await userInfo.getOpenId(ctx)
+    }
     var data = await targetService.getTodayTargetProgress(userId)
     ctx.state.data = data
   },

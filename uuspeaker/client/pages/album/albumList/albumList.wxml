@@ -35,8 +35,8 @@
 </template>
 
 
-<view class="weui-cells weui-cells_after-title middle" style='margin-top:90px;'>
-  <view class="weui-cell top" style='margin-top:40px;height:30px'>
+<view class="weui-cells weui-cells_after-title middle" style='margin-top:180rpx;'>
+  <view class="weui-cell top" style='margin-top:80rpx;height:60rpx'>
     <input class='search' name='queryAlbumName' value='{{queryAlbumName}}' bindinput='setQueryAlbumName' bindconfirm="queryAlbumWithName" confirm-type="search" placeholder='搜索：专辑名称'></input>
     <text class='queryAll' catchtap='queryAllAlbum'>全部</text>
   </view>

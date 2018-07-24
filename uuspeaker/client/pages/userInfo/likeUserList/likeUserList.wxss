@@ -1,76 +1,76 @@
 .right {
   float: right;
-  right: 10px;
+  right: 20rpx;
 }
 
 .myReport {
-  font-size: 15px;
-  padding-left: 10px;
+  font-size: 30rpx;
+  padding-left: 20rpx;
 }
 .title{
-  font-size: 18px;
+  font-size: 36rpx;
   font-weight: bold;
   color: #576b95;
   
 }
 
 .normal {
-  height: 85px;
+  height: 170rpx;
   width: 20%;
-  margin-top: 5px;
-  margin-left: 10px;
+  margin-top: 10rpx;
+  margin-left: 20rpx;
   color: white;
   text-align: center;
-  font-size: 15px;
+  font-size: 30rpx;
   font-weight: bold;
-  border-radius: 10px 10px 10px 10px;
+  border-radius: 20rpx 20rpx 20rpx 20rpx;
 }
 
 .uu-code {
-  width: 35px;
-  height: 35px;
-  margin-top: 10px;
+  width: 70rpx;
+  height: 70rpx;
+  margin-top: 20rpx;
 }
 
 .audio {
-  width: 40px;
-  height: 40px;
-  border-radius: 3px;
-  padding-right: 10px;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 6rpx;
+  padding-right: 20rpx;
 }
 
 .like{
-width: 18px; 
-height: 18px; 
-padding-left: 10px;
+width: 36rpx; 
+height: 36rpx; 
+padding-left: 20rpx;
 
 position: relative;
-  top: 4px;
+  top: 8rpx;
 }
 
 .user-pic {
-  width: 50px;
-  height: 50px;
-  border-radius: 3px;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 6rpx;
 }
 
 .user-like-pic {
-  width: 30px;
-  height: 30px;
-  border-radius: 10px;
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 20rpx;
 }
 .small-grey{
-  font-size: 13px;
+  font-size: 26rpx;
   color:#888888;
   font-weight: normal;
-  padding-left:10px;
-  margin-top: 8px;
+  padding-left:20rpx;
+  margin-top: 16rpx;
 }
 .right{
   
-  right: 10px;
+  right: 20rpx;
 }
 .middle2{
-  margin-top:45px;
-  margin-bottom:80px;
+  margin-top:90rpx;
+  margin-bottom:160rpx;
 }

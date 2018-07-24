@@ -23,7 +23,8 @@ Page({
     clubFee: '' ,
     clubDescription: '',
     isPlay:0,
-    wxGroupImg:'',
+    audioId:'',
+    timeDuration:'',
     wxNo:''
   },
 
@@ -41,7 +42,7 @@ Page({
     var that = this
     qcloud.request({
       url: `${config.service.host}/weapp/club.clubInfo`,
-      data: { clubId: this.data.clubId, clubName: this.data.clubName, clubFee: this.data.clubFee, wxNo:this.data.wxNo, clubDescription: this.data.clubDescription, audioId: audioId, timeDuration: timeDuration},
+      data: { clubId: this.data.clubId, clubName: this.data.clubName, clubFee: this.data.clubFee, wxNo:this.data.wxNo, clubDescription: this.data.clubDescription, audioId: this.data.audioId, timeDuration: this.data.timeDuration},
       login: true,
       method: method,
       success(result) {
@@ -130,7 +131,7 @@ Page({
       util.showModel('录音太短', '请录制一段超过10秒的语音');
       return
     }
-    
+  
     wx.showModal({
       title: '提示',
       content: '是否保存录音？',
@@ -138,6 +139,10 @@ Page({
         if (sm.confirm) {
           updateAudio = 1
           audioId = uuid.v1()
+          this.setData({
+            audioId: audioId,
+            timeDuration: timeDuration
+          })
         } else if (sm.cancel) {
           updateAudio = 0
           console.log('用户点击取消')
@@ -253,7 +258,8 @@ Page({
         clubName: options.clubName,
         clubFee: options.clubFee,
         wxNo: options.wxNo,
-        wxGroupImg: options.wxGroupImg,
+        audioId: options.audioId,
+        timeDuration: options.timeDuration,
         clubDescription: options.clubDescription,
       })
     }

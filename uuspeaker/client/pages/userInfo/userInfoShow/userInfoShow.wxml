@@ -12,7 +12,7 @@
 
     <view class="weui-cells weui-cells_after-title">
 
-      <view class="weui-cell weui-cell_access" bindtap='toMyIntroduction'>
+      <!--view class="weui-cell weui-cell_access" bindtap='toMyIntroduction'>
         <view>
           <image src="../../../images/studyManage/introduction.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
         </view>
@@ -34,29 +34,37 @@
     </block>
         </block>
         </view>
+      </view-->
+
+      <view class="weui-cell weui-cell_access" bindtap='toLikeUserTarget' wx:if='{{myTargetProgress.hasTarget == 1}}'>
+        <view>
+          <image src="../../../images/studyManage/target.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
+        <view class="weui-cell__bd">目标</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
       </view>
 
-      <view class="weui-cell weui-cell_access" bindtap='toLikeUserList'>
+      <view class="weui-cell weui-cell_access"  wx:if='{{myTargetProgress.hasTarget == 0}}'>
         <view>
-          <image src="../../../images/studyManage/checkIn.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+          <image src="../../../images/studyManage/target.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
         </view>
-        <view class="weui-cell__bd">{{userInfo.nickName}}关注的</view>
-        <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
+        <view class="weui-cell__bd">目标</view>
+        <view class="weui-cell__ft ">未制定</view>
       </view>
 
       <view class="weui-cell weui-cell_access" bindtap='toStudyReport'>
         <view>
-          <image src="../../../images/studyManage/record.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+          <image src="../../../images/studyManage/study2.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
         </view>
-        <view class="weui-cell__bd">{{userInfo.nickName}}的学习</view>
+        <view class="weui-cell__bd">学习</view>
         <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
       </view>
 
       <view class="weui-cell weui-cell_access" bindtap='toStudyReportToday'>
         <view>
-          <image src="../../../images/studyManage/record.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+          <image src="../../../images/speechName/star2.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
         </view>
-        <view class="weui-cell__bd">{{userInfo.nickName}}的打卡</view>
+        <view class="weui-cell__bd">打卡</view>
         <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
       </view>
 
@@ -64,7 +72,15 @@
         <view>
           <image src="../../../images/studyManage/record.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
         </view>
-        <view class="weui-cell__bd">{{userInfo.nickName}}的录音</view>
+        <view class="weui-cell__bd">录音</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" bindtap='toLikeUserList'>
+        <view>
+          <image src="../../../images/studyManage/love.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
+        <view class="weui-cell__bd">关注</view>
         <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0"> </view>
       </view>
 

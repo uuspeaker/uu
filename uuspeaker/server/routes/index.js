@@ -112,6 +112,7 @@ router.post('/impromptu.impromptuMeeting', controllers.impromptu.impromptuMeetin
 router.delete('/impromptu.impromptuMeeting', controllers.impromptu.impromptuMeeting.del)
 //即兴会议音频上传
 router.post('/impromptu.impromptuAudio', controllers.impromptu.impromptuAudio.post)
+router.delete('/impromptu.impromptuAudio', controllers.impromptu.impromptuAudio.del)
 //即兴会议音频点赞
 router.post('/impromptu.likeAudio', controllers.impromptu.likeAudio.post)
 router.get('/impromptu.likeAudio', controllers.impromptu.likeAudio.get)

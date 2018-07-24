@@ -1,13 +1,13 @@
 .save{
   position: fixed;
-  right: 17px;
+  right: 34rpx;
   color: #576b95;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 30rpx;
 }
 .uploader-text {
     width: 100%;
-    line-height: 52px;
+    line-height: 104rpx;
     font-size: 34rpx;
     color: #007AFF;
 }
@@ -19,7 +19,7 @@
     align-content: center;
     justify-content: center;
     box-sizing: border-box;
-    border-top: 1px solid rgba(0, 0, 0, .1);
+    border-top: 2rpx solid rgba(0, 0, 0, .1);
 }
 
 .uploader-image {

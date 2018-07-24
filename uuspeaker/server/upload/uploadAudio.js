@@ -68,16 +68,10 @@ const upload = async (ctx) => {
 }
 
 const deleteObject = async (audioId) => {
-  const cos = new CosSdk({
-    AppId: config.qcloudAppId,
-    SecretId: config.qcloudSecretId,
-    SecretKey: config.qcloudSecretKey,
-    Domain: `http://${config.cos.fileBucket}-${config.qcloudAppId}.cos.${config.cos.region}.myqcloud.com/`
-  })
 
   var uploadFolder = config.cos.uploadFolder ? config.cos.uploadFolder + '/' : ''
 
-  cos.deleteOjbect({
+  cos.deleteObject({
     Bucket: config.cos.fileBucket,
     Region: config.cos.region,
     Key: `${uploadFolder}${audioId}.mp3`

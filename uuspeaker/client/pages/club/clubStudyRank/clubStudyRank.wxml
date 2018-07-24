@@ -20,7 +20,7 @@
     </view>
     <view class="weui-cell__bd">
       <view class="title">
-        <view style='padding-left:10px;'>
+        <view style='padding-left:20rpx;'>
           <text>{{user_info.nickName}}</text>
         </view>
       </view>

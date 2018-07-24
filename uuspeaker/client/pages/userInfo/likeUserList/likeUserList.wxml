@@ -26,7 +26,7 @@
     </view>
     <view class="weui-cell__bd">
       <view class="title">
-        <view style='padding-left:10px;'>
+        <view style='padding-left:20rpx;'>
           <text>{{user_info.nickName}}</text>
           <text class='right'></text>
         </view>
@@ -45,7 +45,7 @@
     <template is="scoreDetailTemplate" data="{{...item}}" />
   </block>
 </view>
-<view style='height:45px'></view>
+<view style='height:90rpx'></view>
 <view class="weui-flex bottom">
     <view class="weui-flex__item">
       <button class="weui-btn"  bindtap='toFirstPage'>返回首页</button>

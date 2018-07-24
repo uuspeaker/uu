@@ -2,6 +2,7 @@ const { mysql } = require('../../qcloud')
 const userInfo = require('../../common/userInfo')
 const uuid = require('../../common/uuid');
 const audioService = require('../../service/audioService')
+const uploadAudio = require('../../upload/uploadAudio.js')
 
 module.exports = {
   post: async ctx => {
@@ -31,6 +32,7 @@ module.exports = {
   del: async ctx => {
     var audioId = ctx.request.body.audioId
     audioService.deleteAudio(audioId)
+    uploadAudio.deleteObject(audioId)
   },
 
   get: async ctx => {

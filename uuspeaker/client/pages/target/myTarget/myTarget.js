@@ -17,6 +17,8 @@ Page({
     isPlay:0,
     audios:[],
     createDateStr:'',
+    userId: '',
+    nickName: '',
 
     studyDuration: '',
     starAmount: '',
@@ -39,6 +41,7 @@ Page({
       url: `${config.service.host}/weapp/target.currentTargetProgress`,
       login: true,
       method: 'get',
+      data: {userId: this.data.userId},
       success(result) {
         wx.hideLoading()
         that.setData({
@@ -176,7 +179,13 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function () {
+  onLoad: function (options) {
+    if(options.userId != undefined){
+      this.setData({
+        userId: options.userId,
+        nickName: options.nickName
+      })
+    }
     this.getCurrentTargetProgress()
 
     innerAudioContext.obeyMuteSwitch = false
