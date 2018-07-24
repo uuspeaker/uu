@@ -86,7 +86,7 @@
 
   
 <view class='studyTip' style='margin-top:30px;'>目标制定时间：{{createDateStr}}</view>
-<view class="weui-cells__title bottom "style='padding-bottom:10px;padding-left:33%'><text style='color: #576b95;padding-right:10px' bindtap="resetTarget">重新制定</text><text style='color: #576b95;'  catchtap='toHistoryTarget'>历史目标</text></view>
+<view class="weui-cells__title bottom "style='padding-bottom:10px;padding-left:33%;font-size:15px'><text style='color: #576b95;padding-right:10px' bindtap="resetTarget">重新制定</text><text style='color: #576b95;'  catchtap='toHistoryTarget'>历史目标</text></view>
 
 <view class="weui-flex bottom" wx:if="{{userTarget.star_amount == userTarget.todayStarAmount}}">
     <view class="weui-flex__item">

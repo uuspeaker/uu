@@ -85,8 +85,12 @@ Page({
   },
 
   onReady: function () {
-    //wx.setNavigationBarTitle({ title: '' });
+    wx.setNavigationBarTitle({ title: '我的学习目标' });
+    wx.showShareMenu({
+      withShareTicket: true
+    })
   },
+
 
   onPullDownRefresh: function () {
     queryPageType = 1
