@@ -1,107 +1,107 @@
 .right {
   float: right;
-  right: 10px;
+  right: 20rpx;
 }
 
 .myReport {
-  font-size: 15px;
-  padding-left: 10px;
+  font-size: 30rpx;
+  padding-left: 20rpx;
 }
 .title{
-  font-size: 16px;
+  font-size: 32rpx;
   font-weight: bold;  
 }
 .userAvatar{
   position: relative;
-  top:10px;
+  top:20rpx;
 }
 .audio{
-  width: 40px;
-  height: 40px;
-  margin-top:5px;
-  margin-left:10px;
+  width: 80rpx;
+  height: 80rpx;
+  margin-top:10rpx;
+  margin-left:20rpx;
 }
 
 .like{
-width: 18px; 
-height: 18px; 
-padding-left: 10px;
+width: 36rpx; 
+height: 36rpx; 
+padding-left: 20rpx;
 position: relative;
-top: 4px;
+top: 8rpx;
 }
 
 .user-pic {
-  width: 45px;
-  height: 45px;
-  border-radius: 50px;
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 100rpx;
   position: relative;
   top:-80rpx;
-  margin-right:16px;
+  margin-right:32rpx;
 }
 
 .user-like-pic {
-  width: 30px;
-  height: 30px;
-  border-radius: 10px;
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 20rpx;
 }
 .small-grey{
-  font-size: 13px;
+  font-size: 26rpx;
   color:#888888;
   font-weight: normal;
   position:relative;
   right:15rpx;
 }
 .right{
-  right: 10px;
+  right: 20rpx;
 }
 .date {
-  padding-top: 3px;
-  font-size: 13px;
+  padding-top: 6rpx;
+  font-size: 26rpx;
   color: grey;
-  padding-left: 10px; 
+  padding-left: 20rpx; 
 }
 .link {
-  font-size: 15px;
+  font-size: 30rpx;
   font-weight: bold;
   color: #576b95;
-  padding-left: 5px;
+  padding-left: 10rpx;
 }
 .audioArea{
-  margin-top:10px;
-  border:0.5px solid lightgray;
-  width: 270px;
-  height: 50px;
+  margin-top:20rpx;
+  border:1rpx solid lightgray;
+  width: 540rpx;
+  height: 100rpx;
   background-color: #ffffff;
 }
 .sliderAudio{
-margin-top:15px;
-margin-right: 10px;
-width:90px;
+margin-top:30rpx;
+margin-right: 20rpx;
+width:180rpx;
 }
 .timeNotice{
-  font-size:13px;
+  font-size:26rpx;
   color: gray;
-  margin: 15px 0px 0 0px;
+  margin: 30rpx 0rpx 0rpx 0rpx;
 }
 .timeNotice2{
-  font-size:13px;
+  font-size:26rpx;
   color: gray;
-  margin: 15px 10px 0 0px;
+  margin: 30rpx 20rpx 0rpx 0rpx;
 }
 .search{
-  font-size: 15px;
-  height: 20px;
-  padding-left: 10px;
+  font-size: 30rpx;
+  height: 40rpx;
+  padding-left: 20rpx;
   width:  80%
 }
 .queryAll{
-  right: 10px;
-  font-size: 15px;
+  right: 20rpx;
+  font-size: 30rpx;
   color: grey;
 }
 .audioAlbum{
   position: fixed;
-  right:18px;
-  font-size: 15px;
+  right:36rpx;
+  font-size: 30rpx;
   font-weight: bold;
 }

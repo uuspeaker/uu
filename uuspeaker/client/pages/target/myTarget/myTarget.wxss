@@ -1,26 +1,26 @@
 .save{
   position: fixed;
-  right: 17px;
+  right: 34rpx;
   color: #576b95;
-  font-size: 15px;
+  font-size: 30rpx;
 }
 .title {
-  padding-top: 0px;
-  padding-bottom: 0px;
-  font-size: 19px;
+  padding-top: 0rpx;
+  padding-bottom: 0rpx;
+  font-size: 38rpx;
   font-weight: bold;
   color: black;
 }
 
 .star-pic {
-  width: 24px;
-  height: 24px;
+  width: 48rpx;
+  height: 48rpx;
 }
 
 .star-pic2 {
-  width: 18px;
-  height: 18px;
-  margin: 0px;
+  width: 36rpx;
+  height: 36rpx;
+  margin: 0rpx;
 }
 
 .starContent {
@@ -29,8 +29,8 @@
 
 .studyTip {
   text-align: center;
-  font-size: 13px;
-  margin-top: 20px;
+  font-size: 26rpx;
+  margin-top: 40rpx;
   color: grey;
 }
 
@@ -39,62 +39,62 @@
 }
 
 .small-grey {
-  font-size: 15px;
+  font-size: 30rpx;
   color: #888;
   font-weight: normal;
-  padding-top: 2px;
-  padding-left: 3px;
+  padding-top: 4rpx;
+  padding-left: 6rpx;
 }
 
 .bigNumber {
-  font-size: 24px;
+  font-size: 48rpx;
 }
 .audioArea{
-  border:0.5px solid lightgray;
+  border:1rpx solid lightgray;
   width: 75%;
-  height: 50px;
+  height: 100rpx;
   background-color: #ffffff;
   margin-left: 13%;
-  margin-bottom: 20px;
-  margin-top:40px;
+  margin-bottom: 40rpx;
+  margin-top:80rpx;
 }
 .audio{
-  width: 40px;
-  height: 40px;
-  margin-top:5px;
-  margin-left:10px;
+  width: 80rpx;
+  height: 80rpx;
+  margin-top:10rpx;
+  margin-left:20rpx;
 }
 .sliderAudio{
-margin-top:15px;
-margin-right: 10px;
-width:110px;
+margin-top:30rpx;
+margin-right: 20rpx;
+width:220rpx;
 }
 .timeNotice{
-  font-size:13px;
+  font-size:26rpx;
   color: gray;
-  margin: 15px 0px 0 0px;
+  margin: 30rpx 0rpx 0rpx 0rpx;
 }
 .timeNotice2{
-  font-size:13px;
+  font-size:26rpx;
   color: gray;
-  margin: 15px 10px 0 0px;
+  margin: 30rpx 20rpx 0rpx 0rpx;
 }
 
 .content{
-  font-size: 18px;
+  font-size: 36rpx;
   font-weight: bold;
-  margin-top: 25px;
+  margin-top: 50rpx;
   color: gray
 }
 .task-pic{
-width: 45px; 
-height: 45px; 
+width: 90rpx; 
+height: 90rpx; 
 display: block;
-border-radius: 6px;
-padding-left:6px;
+border-radius: 12rpx;
+padding-left:12rpx;
 }
 .taskNotice{
-  font-size: 17px;
-  padding-left: 15px;
+  font-size: 34rpx;
+  padding-left: 30rpx;
   
 }

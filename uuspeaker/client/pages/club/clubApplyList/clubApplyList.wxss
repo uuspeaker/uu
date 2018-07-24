@@ -1,125 +1,125 @@
 .right {
   float: right;
-  right: 2px;
+  right: 4rpx;
 }
 
 .myReport {
-  font-size: 15px;
-  padding-left: 10px;
+  font-size: 30rpx;
+  padding-left: 20rpx;
 }
 .title{
-  font-size: 18px;
+  font-size: 36rpx;
   font-weight: bold;
   color: #576b95;
 }
 
 .normal {
-  height: 85px;
+  height: 170rpx;
   width: 20%;
-  margin-top: 5px;
-  margin-left: 10px;
+  margin-top: 10rpx;
+  margin-left: 20rpx;
   color: white;
   text-align: center;
-  font-size: 15px;
+  font-size: 30rpx;
   font-weight: bold;
-  border-radius: 10px 10px 10px 10px;
+  border-radius: 20rpx 20rpx 20rpx 20rpx;
 }
 
 .uu-code {
-  width: 35px;
-  height: 35px;
-  margin-top: 10px;
+  width: 70rpx;
+  height: 70rpx;
+  margin-top: 20rpx;
 }
 
 .audio {
-  width: 40px;
-  height: 40px;
-  border-radius: 3px;
-  padding-right: 10px;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 6rpx;
+  padding-right: 20rpx;
 }
 
 .like{
-width: 18px; 
-height: 18px; 
-padding-left: 10px;
+width: 36rpx; 
+height: 36rpx; 
+padding-left: 20rpx;
 
 position: relative;
-  top: 4px;
+  top: 8rpx;
 }
 
 .user-pic {
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 100rpx;
   position: relative;
-  top:-70rpx;
+  top:-90rpx;
 }
 
 .user-like-pic {
-  width: 30px;
-  height: 30px;
-  border-radius: 10px;
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 20rpx;
 }
 .small-grey{
-  font-size: 13px;
+  font-size: 26rpx;
   color:#888888;
   font-weight: normal;
-  padding-left:10px;
-  margin-top: 4px;
+  padding-left:20rpx;
+  margin-top: 8rpx;
 }
 .index{
   color: #576b95;
-  left: 15px;
-  font-size: 24px;
+  left: 30rpx;
+  font-size: 48rpx;
   font-weight: bold;
-  width:40px;
+  width:80rpx;
 }
 .right{
   color: grey;
-  padding-right: 20px;
-  font-size: 17px;
+  padding-right: 40rpx;
+  font-size: 34rpx;
   font-weight: bold;
 
 }
 .middle2{
-  margin-top:45px;
-  margin-bottom:80px;
+  margin-top:90rpx;
+  margin-bottom:160rpx;
 }
 .up{
-  width: 25px;
-  height: 20px;
-  padding-left: 5px;
+  width: 50rpx;
+  height: 40rpx;
+  padding-left: 10rpx;
 }
 .audioArea{
-  margin-top:10px;
-  border:0.5px solid lightgray;
-  width: 270px;
-  height: 50px;
+  margin-top:20rpx;
+  border:1rpx solid lightgray;
+  width: 540rpx;
+  height: 100rpx;
   background-color: #ffffff;
-  margin-left:10px;
+  margin-left:20rpx;
 }
 .sliderAudio{
-margin-top:15px;
-margin-right: 10px;
-width:90px;
+margin-top:30rpx;
+margin-right: 20rpx;
+width:180rpx;
 }
 .timeNotice{
-  font-size:13px;
+  font-size:26rpx;
   color: gray;
-  margin: 15px 0px 0 0px;
+  margin: 30rpx 0rpx 0rpx 0rpx;
 }
 .timeNotice2{
-  font-size:13px;
+  font-size:26rpx;
   color: gray;
-  margin: 15px 10px 0 0px;
+  margin: 30rpx 20rpx 0rpx 0rpx;
 }
 .audio{
-  width: 40px;
-  height: 40px;
-  margin-top:5px;
-  margin-left:10px;
+  width: 80rpx;
+  height: 80rpx;
+  margin-top:10rpx;
+  margin-left:20rpx;
 }
 .checkNotice{
   float: right;
-  margin-right:20px;
+  margin-right:40rpx;
 }

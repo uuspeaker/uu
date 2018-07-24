@@ -1,7 +1,7 @@
 <!--积分汇总-->
 <view class="weui-cells weui-cells_after-title">
   <view class="weui-cell" >
-    <view class="weui-cell__hd" style="position: relative;margin-right: 10px;" >
+    <view class="weui-cell__hd" style="position: relative;margin-right: 20rpx;" >
       <image class="user-pic" src="{{userInfo.avatarUrl}}" />
     </view>
     <view class="weui-cell__bd" >
@@ -9,7 +9,7 @@
       <!--image class='card-pic' src="../../../images/studyManage/checkIn.png" catchtap='toStudyShow' wx:if='{{showContent == 1}}'></image-->
       <image class='card-pic' src="../../../images/studyManage/letter.png" catchtap='toLetter' wx:if='{{showContent == 1 && totalStudyDuration >= 120}}'></image>
       </view>
-      <view style="font-size: 13px;color: #888888;padding-top:5px" catchtap='toScoreLevel'>{{rank}}
+      <view style="font-size: 13px;color: #888888;padding-top:10rpx" catchtap='toScoreLevel'>{{rank}}
       </view>
     </view>
     <view class="weui-cell__ft totoalScore" bindtap='toStudyReportToday'>
@@ -20,10 +20,10 @@
   <view class='line'></view>
 
   <view wx:if='{{showContent == 1}}' >
-    <view class="weui-flex"  style='padding-left:25px;padding-bottom:5px' >
+    <view class="weui-flex"  style='padding-left:50rpx;padding-bottom:10rpx' >
     <view class="weui-flex__item" catchtap='toTargePage'>
         <view class='small-grey'>学习目标</view>
-        <view class="weui-flex" style='font-size:15px'>
+        <view class="weui-flex" style='font-size:30rpx'>
         <text wx:if='{{myTargetProgress.hasTarget == 0}}' class='small-grey2' style='color:#576b95'>去制定</text>
         <block wx:if='{{myTargetProgress.hasTarget == 1}}'>
         <text wx:if='{{myTargetProgress.targetStarAmount == myTargetProgress.todayStarAmount}}' class='small-grey2' style='color:green' >已打卡</text>
@@ -33,18 +33,18 @@
       </view>
       <view class="weui-flex__item" catchtap='toStudyReportTotal'>
         <view class='small-grey'>学习积分</view>
-        <view class="weui-flex" style='font-size:15px'>{{totalStudyDuration}}<text class='small-grey2'>分</text></view>
+        <view class="weui-flex" style='font-size:30rpx'>{{totalStudyDuration}}<text class='small-grey2'>分</text></view>
       </view>
       <view class="weui-flex__item" catchtap='toStarList'>
         <view class='small-grey'>高效学习</view>
-        <view class="weui-flex" style='font-size:15px'>{{totalStarAmount}}<text class='small-grey2'>次</text></view>
+        <view class="weui-flex" style='font-size:30rpx'>{{totalStarAmount}}<text class='small-grey2'>次</text></view>
       </view>
       
 
      
       <view class="weui-flex__item" data-type='2' catchtap='toLikeUserList' >
         <view class='small-grey'>粉丝</view>
-        <view class="weui-flex" style='font-size:15px' >{{myFansTotal}}<text class='small-grey2'>人</text></view>
+        <view class="weui-flex" style='font-size:30rpx' >{{myFansTotal}}<text class='small-grey2'>人</text></view>
       </view>
     </view>
   </view>

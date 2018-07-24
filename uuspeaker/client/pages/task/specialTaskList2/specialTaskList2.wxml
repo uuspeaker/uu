@@ -20,7 +20,7 @@
           <image class="like" src="../../../images/studyIndex/comment.png" /> {{comment_amount}}
         </view>
       </view>
-      <view class="small-grey" style='margin-top:10px;margin-left:5px'>
+      <view class="small-grey" style='margin-top:20rpx;margin-left:10rpx'>
         <text wx:if='{{speech_type == 0}}'>【即兴】</text>
         <text wx:if='{{speech_type == 1}}'>【备稿】</text>
         <text wx:if='{{speech_type == 2}}'>【微课】</text>
@@ -57,8 +57,8 @@
 </template>
 
 
-<view class="weui-cells weui-cells_after-title middle" style='margin-top:90px;'>
-<view class="weui-cell top" style='margin-top:40px;height:30px'><input class='search' name='queryAudioName' value='{{queryAudioName}}' bindinput='setAudioName' bindconfirm="queryAudioWithName" confirm-type="search" placeholder='搜索：演讲名称'></input><text class='queryAll' catchtap='queryAllAudio'>全部</text></view>
+<view class="weui-cells weui-cells_after-title middle" style='margin-top:180rpx;'>
+<view class="weui-cell top" style='margin-top:80rpx;height:60rpx'><input class='search' name='queryAudioName' value='{{queryAudioName}}' bindinput='setAudioName' bindconfirm="queryAudioWithName" confirm-type="search" placeholder='搜索：演讲名称'></input><text class='queryAll' catchtap='queryAllAudio'>全部</text></view>
   <block wx:for="{{audios}}" wx:key="item">
     <template is="scoreDetailTemplate" data="{{...item}}" />
   </block>

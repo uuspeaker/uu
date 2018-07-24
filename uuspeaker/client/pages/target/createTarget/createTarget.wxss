@@ -1,9 +1,9 @@
 .save{
   position: fixed;
-  right: 17px;
+  right: 34rpx;
   color: #576b95;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 30rpx;
 }
 .container {
     height: 100%;
@@ -18,8 +18,8 @@
 }
 .canvas {
     width: 100%;
-    height: 200px;
-    margin-top:30px;
+    height: 400rpx;
+    margin-top:60rpx;
 }
 .title {
 	text-align: center;
@@ -34,35 +34,35 @@
 }
 .studyNotice{
   text-align: center;
-  font-size: 24px;
-  margin-top: 20px;
+  font-size: 48rpx;
+  margin-top: 40rpx;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 40rpx;
 }
 .studyNotice2{
   text-align: center;
-  font-size: 17px;
-  margin-top: 10px;
+  font-size: 34rpx;
+  margin-top: 20rpx;
 }
 .studyNotice3{
   text-align: center;
-  font-size: 13px;
-  margin-top: 10px;
+  font-size: 26rpx;
+  margin-top: 20rpx;
   color: gray;
 }
 .star-pic{
-  width:40px;
-  height: 40px;
- margin: 6px;
- margin-top: 20px;
+  width:80rpx;
+  height: 80rpx;
+ margin: 12rpx;
+ margin-top: 40rpx;
 }
 .starContent{
   text-align: center;
 }
 .studyTip{
   text-align: center;
-  font-size: 13px;
-  margin-top: 20px;
+  font-size: 26rpx;
+  margin-top: 30rpx;
   color: grey;
 }
 .center{

@@ -36,7 +36,7 @@
       </block>
     </view>
     
-    <view class="weui-cell__bd" style='padding-left:10px;'>
+    <view class="weui-cell__bd" style='padding-left:20rpx;'>
       <view class='title'>{{matchedUser.nickName}}的演讲 
       <block wx:if='{{speechInfo.status == 0}}'><text style='color:grey'>未开始</text></block>
       <block wx:if='{{speechInfo.status == 1}}'><text style='color:orange'>进行中</text></block>
@@ -66,7 +66,7 @@
     <view class="">
       <image class="host-pic2" src="{{matchedUser.avatarUrl}}" />
     </view>
-    <view class="weui-cell__bd" style='padding-left:10px;'>
+    <view class="weui-cell__bd" style='padding-left:20rpx;'>
       <view class='title'>{{matchedUser.nickName}}对我的鼓励 
       <block wx:if='{{evaluationInfo.status == 0}}'><text style='color:grey'>未开始</text></block>
       <block wx:if='{{evaluationInfo.status == 1}}'><text style='color:orange'>进行中</text></block>
@@ -102,7 +102,7 @@
   <view class='wait'>{{waitSeconds}}</view>
 </block>
     <block wx:if='{{waitSeconds >= 10}}'>
-  <view style='font-size:24px;padding-top:30px'>计时结束后开始演讲</view>
+  <view style='font-size:48rpx;padding-top:60rpx'>计时结束后开始演讲</view>
 </block>
   </view>
 
@@ -110,7 +110,7 @@
 <view class='speed' wx:if='{{speed > 0 }}'>语速：约每分钟{{speed}}字</view>
 <view class="bottom input-panel">
 <view>
-<input style='height:45px;' type="text" value="{{inputContent}}" class="send-input" bindconfirm="sendTextMessage" confirm-type="send" placeholder='输入聊天：'></input>
+<input style='height:90rpx;' type="text" value="{{inputContent}}" class="send-input" bindconfirm="sendTextMessage" confirm-type="send" placeholder='输入聊天：'></input>
 </view>
 <view  style='width:40%;'>
   <!--计时显示区域-->

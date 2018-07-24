@@ -11,8 +11,8 @@
 }
 .canvas {
     width: 100%;
-    height: 200px;
-    margin-top:0px;
+    height: 400rpx;
+    margin-top:0rpx;
 }
 .title {
 	text-align: center;
@@ -27,75 +27,75 @@
 }
 .studyNotice{
   text-align: center;
-  font-size: 20px;
-  margin-top: 10px;
+  font-size: 40rpx;
+  margin-top: 20rpx;
   font-weight: bold;
-  margin-bottom: 0px;
+  margin-bottom: 0rpx;
 }
 .studyNotice2{
   text-align: center;
-  font-size: 17px;
-  margin-top: 5px;
+  font-size: 34rpx;
+  margin-top: 10rpx;
 }
 .studyNotice3{
   text-align: center;
-  font-size: 13px;
-  margin-top: 0px;
+  font-size: 26rpx;
+  margin-top: 0rpx;
   color: gray;
 }
 .star-pic{
-  width:40px;
-  height: 40px;
- margin: 6px;
- margin-top: 10px;
+  width:80rpx;
+  height: 80rpx;
+ margin: 12rpx;
+ margin-top: 20rpx;
 }
 .starContent{
   text-align: center;
 }
 .studyTip{
   text-align: center;
-  font-size: 11px;
-  margin-top: 10px;
+  font-size: 22rpx;
+  margin-top: 20rpx;
   color: grey;
 }
 .content {
   width: 80%;
   font-weight: bold;
-  padding: 10px;
-  font-size: 15px;
+  padding: 20rpx;
+  font-size: 30rpx;
   background-color: white;
-  border-radius:10px;
+  border-radius:20rpx;
   opacity:0.8;
-  margin-top: 20px;
-  height: 80px;
-  margin-left:30px;
-  padding-left:15px;
+  margin-top: 40rpx;
+  height: 160rpx;
+  margin-left:60rpx;
+  padding-left:30rpx;
 }
 .uu-code {
-  width: 75px;
-  height: 75px;
+  width: 150rpx;
+  height: 150rpx;
 }
 .code-notice{
   background-color:grey;
-  border-radius: 20px;
-  font-size: 12px;
-  padding-left: 10px;
-  margin-top: 5px;
-  width: 110px;
+  border-radius: 40rpx;
+  font-size: 24rpx;
+  padding-left: 20rpx;
+  margin-top: 10rpx;
+  width: 220rpx;
   color: white;
 }
 .arrow-right {  
     font-size: 0;  
     border-left-style: solid;  
-    border-top: 7px solid transparent;
-    border-right: 7px solid transparent;
-    border-bottom: 7px solid transparent; 
-    border-left: 7px solid white; 
-    margin: 3px;
+    border-top: 14rpx solid transparent;
+    border-right: 14rpx solid transparent;
+    border-bottom: 14rpx solid transparent; 
+    border-left: 14rpx solid white; 
+    margin: 6rpx;
 } 
 .smile {
   background-image: url('https://lg-oztvih8q-1255679565.cos.ap-shanghai.myqcloud.com/studyShow1.jpg');
   background-repeat: no-repeat;
   width: 100%;
-  height: 573px;
+  height: 1146rpx;
 }

@@ -1,127 +1,127 @@
 /* pages/studyManage/studyManage.wxss */
 .line{
 width:99%;
-height:1px;
+height:2rpx;
 margin-top: 0px;
-margin-bottom: 10px;
+margin-bottom: 20rpx;
 background:#F6F6F6;
 }
 .notice{
-  font-size: 13px;
-  padding-top:10px;
-  padding-left: 10px;
+  font-size: 26rpx;
+  padding-top:20px;
+  padding-left: 2r0px;
   color: grey;
 }
 .card-pic{
-  margin-right: 5px;
+  margin-right: 10rpx;
   vertical-align: 
-  middle;width:25px; 
-  height: 25px;
-  margin-left: 5px;
+  middle;width:50rpx; 
+  height: 50rpx;
+  margin-left: 10rpx;
 }
 .nickName {
-  font-size: 17px;
+  font-size: 34rpx;
   font-weight: bold;
 }
 .small-grey{
-  font-size: 13px;
+  font-size: 26rpx;
   color:#888888;
   font-weight: normal;
 }
 .small-increase{
-  font-size: 13px;
+  font-size: 26rpx;
   color:red;
   font-weight: normal;
-  padding-top:2px;
-  padding-left: 1px;
+  padding-top:4rpx;
+  padding-left: 2rpx;
 }
 .small-grey2{
-  font-size: 13px;
+  font-size: 26rpx;
   color:#888888;
   font-weight: normal;
-  padding-top:2px;
-  padding-left: 3px;
+  padding-top:4rpx;
+  padding-left: 6rpx;
 }
 .user-pic{
-width: 50px; 
-height: 50px; 
+width: 100rpx; 
+height: 100rpx; 
 display: block;
-border-radius: 6px;
+border-radius: 12rpx;
 }
 .task-pic{
-width: 45px; 
-height: 45px; 
+width: 90rpx; 
+height: 90rpx; 
 display: block;
-border-radius: 6px;
-padding-left:6px;
+border-radius: 12rpx;
+padding-left:12rpx;
 }
 .task-pic2{
-width: 80px; 
-height: 80px; 
+width: 160rpx; 
+height: 160rpx; 
 display: block;
-border-radius: 6px;
+border-radius: 12rpx;
 }
 .totoalScore{
-  margin-right:20px;
+  margin-right:40rpx;
   color: black;
-  font-size: 28px;
+  font-size: 56rpx;
 }
 .uu-code{
-  width:30px;
-  height:30px;
-  margin-top: 15px;
+  width:60rpx;
+  height:60rpx;
+  margin-top: 30rpx;
 }
 .guideline {
   width: 95%;
-  height: 90px;
+  height: 180rpx;
   background-color: rgb(29, 178, 23858);
-  margin: 4px;
+  margin: 8rpx;
   
   color: white;
   text-align: center;
   vertical-align: middle;
 }
 .like{
-width: 18px; 
-height: 18px; 
-padding-left: 10px;
-margin-top: 5px;
+width: 36rpx; 
+height: 36rpx; 
+padding-left: 20rpx;
+margin-top: 10rpx;
 position: relative;
-  top: 4px;
+  top: 8rpx;
 }
 .audio{
-width: 40px; 
-height: 40px; 
+width: 80rpx; 
+height: 80rpx; 
 }
 .rightItem{
-  margin-right: 20px; 
+  margin-right: 40rpx; 
 }
 .content{
-  font-size: 18px;
+  font-size: 36rpx;
   font-weight: bold;
-  margin-top: 25px;
+  margin-top: 50rpx;
   color: gray
 }
 .studyArea{
-  margin: 15px;
+  margin: 30rpx;
 }
 .later{
   opacity: 0.2
 }
 .commentNotice{
   color: red;
-  font-size: 15px;
-  margin-left: 30px;
+  font-size: 30rpx;
+  margin-left: 60rpx;
   font-weight: normal;
 }
 .showStudy{
   position: relative;
-  right:40px;
+  right:80rpx;
   color:orangered;  
 }
 .showStudy2{
   position: relative;
-  right:40px;
+  right:80rpx;
   color:grey;  
 }
 

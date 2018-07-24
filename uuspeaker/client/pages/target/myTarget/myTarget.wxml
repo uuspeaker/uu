@@ -2,7 +2,7 @@
 
 <!--目标宣言-->
 
-<view class="weui-cells__title center title" style='padding-top:0px;font-size:22px'>{{userTarget.target_name}}</view>
+<view class="weui-cells__title center title" style='padding-top:0rpx;font-size:44rpx'>{{userTarget.target_name}}</view>
 
     <view class="weui-flex audioArea" catchtap='doNothing'>
       <view class="weui-flex__item">
@@ -17,9 +17,9 @@
     </view>
 
 <!--当前目标执行情况-->   
-<view class="weui-cells__title center title" style='padding-top:20px;padding-bottom:15px;color:grey'>今日学习</view>
+<view class="weui-cells__title center title" style='padding-top:40rpx;padding-bottom:30rpx;color:grey'>今日学习</view>
   
-      <view class="weui-flex " style='text-align:center;padding-left:30px;padding-right:30px'>
+      <view class="weui-flex " style='text-align:center;padding-left:60rpx;padding-right:60rpx'>
 
       <view class="weui-flex__item">
         <view class='small-grey'>计划完成</view>
@@ -37,7 +37,7 @@
 
       <view class="weui-flex__item">
         <view class='small-grey'>小懂留言</view>
-        <view style='padding-top:5px;'>
+        <view style='padding-top:10rpx;'>
           <text class='taskNotice' wx:if='{{userTarget.todayStarAmount > userTarget.star_amount}}'>超赞！</text>
           <text class='taskNotice' wx:if='{{userTarget.todayStarAmount == userTarget.star_amount}}'>很好！</text>
           <text class='taskNotice' wx:if='{{userTarget.todayStarAmount < userTarget.star_amount}}'>加油哦！</text>
@@ -47,9 +47,9 @@
     </view>   
 
 <!--总体目标执行情况--> 
-    <view class="weui-cells__title center title" style='padding-top:20px;padding-bottom:15px;color:grey'>学习计划</view>
+    <view class="weui-cells__title center title" style='padding-top:40rpx;padding-bottom:30rpx;color:grey'>学习计划</view>
     
-    <view class="weui-flex " style='text-align:center;padding-left:30px;padding-right:30px'>
+    <view class="weui-flex " style='text-align:center;padding-left:60rpx;padding-right:60rpx'>
 
       <view class="weui-flex__item">
         <view class='small-grey'>已经坚持</view>
@@ -76,7 +76,7 @@
       </view>
     </view>
 
-    <view class="center" style='color:gray;font-size:15px;padding-top:10px'>
+    <view class="center" style='color:gray;font-size:30rpx;padding-top:20rpx'>
     计划每天完成
     <text style='color:black'>{{userTarget.star_amount}}</text>
     次高效学习，坚持
@@ -85,8 +85,8 @@
 
 
   
-<view class='studyTip' style='margin-top:30px;'>目标制定时间：{{createDateStr}}</view>
-<view class="weui-cells__title bottom "style='padding-bottom:10px;padding-left:33%;font-size:15px'><text style='color: #576b95;padding-right:10px' bindtap="resetTarget">重新制定</text><text style='color: #576b95;'  catchtap='toHistoryTarget'>历史目标</text></view>
+<view class='studyTip' style='margin-top:40rpx;'>目标制定时间：{{createDateStr}}</view>
+<view class="weui-cells__title  bottom"style='padding-bottom:20rpx;padding-left:33%;font-size:30rpx'><text style='color: #576b95;padding-right:20rpx' bindtap="resetTarget">重新制定</text><text style='color: #576b95;'  catchtap='toHistoryTarget'>历史目标</text></view>
 
 <view class="weui-flex bottom" wx:if="{{userTarget.star_amount == userTarget.todayStarAmount}}">
     <view class="weui-flex__item">

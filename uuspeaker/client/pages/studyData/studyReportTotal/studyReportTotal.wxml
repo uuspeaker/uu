@@ -7,5 +7,5 @@
 
 <view class="container">
 <view class='totalScore'>总体学习情况</view>
-    <canvas canvas-id="pieCanvas" class="canvas" style="height:300px" bindtouchstart="touchHandler"></canvas>
+    <canvas canvas-id="pieCanvas" class="canvas" style="height:600rpx" bindtouchstart="touchHandler"></canvas>
 </view>

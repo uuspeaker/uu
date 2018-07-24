@@ -11,7 +11,7 @@
   </block>
 </view>
 
-<view style='height:35px'></view>
+<view style='height:70rpx'></view>
 <view class="weui-flex bottom ">
   <view class="weui-flex__item ">
 

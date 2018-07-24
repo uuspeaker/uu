@@ -15,7 +15,7 @@
     <view class=" ">
 
       <view class="weui-cells__title center">
-        <view style='padding-top:20px;font-size:17px;font-weight:bold'>你想每天完成几次高效学习？</view>
+        <view style='padding-top:40rpx;font-size:34rpx;font-weight:bold'>你想每天完成几次高效学习？</view>
         <view class='center'>
           <image class="star-pic" src='../../../images/speechName/star{{starAmount>=1?2:1}}.png' data-star='1' catchtap='chooseStarAmount' />
           <image class="star-pic" src='../../../images/speechName/star{{starAmount>=2?2:1}}.png' data-star='2' catchtap='chooseStarAmount' />
@@ -28,13 +28,13 @@
       </view>
 
 
-      <view class="weui-cells__title center" style='padding-top:20px;padding-bottom:20px;font-size:17px;font-weight:bold'>你计划坚持多久？</view>
+      <view class="weui-cells__title center" style='padding-top:30rpx;padding-bottom:40rpx;font-size:34rpx;font-weight:bold'>你计划坚持多久？</view>
 
       <view class="weui-cells weui-cells_after-title center">
         <radio-group bindchange="radioChange">
           <label class="weui-cell " wx:for="{{userItems}}" wx:key="value">
             <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
-            <view class="weui-cell__bd" style='color:orangered;font-weight:bold;font-size:20px' wx:if='{{item.checked}}'>{{item.name}}</view>
+            <view class="weui-cell__bd" style='color:orangered;font-weight:bold;font-size:40rpx' wx:if='{{item.checked}}'>{{item.name}}</view>
             <view class="weui-cell__bd" wx:if='{{!item.checked}}'>{{item.name}}</view>
           </label>
         </radio-group>

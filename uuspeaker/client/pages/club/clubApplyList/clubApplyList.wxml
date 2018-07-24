@@ -11,9 +11,9 @@
     </view>
     <view class="weui-cell__bd">
       <view class="title">
-        <view style='padding-left:10px;'>
+        <view style='padding-left:20rpx;'>
           <text>{{user_info.nickName}}</text>
-          <div class='checkNotice' wx:if='{{myRole == 1 && apply_status == 1}}'><text style='margin-right:15px;color: #576b95;' data-user_id='{{user_info.userId}}' catchtap='pass'>通过</text><text data-user_id='{{user_info.userId}}' style='color: grey;' catchtap='deny'>拒绝</text></div>
+          <div class='checkNotice' wx:if='{{myRole == 1 && apply_status == 1}}'><text style='margin-right:30rpx;color: #576b95;' data-user_id='{{user_info.userId}}' catchtap='pass'>通过</text><text data-user_id='{{user_info.userId}}' style='color: grey;' catchtap='deny'>拒绝</text></div>
           <div class='checkNotice'  wx:if='{{myRole != 1 && apply_status == 1}}'><text data-user_id='{{user_info.userId}}' style='color: grey;'>审批中</text></div>
           <div class='checkNotice' wx:if='{{apply_status == 2}}'><text data-user_id='{{user_info.userId}}' style='color: grey;'>审批通过</text></div>
           <div class='checkNotice' wx:if='{{apply_status == 9}}'><text data-user_id='{{user_info.userId}}' style='color: grey;'>审批未通过</text></div>
